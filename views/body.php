@@ -39,7 +39,12 @@
                             <td><strong><?=$lang['hi'];?> <?=$_COOKIE['user'];?></strong></td>
                         </tr>
                         <tr>
-                            <td><a href="./main.php?logout=true"><?=$lang['logout'];?></a></td>
+                            <td>
+                                <? if($logged == 2) { ?>
+                                <a href="./admin/" target="_blank"><?=$lang['gotoadmin'];?></a>
+                                <? } ?>
+                                <a href="./main.php?logout=true"><?=$lang['logout'];?></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
