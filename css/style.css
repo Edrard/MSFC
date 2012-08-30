@@ -1,0 +1,208 @@
+/* tables */
+table.tablesorter {
+    font-family:arial;
+    background-color: #CDCDCD;
+    margin:10px 0pt 15px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+    background-color: #e6EEEE;
+    border: 1px solid #FFF;
+    font-size: 8pt;
+    padding: 4px;
+}
+table.tablesorter thead tr .header {
+    background-image: url(../images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    padding-right: 15px;
+}
+table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+    background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+    background-image: url(../images/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+    background-image: url(../images/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+    background-color: #8dbdd8;
+}
+
+/** Admin **/
+
+.adinsider_img {
+    background-color: transparent;
+    margin: 0 auto 15px auto;
+    padding: 5px;
+    width: 500px;
+}
+.adinsider {
+    background-color: transparent;
+    width: 305px;
+    margin: 0 auto 15px auto;
+    padding: 5px;
+    border: 1px solid #000;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+    height: 145px;
+}
+.admain {
+    margin: 20px 0px 0px 0px;
+    padding: 0px;
+    position: relative;
+    z-index: inherit;
+    zoom: 1; /* For IE6 */
+}
+.adexit {
+    padding: 5px 17px 3px;
+    font-weight: bold;
+}
+.adwrong {
+    color: black;
+    background-color: #cd5622;
+    width: 920px;
+    margin: 0 auto 15px auto;
+    padding: 5px;
+    border: 1px solid #000;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+
+}
+.adbox {
+    color: black;
+    font-family: "Times New Roman", Times, serif;
+}
+.admin_container {
+    background-color: transparent;
+    width: 900px;
+    margin: 10px auto 15px auto;
+
+ 
+
+}
+.hidden {
+    display: none;
+}
+
+/***** Exinaus ******/
+.ui-button {
+    border-radius: 4px 4px 4px 4px !important;
+}
+.col_red {
+color: #800000;
+}
+
+.col_red a:link {
+color: #800000;
+text-decoration:none;
+}
+.col_red a:visited {
+color: #800000;
+text-decoration:none;
+}
+.col_red a:hover {
+color: #800000;
+text-decoration:none;
+}
+.col_red a:active {
+color: #800000;
+text-decoration:none;
+}
+
+.col_grey {
+color: slategray;
+}
+
+.col_grey a:link {
+color: slategray;
+text-decoration:none;
+}
+.col_grey a:visited {
+color: slategray;
+text-decoration:none;
+}
+.col_grey a:hover {
+color: slategray;
+text-decoration:none;
+}
+.col_grey a:active {
+color: slategray;
+text-decoration:none;
+}
+
+
+.col_blue {
+color: royalblue;
+}
+
+.col_blue a:link {
+color: royalblue;
+text-decoration:none;
+}
+.col_blue a:visited {
+color: royalblue;
+text-decoration:none;
+}
+.col_blue a:hover {
+color: royalblue;
+text-decoration:none;
+}
+.col_blue a:active {
+color: royalblue;
+text-decoration:none;
+}
+
+.col_green {
+color: green;
+}
+
+.col_green a:link {
+color: green;
+text-decoration:none;
+}
+.col_green a:visited {
+color: green;
+text-decoration:none;
+}
+.col_green a:hover {
+color: green;
+text-decoration:none;
+}
+.col_green a:active {
+color: green;
+text-decoration:none;
+}
+
+.col_black {
+color: black;
+}
+
+.col_black a:link {
+color: black;
+text-decoration:none;
+}
+.col_black a:visited {
+color: black;
+text-decoration:none;
+}
+.col_black a:hover {
+color: black;
+text-decoration:none;
+}
+.col_black a:active {
+color: black;
+text-decoration:none;
+}
