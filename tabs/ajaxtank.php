@@ -27,6 +27,7 @@
         $("#change_button_tanks").button();
         $("#change_button_tanks").click( function() {
             $.ajax({
+                cache: true,
                 type: "POST",
                 data: 'type='+ $('#type').val()+'&nation='+$('#nation').val()+'&lvl='+$('#lvl').val(),
                 url: "./ajax/tanks.php",
@@ -36,6 +37,7 @@
             });
         });
         $.ajax({
+            cache: true,
             type: "POST",
             data: 'type=heavyTank&nation=all&lvl=10',
             url: "./ajax/tanks.php",
