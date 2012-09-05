@@ -31,7 +31,13 @@ echo '
                 <tr>
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($topTanki as $tank => $stat){ ?>
-                        <td align='center' style='padding: 0px !important; vertical-align: middle;'><?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0) { echo '<img src="./images/yes.png">'; @$countTanks[$tank] +=1; ++$x; ++$y;} ?></td>
+                        <td align='center' style='padding: 0px !important; vertical-align: middle;'>
+                        <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0) { echo '<img src="./images/yes.png">'; @$countTanks[$tank] +=1; ++$x; ++$y;
+                          if(isset($blocked[$name][$tank])) {
+                            echo '<img src="./images/no2.png">';
+                          }
+                        } ?>
+                        </td>
                         <?php } ?>
                     <td align='center'><?php echo $x; ?></td>
                 </tr>

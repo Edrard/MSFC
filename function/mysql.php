@@ -25,9 +25,9 @@
     $dbhost ='localhost';
     // username and password to log onto db SERVER
     $dbuser ='root';
-    $dbpass  ='Kndr:34.';
+    $dbpass  ='';
     // name of database
-    $dbname='test2';
+    $dbname='wot';
     $sqlchar = 'utf8';
 
     $db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);  

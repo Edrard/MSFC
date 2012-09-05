@@ -41,7 +41,7 @@
                         <tr>
                             <td>
                                 <? if($logged == 2) { ?>
-                                <a href="./admin/" target="_blank"><?=$lang['gotoadmin'];?></a>
+                                <a href="./admin/" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
                                 <? } ?>
                                 <a href="./main.php?logout=true"><?=$lang['logout'];?></a>
                             </td>
