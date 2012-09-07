@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.1 $
+    * @version     $Rev: 2.1.2 $
     *
     */
 ?>
@@ -49,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <? foreach($tanks_list as $val) { ?>
+                            <?php foreach($tanks_list as $val) { ?>
                                 <tr>
                                     <td align="center"><span class="hidden"><?=$val['tank'];?></span><?=$val['tank']?></td>
                                     <td align="center"><span class="hidden"><?=$val['nation'];?></span><input type="text" size="10" value="<?=$val['nation']?>" name="Array[<?=$val['id']?>][nation]"></td>
@@ -57,7 +57,7 @@
                                     <td align="center"><span class="hidden"><?=$val['type'];?></span><input type="text" size="12" value="<?=$val['type']?>" name="Array[<?=$val['id']?>][type]"></td>
                                     <td align="center"><span class="hidden"><?=$val['link'];?></span><input type="text" size="82" value="<?=$val['link']?>" name="Array[<?=$val['id']?>][link]"></td>
                                 </tr>
-                                <? } ?>
+                                <?php } ?>
                         </tbody>
                     </table>
                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
@@ -380,7 +380,7 @@
                         </tbody>
                     </table>
                 </form><br>
-                <table id="files" class="tablesorter" cellspacing="1">
+                <table id="users" class="tablesorter" cellspacing="1">
                     <thead>
                         <tr>
                             <th align="center"><?=$lang['admin_user_name'];?></th>

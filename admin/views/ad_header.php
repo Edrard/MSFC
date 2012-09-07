@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.1 $
+    * @version     $Rev: 2.1.2 $
     *
     */
 ?>
@@ -43,14 +43,16 @@
             $('#tabs ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);}); 
         });
     </script>
-    <script>
-        $(document).ready(function() 
-        {  
-            <?php foreach($current_user as $val){?>
-                $('#dialog_<?=$val['user']?>').jqm({trigger: 'a.trigger_<?=$val['user']?>'}); 
-                <?php } ?>
-        });
-    </script>
+    <?php if(isset($current_user)){ ?>
+        <script>
+            $(document).ready(function() 
+            {  
+                <?php foreach($current_user as $val){?>
+                    $('#dialog_<?=$val['user']?>').jqm({trigger: 'a.trigger_<?=$val['user']?>'}); 
+                    <?php } ?>
+            });
+        </script>
+        <?php    }  ?>
     <script type="text/javascript" id="js">     
 
         $(document).ready(function() 
@@ -63,20 +65,21 @@
                 }
             });
             $("#users").tablesorter({
-                sortList: [[2, 0]],
+                sortList: [[1, 0]],
                 widgets: ['zebra'],
-                textExtraction: function(node) {
-                    return $(node).find("span.hidden").text();
-                }
             });
-            $("#top_tanks").tablesorter({sortList:[[6,0],[3,0]], widgets: ['zebra']});
-            $("#tanks_list").tablesorter({
-                sortList: [[2, 0]],
-                widgets: ['zebra'],
-                textExtraction: function(node) {
-                    return $(node).find("span.hidden").text();
-                }
-            });
+            <?php if(!empty($adm_top_tanks)){ ?>
+                $("#top_tanks").tablesorter({sortList:[[6,0],[3,0]], widgets: ['zebra']});
+                <?php } ?>
+            <?php if(!empty($tanks_list)){ ?>
+                $("#tanks_list").tablesorter({
+                    sortList: [[2, 0]],
+                    widgets: ['zebra'],
+                    textExtraction: function(node) {
+                        return $(node).find("span.hidden").text();
+                    }
+                });
+                <?php } ?>
         }
         );  
     </script>

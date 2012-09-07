@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.0 $
+    * @version     $Rev: 2.1.2 $
     *
     */
 ?>
@@ -34,6 +34,8 @@
         $user = $_GET['user'];
         $pass = $_GET['pass'];
     }
+    // Check Admin(1) 
+    define('STATE', '1');
 
     //Cheker
     include_once(ROOT_DIR.'/including/check.php');
@@ -69,60 +71,70 @@
         }
     }
     include_once(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
+    include_once(ROOT_DIR.'/function/cache.php');
+
+    //cache
+    $cache = new Cache(ROOT_DIR.'/cache/');
     //Authentication
-    $auth = new Auth($db);
+    if(STATE == 1){
+        $auth = new Auth($db);
 
-    if(($user) && ($pass)){
-        $auth->login($user, $pass); // This order: User/Email Password True/False (if you want to use email as auth
+        if(($user) && ($pass)){
+            $auth->login($user, $pass); // This order: User/Email Password True/False (if you want to use email as auth
+        }
+
+        $logged = 0;
+        if($auth->isLoggedIn(1)){
+            $logged = 1;
+        }    
+        if($auth->isLoggedInAdmin(1)){
+            $logged = 2;
+        }
+        if($logged != 2){
+            die($lang['log_to_cron']);
+        }    
     }
 
-    $logged = 0;
-    if($auth->isLoggedIn(1)){
-        $logged = 1;
-    }    
-    if($auth->isLoggedInAdmin(1)){
-        $logged = 2;
-    }
-    if($logged == 2){
-        if($config['cron'] == 1){
-            $new['data']['request_data']['items'] = array();
-            //Geting clan roster fron wargaming or from local DB.
-            if(is_valid_url($config['td']) == true){
-                $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
-                if($new['error'] != 0){
-                    $new = get_last_roster();   
-                }
-            }
-            // Creating empty array if needed.
-            if(count($new['data']['request_data']['items']) == 0){
-                $new['error'] = 1;  
-            }
-
-            //Sorting roster
-            $roster = &roster_sort($new['data']['request_data']['items']);
-            $now = now();
-            //Starting geting data
-            if(count($new['data']['request_data']['items']) > 0){
-
-                $links = cron_time_checker($roster);
-                if(count($links) > 0){
-                    multiget($links, $result,$config['pars']);    
-                }
-
-                foreach($result as $name => $val){    
-                    cron_insert_pars_data($val,$roster[$name],$config,$now);
-                }
-                echo $lang['cron_done'];
-                // In $res array stored player statistic.  
-            }
+    if($config['cron'] == 1){
+        //Geting clan roster fron wargaming or from local DB.
+        $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
+        if($new['error'] != 0){
+            unset($new);
+            $new = $cache->get('get_last_roster',0);
+            if($new === FALSE) { die('No cahced data'); }  
         }else{
-            echo $lang['error_cron_off'];
-        }   
+            $cache->clear('get_last_roster', $new);
+            $cache->set('get_last_roster', $new);
+        }
 
+        // Creating empty array if needed.
+        if(count($new['data']['request_data']['items']) == 0){
+            $new['error'] = 1;
+            $new['data']['request_data']['items'] = array();
+        }
+
+        //Sorting roster
+        $roster = &roster_sort($new['data']['request_data']['items']);
+        $now = now();
+        //Starting geting data
+        if(count($new['data']['request_data']['items']) > 0){
+
+            $links = cron_time_checker($roster);
+            if(count($links) > 0){
+                multiget($links, $result,$config['pars']);    
+            }
+
+            foreach($result as $name => $val){    
+                cron_insert_pars_data($val,$roster[$name],$config,$now);
+            }
+            echo $lang['cron_done'];
+            // In $res array stored player statistic.  
+        }
     }else{
-        echo $lang['log_to_cron'];
+        echo $lang['error_cron_off'];
+    }   
 
-    }
+
 
 
     //print_r($lang);

@@ -405,7 +405,6 @@
     }
     function tanks_group_full($array,$nation_s,$type_s,$lvl_s){
         $name = array();
-        
         foreach($array as $val){
             if(isset($val['tank'])){
                 if(is_array($val['tank'])) {
