@@ -80,7 +80,7 @@
             <?php foreach($tanks_group as $type => $types){
                     foreach($types as $lvl => $tank) {
                         foreach($tank as $column => $tmp){ ?>
-                        <th class="<?=$type,$lvl,'t ',$lvl,'lvl ',$type,'class';?> 2hide"><?php echo $column; ?></th>
+                        <th><?php echo $column; ?></th>
                         <?php }
                     }
                 }

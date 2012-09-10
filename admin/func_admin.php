@@ -314,7 +314,6 @@
         global $db;
         $error = 0;
         unset($post['tabsub']);
-        //print_r($post);
         foreach($post as $key => $var){
             $tmp = explode('_',$key);
             $type = array_pop($tmp);
@@ -325,58 +324,67 @@
             if($type == 'status'){
                 $var = 1;
             }
+            if($type == 'id'){
+                if(!isset($checker)){
+                    $checker[] = $var;
+                }else{
+                    if(!in_array($var,$checker)){
+                        $checker[] = $var;
+                    }else{
+                        $error = 2;
+                    }
+                }
+            }
             if(strlen($var) > 0){
                 $new[$tmp_key][$type] = $var;
             }
-        }    
-        foreach($new as $vals){ 
-            //print_r($vals);
-            if(count($vals) == 6){
-                $sql = "SELECT COUNT(*) FROM tabs WHERE file = '".$vals['file']."';";
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $num = $q->fetchColumn();  
-                }else{ 
-                    print_r($q->errorInfo());
-                    die();
-                }  
-                if($num == 0){
-                    $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
+        }  
+        if($error == 0){ 
+            foreach($new as $vals){ 
+                //print_r($vals);
+                if(count($vals) == 6){
+                    $sql = "SELECT COUNT(*) FROM tabs WHERE file = '".$vals['file']."';";
                     $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
+                    if ($q->execute() == TRUE) {
+                        $num = $q->fetchColumn();  
+                    }else{ 
                         print_r($q->errorInfo());
                         die();
-                    }     
+                    }  
+                    if($num == 0){
+                        $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
+                        $q = $db->prepare($sql);
+                        if ($q->execute() != TRUE) {
+                            print_r($q->errorInfo());
+                            die();
+                        }     
+
+                    }else{
+                        $nm = 0;
+                        $insert = '';
+                        foreach($vals as $column => $val){
+                            if($nm == 0){
+                                $insert .= "`".$column."` = '".$val."'";  
+                                $nm++;  
+                            }else{
+                                $insert .= ', `'.$column."` = '".$val."'";
+                            }    
+                        }
+                        $sql = "UPDATE tabs SET ".$insert." WHERE file = '".$vals['file']."';";
+                        //echo $sql;
+                        $q = $db->prepare($sql);
+                        if ($q->execute() != TRUE) {
+                            print_r($q->errorInfo());
+                            die();
+                        }     
+                    }
 
                 }else{
-                    $nm = 0;
-                    $insert = '';
-                    foreach($vals as $column => $val){
-                        if($nm == 0){
-                            $insert .= "`".$column."` = '".$val."'";  
-                            $nm++;  
-                        }else{
-                            $insert .= ', `'.$column."` = '".$val."'";
-                        }    
-                    }
-                    $sql = "UPDATE tabs SET ".$insert." WHERE file = '".$vals['file']."';";
-                    //echo $sql;
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        print_r($q->errorInfo());
-                        die();
-                    }     
+                    $error = 1;
                 }
-
-            }else{
-                $error = 1;
             }
         }
-        if($error == 1) {
-            return TRUE;
-        }else{
-            return FALSE;
-        }
+        return $error;
     }
 
     function read_tabs_dir()

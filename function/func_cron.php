@@ -16,6 +16,30 @@
     */
 ?>
 <?php
+    function cron_current_run($fh,$date)
+    {
+        global $db, $config;
+
+        $sql = "SELECT account_id FROM col_players LIMIT 1;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $id = $q->fetchColumn();
+        } else {
+            print_r($q->errorInfo());
+            die();
+        }
+
+        $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$id."';";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $player_stat = $q->fetchColumn();
+        } else {
+            print_r($q->errorInfo());
+            die();
+        }
+        fwrite($fh, $date.": Current run number ".($player_stat + 1)."\n"); 
+
+    } 
     function cron_time_checker($players)
     {
         global $db, $config;
@@ -23,14 +47,22 @@
         foreach($players as $val){
             $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$val['account_id']."';";
             $q = $db->prepare($sql);
-            $q->execute();
-            $player_stat = $q->fetchColumn();
+            if ($q->execute() == TRUE) {
+                $player_stat = $q->fetchColumn();
+            } else {
+                print_r($q->errorInfo());
+                die();
+            }
             $status = 0;
             if($player_stat > 0){
                 $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$val['account_id']."' AND up < '".(now() - $config['cron_time']*3600)."';";
                 $q = $db->prepare($sql);
-                $q->execute();
-                $status = $q->fetchColumn();
+                if ($q->execute() == TRUE) {
+                    $player_stat = $q->fetchColumn();
+                } else {
+                    print_r($q->errorInfo());
+                    die();
+                }
             }
 
             if($status >= $player_stat || $player_stat == 0){
@@ -40,12 +72,15 @@
         return($links);
     }
 
-    function cron_insert_pars_data($data,$roster,$config,$now){   
+    function cron_insert_pars_data($data,$roster,$config,$now,$log){   
 
         global $db;
         $data = json_decode($data,TRUE);
         if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
             if(count($data['data']) > 0){
+                if($log == 1){
+                    fwrite($fh, $date.": Writing player ".$data['data']['name']."\n");    
+                }
                 $mod = 1;
                 $dbb['account_id'] = $roster['account_id'];
                 $dbb['name'] = $data['data']['name'];
@@ -290,6 +325,10 @@
 
                 } 
             } 
+        }else{
+            if($log == 1){
+                fwrite($fh, $date.": No data for player with ID ".$roster['account_id']."\n");    
+            }
         }
     }
 

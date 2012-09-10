@@ -30,9 +30,13 @@
         insert_config($_POST);
     } 
     if (isset($_POST['tabsub'])){
-        if(tabs_info_db($_POST) == TRUE){
+        $error = tabs_info_db($_POST);
+        if($error == 1){
             $message['text'] = $lang['admin_tabs_insert_error'];
             $message['color'] = 'red';    
+        }elseif($error == 2){
+            $message['text'] = $lang['admin_tabs_insert_error2'];
+            $message['color'] = 'red';
         }
     }
     if (isset($_GET['userdel'])){
@@ -122,25 +126,25 @@
 
     //Update top tanks tab info
     if(isset($_POST['toptanksupd'])) {
-      update_top_tanks($_POST['Array']);
+        update_top_tanks($_POST['Array']);
     }
     if(isset($_POST['tanklist']) && isset($_POST['Array'])){ 
         update_tanks_list($_POST['Array']);
     }
     if(isset($_POST['toptanksadd'])) {
 
-      if($_POST['adm_top_tanks_action'] == 'add'){
-      add_top_tanks($_POST['adm_top_tanks_lvl'],$_POST['adm_top_tanks_type']);
-      }
+        if($_POST['adm_top_tanks_action'] == 'add'){
+            add_top_tanks($_POST['adm_top_tanks_lvl'],$_POST['adm_top_tanks_type']);
+        }
 
-      if($_POST['adm_top_tanks_action'] == 'delete'){
-      delete_top_tanks($_POST['adm_top_tanks_lvl'],$_POST['adm_top_tanks_type']);
-      }
+        if($_POST['adm_top_tanks_action'] == 'delete'){
+            delete_top_tanks($_POST['adm_top_tanks_lvl'],$_POST['adm_top_tanks_type']);
+        }
 
     }
     if (isset($_GET['removetoptank'])){
         delete_top_tank($_GET['tank']);
-       // header ( 'Location: index.php?page=main#tabs-10' );
+        // header ( 'Location: index.php?page=main#tabs-10' );
     }
 
 

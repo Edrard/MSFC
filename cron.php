@@ -73,10 +73,21 @@
     include_once(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
     include_once(ROOT_DIR.'/function/cache.php');
 
+    $myFile = "cron.log";
+    $log = 0;
+    if($fh = fopen($myFile, 'a')){
+        $log = 1;    
+        $date = date('Y-m-d H:i');
+        fwrite($fh, $date.": Loging Started\n");
+        fwrite($fh, $date.": STATE ".STATE."\n");
+        cron_current_run($fh,$date);
+    }
+
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
     //Authentication
     if(STATE == 1){
+
         $auth = new Auth($db);
 
         if(($user) && ($pass)){
@@ -91,6 +102,9 @@
             $logged = 2;
         }
         if($logged != 2){
+            if($log == 1){
+                fwrite($fh, $date.": ".$lang['log_to_cron']."\n");    
+            }
             die($lang['log_to_cron']);
         }    
     }
@@ -101,10 +115,21 @@
         if($new['error'] != 0){
             unset($new);
             $new = $cache->get('get_last_roster',0);
-            if($new === FALSE) { die('No cahced data'); }  
+            if($new === FALSE) { 
+                if($log == 1){
+                    fwrite($fh, $date.": No cahced data\n");    
+                }
+                die('No cahced data'); 
+            }
+            if($log == 1){
+                fwrite($fh, $date.": Used cached roster\n");    
+            }  
         }else{
             $cache->clear('get_last_roster', $new);
             $cache->set('get_last_roster', $new);
+            if($log == 1){
+                fwrite($fh, $date.": Used roster from WG\n");    
+            }
         }
 
         // Creating empty array if needed.
@@ -120,20 +145,33 @@
         if(count($new['data']['request_data']['items']) > 0){
 
             $links = cron_time_checker($roster);
-            if(count($links) > 0){
+            $count = count($links); 
+            if($count > 0){
+                if($log == 1){
+                    fwrite($fh, $date.": Requested players num ".$count."\n");    
+                }
+                unset($count);
                 multiget($links, $result,$config['pars']);    
             }
 
-            foreach($result as $name => $val){    
-                cron_insert_pars_data($val,$roster[$name],$config,$now);
+            foreach($result as $name => $val){ 
+                cron_insert_pars_data($val,$roster[$name],$config,$now,$log);
+            }
+            if($log == 1){
+                fwrite($fh, $date.": ".$lang['cron_done']."\n");    
             }
             echo $lang['cron_done'];
             // In $res array stored player statistic.  
         }
     }else{
-        echo $lang['error_cron_off'];
+        if($log == 1){
+            fwrite($fh, $date.": ".$lang['error_cron_off']."\n");    
+        }
     }   
-
+    if($log == 1){
+        fwrite($fh, $date.": End cron\n");    
+        fwrite($fh, $date."////////////////////////////////////////////--->\n");    
+    }
 
 
 

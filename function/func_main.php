@@ -420,7 +420,10 @@
                 }
             }
         }
-
+        ksort($name);
+        foreach(array_keys($name) as $types){
+            ksort($name[$types]);   
+        }
         return $name;
     }
 

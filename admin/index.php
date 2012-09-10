@@ -80,7 +80,7 @@
         $data['msg'][] = 'You need to login';    
     }
     if (isset($config['error'])){
-        if($config['error'] = '2'){
+        if($config['error'] == '2'){
             $page = 'install';  
         }
     }

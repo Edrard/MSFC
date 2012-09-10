@@ -58,6 +58,7 @@
     $lang['admin_ajax_new_file'] = 'Enter file name';
     $lang['admin_ajax_new_error'] = 'tab with such name allready exist';   
     $lang['admin_tabs_insert_error'] = 'Error. Looks like some forms not fieled';
+    $lang['admin_tabs_insert_error2'] = 'Error. Can\'t be the same Index number';
     $lang['admin_confirm_delete'] = 'Are you shure, you want to delete';
     $lang['admin_user_name'] = 'Name';
     $lang['admin_user_group'] = 'Group';

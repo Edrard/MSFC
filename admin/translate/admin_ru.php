@@ -58,6 +58,7 @@
     $lang['admin_ajax_new_file'] = 'Введите имя файла';
     $lang['admin_ajax_new_error'] = 'закладка с таким названием уже существует';
     $lang['admin_tabs_insert_error'] = 'Ошибка. Не все поля заполнены';
+    $lang['admin_tabs_insert_error2'] = 'Ошибка. Не должно быть одинаковых порядковых номеров';
     $lang['admin_confirm_delete'] = 'Вы уверены что хотите удалить';
     $lang['admin_user_name'] = 'Имя';
     $lang['admin_user_group'] = 'Группа';

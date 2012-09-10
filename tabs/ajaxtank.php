@@ -39,7 +39,7 @@
         $.ajax({
             cache: true,
             type: "POST",
-            data: 'type=heavyTank&nation=all&lvl=10',
+            data: 'type=all&nation=all&lvl=1',
             url: "./ajax/tanks.php",
             success: function(msg){
                 $("#result").html(msg).show();
