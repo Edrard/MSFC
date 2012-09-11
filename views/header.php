@@ -77,22 +77,15 @@
             $("#overall").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
             $("#perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
             $("#battel").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
-            $("#stat_lvl_9").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#stat_lvl_10").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#spg_lvl_7").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#spg_lvl_8").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#achiv_epic").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#achiv_major").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#achiv_hero").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#achiv_special").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
             $("#rating").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#rating1").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
+            $("#rating1").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+            $("#rating_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
             $("#average_perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#stat_lvl_9_others").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#stat_lvl_10_others").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#stat_lvl_9_heavy").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#stat_lvl_10_heavy").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#blocked").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
             $("#all_tanks_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});

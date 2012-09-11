@@ -56,15 +56,16 @@
             $status = 0;
             if($player_stat > 0){
                 $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$val['account_id']."' AND up < '".(now() - $config['cron_time']*3600)."';";
+                //echo $sql;
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
-                    $player_stat = $q->fetchColumn();
+                    $status = $q->fetchColumn();
                 } else {
                     print_r($q->errorInfo());
                     die();
                 }
             }
-
+            
             if($status >= $player_stat || $player_stat == 0){
                 $links[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.5/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
@@ -72,7 +73,7 @@
         return($links);
     }
 
-    function cron_insert_pars_data($data,$roster,$config,$now,$log){   
+    function cron_insert_pars_data($data,$roster,$config,$now,$log,$fh,$date){   
 
         global $db;
         $data = json_decode($data,TRUE);

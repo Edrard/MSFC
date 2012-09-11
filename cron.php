@@ -155,7 +155,7 @@
             }
 
             foreach($result as $name => $val){ 
-                cron_insert_pars_data($val,$roster[$name],$config,$now,$log);
+                cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date);
             }
             if($log == 1){
                 fwrite($fh, $date.": ".$lang['cron_done']."\n");    
