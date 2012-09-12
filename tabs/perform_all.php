@@ -48,7 +48,7 @@ $(document).ready(function() {
                 <th><?php echo $lang['name']; ?></th> 
                 <?php foreach($res[$rand_keys]['perform'] as $column => $cat){ ?>
                     <?php if($column == $lang['hit_ratio']) { ?>
-                            <th class='fullshow'><?=$column;?></th>
+                            <th class='fullshow averageshow'><?=$column;?></th>
                     <? } else { ?>
                             <th class='averageshow'><?=$column;?></th>
                             <th class='fullshow'><?=$column;?></th>
@@ -62,7 +62,7 @@ $(document).ready(function() {
                             target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['perform'] as $cat => $result){ ?>
                         <?php if($cat == $lang['hit_ratio']) { ?>
-                			<td class='fullshow'>
+                			<td class='fullshow averageshow'>
                 			<?php echo $result; ?>
                 			</td>
                         <?php } else { ?>

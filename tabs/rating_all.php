@@ -41,7 +41,9 @@ $(document).ready(function() {
     });
 });
 </script>
-  <a href="#" id="change_ratingplace"><?=$lang['show_ratingplace'];?></a>&nbsp;&nbsp;&nbsp;<a href="#" id="change_ratingvalue"><?=$lang['show_ratingvalue'];?></a>
+  <a href="#" id="change_ratingvalue"><?=$lang['show_ratingvalue'];?></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="#" id="change_ratingplace"><?=$lang['show_ratingplace'];?></a>
     <table id="rating_all" class="tablesorter" cellspacing="1" style="width: 100%;">
         <thead> 
             <tr>

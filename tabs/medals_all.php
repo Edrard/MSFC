@@ -19,46 +19,52 @@
 $(document).ready(function() {
     $(".allmedalhide").hide();
     $(".heroshow").show();
-    $("#show_hero").button();
+    $("#show_hero").button().addClass("ui-state-focus");
     $("#show_major").button();
     $("#show_epic").button();
     $("#show_special").button();
+    var medals_change = '#show_hero';
     $("#show_hero").click(function() {
-      //hide all
       $(".allmedalhide").hide();
-      //show selected
       $(".heroshow").show();
+      $(medals_change).removeClass("ui-state-focus");
+      $("#show_hero").addClass("ui-state-focus");
+      medals_change = '#show_hero';
       return false;
     });
     $("#show_major").click(function() {
-      //hide all
       $(".allmedalhide").hide();
-      //show selected
       $(".majorshow").show();
+      $(medals_change).removeClass("ui-state-focus");
+      $("#show_major").addClass("ui-state-focus");
+      medals_change = '#show_major';
       return false;
     });
     $("#show_epic").click(function() {
-      //hide all
       $(".allmedalhide").hide();
-      //show selected
       $(".epicshow").show();
+      $(medals_change).removeClass("ui-state-focus");
+      $("#show_epic").addClass("ui-state-focus");
+      medals_change = '#show_epic';
       return false;
     });
     $("#show_special").click(function() {
-      //hide all
       $(".allmedalhide").hide();
-      //show selected
       $(".specialshow").show();
+      $(medals_change).removeClass("ui-state-focus");
+      $("#show_special").addClass("ui-state-focus");
+      medals_change = '#show_special';
       return false;
     });
 });
 </script>
 <div align="center">
-<?=$lang['select_medals'];?><br />
+<?=$lang['select_medals'];?><br /><br />
 <a href="#" id="show_hero"><?=$lang['hero'];?></a>&nbsp;&nbsp;&nbsp;
 <a href="#" id="show_major"><?=$lang['major'];?></a>&nbsp;&nbsp;&nbsp;
 <a href="#" id="show_epic"><?=$lang['epic'];?></a>&nbsp;&nbsp;&nbsp;
 <a href="#" id="show_special"><?=$lang['special'];?></a>
+<br />
     <table id="all_medals_stat" class="tablesorter wid" cellspacing="1">
         <thead> 
             <tr>
