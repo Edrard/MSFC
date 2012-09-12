@@ -91,6 +91,7 @@
             $("#all_tanks_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#all_medals_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#perform_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+            $("#all_medals_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
             $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
             $( "#login_dialog" ).dialog({
