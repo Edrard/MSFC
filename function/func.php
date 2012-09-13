@@ -61,8 +61,45 @@
         }
 
     }
-
+    function key_compare_func($array1, $array2)
+    {
+        $new = array();
+        $array_keys1 = array_keys($array1);
+        $array_keys2 = array_keys($array2);
+        foreach($array2 as $key2 => $val2){
+            if(!in_array($key2,$array_keys1)){
+                $new['new'][$key2] = $val2; 
+            }
+        }
+        foreach($array1 as $key1 => $val1){
+            if(!in_array($key1,$array_keys2)){
+                $new['unset'][$key1] = true; 
+            }
+        }
+        return $new;
+    }
+    function unset_diff(&$res,$unset){
+        $res_keys = array_keys($res);
+        foreach(array_keys($unset) as $name){
+            if(in_array($name,$res_keys)){
+                unset($res[$name]);
+            }
+        }    
+    }
     function array_special_merge($array1,$array2)
+    {
+        foreach($array2 as $key2 => $val2){
+            if(!array_key_exists($key2,$array1)){
+                $array1[$key2] = $val2;
+            }else{
+                $array1[] = $val2;
+            }
+
+        }
+        return $array1;
+
+    }
+    function array_special_merge_res(&$array1,$array2)
     {
         foreach($array2 as $key2 => $val2){
             if(!array_key_exists($key2,$array1)){
