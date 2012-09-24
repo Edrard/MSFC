@@ -393,11 +393,15 @@
         $sql = "SELECT * FROM tanks ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $tank_name = $q->fetchAll();
+            $tank_name_tmp = $q->fetchAll(PDO::FETCH_ASSOC);
         } else {
             print_r($q->errorInfo());
             die();
         }
+        foreach($tank_name_tmp as $tmp) {
+          $tank_name[$tmp['id']] = $tmp;
+        }
+        unset($tank_name_tmp);
 
         foreach($roster as $pers){
             foreach($tables as $val){
