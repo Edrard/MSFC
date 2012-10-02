@@ -532,22 +532,28 @@
         return $link;
     }
 
-    function multiget($urls, &$result,$tcurl = 'curl')
+    function multiget($inurls, &$result,$tcurl = 'curl')
     {
-        if($tcurl == 'curl'){
-            $curl = new CURL();
-            $opts = array( CURLOPT_RETURNTRANSFER => true );  
-            foreach($urls as $key => $link){
-                $curl->addSession( $link, $key, $opts );
-            }  
-            $result = $curl->exec();  
-            $curl->clear();
+        $urlss = array_chunk($inurls,10,TRUE);
+        $result = array();
+        if($tcurl == 'curl'){    
+            foreach($urlss as $urls){
+                $curl = new CURL();
+                $opts = array( CURLOPT_RETURNTRANSFER => true );  
+                foreach($urls as $key => $link){
+                    $curl->addSession( $link, $key, $opts );
+                }  
+                $res = $curl->exec();  
+                $curl->clear();
+                $result = array_special_merge($result,$res);
+            }
         }else{
-            $curl = new MCurl; 
-            $curl->threads = 100;  
-            $curl->timeout = 15;   
-            unset($results); 
-            $curl->sec_multiget($urls, $result);  
+            foreach($urlss as $urls){
+                $curl = new MCurl; 
+                $curl->threads = 100;  
+                $curl->timeout = 15;    
+                $curl->sec_multiget($urls, $result);
+            }  
         }
     }
 ?>
