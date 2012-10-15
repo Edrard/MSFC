@@ -69,16 +69,17 @@
         arsort($rat['mcap']);
         arsort($rat['mdef']);
         $ratt = $rat;
-        $rat['mdmg'] = array_slice($rat['mdmg'],0,5);
-        $rat['mspo'] = array_slice($rat['mspo'],0,5);
-        $rat['mcap'] = array_slice($rat['mcap'],0,5);
-        $rat['mdef'] = array_slice($rat['mdef'],0,5);
+        $rat['mdmg'] = array_slice($rat['mdmg'],0,5,true);
+        $rat['mspo'] = array_slice($rat['mspo'],0,5,true);
+        $rat['mcap'] = array_slice($rat['mcap'],0,5,true);
+        $rat['mdef'] = array_slice($rat['mdef'],0,5,true);
 
         arsort($total);
         $news['total'] = array_slice($total,0,10);
         $news['rat'] = &$rat;
         $news['rat_all'] = &$ratt;
         $news['max'] = &$max;
+        unset($rat, $ratt, $max);
         return $news;
     }
     function middel_tank_lvl($array){

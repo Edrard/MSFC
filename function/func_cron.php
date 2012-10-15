@@ -161,6 +161,7 @@
                     }
 
                     $tmp = array();
+                    $tmp_second = array();
                     $current_flip = &array_flip($current);
                     if(isset($data['data']['vehicles'])){
                         foreach($data['data']['vehicles'] as $val){
