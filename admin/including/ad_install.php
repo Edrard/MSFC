@@ -22,11 +22,19 @@
     </head>
     <body>
         <div align="center"><br><br><br><br><br><br>
-            <h3><?=$lang['admin_db_creat'];?></h3>
-            <form action="./index.php" method="post">
-                <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb"><br /><br> 
-                <?=$lang['admin_db_cwarning'];?>
-            </form> 
+            <?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/')){ ?>
+                <h3><?=$lang['admin_db_creat'];?></h3>
+                <form action="./index.php" method="post">
+                    <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb"><br /><br> 
+                    <?=$lang['admin_db_cwarning'];?>
+                </form> 
+                <?php } ?>
+            <?php if(!is_writable(ROOT_DIR.'/cache/')){ ?>
+                <h3><?=$lang['admin_dir_cache'];?></h3>
+                <?php } ?>
+            <?php if(!is_writable(LOCAL_DIR.'/sql/')){ ?>
+                <h3><?=$lang['admin_dir_sql'];?></h3>
+                <?php } ?>
         </div>
     </body>
 </html>

@@ -88,6 +88,7 @@
     $lang['admin_db_up'] = 'Upgrade database';
     $lang['admin_db_up_warning'] = '<span style="color:red;">Warning!!! Use it only for upgrading database</span>';
     $lang['admin_db_up_but'] = 'Upgrade';
+    $lang['admin_clean_cache'] = 'Clean cache';
 
     $lang['admin_con_error'] = 'Sorry, but we cant get data from Wargaming site';
 
@@ -96,6 +97,8 @@
     $lang['admin_db_creat'] = 'Install database';
     $lang['admin_db_cwarning'] = '<span style="color:red;">Warning!!! All data will be deleted</span>';
     $lang['admin_db_cbut'] = 'Install';
+    $lang['admin_dir_cache'] = 'Check cache folder, its must be writeble';
+    $lang['admin_dir_sql'] = 'Check admin/sql folder, its must be writeble';
 
     $lang['admin_new_version_1'] = 'New version';
     $lang['admin_new_version_2'] = 'of module available now, pls visit';

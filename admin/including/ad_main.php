@@ -72,6 +72,14 @@
             $message['color'] = 'red';
         }
     } 
+    if (isset($_POST['clean_cache'])){
+        $target_path = ROOT_DIR.'/cache/*';
+        $files = glob($target_path); // get all file names
+        foreach($files as $file){ // iterate files
+            if(is_file($file))
+                unlink($file); // delete file
+        }
+    } 
 
 
 

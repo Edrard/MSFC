@@ -88,6 +88,7 @@
     $lang['admin_db_up'] = 'Апгрейд базы';
     $lang['admin_db_up_warning'] = '<span style="color:red;">Предупреждение!!! Используйте только при переходе на новую версию</span>';
     $lang['admin_db_up_but'] = 'Апгрейд';
+    $lang['admin_clean_cache'] = 'Очистить кеш';
 
     $lang['admin_con_error'] = 'Простите, но есть проблемы со связью к сайту Wargaming';
 
@@ -96,9 +97,13 @@
     $lang['admin_db_creat'] = 'Установить базу';
     $lang['admin_db_cwarning'] = '<span style="color:red;">Предупреждение!!! Все данные будут удалены</span>';
     $lang['admin_db_cbut'] = 'Установить';
-
+    $lang['admin_dir_cache'] = 'Проверьте папку cache, сейчас нет прав на запись';
+    $lang['admin_dir_sql'] = 'Проверьте папку admin/sql, сейчас нет прав на запись';
+    
     $lang['admin_new_version_1'] = 'Новая версия';
     $lang['admin_new_version_2'] = 'уже доступна, пожалуйста посетите';
+
+
 
     $lang['tank_list_title'] = 'Название';
     $lang['tank_list_nation'] = 'Нация';

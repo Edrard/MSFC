@@ -423,10 +423,10 @@
                                 $tmp = explode('_',$key);
                                 if($tmp[1] == 't'){
                                     if(!isset($vals[$first][$key])){
-                                        $new[$tank_name[($tmp[0] - 1)]['tank']] = $vals[0]['account_id'];  
+                                        $new[$tank_name[($tmp[0])]['tank']] = $vals[0]['account_id'];  
                                     }   
                                     if($vals[$first][$key] == 0 && $val > 0){
-                                        $new[$tank_name[($tmp[0] - 1)]['tank']] = $vals[0]['account_id'];
+                                        $new[$tank_name[($tmp[0])]['tank']] = $vals[0]['account_id'];
                                     }
                                 }
                             }
