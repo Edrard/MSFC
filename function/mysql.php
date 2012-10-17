@@ -36,7 +36,7 @@
         $db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
     } catch (PDOException $e) {
         //echo $e->getMessage();
-        die(show_message(__line__,__file__,$e->getMessage()));
+        die(show_message($e->getMessage(),__line__,__file__));
     }
 
     $db->query ( 'SET character_set_connection = '.$sqlchar );  
