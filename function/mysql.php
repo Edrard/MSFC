@@ -30,7 +30,15 @@
     $dbname='';
     $sqlchar = 'utf8';
 
-    $db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);  
+    //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
+
+    try {
+        $db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
+    } catch (PDOException $e) {
+        //echo $e->getMessage();
+        die(show_message(__line__,__file__,$e->getMessage()));
+    }
+
     $db->query ( 'SET character_set_connection = '.$sqlchar );  
     $db->query ( 'SET character_set_client = '.$sqlchar );  
     $db->query ( 'SET character_set_results = '.$sqlchar );

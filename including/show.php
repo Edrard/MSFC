@@ -21,8 +21,7 @@
     if ($q->execute() == TRUE) {
         $tables = reform($q->fetchAll());
     } else {
-        print_r($q->errorInfo());
-        die();
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
     //Geting clan roster fron wargaming or from local DB.
 

@@ -20,12 +20,16 @@
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
-        include_once (LOCAL_DIR.'/func_admin.php');
-        include_once (LOCAL_DIR.'/translate/tabs.php');
-
         define('ROOT_DIR', base_dir('admin'));
 
-        include_once (ROOT_DIR.'/function/auth.php');
+        //Cheker
+        include_once(ROOT_DIR.'/including/check.php');
+
+        include_once(LOCAL_DIR.'/func_admin.php');
+        include_once(LOCAL_DIR.'/translate/tabs.php');
+
+        include_once(ROOT_DIR.'/function/auth.php');
+        include_once(ROOT_DIR.'/function/cache.php');
         include_once(ROOT_DIR.'/function/mysql.php');
         include_once(ROOT_DIR.'/function/func.php');  
         include_once(ROOT_DIR.'/function/func_get.php');
@@ -40,12 +44,16 @@
         }
     }else{
         define('LOCAL_DIR', '.');
-        include_once (LOCAL_DIR.'/func_admin.php');
-        include_once (LOCAL_DIR.'/translate/tabs.php');
-
         define('ROOT_DIR', '..');
 
-        include_once (ROOT_DIR.'/function/auth.php');
+         //Cheker
+        include_once(ROOT_DIR.'/including/check.php');
+
+        include_once(LOCAL_DIR.'/func_admin.php');
+        include_once(LOCAL_DIR.'/translate/tabs.php');
+
+        include_once(ROOT_DIR.'/function/auth.php');
+        include_once(ROOT_DIR.'/function/cache.php');
         include_once(ROOT_DIR.'/function/mysql.php');
         include_once(ROOT_DIR.'/function/func.php');
         include_once(ROOT_DIR.'/function/func_get.php');
@@ -77,11 +85,11 @@
         $auth->login($_POST['user'], $_POST['pass']); // This order: User/Email Password True/False (if you want to use email as auth
     }
     if (isset($_GET['error'])){
-        $data['msg'][] = 'You need to login';    
+        $data['msg'][] = 'You need to login';
     }
     if (isset($config['error'])){
         if($config['error'] == '2'){
-            $page = 'install';  
+            $page = 'install';
         }
     }
 
@@ -104,6 +112,8 @@
                 header ( 'Location: index.php?error=1' );
 
             }
+            //cache
+            $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller
             include_once(LOCAL_DIR.'/including/ad_main.php');
             //Viewing
@@ -116,6 +126,8 @@
             if ( $config['error'] != 2) {
                 header ( 'Location: index.php' );
             }
+            //cache
+            $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller
             include_once(LOCAL_DIR.'/including/ad_install.php');
             //Viewing

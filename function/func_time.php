@@ -31,8 +31,7 @@
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($result as $val){
             if(!isset($roster[$val['name']])){
@@ -56,8 +55,7 @@
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         foreach($result as $val){
@@ -84,8 +82,7 @@
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if(count($result) > 1){
             $first = array_pop($result);
@@ -97,16 +94,14 @@
             if ($q->execute() == TRUE) {
                 $dfirst = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             $sql = "SELECT * FROM col_players WHERE up = '".$last."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dlast = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             foreach($dfirst as $val){
                 $dfirst_new[$val['name']] = $val;
@@ -176,8 +171,7 @@
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if(count($result) > 1){
             $first = array_pop($result);
@@ -189,16 +183,14 @@
             if ($q->execute() == TRUE) {
                 $dfirst = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             $sql = "SELECT * FROM col_medals WHERE up = '".$last."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dlast = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             foreach($dfirst as $val){
                 $dfirst_new[$val['account_id']] = $val;
@@ -286,8 +278,7 @@
         if ($q->execute() == TRUE) {
             $players = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($players as $vals){
             foreach($vals as $key => $val){
@@ -301,8 +292,7 @@
         if ($q->execute() == TRUE) {
             $medals = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($medals as $vals){
             foreach($vals as $key => $val){
@@ -320,16 +310,14 @@
             if ($q->execute() == TRUE) {
                 $ftank[$tmp[2]] = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             $sql = "SELECT * FROM ".$tables_sec." WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $stank[$tmp[2]] = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }     
 
@@ -358,8 +346,7 @@
         if ($q->execute() == TRUE) {
             $tank_name = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($newt as $time => $dd){
             foreach($tank_name as $val){
@@ -395,8 +382,7 @@
         if ($q->execute() == TRUE) {
             $tank_name_tmp = $q->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($tank_name_tmp as $tmp) {
           $tank_name[$tmp['id']] = $tmp;
@@ -412,8 +398,7 @@
                 if ($q->execute() == TRUE) {
                     $tank[$tmp[2]] = $q->fetchAll();
                 } else {
-                    print_r($q->errorInfo());
-                    die();
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 foreach($tank as $vals){
                     $first = count($vals) - 1;

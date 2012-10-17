@@ -167,19 +167,6 @@
     </script> 
     </head>
     <body>
-    <?php if(ini_get('short_open_tag') != 1) { ?>
-    <center>
-    <p style="border: 1px solid red; width: 90%; text-align: center; color: red; padding:10px;" align="center">
-    В настройках PHP вашего хостинга отключено использование <b>short_open_tag</b>, без этой опции ничего работать не будет.<br />
-    Using of <b>short_open_tag</b> are disabled in PHP settings. Please enable it for correct work of this site.
-    </p>
-    </center>
-    <?php } ?>
     <noscript>
-    <center>
-    <p style="border: 1px solid red; width: 90%; text-align: center; color: red; padding:10px;" align="center">
-    Your browser does not support JavaScript. Please enable JavaScript in your browser settings to use full version of this site.<br />
-    Ваш браузер не поддерживает ЯваСкрипт. Включите его поддержку для полной функциональности сайта.
-    </p>
-    </center>
+    <? show_message($lang['js_off']); ?>
     </noscript>

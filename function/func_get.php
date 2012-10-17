@@ -174,8 +174,7 @@
         if ($q->execute() == TRUE) {
             $result = $q->fetch();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         //Даты
@@ -282,8 +281,7 @@
             if ($q->execute() == TRUE) {
                 $result_tank = $q->fetch();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
 
             if(is_array($result_tank)){
@@ -300,8 +298,7 @@
             if ($q->execute() == TRUE) {
                 $rating_result_tank = $q->fetch();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
 
             if(is_array($rating_result_tank)){
@@ -340,8 +337,7 @@
         if ($q->execute() == TRUE) {
             $tank_name = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         $i = 0;
@@ -371,8 +367,7 @@
         if ($q->execute() == TRUE) {
             $result_med = $q->fetch();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         $medn = array();
         unset($result_med['id'],$result_med[0]);

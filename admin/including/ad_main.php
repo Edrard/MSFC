@@ -87,7 +87,7 @@
     if (isset($_POST['recdb'])){
         recreat_db();
         insert_file(LOCAL_DIR.'/sql/clan.sql');
-    } 
+    }
     if (isset($_POST['syncdb'])){
         if(is_valid_url($config['td']) == true){
             $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
@@ -155,6 +155,10 @@
         // header ( 'Location: index.php?page=main#tabs-10' );
     }
 
+    //Clear cache
+    if (isset($_POST['admclearcache'])){
+        $cache->clear_all();
+    }
 
     //Get top tanks for Tab
     $adm_top_tanks = get_top_tanks_list();

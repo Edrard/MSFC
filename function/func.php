@@ -141,16 +141,14 @@
         if ($q->execute() == TRUE) {
             $check_if = $q->fetch();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         if((now() - $check_if['value']) > 900){
             $sql = "UPDATE config SET value = '".now()."' WHERE name = 'lockin';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             return true;
         }elseif($check_if['value'] != 0){
@@ -159,8 +157,7 @@
             $sql = "UPDATE config SET value = '".now()."' WHERE name = 'lockin';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             return true;
         }    
@@ -180,8 +177,7 @@
         if ($q->execute() == TRUE) {
             $check_if = $q->fetch();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         if((now() - $check_if['value']) > 900){
@@ -322,8 +318,7 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll();  
         }else{ 
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }  
     }
     function sort_id($a, $b)

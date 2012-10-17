@@ -108,4 +108,7 @@
     $lang['tank_list_lvl'] = 'Level';
     $lang['tank_list_type'] = 'Type';
     $lang['tank_list_link'] = 'Link';
+
+    $lang['admin_clear_cache'] = 'Clear cached data';
+    $lang['admin_clear_cache_but'] = 'Delete cache';
 ?>

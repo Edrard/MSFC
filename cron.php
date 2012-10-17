@@ -75,9 +75,9 @@
 
     $myFile = "cron.log";
     $log = 0;
+    $date = date('Y-m-d H:i');
     if($fh = fopen($myFile, 'a')){
-        $log = 1;    
-        $date = date('Y-m-d H:i');
+        $log = 1;
         fwrite($fh, $date.": Loging Started\n");
         fwrite($fh, $date.": STATE ".STATE."\n");
         cron_current_run($fh,$date);

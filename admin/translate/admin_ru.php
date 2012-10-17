@@ -110,4 +110,7 @@
     $lang['tank_list_lvl'] = 'Уровень';
     $lang['tank_list_type'] = 'Тип';
     $lang['tank_list_link'] = 'Ссылка';
+
+    $lang['admin_clear_cache'] = 'Удалить кэшированные данные';
+    $lang['admin_clear_cache_but'] = 'Очистить кэш';
 ?>

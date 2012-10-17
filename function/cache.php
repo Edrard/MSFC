@@ -3,7 +3,7 @@
 
         function __construct($dir)  
         {  
-            $this->dir = $dir; 
+            $this->dir = $dir;
         }  
 
         private function _name($key)  
@@ -87,16 +87,40 @@
         }  
 
         public function clear($key)  
-        {  
-            $cache_path = $this->_name($key);  
+        {
+            $cache_path = $this->_name($key);
 
             if (file_exists($cache_path))  
             {  
-                unlink($cache_path);  
-                return TRUE;  
-            }  
+                unlink($cache_path);
+                return TRUE;
+            }
 
             return FALSE;  
-        }  
+        }
+
+        public function clear_all($exclude_option = NULL)
+        {
+           $exclude_list = array('.', '..');
+           $exclude_last = array();
+
+           if(isset($exclude_option))
+           {
+             if(is_array($exclude_option)) {
+               foreach($exclude_option as $t) { $exclude_last[] = sha1($t); }
+             } elseif(is_string($exclude_option)) {
+               $exclude_last[] = sha1($exclude_option);
+             }
+           }
+
+           $exclude_list = array_merge($exclude_list,$exclude_last);
+           $clear_files = array_diff(scandir($this->dir), $exclude_list);
+
+           foreach($clear_files as $files){
+               if(is_file($this->dir.$files)){
+                 unlink($this->dir.$files);
+               }
+           }
+        }
     }  
 ?>

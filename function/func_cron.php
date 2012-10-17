@@ -25,8 +25,7 @@
         if ($q->execute() == TRUE) {
             $id = $q->fetchColumn();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$id."';";
@@ -34,8 +33,7 @@
         if ($q->execute() == TRUE) {
             $player_stat = $q->fetchColumn();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         fwrite($fh, $date.": Current run number ".($player_stat + 1)."\n"); 
 
@@ -50,8 +48,7 @@
             if ($q->execute() == TRUE) {
                 $player_stat = $q->fetchColumn();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             $status = 0;
             if($player_stat > 0){
@@ -61,8 +58,7 @@
                 if ($q->execute() == TRUE) {
                     $status = $q->fetchColumn();
                 } else {
-                    print_r($q->errorInfo());
-                    die();
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
             }
             
@@ -135,8 +131,7 @@
 
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
-                        print_r($q->errorInfo());
-                        die();
+                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
 
@@ -147,8 +142,7 @@
                     if ($q->execute() == TRUE) {
                         $current_tmp = $q->fetchAll();
                     } else {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
                     foreach($current_tmp as $val){
@@ -184,8 +178,7 @@
                                 $tsql = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                                 $q = $db->prepare($tsql);
                                 if ($q->execute() !== TRUE) {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$tsql));
                                 }
                                 $sql = "SELECT id FROM tanks WHERE title = '".$val['name']."';";
                                 $q = $db->prepare($sql);
@@ -193,8 +186,7 @@
                                     $id = $q->fetch();
                                     $id = $id['id'];
                                 } else {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 /**
                                 if(!is_numeric($id)){
@@ -212,16 +204,14 @@
                                 if ($q->execute() == TRUE) {
                                     $nation_db = $q->fetchAll();
                                 } else {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 $sql = "show tables like 'rating_tank_".$val['nation']."';";
                                 $q = $db->prepare($sql);
                                 if ($q->execute() == TRUE) {
                                     $rat_nation_db = $q->fetchAll();
                                 } else {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
 
                                 if(count($nation_db) < 1){
@@ -245,16 +235,14 @@
                                 if ($q->execute() == TRUE) {
                                     $nation_db = $q->fetchAll();
                                 } else {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 $sql = "show tables like 'col_rating_tank_".$val['nation']."';";
                                 $q = $db->prepare($sql);
                                 if ($q->execute() == TRUE) {
                                     $col_nation_db = $q->fetchAll();
                                 } else {
-                                    print_r($q->errorInfo());
-                                    die();
+                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 if(count($nation_db) < 1){
                                     $db->prepare("CREATE TABLE col_tank_".$val['nation']." (account_id INT(12)) ENGINE=MYISAM;;")->execute(); 
@@ -292,8 +280,7 @@
                     if ($q->execute() == TRUE) {
                         $nation_db_now = $q->fetchAll();
                     } else {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
                     foreach($tmp as $key => $t){
@@ -308,8 +295,7 @@
                     if ($q->execute() == TRUE) {
                         $nation_db_now = $q->fetchAll();
                     } else {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
                     foreach($tmp_second as $key => $t){
@@ -325,7 +311,7 @@
                     $data['data']['achievements']['up'] = $now;
                     $q = $db->prepare("INSERT INTO col_medals (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');")->execute();     
 
-                } 
+                }
             } 
         }else{
             if($log == 1){

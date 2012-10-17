@@ -30,7 +30,8 @@
 
         define('ROOT_DIR', '..');
 
-    }          
+    }
+    include_once(ROOT_DIR.'/including/check.php');
     include_once(ROOT_DIR.'/function/auth.php');
     include_once(ROOT_DIR.'/function/mysql.php');
     include_once(ROOT_DIR.'/function/func.php');

@@ -65,8 +65,7 @@
                 if ($q->execute() == TRUE) {
                     $result = $q->fetch();
                 } else {
-                    print_r($q->errorInfo());
-                    die();
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 if ( count($result) == 0 ) {
                     $this->errors[] = ucfirst($col).' doesn\'t exist.';
@@ -165,8 +164,7 @@
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();
                     } else {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     $row = &$result;
                     if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] ) {
@@ -180,8 +178,7 @@
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();
                     } else {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     $row = &$result;
                     if ( $row[$col] !== $_SESSION[$col] || $row['password'] !== $_SESSION['password'] ) {

@@ -23,8 +23,7 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function update_tanks_list($array){
@@ -44,8 +43,7 @@
             $sql = "UPDATE tanks SET ".$insert." WHERE id = '".$key."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }    
         }
     }
@@ -132,8 +130,7 @@
             $sql = "UPDATE config SET value = '".$var."' WHERE name = '".$name."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }
     }
@@ -145,9 +142,8 @@
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_user = $q->fetchColumn();  
-        }else{ 
-            print_r($q->errorInfo());
-            die();
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if($status_user == 0){
             $post['password'] = $auth->encrypt($post['password']);
@@ -156,8 +152,7 @@
 
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             } 
             return FALSE; 
         }   
@@ -171,9 +166,8 @@
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_user = $q->fetchColumn();  
-        }else{ 
-            print_r($q->errorInfo());
-            die();
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if($status_user == 1){
             $oldname = $post['oldname'];
@@ -197,8 +191,7 @@
             $sql = "UPDATE users SET ".$insert." WHERE user = '".$oldname."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }    
         }   
 
@@ -213,17 +206,15 @@
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $status_user = $q->fetchColumn();  
-                    }else{ 
-                        print_r($q->errorInfo());
-                        die();
+                    }else{
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     if($status_user > 0){
 
                         $sql = "DELETE FROM users WHERE id = '".$get['id']."';";
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
-                            print_r($q->errorInfo());
-                            die();
+                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         } 
                         return FALSE; 
                     }
@@ -243,9 +234,8 @@
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
                     $info = $q->fetch();  
-                }else{ 
-                    print_r($q->errorInfo());
-                    die();                                             
+                }else{
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }     
                 $target_path = ROOT_DIR.'/tabs/'.$info['file'];
                 unlink($target_path);
@@ -253,8 +243,7 @@
             $sql = "DELETE FROM tabs WHERE id = '".$get['id']."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
             } 
         }elseif($get['del'] == 2){
             $file = '';
@@ -280,8 +269,7 @@
         if ($q->execute() == TRUE) {
             $status_tab = $q->fetchColumn();  
         }else{ 
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if($status_tab == 0){ 
             $sql = "SELECT MAX(id) FROM tabs";
@@ -289,8 +277,7 @@
             if ($q->execute() == TRUE) {
                 $max = $q->fetchColumn();  
             }else{ 
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             } 
             $max = (int) $max;
             $post['id'] = $max + 10;
@@ -300,8 +287,7 @@
             $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }     
         }else{
             return TRUE;
@@ -348,15 +334,13 @@
                     if ($q->execute() == TRUE) {
                         $num = $q->fetchColumn();  
                     }else{ 
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }  
                     if($num == 0){
                         $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }     
 
                     }else{
@@ -374,8 +358,7 @@
                         //echo $sql;
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }     
                     }
 
@@ -404,9 +387,8 @@
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $status_tab[$tab] = $q->fetchColumn();  
-            }else{ 
-                print_r($q->errorInfo());
-                die();
+            }else{
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }  
         }
         return $status_tab;
@@ -417,10 +399,9 @@
         $sql = "SELECT * FROM users ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            return $q->fetchAll();  
+            return $q->fetchAll();
         }else{ 
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }  
     }
     function insert_file($filename)
@@ -437,8 +418,7 @@
             {
                 $q = $db->prepare($templine);
                 if ($q->execute() != TRUE) {
-                    print_r($q->errorInfo());
-                    die();
+                    die(show_message($q->errorInfo(),__line__,__file__,$templine));
                 } 
                 $templine = '';
             }
@@ -446,25 +426,24 @@
     }
     function recreat_db()
     {
-        global $db;
+        global $db,$cache;
 
         $sql = "show tables like '%%'"; 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $tables = $q->fetchAll();  
-        }else{ 
-            print_r($q->errorInfo());
-            die();
+            $tables = $q->fetchAll();
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }  
         foreach($tables as $tab){
             $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
             //echo $sql;
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }    
         }
+        $cache->clear_all();
     }
     function sync_roster($load)
     {
@@ -474,8 +453,7 @@
         if ($q->execute() == TRUE) {
             $inbase = $q->fetchAll();  
         }else{ 
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }  
         foreach($load as $val){
             $new_load[$val['account_id']] = 1;
@@ -485,8 +463,7 @@
         if ($q->execute() == TRUE) {
             $nation_db = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         foreach($inbase as $val){
@@ -496,8 +473,7 @@
                 if ($q->execute() == TRUE) {
                     $num = $q->fetchColumn();
                 }else{
-                    print_r($q->errorInfo());
-                    die();
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 if($num == 1){
 
@@ -505,16 +481,14 @@
                     //echo $sql;
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
-                        print_r($q->errorInfo());
-                        die();
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     foreach($nation_db as $nat){
                         $sql = "DELETE FROM ".$nat[0]." WHERE id = '".$val['id']."';";
                         //echo $sql;
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }   
                     }
                 }
@@ -527,7 +501,6 @@
     function get_top_tanks_list() {
         global $db;
         $top_tanks=array();
-        check_top_tanks_db();
 
         $sql='SELECT tt.lvl, tt.type, tt.shortname, tt.show, tt.order, t.tank, tt.title, tt.index
         FROM top_tanks tt, tanks t
@@ -536,8 +509,7 @@
         if ($q->execute() == TRUE) {
             $top_tanks_unsorted = $q->fetchAll();
         }else{
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         foreach($top_tanks_unsorted as $val) {
@@ -567,8 +539,7 @@
             WHERE top_tanks.title = "'.$name.'";';
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             unset($q);
         }
@@ -581,8 +552,7 @@
         WHERE title = "'.$info.'";';
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function add_top_tanks($lvl,$type) {
@@ -598,8 +568,7 @@
         if ($q->execute() == TRUE) {
             $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         //print_r($tanks);
 
@@ -616,8 +585,7 @@
             //echo $sql;
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }
     }
@@ -628,8 +596,7 @@
         WHERE lvl = "'.$lvl.'" AND type = "'.$type.'";';
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
 ?>

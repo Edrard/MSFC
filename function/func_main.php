@@ -26,8 +26,7 @@
             if ($q->execute() == TRUE) {
                 $current_tmp = $q->fetchAll();
             } else {
-                print_r($q->errorInfo());
-                die();
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
 
             foreach($current_tmp as $val){
@@ -55,8 +54,7 @@
                         $tsql = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                         $q = $db->prepare($tsql);
                         if ($q->execute() !== TRUE) {
-                            print_r($q->errorInfo());
-                            die();
+                           die(show_message($q->errorInfo(),__line__,__file__,$tsql));
                         }
                         $sql = "SELECT id FROM tanks WHERE title = '".$val['name']."';";
                         $q = $db->prepare($sql);
@@ -64,8 +62,7 @@
                             $id = $q->fetch();
                             $id = $id['id'];
                         } else {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }
                         /**
                         if(!is_numeric($id)){
@@ -83,16 +80,14 @@
                         if ($q->execute() == TRUE) {
                             $nation_db = $q->fetchAll();
                         } else {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }
                         $sql = "show tables like 'col_rating_tank_".$val['nation']."';";
                         $q = $db->prepare($sql);
                         if ($q->execute() == TRUE) {
                             $col_nation_db = $q->fetchAll();
                         } else {
-                            print_r($q->errorInfo());
-                            die();
+                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }
                         if(count($nation_db) < 1){
                             $db->prepare("CREATE TABLE col_tank_".$val['nation']." (account_id INT(12)) ENGINE=MYISAM;;")->execute(); 
@@ -355,8 +350,7 @@
         if ($q->execute() == TRUE) {
             $roster['request_data']['items'] = $q->fetchAll();
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         if(count($roster['request_data']['items']) == 0)  {
@@ -451,8 +445,7 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
         }else{
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function tanks_types() {
@@ -462,8 +455,7 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
         }else{
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function tanks_lvl() {
@@ -473,47 +465,14 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
         }else{
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     /***** Exinaus *****/
-    function check_top_tanks_db() {
-        global $db;
-        $sql='SHOW TABLES LIKE "top_tanks";';
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $tmp = $q->fetchAll();
-        }else{
-            print_r($q->errorInfo());
-            die();
-        }
-
-        if(!(count($tmp)>0)) {
-            $sql='CREATE TABLE IF NOT EXISTS `top_tanks` (
-            `title` varchar(25) NOT NULL,
-            `lvl` tinyint(3) unsigned NOT NULL,
-            `type` varchar(15) NOT NULL,
-            `show` tinyint(1) NOT NULL DEFAULT "1",
-            `order` smallint(5) unsigned NOT NULL DEFAULT "0",
-            `shortname` varchar(20) NOT NULL DEFAULT "",
-            `index` tinyint(10) unsigned NOT NULL DEFAULT "1",
-            PRIMARY KEY (`title`),
-            KEY `index` (`index`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                print_r($q->errorInfo());
-                die('Ошибка при создании таблицы в БД');
-            }
-        }
-        return 0;
-    }
     function get_top_tanks_tab($index)
     {
         global $db;
         $top_tanks=array();
-        check_top_tanks_db();
 
         $sql='SELECT tt.lvl, tt.type, tt.shortname, t.tank
         FROM top_tanks tt, tanks t
@@ -523,8 +482,7 @@
         if ($q->execute() == TRUE) {
             $top_tanks_unsorted = $q->fetchAll();
         }else{
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
         foreach($top_tanks_unsorted as $val) {

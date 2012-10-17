@@ -27,8 +27,7 @@
         if ($q->execute() == TRUE) {
             return $q->fetchAll(PDO :: FETCH_ASSOC);
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function gk_tanks($gk_block,$db) // Получаем список танков в клане, с данными о времени блокировки
@@ -46,8 +45,7 @@
             }
             return $r;
         } else {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
     }
@@ -55,11 +53,8 @@
     {
         $sql = "INSERT INTO gk (name,tank,time) VALUES ('{$array['name']}','{$array['vehicleType']}','{$time}');";
         $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-
-        } else {
-            print_r($q->errorInfo());
-            die();
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
     function gk_parse_file($file,$res,$gk_time,$lang,$db) // Обработка реплея.
@@ -189,8 +184,7 @@
         $sql = "DELETE FROM `gk` WHERE `time` < '".mktime()."';";
         $q = $db->prepare($sql);
         if($q->execute() != true) {
-            print_r($q->errorInfo());
-            die();
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         return 0;
     }
