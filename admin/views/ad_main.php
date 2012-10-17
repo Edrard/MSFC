@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -437,10 +437,6 @@
         </div>
         <div id="tabs-4">
             <div align="center">
-                <h3><?=$lang['admin_clean_cache'];?></h3>
-                <form action="./index.php?page=main#tabs-4" method="post">
-                    <input type="submit" value="<?=$lang['admin_clean_cache'];?>" name="clean_cache"><br />
-                </form> <br><br>
                 <h3><?=$lang['admin_db_recreat'];?></h3>
                 <form action="./index.php?page=main#tabs-4" method="post">
                     <input type="submit" value="<?=$lang['admin_db_but'];?>" name="recdb"><br />

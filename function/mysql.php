@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -28,7 +28,7 @@
     $dbpass  ='';
     // name of database
     $dbname='';
-    $sqlchar = 'utf8';
+    $sqlchar = '';
 
     //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
 

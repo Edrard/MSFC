@@ -105,9 +105,8 @@
     $lang['pdo_mysql_off'] = '<i>ERROR:</i> <strong>php-pdo_mysql</strong> extention do not loaded, without it this site can\'t function.<br />В настройках PHP вашего хостинга отключено использование расширения <strong>php-pdo_mysql</strong>, без него MySQL не будет работать.';
     $lang['js_off'] = 'Your browser does not support JavaScript. Please enable JavaScript in your browser settings to use full version of this site.<br />Для работы с сайтом необходима поддержка Javascript. Включите его поддержку для полной функциональности сайта.';
     $lang['short_tag_off'] = 'Using of <b>short_open_tag</b> are disabled in PHP settings. Please enable it for correct work of this site.<br /> В настройках PHP вашего хостинга отключено использование <b>short_open_tag</b>, без него корректная работа модуля статистики невозможна.';
-    $lang['short_tag_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
+    $lang['chmod_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
     $lang['cronlog_off'] = 'File <b>cron.log</b> doesn\'t exist, or no permission to write. <br /> Файл <b>cron.log</b> не существует, или невозможна запись.';
-
 
     if ( !extension_loaded('pdo') ) {
        show_message($lang['pdo_off']);
@@ -118,10 +117,10 @@
     if(ini_get('short_open_tag') != 1) {
       show_message($lang['short_tag_off']);
     }
-    if(!(file_exists(ROOT_DIR.'/cache') or is_writable(ROOT_DIR.'/cache'))) {
+    if(!file_exists(ROOT_DIR.'/cache/') || !is_writable(ROOT_DIR.'/cache/')) {
       show_message($lang['chmod_off']);
     }
-    if(!(file_exists(ROOT_DIR.'/cron.log') or is_writable(ROOT_DIR.'/cron.log'))) {
+    if(!file_exists(ROOT_DIR.'/cron.log') || !is_writable(ROOT_DIR.'/cron.log')) {
       show_message($lang['cronlog_off']);
     }
 

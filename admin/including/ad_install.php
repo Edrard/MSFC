@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -28,12 +28,6 @@
                     <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb"><br /><br> 
                     <?=$lang['admin_db_cwarning'];?>
                 </form> 
-                <?php } ?>
-            <?php if(!is_writable(ROOT_DIR.'/cache/')){ ?>
-                <h3><?=$lang['admin_dir_cache'];?></h3>
-                <?php } ?>
-            <?php if(!is_writable(LOCAL_DIR.'/sql/')){ ?>
-                <h3><?=$lang['admin_dir_sql'];?></h3>
                 <?php } ?>
         </div>
     </body>

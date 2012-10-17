@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -70,14 +70,6 @@
         } else{
             $message['text'] = $lang['admin_msg_upl_3'];
             $message['color'] = 'red';
-        }
-    } 
-    if (isset($_POST['clean_cache'])){
-        $target_path = ROOT_DIR.'/cache/*';
-        $files = glob($target_path); // get all file names
-        foreach($files as $file){ // iterate files
-            if(is_file($file))
-                unlink($file); // delete file
         }
     } 
 

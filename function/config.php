@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -25,7 +25,7 @@
 
     $config = get_config();
         
-    define("VER",'2.1.3');
+    define("VER",'2.1.4');
 
   
     $data = array();

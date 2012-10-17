@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.3 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -20,13 +20,14 @@
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
+        
+        include_once(LOCAL_DIR.'/func_admin.php');
+        include_once(LOCAL_DIR.'/translate/tabs.php');
+        
         define('ROOT_DIR', base_dir('admin'));
 
         //Cheker
         include_once(ROOT_DIR.'/including/check.php');
-
-        include_once(LOCAL_DIR.'/func_admin.php');
-        include_once(LOCAL_DIR.'/translate/tabs.php');
 
         include_once(ROOT_DIR.'/function/auth.php');
         include_once(ROOT_DIR.'/function/cache.php');
