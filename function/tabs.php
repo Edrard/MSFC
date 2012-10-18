@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.0 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -46,6 +46,18 @@
                 $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = array();    
             }
         }
+    }
+
+    /* Защита от дураков, удаливших табы, но не удаливших запись о них из БД */
+    foreach($tabs as $key => $val) {
+      foreach($val as $link => $file) {
+        if(is_numeric($key)) {
+          if(!file_exists(ROOT_DIR.'/tabs/'.$file)) {
+            show_message(sprintf($lang['tab_del'],$link,$file));
+            unset($tabs[$key]);
+          }
+        }
+      }
     }
     //print_r($tabs);
 ?>

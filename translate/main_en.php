@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.0 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -268,4 +268,6 @@
     $lang['lightTank'] = 'lt';
     $lang['mediumTank'] = 'mt';
     $lang['heavyTank'] = 'ht';
+
+    $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it in the database remains. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
 ?>

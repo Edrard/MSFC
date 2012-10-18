@@ -79,7 +79,7 @@
         } ?>
     </ul>
     <?php foreach($tabs as $key => $val){ 
-            foreach($val as $file){    
+            foreach($val as $file){
                 if(is_numeric($key)){ 
                     if(!is_array($file)){?>
                     <div id="tabs-<?php echo $key; ?>">

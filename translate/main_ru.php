@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.0 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -269,5 +269,7 @@
     $lang['lightTank'] = 'лт';
     $lang['mediumTank'] = 'ст';
     $lang['heavyTank'] = 'тт';
+
+    $lang['tab_del'] = 'Вкладка <b>%1$s</b> (файл: <b>%2$s</b>) была удалена, но запись о ней в базе данных осталась.<br />Пожалуйста, удалите запись из базы данных в админке, или восстановите файл.';
 
 ?>
