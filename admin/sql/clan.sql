@@ -208,7 +208,7 @@ INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
 
 CREATE TABLE IF NOT EXISTS `tanks` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(25) NOT NULL,
+  `title` varchar(40) NOT NULL,
   `tank` varchar(40) NOT NULL,
   `nation` varchar(20) NOT NULL,
   `lvl` varchar(4) NOT NULL,
@@ -225,12 +225,12 @@ CREATE TABLE IF NOT EXISTS `tanks` (
 --
 
 CREATE TABLE IF NOT EXISTS `top_tanks` (
-  `title` varchar(25) NOT NULL,
+  `title` varchar(40) NOT NULL,
   `lvl` tinyint(3) unsigned NOT NULL,
   `type` varchar(15) NOT NULL,
   `show` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `shortname` varchar(20) NOT NULL DEFAULT '',
+  `shortname` varchar(30) NOT NULL DEFAULT '',
   `index` tinyint(10) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`title`),
   KEY `index` (`index`)
