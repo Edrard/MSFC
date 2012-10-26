@@ -187,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `tabs` (
 INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
 (130, 'Собственность клана', './poss.php', 1, 1, 'all'),
 (120, 'Запланированные атаки', './attack.php', 1, 1, 'all'),
+(115, 'Активность', 'ajax_activity.php', 0, 1, 'all'),
 (1, 'Состав', 'roster.php', 0, 1, 'all'),
 (70, 'Рейтинг', 'rating_all.php', 0, 1, 'all'),
 (50, 'Боевая эффективность', 'perform_all.php', 0, 1, 'all'),

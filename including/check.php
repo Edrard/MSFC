@@ -107,6 +107,7 @@
     $lang['short_tag_off'] = 'Using of <b>short_open_tag</b> are disabled in PHP settings. Please enable it for correct work of this site.<br /> В настройках PHP вашего хостинга отключено использование <b>short_open_tag</b>, без него корректная работа модуля статистики невозможна.';
     $lang['chmod_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
     $lang['cronlog_off'] = 'File <b>cron.log</b> doesn\'t exist, or no permission to write. <br /> Файл <b>cron.log</b> не существует, или невозможна запись.';
+    $lang['a_chmod_off'] = 'Directory <b>cache_activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
 
     if ( !extension_loaded('pdo') ) {
        show_message($lang['pdo_off']);
@@ -119,6 +120,9 @@
     }
     if(!file_exists(ROOT_DIR.'/cache/') || !is_writable(ROOT_DIR.'/cache/')) {
       show_message($lang['chmod_off']);
+    }
+    if(!file_exists(ROOT_DIR.'/cache_activity/') || !is_writable(ROOT_DIR.'/cache_activity/')) {
+      show_message($lang['a_chmod_off']);
     }
     if(!file_exists(ROOT_DIR.'/cron.log') || !is_writable(ROOT_DIR.'/cron.log')) {
       show_message($lang['cronlog_off']);

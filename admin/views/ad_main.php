@@ -446,6 +446,11 @@
                 <form action="./index.php?page=main#tabs-4" method="post">
                     <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearcache"><br />
                 </form> <br><br>
+                <h3><?=$lang['admin_clear_a_cache'];?></h3>
+                <form action="./index.php?page=main#tabs-4" method="post">
+                    <?=$lang['admin_clear_a_cache_form'];?><br />
+                    <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearacache"><br />
+                </form> <br><br>                
                 <h3><?=$lang['admin_db_sync'];?></h3>
                 <form action="./index.php?page=main#tabs-4" method="post">
                     <input type="submit" value="<?=$lang['admin_db_sync_but'];?>" name="syncdb"><br />

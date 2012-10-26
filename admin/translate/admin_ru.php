@@ -103,8 +103,6 @@
     $lang['admin_new_version_1'] = 'Новая версия';
     $lang['admin_new_version_2'] = 'уже доступна, пожалуйста посетите';
 
-
-
     $lang['tank_list_title'] = 'Название';
     $lang['tank_list_nation'] = 'Нация';
     $lang['tank_list_lvl'] = 'Уровень';
@@ -113,4 +111,7 @@
 
     $lang['admin_clear_cache'] = 'Удалить кэшированные данные';
     $lang['admin_clear_cache_but'] = 'Очистить кэш';
+
+    $lang['admin_clear_a_cache'] = 'Удалить кэшированные данные о активности';
+    $lang['admin_clear_a_cache_form'] = 'Удалить кэшированные данные о активности, кроме последних <input type="text" size="1" name="clear_a_cache_date" value="7" /> дней.';
 ?>

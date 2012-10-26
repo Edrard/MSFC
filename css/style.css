@@ -98,6 +98,11 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 
 /***** Exinaus ******/
+.ui-datepicker {
+  border: 1px solid black;
+  background-color: white !important;
+}
+
 .ui-button {
     border-radius: 4px 4px 4px 4px !important;
 }

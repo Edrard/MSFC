@@ -107,7 +107,7 @@
            if(isset($exclude_option))
            {
              if(is_array($exclude_option)) {
-               foreach($exclude_option as $t) { $exclude_last[] = sha1($t); }
+               foreach($exclude_option as $n => $t) { $exclude_last[] = sha1($t); }
              } elseif(is_string($exclude_option)) {
                $exclude_last[] = sha1($exclude_option);
              }

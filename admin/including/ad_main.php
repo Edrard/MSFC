@@ -152,6 +152,22 @@
         $cache->clear_all();
     }
 
+    //Clear activity cache
+    if (isset($_POST['admclearacache'])){
+        if(isset($_POST['clear_a_cache_date']) and is_numeric($_POST['clear_a_cache_date'])) {
+          $left_days = $_POST['clear_a_cache_date'];
+        } else {
+          $left_days = 7;
+        }
+        $exclude_list = array();
+        for($i=$left_days;$i>=0;$i--) {
+          $exclude_list[] = date('d.m.Y',mktime(0, 0, 0, date('m'), date('d')-$i, date('Y')));
+        }
+        $cache_activity = new Cache(ROOT_DIR.'/cache_activity/');
+        $cache_activity->clear_all($exclude_list);
+        unset($exclude_list,$cache_activity,$left_days);
+    }
+
     //Get top tanks for Tab
     $adm_top_tanks = get_top_tanks_list();
     $tanks_list = get_tanks_list();

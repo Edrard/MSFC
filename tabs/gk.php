@@ -16,7 +16,7 @@ $('.gksubmit').css('font-weight','normal').button();
 <? if($logged > 1) { ?>
 <form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
 <input type="file" name="filename">
-<input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit">
+<input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
 </form>
 <br />
 <? } ?>
