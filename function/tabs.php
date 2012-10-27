@@ -52,7 +52,7 @@
     foreach($tabs as $key => $val) {
       foreach($val as $link => $file) {
         if(is_numeric($key)) {
-          if(!file_exists(ROOT_DIR.'/tabs/'.$file)) {
+          if(!file_exists(ROOT_DIR.'/tabs/'.$file) and !is_array($file)) {
             show_message(sprintf($lang['tab_del'],$link,$file));
             unset($tabs[$key]);
           }
