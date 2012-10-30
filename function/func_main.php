@@ -46,7 +46,7 @@
       }
       foreach($tmp as $t) { $col_tank[] = end(explode('_',$t['0'])); }
 
-      $sql = "show tables like 'col_rating_tank__%';";
+      $sql = "show tables like 'col_rating_tank_%';";
       $q = $db->prepare($sql);
       if ($q->execute() == TRUE) {
           $tmp = $q->fetchAll();
