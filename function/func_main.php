@@ -111,7 +111,7 @@
                 $q = $db->prepare($sql);
                 if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
               }
-              if($sql != '') {
+              if($tsql != '') {
                 $q = $db->prepare($tsql);
                 if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
               }
