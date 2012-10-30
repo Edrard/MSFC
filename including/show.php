@@ -82,15 +82,16 @@
             $links = link_creater($new['data']['request_data']['items'],$config);
             multiget($links, $result,$config['pars']);
             //print_r($result);
+            $transit = prepare_stat();
             foreach($result as $name => $val){ 
                 $json = json_decode($val,TRUE);
                 if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
-                    insert_stat($json,$roster[$name],$config);
+                    $transit = insert_stat($json,$roster[$name],$config,$transit);
                     $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
                     unset($result[$name]);   
                 }
             }
-            unset($result,$json,$links);
+            unset($result,$json,$links,$transit);
             // Unlocking DB now
             lockout_mysql();
             $cache->set('res', $res);
@@ -103,15 +104,16 @@
                 $links = link_creater($diff_roster['new'],$config);
                 multiget($links, $result,$config['pars']);
                 //print_r($result);
-                foreach($result as $name => $val){ 
+                $transit = prepare_stat();
+                foreach($result as $name => $val){
                     $json = json_decode($val,TRUE);
                     if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
-                        insert_stat($json,$roster[$name],$config);
+                        $transit = insert_stat($json,$roster[$name],$config,$transit);
                         $res_new[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
                         unset($result[$name]);   
                     }
                 }
-                unset($result,$json,$links);
+                unset($result,$json,$links,$transit);
                 //print_R($res_new);
             }
             if(!empty($diff_roster['unset'])){
