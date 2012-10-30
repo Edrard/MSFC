@@ -46,35 +46,24 @@
       }
       foreach($tmp as $t) { $col_tank[] = end(explode('_',$t['0'])); }
 
-      $sql = "show tables like 'col_rating_tank_%';";
-      $q = $db->prepare($sql);
-      if ($q->execute() == TRUE) {
-          $tmp = $q->fetchAll();
-      } else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
-      foreach($tmp as $t) { $col_rating_tank[] = end(explode('_',$t['0'])); }
-
       $t = array();
       $t['current'] = $current;
       $t['col_tank'] = $col_tank;
-      $t['col_rating_tank'] = $col_rating_tank;
-      unset($col_rating_tank,$col_tank,$current,$current_tmp,$tmp);
+      unset($col_tank,$current,$current_tmp,$tmp);
 
       return $t;
     }
 
-    function insert_stat($data,$roster,$config,$transit = array('current' => array(),'col_tank' => array(),'col_rating_tank' => array())){
+    function insert_stat($data,$roster,$config,$transit = array('current' => array(),'col_tank' => array())){
 
         global $db;
         if(count($data['data']) > 0){
-
             $current = $transit['current'];
             $col_tank = $transit['col_tank'];
-            $col_rating_tank = $transit['col_rating_tank'];
 
-            $tmp = array();
             if(isset($data['data']['vehicles'])){
+                $tsql = '';
+                $sql = '';
                 foreach($data['data']['vehicles'] as $val){
                     if(!in_array($val['name'].'_'.$val['nation'],$current)){
 
@@ -86,55 +75,51 @@
                         'link' => $val['image_url'],
                         'title' => $val['name'],
                         );
-                        $sql = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
-                        $q = $db->prepare($sql);
+                        $sqlt = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
+                        $q = $db->prepare($sqlt);
                         if ($q->execute() !== TRUE) {
-                           die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                           die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
                         }
-
-                        $current[] = $val['name'].'_'.$val['nation']; //добавляем танк
+                        unset($q);
                         $id = $db->lastInsertId(); //шикарная функция на самом деле, возвращает значение автоинкремент поля из последнего запроса
+                        $current[$id] = $val['name'].'_'.$val['nation']; //добавляем танк
 
                         if(!in_array($val['nation'],$col_tank)) {
-                          $sql = "CREATE TABLE IF NOT EXISTS col_tank_".$val['nation']." (
+                          $sql .= "CREATE TABLE IF NOT EXISTS col_tank_".$val['nation']." (
                                         `account_id` INT(12),
                                         `up` INT( 12 ) NOT NULL,
-                                         KEY `account_id` (`account_id`) ) ENGINE=MYISAM;";
-                          $q = $db->prepare($sql);
-                          if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
+                                         KEY `up` (`up`) ) ENGINE=MYISAM;";
+                          $sql .= "CREATE TABLE IF NOT EXISTS col_rating_tank_".$val['nation']." (
+                                        `account_id` INT(12),
+                                        `up` INT( 12 ) NOT NULL,
+                                         KEY `up` (`up`) ) ENGINE=MYISAM;";
                           $col_tank[] = $val['nation']; //добавляем в массив, дабы не создавать еще раз.
                         }
 
-                        if(!in_array($val['nation'],$col_rating_tank)) {
-                          $sql = "CREATE TABLE IF NOT EXISTS col_rating_tank_".$val['nation']." (
-                                        `account_id` INT(12),
-                                        `up` INT( 12 ) NOT NULL,
-                                         KEY `account_id` (`account_id`) ) ENGINE=MYISAM;";
-                          $q = $db->prepare($sql);
-                          if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
-                          $col_rating_tank[] = $val['nation']; //добавляем в массив, дабы не создавать еще раз.
-                        }
-
-                        $sql =  "ALTER TABLE `col_tank_".$val['nation']."`
+                        $tsql .= "ALTER TABLE `col_tank_".$val['nation']."`
                                        ADD `".$id."_w` INT( 12 ) NOT NULL,
                                        ADD `".$id."_t` INT( 12 ) NOT NULL;";
-                        $sql .= "ALTER TABLE `col_rating_tank_".$val['nation']."`
+                        $tsql .= "ALTER TABLE `col_rating_tank_".$val['nation']."`
                                        ADD `".$id."_sp` INT( 12 ) NOT NULL,
                                        ADD `".$id."_dd` INT( 12 ) NOT NULL,
                                        ADD `".$id."_sb` INT( 12 ) NOT NULL,
                                        ADD `".$id."_fr` INT( 12 ) NOT NULL;";
-
-                        $q = $db->prepare($sql);
-                        if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
                     }
                 }
+            /* Запросы к БД вынесенные за цикл */
+              if($sql != '') {
+                $q = $db->prepare($sql);
+                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
+              }
+              if($sql != '') {
+                $q = $db->prepare($tsql);
+                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+              }
             }
+        unset($transit); $transit = array('current' => array(),'col_tank' => array());
+        $transit['current'] = $current;
+        $transit['col_tank'] = $col_tank;
         }
-    unset($transit); $transit = array('current' => array(),'col_tank' => array(),'col_rating_tank' => array());
-    $transit['current'] = $current;
-    $transit['col_tank'] = $col_tank;
-    $transit['col_rating_tank'] = $col_rating_tank;
-
     return $transit;
     }
 
