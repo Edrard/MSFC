@@ -25,7 +25,7 @@
 
     $config = get_config();
         
-    define("VER",'2.1.4');
+    define("VER",'2.1.5');
 
   
     $data = array();
