@@ -23,10 +23,12 @@
         $losed = array();
 
         if($end == -1){
-            $end = now();
+            $end = now();  
+        }else{
+            $roster = array_resort(get_last_roster($end),'name');
         }
         $sql = "SELECT name,account_id,role,member_since,up FROM col_players WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
-
+        ///echo $sql;
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
@@ -35,7 +37,7 @@
         }
         foreach($result as $val){
             if(!isset($roster[$val['name']])){
-                $losed[] = $val;   
+                $losed[$val['name']] = $val;   
             }
         }
         return $losed;
@@ -49,7 +51,7 @@
         if($end == -1){
             $end = now();
         }
-        $sql = "SELECT name,account_id,role,member_since FROM col_players WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT name,account_id,role,member_since FROM col_players WHERE member_since <= '".$end."' AND member_since >= '".$start."' ORDER BY member_since DESC;";
 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
@@ -57,17 +59,18 @@
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-
         foreach($result as $val){
             $new_res[$val['name']] = $val;
         }
-        foreach($roster as $name => $val){
-            if(!isset($new_res[$name])){
-                $come[] = $val;   
+        if(isset($new_res)){
+            foreach($new_res as $name => $val){
+                if(isset($roster[$name])){
+                    $come[$name] = $val;
+                }
             }
         }
         return $come;
-    }                                                       
+    }                                                    
     function player_progress_main($start = 0,$end = -1){
 
         global $db;
@@ -385,7 +388,7 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($tank_name_tmp as $tmp) {
-          $tank_name[$tmp['id']] = $tmp;
+            $tank_name[$tmp['id']] = $tmp;
         }
         unset($tank_name_tmp);
 

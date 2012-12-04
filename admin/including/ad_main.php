@@ -80,7 +80,7 @@
         recreat_db();
         insert_file(LOCAL_DIR.'/sql/clan.sql');
     }
-    if (isset($_POST['syncdb'])){
+    /**if (isset($_POST['syncdb'])){
         if(is_valid_url($config['td']) == true){
             $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
             if($new['error'] != 0){
@@ -94,7 +94,7 @@
             $message['color'] = 'red';
         }
 
-    }
+    }  **/
     if (isset($_POST['newup'])){
         $target_path = LOCAL_DIR.'/sql/';
         $target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 

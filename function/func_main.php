@@ -343,36 +343,28 @@
         return $new;
     }
 
-    function get_last_roster()
+    function get_last_roster($time)
     {
         global $db;
         global $config;
         $error = 1;
 
         $sql = "
-        SELECT p.name, p.id, p.account_id, p.role, p.member_since
-        FROM players p,
+        SELECT p.name, p.account_id, p.role, p.member_since
+        FROM col_players p,
         (SELECT max(up) as maxup
-        FROM players
+        FROM col_players
+        WHERE up <= ".$time."
         LIMIT 1) maxresults
-        WHERE p.up > (maxresults.maxup - ".($config['cache']*60*60).")
+        WHERE p.up = maxresults.maxup
         ORDER BY p.up DESC;";
 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $roster['request_data']['items'] = $q->fetchAll();
+            return $q->fetchAll();
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-
-        if(count($roster['request_data']['items']) == 0)  {
-            $error = 21; //No entries in MySQL
-        }
-
-        //print_r(restr($roster));
-        $new['error'] = &$error;
-        $new['data'] = &restr($roster);
-        return $new;
     }
 
     function roster_sort($array)

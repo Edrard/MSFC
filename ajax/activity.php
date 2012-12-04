@@ -68,12 +68,12 @@
       $t2 = explode('.',$_POST['a_to']);
 
       $time['from'] = mktime(0, 0, 0, $t1['1'], $t1['0'], $t1['2']);
-      $time['to'] = mktime(0, 0, 0, $t2['1'], $t2['0'], $t2['2']);
+      $time['to'] = mktime(0, 0, 0, $t2['1'], $t2['0']+1, $t2['2']);
     } else {
       $time['from'] = mktime(0, 0, 0, date('m'), date('d')-7, date('Y'));
       $time['to'] = time();
     }
-
+    
     if(isset($_POST['a_all']) and $_POST['a_all'] ==1) {
       $a_all = 1;
     } else {

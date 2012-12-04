@@ -445,57 +445,6 @@
         }
         $cache->clear_all();
     }
-    function sync_roster($load)
-    {
-        global $db;
-        $sql = "SELECT id,account_id FROM players;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $inbase = $q->fetchAll();  
-        }else{ 
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }  
-        foreach($load as $val){
-            $new_load[$val['account_id']] = 1;
-        }
-        $sql = "show tables like 'tank_%';";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $nation_db = $q->fetchAll();
-        } else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-
-        foreach($inbase as $val){
-            if(!isset($new_load[$val['account_id']])){
-                $sql = "SELECT COUNT(*) FROM players WHERE account_id = '".$val['account_id']."';";
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $num = $q->fetchColumn();
-                }else{
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-                if($num == 1){
-
-                    $sql = "DELETE FROM players WHERE account_id = '".$val['account_id']."';";
-                    //echo $sql;
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                    foreach($nation_db as $nat){
-                        $sql = "DELETE FROM ".$nat[0]." WHERE id = '".$val['id']."';";
-                        //echo $sql;
-                        $q = $db->prepare($sql);
-                        if ($q->execute() != TRUE) {
-                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                        }   
-                    }
-                }
-            }
-        }
-
-    }
 
     /***** Exinaus *****/
     function get_top_tanks_list() {

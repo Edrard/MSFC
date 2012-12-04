@@ -22,6 +22,12 @@
         header ("Location: ./index.php");
         exit;
     }
+    function array_resort($array,$param){
+        foreach($array as $val){
+            $new[$val[$param]] = $val;
+        }
+        return $new;
+    }
     function redirect($url)
     {
         preg_match('%^(https?://)([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i',$url,$matches);
