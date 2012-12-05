@@ -16,13 +16,13 @@
     */
 ?>
 <?php
-    $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'tank\_%';";
+  /*  $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'tank\_%';";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
         $tables = reform($q->fetchAll());
     } else {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    }*/
     //Geting clan roster fron wargaming or from local DB.
 
     $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
