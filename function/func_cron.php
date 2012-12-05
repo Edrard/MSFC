@@ -196,7 +196,7 @@
                                 fwrite($fh, $stringData);
                                 fclose($fh);
                                 }
-                                **/
+                                
                                 //$nation_db = $db->query("show tables like 'tank_".$val['nation']."';")->fetchAll(); 
 
                                 $sql = "show tables like 'tank_".$val['nation']."';";
@@ -228,7 +228,7 @@
                                 $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_sb` INT( 12 ) NOT NULL;";
                                 $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_fr` INT( 12 ) NOT NULL;";
                                 $db->prepare($ask)->execute();
-
+                                **/
 
                                 $sql = "show tables like 'col_tank_".$val['nation']."';";
                                 $q = $db->prepare($sql);
