@@ -80,28 +80,43 @@
             </tr> 
         </thead> 
         <tbody>
-            <?php $total = 0; foreach($poss['request_data']['items']  as $val){ 
-                    if(strlen($val['attacked']) > 0){
-                        $attack = '<img src="./images/attacked.png">';
-                    }elseif(strlen($val['combats_running']) > 0){
-                        $attack = '<img src="./images/combats_running.png">';
-                    }else{
-                        $attack = '';
-                    }
-                    $total += $val['revenue'];
-                ?>
+            <?php if (isset($poss['request_data'])) {
+                    $total = 0;
+                    foreach($poss['request_data']['items']  as $val){ 
+                        if(strlen($val['attacked']) > 0){
+                            $attack = '<img src="./images/attacked.png">';
+                        }elseif(strlen($val['combats_running']) > 0){
+                            $attack = '<img src="./images/combats_running.png">';
+                        }else{
+                            $attack = '';
+                        }
+                        $total += $val['revenue'];
+            ?>
                 <tr>
                     <td><img src="./images/<?php echo $val['type']; ?>.png"></td>
                     <td><a href="<?php echo $config['clan_link']; ?>maps/?province=<?php echo $val['id']; ?>" target="_blank"><?php echo $val['name'].'</a> '.$attack; ?></td>
                     <td><?php echo $val['arena_name']; ?></td>
                     <td align="center"><?php echo date('H:i',$val['prime_time']); ?></td>
                     <td align="center" style="color: #ba904d;"><?php echo $val['revenue']; ?> <img src="./images/currency-gold.png"></td>
-                    <td align="center"><?php echo $val['occupancy_time']; ?> дней</td>
+                    <td align="center"><?php echo $val['occupancy_time']; echo $lang['days'];?> </td>
                 </tr>
-                <?php } ?>
+                <?php }
+             if ((isset($poss['request_data']) && (count($poss['request_data']['items']) == 0 )) || !(isset($poss['request_data']))) {  ?>
+                <tr>
+                    <td colspan="6" align="Center"><?php echo $val['no_province'];</td>
+                </tr>
+             <?php }} else { ?>
+                <tr>
+                    <td colspan="6" align="Center"><?=$lang['error_1']?></td>
+                </tr>
+                <?php }; ?>
         </tbody>
     </table>
-    <p><?php echo $lang['total_gold'].': <span style="color: #ba904d;">'.$total.'</span>'; ?> <img src="./images/currency-gold.png"></p>
+    <?php if (isset($total)) {
+             if ($total != 0 ) { ?>
+             <p><?=$lang['total_gold'].': <span style="color: #ba904d;">'.$total.'</span>'; ?> <img src="./images/currency-gold.png"></p>
+    <?php    };
+          }; ?>
                 </div>
                     </body>
 </html>
