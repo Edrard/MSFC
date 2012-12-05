@@ -235,11 +235,12 @@
     $lang['players_best_results'] = 'The best overall results';
     $lang['players_best_medals'] = 'The best results for the awards';
 
-    $lang['heavyTank'] = 'Heavy tanks';
+/*    $lang['heavyTank'] = 'Heavy tanks';
     $lang['mediumTank'] = 'Medium tanks';
     $lang['lightTank'] = 'Light tanks';
     $lang['AT-SPG'] = 'AT-SPG';
     $lang['SPG'] = 'SPG';
+*/    
     $lang['all_types'] = 'All types';
     $lang['all_lvls'] = 'All levels';
     $lang['select_tanks'] = 'Pick tanks to show:';
@@ -270,4 +271,6 @@
     $lang['heavyTank'] = 'ht';
 
     $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it in the database remains. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
+    $lang['days'] = ' days';    
+    $lang['no_province'] = 'The clan owns no provinces on the Global Map.';    
 ?>
