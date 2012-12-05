@@ -279,7 +279,7 @@
                                 <tr>
                                     <th><?=$lang['admin_tab_base'];?></th>
                                     <th><?=$lang['admin_tab_file'];?></th>
-                                    <th><?=$lang['admin_tab_id'];?></th>
+                                    <th class="{sorter: 'digit'}"><?=$lang['admin_tab_id'];?></th>
                                     <th><?=$lang['admin_tab_name'];?></th>
                                     <th><?=$lang['admin_tab_auth'];?></th>
                                     <th><?=$lang['admin_tab_type'];?></th>
