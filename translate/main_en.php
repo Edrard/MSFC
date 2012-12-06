@@ -117,7 +117,7 @@
     $lang['owned'] = 'Time owned';
     $lang['time'] = 'Time';
     $lang['province'] = 'Province';
-    $lang['total'] = 'Total income';
+    $lang['total_gold'] = 'Total income';
     $lang['damage_short'] = 'Damage';
     $lang['mdmg'] = 'Average damage';
     $lang['mspo'] = 'Average spotted';
