@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.4 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -275,4 +275,5 @@
     $lang['days'] = ' дней';    
     $lang['no_province'] = 'У клана нет владений на глобальной карте.';
     $lang['no_war'] = 'У клана нет назначенных боёв.';
+    $lang['dateof'] = 'Данные по состоянию на';
 ?>
