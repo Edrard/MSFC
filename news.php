@@ -26,7 +26,7 @@
     //Starting script time execution timer
     $begin_time = microtime(true);
 
-    //Cheker
+    //Cheсker
 
     //MYSQL
     //Connecting to MySQL
@@ -53,7 +53,9 @@
     <link rel="stylesheet" href="./css/jquery-ui.css" type="text/css" media="print, projection, screen" /> 
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jquery-ui.js"></script>
-    <script type="text/javascript" src="./js/jquery-ui-ru.js"></script> 
+    <?php if ($config['lang'] == 'ru') { ?>
+    <script type="text/javascript" src="../js/jquery-ui-ru.js"></script>
+    <?php }; ?>
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script> 
     <script type="text/javascript" src="./js/jquery.metadata.js"></script>
     <script type="text/javascript" src="./js/jquery.qtip.js"></script>
