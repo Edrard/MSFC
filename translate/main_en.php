@@ -272,5 +272,6 @@
 
     $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it in the database remains. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
     $lang['days'] = ' days';    
-    $lang['no_province'] = 'The clan owns no provinces on the Global Map.';    
+    $lang['no_province'] = 'The clan owns no provinces on the Global Map.';
+    $lang['no_war'] = 'The clan has no scheduled battles.';
 ?>
