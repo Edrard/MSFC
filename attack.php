@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.0 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -70,35 +70,47 @@
     <table id="stat6" class="tablesorter" cellspacing="1" style="width: 70%;"> 
         <thead> 
             <tr>
-                <th width="40"><?php echo $lang['type']; ?></th>
-                <th><?php echo $lang['time']; ?></th>
-                <th><?php echo $lang['province']; ?></th>
+                <th width="40"><?=$lang['type']; ?></th>
+                <th><?=$lang['time']; ?></th>
+                <th><?=$lang['province']; ?></th>
 
             </tr> 
         </thead> 
         <tbody>
-            <?php foreach($battel['request_data']['items'] as $val){ 
-                    if(strlen($val['time']) > 1){
-                        $date = date('H:i',($val['time'] + $config['time']*60*60));
-                    }else{
-                        $date = '--:--';
-                    }
-                    if($val['type'] == 'landing'){
-                        $type = '<img src="./images/landing.png">';    
-                    }elseif($val['type'] == 'for_province'){
-                        $type = '<img src="./images/attacked.png">';
-                    }elseif($val['type'] == 'meeting_engagement'){
-                        $type = '<img src="./images/combats_running.png">';
-                    }
+            <?php if (isset($battel['request_data'])){
+                        foreach ($battel['request_data']['items'] as $val){ 
+                            if (strlen($val['time']) > 1){
+                                $date = date('H:i',($val['time'] + $config['time']*60*60));
+                            } else {
+                                $date = '--:--';
+                            }
+                            if ($val['type'] == 'landing'){
+                                $type = '<img src="./images/landing.png">';    
+                            } elseif ($val['type'] == 'for_province'){
+                                $type = '<img src="./images/attacked.png">';
+                            } elseif ($val['type'] == 'meeting_engagement'){
+                                $type = '<img src="./images/combats_running.png">';
+                            };
                 ?>
                 <tr>
-                    <td align="center"><?php echo $type; ?></td>
-                    <td><?php echo $date; ?></td>
-                    <td><a href="<?php echo $config['clan_link']; ?>maps/?province=<?php echo $val['provinces'][0]['id']; ?>" target="_blank"><?php echo $val['provinces'][0]['name']; ?></a></td>
+                    <td align="center"><?=$type; ?></td>
+                    <td><?=$date; ?></td>
+                    <td><a href="<?=$config['clan_link']; ?>maps/?province=<?=$val['provinces'][0]['id']; ?>" target="_blank"><?=$val['provinces'][0]['name']; ?></a></td>
                 </tr>
-                <?php } ?>
+                <?php };
+                    if ((isset($battel['request_data'])) && (count($battel['request_data']['items']) == 0 )) {  ?>
+                <tr>
+                    <td colspan="3" align="center"><?=$lang['no_war']; ?></td>
+                </tr>
+                <?php 
+                    };
+                  } else { ?>
+                <tr>
+                    <td colspan="3" align="center"><?=$lang['error_1']?></td>
+                </tr>
+                <?php }; ?> 
         </tbody>
     </table>
-                </div>
-                    </body>
+</div>
+    </body>
 </html>
