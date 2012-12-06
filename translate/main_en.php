@@ -274,4 +274,5 @@
     $lang['days'] = ' days';    
     $lang['no_province'] = 'The clan owns no provinces on the Global Map.';
     $lang['no_war'] = 'The clan has no scheduled battles.';
+    $lang['dateof'] = 'Data for';
 ?>
