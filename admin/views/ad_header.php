@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.4 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -27,7 +27,9 @@
 
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/jquery-ui.js"></script>
+    <?php if ($config['lang'] == 'ru') { ?>
     <script type="text/javascript" src="../js/jquery-ui-ru.js"></script>
+    <?php }; ?>
     <script type="text/javascript" src="../js/jquery.tablesorter.js"></script> 
     <script type="text/javascript" src="../js/jquery.metadata.js"></script>
     <script type="text/javascript" src="../js/jqmodal.js"></script>
