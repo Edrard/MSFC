@@ -24,7 +24,4 @@
     $config['clan_link'] = 'http://worldoftanks.com/uc/clanwars/';
     $config['gm_url'] = 'worldoftanks.com';
     $config['td'] = 'http://worldoftanks.com';
-    $config['reg'] = 'Registration Date:';
-    $config['dateof'] = 'Data for';
- 
 ?>
