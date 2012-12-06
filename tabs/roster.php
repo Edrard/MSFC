@@ -94,7 +94,7 @@
                 <th><?php echo $lang['in_clan']; ?></th>
                 <th><?php echo $lang['day_clan']; ?></th> 
                 <th><?php echo $lang['role']; ?></th>
-                <th><?php echo $config['dateof']; ?></th>
+                <th><?php echo $lang['dateof']; ?></th>
             </tr>  
         </thead>
         <tbody>
