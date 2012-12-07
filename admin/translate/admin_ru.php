@@ -81,10 +81,6 @@
     $lang['admin_db_warning'] = '<span style="color:red;">Предупреждение!!! Все данные будут удалены</span>';
     $lang['admin_db_but'] = 'Пересоздать';
 
-    $lang['admin_db_sync'] = 'Удалить игроков которые не входят в текущий состав клана';
-    $lang['admin_db_sync_warning'] = '<span style="color:red;">Предупреждение!!! Все данные игроков, которые не входят состав клана, будут удалены</span>';
-    $lang['admin_db_sync_but'] = 'Удалить';
-
     $lang['admin_db_up'] = 'Апгрейд базы';
     $lang['admin_db_up_warning'] = '<span style="color:red;">Предупреждение!!! Используйте только при переходе на новую версию</span>';
     $lang['admin_db_up_but'] = 'Апгрейд';
