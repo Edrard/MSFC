@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.2 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -128,9 +128,9 @@
     {
 
         //Даты
-        $new['date']['reg'] = $stat_config['reg'].' '.date('d.m.Y',$result['data']['created_at']);
+        $new['date']['reg'] = $trans['reg'].' '.date('d.m.Y',$result['data']['created_at']);
         $new['date']['reg_num'] = $result['data']['created_at'];
-        $new['date']['local'] = $stat_config['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);
+        $new['date']['local'] = $trans['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);
         $new['date']['local_num'] = $result['data']['updated_at'];
         //Общие результаты
         $new['overall'][$trans['games_p']] = $result['data']['summary']['battles_count'];
