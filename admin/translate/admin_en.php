@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.1 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -80,10 +80,6 @@
     $lang['admin_db_recreat'] = 'Recreate database';
     $lang['admin_db_warning'] = '<span style="color:red;">Warning!!! All data will be deleted</span>';
     $lang['admin_db_but'] = 'Recreate';
-
-    $lang['admin_db_sync'] = 'Delete players who is not in current roster';
-    $lang['admin_db_sync_warning'] = '<span style="color:red;">Warning!!! All players data, who not in clan roster will be delete</span>';
-    $lang['admin_db_sync_but'] = 'Delete';
 
     $lang['admin_db_up'] = 'Upgrade database';
     $lang['admin_db_up_warning'] = '<span style="color:red;">Warning!!! Use it only for upgrading database</span>';
