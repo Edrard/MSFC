@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.0 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -188,47 +188,7 @@
                                 } else {
                                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
-                                /**
-                                if(!is_numeric($id)){
-                                $myFile = now().".txt";
-                                $fh = fopen($myFile, 'w') or die("can't open file");
-                                $stringData = $id.' '.$val['name'].' '.$val['class']."\n";
-                                fwrite($fh, $stringData);
-                                fclose($fh);
-                                }
-                                
-                                //$nation_db = $db->query("show tables like 'tank_".$val['nation']."';")->fetchAll(); 
-
-                                $sql = "show tables like 'tank_".$val['nation']."';";
-                                $q = $db->prepare($sql);
-                                if ($q->execute() == TRUE) {
-                                    $nation_db = $q->fetchAll();
-                                } else {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                }
-                                $sql = "show tables like 'rating_tank_".$val['nation']."';";
-                                $q = $db->prepare($sql);
-                                if ($q->execute() == TRUE) {
-                                    $rat_nation_db = $q->fetchAll();
-                                } else {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                }
-
-                                if(count($nation_db) < 1){
-                                    $db->prepare("CREATE TABLE tank_".$val['nation']." (id INT(12)) ENGINE=MyISAM;")->execute();    
-                                }
-                                if(count($rat_nation_db) < 1){
-                                    $db->prepare("CREATE TABLE rating_tank_".$val['nation']." (id INT(12)) ENGINE=MyISAM;")->execute();    
-                                }
-
-                                $ask =  "ALTER TABLE `tank_".$val['nation']."` ADD `".$id."_t` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `tank_".$val['nation']."` ADD `".$id."_w` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_sp` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_dd` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_sb` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `rating_tank_".$val['nation']."` ADD `".$id."_fr` INT( 12 ) NOT NULL;";
-                                $db->prepare($ask)->execute();
-                                **/
+                                $id = $db->lastInsertId(); //шикарная функция, возвращает значение автоинкремент поля из последнего запроса
 
                                 $sql = "show tables like 'col_tank_".$val['nation']."';";
                                 $q = $db->prepare($sql);
@@ -245,21 +205,30 @@
                                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 if(count($nation_db) < 1){
-                                    $db->prepare("CREATE TABLE col_tank_".$val['nation']." (account_id INT(12)) ENGINE=MYISAM;;")->execute(); 
-                                    $db->prepare("ALTER TABLE `col_tank_".$val['nation']."` ADD `up` INT( 12 ) NOT NULL;")->execute();   
+                                    $sql = "CREATE TABLE IF NOT EXISTS col_tank_".$val['nation']." (
+                                            `account_id` INT(12),
+                                            `up` INT( 12 ) NOT NULL,
+                                             KEY `up` (`up`) ) ENGINE=MYISAM;";
+                                    $db->prepare($sql)->execute(); 
                                 }
                                 if(count($col_nation_db) < 1){
-                                    $db->prepare("CREATE TABLE col_rating_tank_".$val['nation']." (account_id INT(12)) ENGINE=MyISAM;")->execute(); 
-                                    $db->prepare("ALTER TABLE `col_rating_tank_".$val['nation']."` ADD `up` INT( 12 ) NOT NULL;")->execute();   
+                                    $sql = "CREATE TABLE IF NOT EXISTS col_rating_tank_".$val['nation']." (
+                                            `account_id` INT(12),
+                                            `up` INT( 12 ) NOT NULL,
+                                             KEY `up` (`up`) ) ENGINE=MYISAM;";
+                                    $db->prepare($sql)->execute();                                    
+                                    
                                 }
-                                $ask =  "ALTER TABLE `col_tank_".$val['nation']."` ADD `".$id."_w` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `col_tank_".$val['nation']."` ADD `".$id."_t` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `col_rating_tank_".$val['nation']."` ADD `".$id."_sp` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `col_rating_tank_".$val['nation']."` ADD `".$id."_dd` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `col_rating_tank_".$val['nation']."` ADD `".$id."_sb` INT( 12 ) NOT NULL;";
-                                $ask .= "ALTER TABLE `col_rating_tank_".$val['nation']."` ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                                $ask = "ALTER TABLE `col_tank_".$val['nation']."`
+                                        ADD `".$id."_w` INT( 12 ) NOT NULL,
+                                        ADD `".$id."_t` INT( 12 ) NOT NULL;";
                                 $db->prepare($ask)->execute();
-
+                                $ask = "ALTER TABLE `col_rating_tank_".$val['nation']."`
+                                       ADD `".$id."_sp` INT( 12 ) NOT NULL,
+                                       ADD `".$id."_dd` INT( 12 ) NOT NULL,
+                                       ADD `".$id."_sb` INT( 12 ) NOT NULL,
+                                       ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                                $db->prepare($ask)->execute();
 
                                 $tmp[$val['nation']][$id.'_t'] = str_replace(' ','',$val['battle_count']);
                                 $tmp[$val['nation']][$id.'_w'] = str_replace(' ','',$val['win_count']); 
@@ -268,7 +237,7 @@
                                 $tmp_second[$val['nation']][$id.'_sb'] = (int) str_replace(' ','',$val['survivedBattles']);
                                 $tmp_second[$val['nation']][$id.'_fr'] = (int) str_replace(' ','',$val['frags']); 
 
-                            }     
+                            }
                         }
                     }
                     //print_r($tmp_second);
