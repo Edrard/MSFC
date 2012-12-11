@@ -182,7 +182,7 @@
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $check_if = $q->fetch();
-        } else {
+        } else {                                                    
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 

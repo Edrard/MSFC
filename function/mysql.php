@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.4 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -38,7 +38,8 @@
         //echo $e->getMessage();
         die(show_message($e->getMessage()));
     }
-
+    
+    
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
