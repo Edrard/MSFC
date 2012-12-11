@@ -180,14 +180,6 @@
                                 if ($q->execute() !== TRUE) {
                                     die(show_message($q->errorInfo(),__line__,__file__,$tsql));
                                 }
-                                $sql = "SELECT id FROM tanks WHERE title = '".$val['name']."';";
-                                $q = $db->prepare($sql);
-                                if ($q->execute() == TRUE) {
-                                    $id = $q->fetch();
-                                    $id = $id['id'];
-                                } else {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                }
                                 $id = $db->lastInsertId(); //шикарная функция, возвращает значение автоинкремент поля из последнего запроса
 
                                 $sql = "show tables like 'col_tank_".$val['nation']."';";
