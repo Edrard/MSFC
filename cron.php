@@ -165,11 +165,14 @@
         }
     }else{
         if($log == 1){
-            fwrite($fh, $date.": ".$lang['error_cron_off']."\n");    
+            fwrite($fh, $date.": ".$lang['error_cron_off']."\n");
         }
     }   
     if($log == 1){
-        fwrite($fh, $date.": End cron\n");    
+        if(is_numeric($db->count)) {
+          fwrite($fh, $date.": Number of MySQL queries - ".($db->count)."\n");
+        }
+        fwrite($fh, $date.": End cron\n");
         fwrite($fh, $date."////////////////////////////////////////////--->\n");    
     }
 
