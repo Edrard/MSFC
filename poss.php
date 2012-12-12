@@ -103,7 +103,7 @@
                 <?php }
              if ((isset($poss['request_data']) && (count($poss['request_data']['items']) == 0 )) || !(isset($poss['request_data']))) {  ?>
                 <tr>
-                    <td colspan="6" align="Center"><?php echo $val['no_province'];</td>
+                    <td colspan="6" align="Center"><?php echo $lang['no_province'];?></td>
                 </tr>
              <?php }} else { ?>
                 <tr>
