@@ -67,7 +67,7 @@
 ?>
 
 <div align="center">
-    <table id="stat6" class="tablesorter" cellspacing="1" style="width: 70%;"> 
+    <table id="attack" class="tablesorter" cellspacing="1" style="width: 70%;"> 
         <thead> 
             <tr>
                 <th width="40"><?=$lang['type']; ?></th>

@@ -94,6 +94,9 @@
             $("#perform_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $("#all_medals_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
+            $("#attack").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+            $("#poss").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+
             $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
             $( "#login_dialog" ).dialog({
                  title: 'Login',
