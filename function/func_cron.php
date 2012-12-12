@@ -20,7 +20,7 @@
     {
         global $db, $config;
 
-        $sql = "SELECT account_id FROM col_players LIMIT 1;";
+        $sql = "SELECT account_id FROM `col_players` LIMIT 1;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $id = $q->fetchColumn();
@@ -28,7 +28,7 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
-        $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$id."';";
+        $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$id."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $player_stat = $q->fetchColumn();
@@ -43,7 +43,7 @@
         global $db, $config;
         $links = array();
         foreach($players as $val){
-            $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$val['account_id']."';";
+            $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$val['account_id']."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $player_stat = $q->fetchColumn();
@@ -52,7 +52,7 @@
             }
             $status = 0;
             if($player_stat > 0){
-                $sql = "SELECT COUNT(account_id) FROM col_players WHERE account_id = '".$val['account_id']."' AND up < '".(now() - $config['cron_time']*3600)."';";
+                $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$val['account_id']."' AND up < '".(now() - $config['cron_time']*3600)."';";
                 //echo $sql;
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
@@ -127,7 +127,7 @@
                 //print_r($status);
                 if($data['data']['name']){
 
-                    $sql = "INSERT INTO col_players (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
+                    $sql = "INSERT INTO `col_players` (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
 
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
@@ -135,9 +135,9 @@
                     }
 
 
-                    //$current_tmp = $db->query("SELECT id,tank,nation,title FROM tanks;")->fetchAll();  
+                    //$current_tmp = $db->query("SELECT id,tank,nation,title FROM tanks;")->fetchAll();
 
-                    $sql = "SELECT id,tank,nation,title FROM tanks;";
+                    $sql = "SELECT id,tank,nation,title FROM `tanks`;";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $current_tmp = $q->fetchAll();
@@ -175,7 +175,7 @@
                                 'link' => $val['image_url'],
                                 'title' => $val['name'],
                                 );
-                                $tsql = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
+                                $tsql = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                                 $q = $db->prepare($tsql);
                                 if ($q->execute() !== TRUE) {
                                     die(show_message($q->errorInfo(),__line__,__file__,$tsql));
@@ -197,18 +197,18 @@
                                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                                 }
                                 if(count($nation_db) < 1){
-                                    $sql = "CREATE TABLE IF NOT EXISTS col_tank_".$val['nation']." (
+                                    $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
                                             `account_id` INT(12),
                                             `up` INT( 12 ) NOT NULL,
                                              KEY `up` (`up`) ) ENGINE=MYISAM;";
-                                    $db->prepare($sql)->execute(); 
+                                    $db->prepare($sql)->execute();
                                 }
                                 if(count($col_nation_db) < 1){
-                                    $sql = "CREATE TABLE IF NOT EXISTS col_rating_tank_".$val['nation']." (
+                                    $sql = "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
                                             `account_id` INT(12),
                                             `up` INT( 12 ) NOT NULL,
                                              KEY `up` (`up`) ) ENGINE=MYISAM;";
-                                    $db->prepare($sql)->execute();                                    
+                                    $db->prepare($sql)->execute();
                                     
                                 }
                                 $ask = "ALTER TABLE `col_tank_".$val['nation']."`
@@ -236,7 +236,7 @@
 
 
                     //Inserting tanks
-                    $sql = "show tables like 'col_tank\_%';";
+                    $sql = "show tables like 'col_tank_%';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $nation_db_now = $q->fetchAll();
@@ -247,11 +247,11 @@
                     foreach($tmp as $key => $t){
                         $t['account_id'] = $roster['account_id'];
                         $t['up'] = $now;
-                        $q = $db->prepare("INSERT INTO col_tank_".$key." (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
+                        $q = $db->prepare("INSERT INTO `col_tank_".$key."` (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
                     }
                     //Inserting second part of tanks
 
-                    $sql = "show tables like 'col_rating_tank\_%';";
+                    $sql = "show tables like 'col_rating_tank_%';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $nation_db_now = $q->fetchAll();
@@ -262,7 +262,7 @@
                     foreach($tmp_second as $key => $t){
                         $t['account_id'] = $roster['account_id'];
                         $t['up'] = $now;
-                        $q = $db->prepare("INSERT INTO col_rating_tank_".$key." (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
+                        $q = $db->prepare("INSERT INTO `col_rating_tank_".$key."` (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
 
                     }
 
@@ -270,7 +270,7 @@
                     //print_r($new_med);
                     $data['data']['achievements']['account_id'] = $roster['account_id'];
                     $data['data']['achievements']['up'] = $now;
-                    $q = $db->prepare("INSERT INTO col_medals (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');")->execute();     
+                    $q = $db->prepare("INSERT INTO `col_medals` (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');")->execute();
 
                 }
             } 

@@ -19,7 +19,7 @@
     function prepare_stat() {
       global $db;
 
-      $sql = "SELECT id,tank,nation,title FROM tanks;";
+      $sql = "SELECT id,tank,nation,title FROM `tanks`;";
       $q = $db->prepare($sql);
       if ($q->execute() == TRUE) {
           $current_tmp = $q->fetchAll();
@@ -75,7 +75,7 @@
                         'link' => $val['image_url'],
                         'title' => $val['name'],
                         );
-                        $sqlt = "INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
+                        $sqlt = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                         $q = $db->prepare($sqlt);
                         if ($q->execute() !== TRUE) {
                            die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
@@ -85,11 +85,11 @@
                         $current[$id] = $val['name'].'_'.$val['nation']; //добавляем танк
 
                         if(!in_array($val['nation'],$col_tank)) {
-                          $sql .= "CREATE TABLE IF NOT EXISTS col_tank_".$val['nation']." (
+                          $sql .= "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
                                         `account_id` INT(12),
                                         `up` INT( 12 ) NOT NULL,
                                          KEY `up` (`up`) ) ENGINE=MYISAM;";
-                          $sql .= "CREATE TABLE IF NOT EXISTS col_rating_tank_".$val['nation']." (
+                          $sql .= "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
                                         `account_id` INT(12),
                                         `up` INT( 12 ) NOT NULL,
                                          KEY `up` (`up`) ) ENGINE=MYISAM;";
@@ -351,9 +351,9 @@
 
         $sql = "
         SELECT p.name, p.account_id, p.role, p.member_since
-        FROM col_players p,
+        FROM `col_players` p,
         (SELECT max(up) as maxup
-        FROM col_players
+        FROM `col_players`
         WHERE up <= ".$time."
         LIMIT 1) maxresults
         WHERE p.up = maxresults.maxup
@@ -444,7 +444,7 @@
     }
     function tanks_nations() {
         global $db;
-        $sql='SELECT DISTINCT nation FROM tanks;';
+        $sql='SELECT DISTINCT nation FROM `tanks`;';
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
@@ -454,7 +454,7 @@
     }
     function tanks_types() {
         global $db;
-        $sql='SELECT DISTINCT type FROM tanks;';
+        $sql='SELECT DISTINCT type FROM `tanks`;';
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
@@ -464,7 +464,7 @@
     }
     function tanks_lvl() {
         global $db;
-        $sql='SELECT DISTINCT lvl FROM tanks;';
+        $sql='SELECT DISTINCT lvl FROM `tanks`;';
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
@@ -479,7 +479,7 @@
         $top_tanks=array();
 
         $sql='SELECT tt.lvl, tt.type, tt.shortname, t.tank
-        FROM top_tanks tt, tanks t
+        FROM `top_tanks` tt, `tanks` t
         WHERE t.title = tt.title AND tt.show = "1" AND tt.index = "'.$index.'"
         ORDER BY tt.order ASC, t.tank ASC;';
         $q = $db->prepare($sql);

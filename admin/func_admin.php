@@ -18,7 +18,7 @@
 <?php
     function get_tanks_list() {
         global $db;
-        $sql = "SELECT * FROM tanks;";
+        $sql = "SELECT * FROM `tanks`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
@@ -40,7 +40,7 @@
                 }    
             }
 
-            $sql = "UPDATE tanks SET ".$insert." WHERE id = '".$key."';";
+            $sql = "UPDATE `tanks` SET ".$insert." WHERE id = '".$key."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -127,7 +127,7 @@
         }
 
         foreach($config as $name => $var){
-            $sql = "UPDATE config SET value = '".$var."' WHERE name = '".$name."';";
+            $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -138,7 +138,7 @@
     {
         global $db,$auth;
         unset($post['newuser']);
-        $sql = "SELECT COUNT(*) FROM users WHERE user = '".$post['user']."';";
+        $sql = "SELECT COUNT(id) FROM `users` WHERE user = '".$post['user']."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_user = $q->fetchColumn();  
@@ -148,7 +148,7 @@
         if($status_user == 0){
             $post['password'] = $auth->encrypt($post['password']);
             $post['email'] = $post['user'].'@local.com'; 
-            $sql = "INSERT INTO users (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
+            $sql = "INSERT INTO `users` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
 
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
@@ -162,7 +162,7 @@
     {
         global $db,$auth;
         unset($post['edituser']);
-        $sql = "SELECT COUNT(*) FROM users WHERE user = '".$post['oldname']."';";
+        $sql = "SELECT COUNT(id) FROM `users` WHERE user = '".$post['oldname']."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_user = $q->fetchColumn();  
@@ -188,7 +188,7 @@
                     $insert .= ', `'.$column."` = '".$val."'";
                 }    
             }
-            $sql = "UPDATE users SET ".$insert." WHERE user = '".$oldname."';";
+            $sql = "UPDATE `users` SET ".$insert." WHERE user = '".$oldname."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -202,7 +202,7 @@
         if($get['userdel'] == 1){
             if(isset($get['id'])){
                 if(is_numeric($get['id'])){
-                    $sql = "SELECT COUNT(*) FROM users WHERE id = '".$get['id']."';";
+                    $sql = "SELECT COUNT(id) FROM `users` WHERE id = '".$get['id']."';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $status_user = $q->fetchColumn();  
@@ -211,7 +211,7 @@
                     }
                     if($status_user > 0){
 
-                        $sql = "DELETE FROM users WHERE id = '".$get['id']."';";
+                        $sql = "DELETE FROM `users` WHERE id = '".$get['id']."';";
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
                              die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -230,7 +230,7 @@
         global $db;
         if($get['del'] == 1){
             if($get['type'] == 0){
-                $sql = "SELECT * FROM tabs WHERE id = '".$get['id']."';";
+                $sql = "SELECT * FROM `tabs` WHERE id = '".$get['id']."';";
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
                     $info = $q->fetch();  
@@ -240,7 +240,7 @@
                 $target_path = ROOT_DIR.'/tabs/'.$info['file'];
                 unlink($target_path);
             }
-            $sql = "DELETE FROM tabs WHERE id = '".$get['id']."';";
+            $sql = "DELETE FROM `tabs` WHERE id = '".$get['id']."';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                   die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -264,7 +264,7 @@
         global $db;
         unset($post['ajaxcre']);
         $post['file'] = trim($post['file']);
-        $sql = "SELECT COUNT(*) FROM tabs WHERE file = '".$post['file']."';";
+        $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$post['file']."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_tab = $q->fetchColumn();  
@@ -272,7 +272,7 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if($status_tab == 0){ 
-            $sql = "SELECT MAX(id) FROM tabs";
+            $sql = "SELECT MAX(id) FROM `tabs`;";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $max = $q->fetchColumn();  
@@ -284,7 +284,7 @@
             $post['name'] = '...';
             $post['type'] = '1';
             $post['status'] = '0';
-            $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
+            $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -329,7 +329,7 @@
             foreach($new as $vals){ 
                 //print_r($vals);
                 if(count($vals) == 6){
-                    $sql = "SELECT COUNT(*) FROM tabs WHERE file = '".$vals['file']."';";
+                    $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$vals['file']."';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $num = $q->fetchColumn();  
@@ -337,7 +337,7 @@
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }  
                     if($num == 0){
-                        $sql = "INSERT INTO tabs (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
+                        $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -354,7 +354,7 @@
                                 $insert .= ', `'.$column."` = '".$val."'";
                             }    
                         }
-                        $sql = "UPDATE tabs SET ".$insert." WHERE file = '".$vals['file']."';";
+                        $sql = "UPDATE `tabs` SET ".$insert." WHERE file = '".$vals['file']."';";
                         //echo $sql;
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
@@ -383,7 +383,7 @@
     {
         global $db;
         foreach($tabs as $tab){
-            $sql = "SELECT COUNT(*) FROM tabs WHERE file = '".$tab."';";
+            $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$tab."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $status_tab[$tab] = $q->fetchColumn();  
@@ -396,7 +396,7 @@
     function read_users()
     {
         global $db;
-        $sql = "SELECT * FROM users ORDER BY id ASC;";
+        $sql = "SELECT * FROM `users` ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
@@ -428,7 +428,7 @@
     {
         global $db,$cache;
 
-        $sql = "show tables like '%%'"; 
+        $sql = "show tables like '".$db->prefix."%'";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tables = $q->fetchAll();
@@ -452,7 +452,7 @@
         $top_tanks=array();
 
         $sql='SELECT tt.lvl, tt.type, tt.shortname, tt.show, tt.order, t.tank, tt.title, tt.index
-        FROM top_tanks tt, tanks t
+        FROM `top_tanks` tt, `tanks` t
         WHERE t.title = tt.title;';
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
@@ -479,13 +479,13 @@
 
         foreach($config as $name => $var){
             $var['show'] = isset($var['show']) ? 1 : 0;
-            $sql = 'UPDATE top_tanks
+            $sql = 'UPDATE `top_tanks`
             SET
             `show` = "'.$var['show'].'",
             `order` = "'.$var['order'].'",
             `shortname` = "'.$var['shortname'].'",
             `index` = "'.$var['index'].'"
-            WHERE top_tanks.title = "'.$name.'";';
+            WHERE title = "'.$name.'";';
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -497,7 +497,7 @@
     function delete_top_tank($info) {
         global $db;
 
-        $sql = 'DELETE FROM top_tanks
+        $sql = 'DELETE FROM `top_tanks`
         WHERE title = "'.$info.'";';
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
@@ -508,9 +508,8 @@
         global $db;
 
         $sql = 'select t.title
-        from
-        tanks t
-        left join top_tanks tt
+        from `tanks` t
+        left join `top_tanks` tt
         on t.title = tt.title
         where tt.title is null AND t.lvl = "'.$lvl.'" AND t.type = "'.$type.'";';
         $q = $db->prepare($sql);
@@ -525,7 +524,7 @@
             unset($q);
             $i = count($tanks);
             $j = 1;
-            $sql = 'INSERT INTO top_tanks (`title`, `lvl`, `type`) VALUES ';
+            $sql = 'INSERT INTO `top_tanks` (`title`, `lvl`, `type`) VALUES ';
 
             foreach($tanks as $val) {
                 $sql .= "('{$val['title']}', '$lvl', '$type')";
@@ -541,7 +540,7 @@
     function delete_top_tanks($lvl,$type) {
         global $db;
 
-        $sql = 'DELETE FROM top_tanks
+        $sql = 'DELETE FROM `top_tanks`
         WHERE lvl = "'.$lvl.'" AND type = "'.$type.'";';
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {

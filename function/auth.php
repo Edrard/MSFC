@@ -60,7 +60,7 @@
 
             if ( $err == false ) {
 
-                $sql = sprintf("SELECT * FROM users WHERE %s = '%s'", $col, $user);
+                $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $user);
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
                     $result = $q->fetch();
@@ -159,7 +159,7 @@
             }
             if ( $this->type == 'cookie' ) {
                 if ( isset($_COOKIE['password']) ) {
-                    $sql = sprintf("SELECT * FROM users WHERE %s = '%s'", $col, $_COOKIE[$col] );
+                    $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();
@@ -173,7 +173,7 @@
                 }
             } elseif ( $this->type == 'session' ) {
                 if ( isset($_SESSION['password']) ) {
-                    $sql = sprintf("SELECT * FROM users WHERE %s = '%s'", $col, $_COOKIE[$col] );
+                    $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();

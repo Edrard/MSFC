@@ -18,10 +18,10 @@
 <?php
     function get_data($name,$trans,$stat_config,$tables)
     {
-        global $db;      
+        global $db;
         //$result = $db->query("select * from players WHERE name = '".$name."';")->fetch();
 
-        $sql = "SELECT * FROM players WHERE name = '".$name."';";
+        $sql = "SELECT * FROM `players` WHERE name = '".$name."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $result = $q->fetch();
@@ -128,7 +128,7 @@
         foreach($tables as $tab){
             //$result_tank = $db->query("SELECT * FROM ".$tab." WHERE id = '".$result['id']."';")->fetch();
 
-            $sql = "SELECT * FROM ".$tab." WHERE id = '".$result['id']."';";
+            $sql = "SELECT * FROM `".$tab."` WHERE id = '".$result['id']."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $result_tank = $q->fetch();
@@ -145,7 +145,7 @@
                 $tank = array_merge($tank,$result_tank);
             }
 
-            $sql = "SELECT * FROM rating_".$tab." WHERE id = '".$result['id']."';";
+            $sql = "SELECT * FROM `rating_".$tab."` WHERE id = '".$result['id']."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $rating_result_tank = $q->fetch();
@@ -182,9 +182,9 @@
         }else{
             $total = array();
         }
-        //$tank_name = $db->query("SELECT * FROM tanks;")->fetchAll();
+        //$tank_name = $db->query("SELECT * FROM `tanks`;")->fetchAll();
 
-        $sql = "SELECT * FROM tanks;";
+        $sql = "SELECT * FROM `tanks`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tank_name = $q->fetchAll();
@@ -212,9 +212,9 @@
                 $new['tank'][($tank_name[$tkey-1]['lvl'])][$tank_name[$tkey-1]['type']][$tank_name[$tkey-1]['tank']]['frags'] = $tank_rating[$tkey.'_fr'];
             }
         }
-        //$result_med = $db->query("select * FROM medals WHERE id = '".$result['id']."';")->fetch();
+        //$result_med = $db->query("select * FROM `medals` WHERE id = '".$result['id']."';")->fetch();
 
-        $sql = "SELECT * FROM medals WHERE id = '".$result['id']."';";
+        $sql = "SELECT * FROM `medals` WHERE id = '".$result['id']."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $result_med = $q->fetch();
@@ -342,7 +342,7 @@
         global $db;
         //print_r($error);
         if($error == 0){
-            $sql = "SELECT COUNT(id) FROM players WHERE name = '".$val['name']."' AND up < '".(now() - $config['cache']*3600)."';";
+            $sql = "SELECT COUNT(id) FROM `players` WHERE name = '".$val['name']."' AND up < '".(now() - $config['cache']*3600)."';";
             //echo $sql;
             $q = $db->prepare($sql);
             $q->execute();
@@ -350,7 +350,7 @@
         }else{
             $status = 0;
         }
-        $sql = "SELECT COUNT(id) FROM players WHERE name = '".$val['name']."';";
+        $sql = "SELECT COUNT(id) FROM `players` WHERE name = '".$val['name']."';";
         $q = $db->prepare($sql);
         $q->execute();
         $player_stat = $q->fetchColumn();
@@ -368,7 +368,7 @@
     function sync_roster($load)
     {
         global $db;
-        $sql = "SELECT id,account_id FROM players;";
+        $sql = "SELECT id,account_id FROM `players`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $inbase = $q->fetchAll();  
@@ -388,7 +388,7 @@
 
         foreach($inbase as $val){
             if(!isset($new_load[$val['account_id']])){
-                $sql = "SELECT COUNT(*) FROM players WHERE account_id = '".$val['account_id']."';";
+                $sql = "SELECT COUNT(*) FROM `players` WHERE account_id = '".$val['account_id']."';";
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {
                     $num = $q->fetchColumn();
@@ -397,14 +397,14 @@
                 }
                 if($num == 1){
 
-                    $sql = "DELETE FROM players WHERE account_id = '".$val['account_id']."';";
+                    $sql = "DELETE FROM `players` WHERE account_id = '".$val['account_id']."';";
                     //echo $sql;
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     foreach($nation_db as $nat){
-                        $sql = "DELETE FROM ".$nat[0]." WHERE id = '".$val['id']."';";
+                        $sql = "DELETE FROM `".$nat[0]."` WHERE id = '".$val['id']."';";
                         //echo $sql;
                         $q = $db->prepare($sql);
                         if ($q->execute() != TRUE) {
@@ -496,7 +496,7 @@
     }
 
     function insert_rating_old($data,$trans,$fname,$SERVER,$stat_config,$roster){   
-        //if($this->session->userdata('group') == 'administrator'){ 
+        //if($this->session->userdata('group') == 'administrator'){
         global $db;
         if(count($data['stats']) > 0){
             $mod = 1;
@@ -552,14 +552,14 @@
             $dbb['exp_v'] = str_replace(' ','',$data['stats'][3+$mod][10][0]);
 
 
-            $sql = "SELECT COUNT(id) FROM players WHERE name = '".$fname."' AND SERVER = '".$SERVER."';";
+            $sql = "SELECT COUNT(id) FROM `players` WHERE name = '".$fname."' AND SERVER = '".$SERVER."';";
             $q = $db->prepare($sql);
             $q->execute();
             $status = $q->fetchColumn();
 
             //print_r($status);
             if($status > 0){
-                $player = $db->query("SELECT id FROM players WHERE name = '".$fname."' AND SERVER = '".$SERVER."';")->fetch();
+                $player = $db->query("SELECT id FROM `players` WHERE name = '".$fname."' AND SERVER = '".$SERVER."';")->fetch();
                 //print_r($id);
                 $nm = 0;
                 $insert = '';
@@ -571,19 +571,19 @@
                         $insert .= ', '.$column." = '".$val."'";
                     }    
                 }
-                $sql = "UPDATE players SET ".$insert." WHERE id = '".$player['id']."';";
+                $sql = "UPDATE `players` SET ".$insert." WHERE id = '".$player['id']."';";
                 //echo $sql;
                 $q = $db->prepare($sql);
                 $q->execute();   
             }else{ 
-                $sql = "INSERT INTO players (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
+                $sql = "INSERT INTO `players` (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
                 //echo $sql;
                 $q = $db->prepare($sql);
                 $q->execute();
-                $player['id'] = $db->lastInsertId();  
+                $player['id'] = $db->lastInsertId();
             }              
 
-            $current_tmp = $db->query("SELECT id,tank,nation FROM tanks;")->fetchAll();   
+            $current_tmp = $db->query("SELECT id,tank,nation FROM `tanks`;")->fetchAll();
             foreach($current_tmp as $val){
                 $current[$val['id']] = $val['tank'].'_'.$val['nation'];    
             }
@@ -609,11 +609,11 @@
                         'link' => $val[$trans['tank']],
                         );
                         //print_r($tank);
-                        $db->prepare("INSERT INTO tanks (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');")->execute();
+                        $db->prepare("INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');")->execute();
                         $id = $db->lastInsertId();
                         $nation_db = $db->query("show tables like 'tank_".$val[2]."';")->fetchAll(); 
                         if(count($nation_db) < 1){
-                            $db->prepare("CREATE TABLE tank_".$val[2]." (id INT(12) PRIMARY KEY);")->execute();    
+                            $db->prepare("CREATE TABLE 'tank_".$val[2]."' (id INT(12) PRIMARY KEY);")->execute();
                         }
                         $db->prepare("ALTER TABLE `tank_".$val[2]."` ADD `".$id."_t` INT( 12 ) NOT NULL;")->execute();
                         $db->prepare("ALTER TABLE `tank_".$val[2]."` ADD `".$id."_w` INT( 12 ) NOT NULL;")->execute();
@@ -624,10 +624,10 @@
                 }
             }
 
-            $nation_db_now = $db->query("show tables like 'tank\_%';")->fetchAll();
+            $nation_db_now = $db->query("show tables like 'tank_%';")->fetchAll();
 
             foreach($nation_db_now as $db_now){
-                $sql = "SELECT COUNT(id) FROM ".$db_now[0]." WHERE id = '".$player['id']."';";
+                $sql = "SELECT COUNT(id) FROM `".$db_now[0]."` WHERE id = '".$player['id']."';";
                 $q = $db->prepare($sql);
                 $q->execute();
                 $status_nation[$db_now[0]] = $q->fetchColumn();
@@ -647,10 +647,10 @@
                         }    
                     }
                     //$db->prepare("UPDATE players SET ".$insert." WHERE id = '".$id['id']."';")->execute();
-                    $db->prepare("UPDATE tank_".$key." SET ".$insert." WHERE id = '".$player['id']."';")->execute();    
+                    $db->prepare("UPDATE `tank_".$key."` SET ".$insert." WHERE id = '".$player['id']."';")->execute();
                 }else{
                     $t['id'] = $player['id'];
-                    $q = $db->prepare("INSERT INTO tank_".$key." (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
+                    $q = $db->prepare("INSERT INTO `tank_".$key."` (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
                 }
             }
 
@@ -752,14 +752,14 @@
             $dbb['local'] = trim(str_replace($stat_config['dateof'],'',$data['date']['local']));
             $dbb['local'] = strtotime($dbb['local']);
 
-            $sql = "SELECT COUNT(id) FROM players WHERE name = '".$fname."' AND SERVER = '".$SERVER."';";
+            $sql = "SELECT COUNT(id) FROM `players` WHERE name = '".$fname."' AND SERVER = '".$SERVER."';";
             $q = $db->prepare($sql);
             $q->execute();
             $status = $q->fetchColumn();
 
             //print_r($status);
             if($status > 0){
-                $player = $db->query("SELECT id FROM players WHERE name = '".$fname."' AND SERVER = '".$SERVER."';")->fetch();
+                $player = $db->query("SELECT id FROM `players` WHERE name = '".$fname."' AND SERVER = '".$SERVER."';")->fetch();
                 //print_r($id);
                 $nm = 0;
                 $insert = '';
@@ -771,12 +771,12 @@
                         $insert .= ', '.$column." = '".$val."'";
                     }    
                 }
-                $sql = "UPDATE players SET ".$insert." WHERE id = '".$player['id']."';";
+                $sql = "UPDATE `players` SET ".$insert." WHERE id = '".$player['id']."';";
                 //echo $sql;
                 $q = $db->prepare($sql);
                 $q->execute();   
             }else{ 
-                $sql = "INSERT INTO players (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
+                $sql = "INSERT INTO `players` (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
                 //echo $sql;
                 $q = $db->prepare($sql);
                 $q->execute();

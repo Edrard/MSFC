@@ -125,7 +125,8 @@
         }
 
     }
-    // In $res array stored player statistic.  
-    $col_tables = reform($db->query("SHOW TABLES FROM `".$dbname."` LIKE 'col\_tank\_%';")->fetchAll());
-    $col_check = count($db->query("SELECT DISTINCT up FROM col_players ;")->fetchAll());
+    // In $res array stored player statistic.
+    $col_tables = reform($db->query("SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';")->fetchAll());
+    $col_check = count($db->query("SELECT DISTINCT up FROM `col_players`;")->fetchAll());
+
 ?>

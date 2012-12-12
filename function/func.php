@@ -142,7 +142,7 @@
         global $db;
         //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
-        $sql = "SELECT value FROM config WHERE name = 'lockin';";
+        $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $check_if = $q->fetch();
@@ -151,7 +151,7 @@
         }
 
         if((now() - $check_if['value']) > 900){
-            $sql = "UPDATE config SET value = '".now()."' WHERE name = 'lockin';";
+            $sql = "UPDATE `config` SET value = '".now()."' WHERE name = 'lockin';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -160,7 +160,7 @@
         }elseif($check_if['value'] != 0){
             return false;
         }else{
-            $sql = "UPDATE config SET value = '".now()."' WHERE name = 'lockin';";
+            $sql = "UPDATE `config` SET value = '".now()."' WHERE name = 'lockin';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
@@ -171,14 +171,14 @@
     function lockout_mysql()
     {
         global $db;
-        $db->prepare("UPDATE config SET value = '0' WHERE name = 'lockin';")->execute();   
+        $db->prepare("UPDATE `config` SET value = '0' WHERE name = 'lockin';")->execute();
     }
     function lock_check()
     {
         global $db;
         //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
-        $sql = "SELECT value FROM config WHERE name = 'lockin';";
+        $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $check_if = $q->fetch();
@@ -187,7 +187,7 @@
         }
 
         if((now() - $check_if['value']) > 900){
-            $sql = "UPDATE config SET value = '0' WHERE name = 'lockin';";
+            $sql = "UPDATE `config` SET value = '0' WHERE name = 'lockin';";
             $db->prepare($sql)->execute();
             return true;
         }elseif($check_if['value'] != 0){
@@ -298,9 +298,9 @@
     */
     function get_config()
     {
-        global $db; 
+        global $db;
 
-        $sql = "SELECT * FROM config;";
+        $sql = "SELECT * FROM `config`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             foreach($q->fetchAll() as $val){
@@ -319,7 +319,7 @@
     function read_tabs()
     {
         global $db;
-        $sql = "SELECT * FROM tabs ORDER BY id ASC;";
+        $sql = "SELECT * FROM `tabs` ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();  

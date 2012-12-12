@@ -27,7 +27,7 @@
         }else{
             $roster = array_resort(get_last_roster($end),'name');
         }
-        $sql = "SELECT name,account_id,role,member_since,up FROM col_players WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT name,account_id,role,member_since,up FROM `col_players` WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
         ///echo $sql;
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
@@ -51,7 +51,7 @@
         if($end == -1){
             $end = now();
         }
-        $sql = "SELECT name,account_id,role,member_since FROM col_players WHERE member_since <= '".$end."' AND member_since >= '".$start."' ORDER BY member_since DESC;";
+        $sql = "SELECT name,account_id,role,member_since FROM `col_players` WHERE member_since <= '".$end."' AND member_since >= '".$start."' ORDER BY member_since DESC;";
 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
@@ -79,7 +79,7 @@
             $end = now();
         }
 
-        $sql = "SELECT DISTINCT up FROM col_players WHERE up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT DISTINCT up FROM `col_players` WHERE up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
@@ -92,14 +92,14 @@
             $first = $first['up'];
             $last = $result[0]['up'];
 
-            $sql = "SELECT * FROM col_players WHERE up = '".$first."';";
+            $sql = "SELECT * FROM `col_players` WHERE up = '".$first."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dfirst = $q->fetchAll();
             } else {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
-            $sql = "SELECT * FROM col_players WHERE up = '".$last."';";
+            $sql = "SELECT * FROM `col_players` WHERE up = '".$last."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dlast = $q->fetchAll();
@@ -169,7 +169,7 @@
             $end = now();
         }   
 
-        $sql = "SELECT DISTINCT up FROM col_medals WHERE up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT DISTINCT up FROM `col_medals` WHERE up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
@@ -181,14 +181,14 @@
             $first = $first['up'];
             $last = $result[0]['up'];
 
-            $sql = "SELECT * FROM col_medals WHERE up = '".$first."';";
+            $sql = "SELECT * FROM `col_medals` WHERE up = '".$first."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dfirst = $q->fetchAll();
             } else {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
-            $sql = "SELECT * FROM col_medals WHERE up = '".$last."';";
+            $sql = "SELECT * FROM `col_medals` WHERE up = '".$last."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $dlast = $q->fetchAll();
@@ -276,7 +276,7 @@
         if($end == -1){
             $end = now();
         } 
-        $sql = "SELECT * FROM col_players WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT * FROM `col_players` WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $players = $q->fetchAll();
@@ -290,7 +290,7 @@
                 }     
             }
         }
-        $sql = "SELECT * FROM col_medals WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+        $sql = "SELECT * FROM `col_medals` WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $medals = $q->fetchAll();
@@ -308,14 +308,14 @@
         foreach($tables as $val){
             $tmp = explode('_',$val);
             $tables_sec = $tmp[0].'_rating_'.$tmp[1].'_'.$tmp[2];
-            $sql = "SELECT * FROM ".$val." WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+            $sql = "SELECT * FROM `".$val."` WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $ftank[$tmp[2]] = $q->fetchAll();
             } else {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
-            $sql = "SELECT * FROM ".$tables_sec." WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+            $sql = "SELECT * FROM `".$tables_sec."` WHERE account_id = '".$account_id."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
                 $stank[$tmp[2]] = $q->fetchAll();
@@ -344,7 +344,7 @@
             }
         }
 
-        $sql = "SELECT * FROM tanks ORDER BY id ASC;";
+        $sql = "SELECT * FROM `tanks` ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tank_name = $q->fetchAll();
@@ -380,7 +380,7 @@
             $end = now();
         } 
 
-        $sql = "SELECT * FROM tanks ORDER BY id ASC;";
+        $sql = "SELECT * FROM `tanks` ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tank_name_tmp = $q->fetchAll(PDO::FETCH_ASSOC);
@@ -395,7 +395,7 @@
         foreach($roster as $pers){
             foreach($tables as $val){
                 $tmp = explode('_',$val);
-                $sql = "SELECT * FROM ".$val." WHERE account_id = '".$pers['account_id']."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+                $sql = "SELECT * FROM `".$val."` WHERE account_id = '".$pers['account_id']."' AND up < '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
 
                 $q = $db->prepare($sql);
                 if ($q->execute() == TRUE) {

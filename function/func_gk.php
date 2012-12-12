@@ -19,8 +19,8 @@
     function gk_get_all($db) //Получаем список всей заблокированной техники
     {
         $sql = "SELECT g.time AS time, t.tank AS tank, g.name AS name
-        FROM gk g
-        LEFT OUTER JOIN tanks t
+        FROM `gk` g
+        LEFT OUTER JOIN `tanks` t
         ON g.tank = t.title
         ORDER BY g.time ASC;";
         $q = $db->prepare($sql);
@@ -51,7 +51,7 @@
     }
     function gk_insert_tanks($array,$time,$db) //Добавляем информацию о заблокированных танках
     {
-        $sql = "INSERT INTO gk (name,tank,time) VALUES ('{$array['name']}','{$array['vehicleType']}','{$time}');";
+        $sql = "INSERT INTO `gk` (name,tank,time) VALUES ('{$array['name']}','{$array['vehicleType']}','{$time}');";
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
