@@ -68,7 +68,7 @@
       $t2 = explode('.',$_POST['a_to']);
 
       $time['from'] = mktime(0, 0, 0, $t1['1'], $t1['0'], $t1['2']);
-      $time['to'] = mktime(0, 0, 0, $t2['1'], $t2['0']+1, $t2['2']);
+      $time['to'] = mktime(23, 59, 59, $t2['1'], $t2['0'], $t2['2']);
     } else {
       $time['from'] = mktime(0, 0, 0, date('m'), date('d')-7, date('Y'));
       $time['to'] = time();
@@ -91,7 +91,7 @@
         if(!empty($val['players'])) { ++$empty; }
       }
     }
-
+    unset($t,$cache_activity);
 ?>
 <?php if($empty != 0 or ($a_all == 1)) { ?>
 <script type="text/javascript" id="js">
@@ -103,20 +103,20 @@
 <table id="activity_table" class="tablesorter wid" cellspacing="1">
     <thead>
         <tr>
-            <th><?php echo $lang['name']; ?></th>
+            <th><?=$lang['name']; ?></th>
             <?php for($i=$time['from'];$i<=$time['to'];$i+=86400) { ?>
                   <?php if(isset($activity[date('d.m.Y',$i)]) or ($a_all == 1)) { ?>
                         <th align="center"><?php echo date('d.m.Y',$i); ?></th>
                   <?php } ?>
             <?php } ?>
-            <th align='center' style="min-width: 30px;"><?=$lang['activity_4']?></th>
+            <th align='center' style="min-width: 30px;"><?=$lang['activity_4'];?></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach($res as $val => $name){ $x = 0; ?>
             <tr>
                 <td><a href="<?php echo $config['base'].$name.'/'; ?>"
-                        target="_blank"><?php echo $name; ?></a></td>
+                        target="_blank"><?=$name; ?></a></td>
                 <?php for($i=$time['from'];$i<=$time['to'];$i+=86400) {
                   if(isset($activity[date('d.m.Y',$i)]) or ($a_all == 1)) {
                   if(isset($activity[date('d.m.Y',$i)][$name])) { ?>
@@ -126,11 +126,12 @@
                <? }
                   }
                 } ?>
-                <td align='center'><?php echo $x; ?></td>
+                <td align='center'><?=$x; ?></td>
             </tr>
             <?php } ?>
     </tbody>
 </table>
 <?php } else {
  echo $lang['activity_error_2'];
- } ?>
+ } 
+unset($activity);?>
