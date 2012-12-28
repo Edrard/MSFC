@@ -156,8 +156,11 @@
 
         }
         if($error == 0){
-            preg_match_all("/{\"request(.*?)success\"}/", $page, $matches);
-            $data = (json_decode($matches[0][0], true));
+            if(preg_match_all("/{\"request(.*?)success\"}/", $page, $matches)) {
+              $data = (json_decode($matches[0][0], true));
+            } else {
+              $error = 1;
+            }
         }
         $new['error'] = &$error;
         $new['data'] = &$data;
@@ -185,6 +188,7 @@
         if($tcurl == 'curl'){    
             foreach($urlss as $urls){
                 $curl = new CURL();
+                $curl->retry = 2;
                 $opts = array( CURLOPT_RETURNTRANSFER => true );  
                 foreach($urls as $key => $link){
                     $curl->addSession( $link, $key, $opts );

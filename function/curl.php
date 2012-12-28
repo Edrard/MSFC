@@ -138,7 +138,7 @@
                             $res[$i] = false;
 
                         $this->retry = $retry;
-                        echo '1';
+                        //echo '1';
                     }
                     else
                         $res[$i] = false;
