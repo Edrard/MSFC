@@ -49,18 +49,26 @@
         foreach($rating as $name => $val){
             if($max['mdmg'] != 0){
                 $new['mdmg'] = $val['mdmg']*100/$max['mdmg'];
+            } else {
+                $new['mdmg'] = 0;
             }
 
             if($max['mspo'] != 0){
                 $new['mspo'] = $val['mspo']*100/$max['mspo'];
+            } else {
+                $new['mspo'] = 0;
             }
 
             if($max['mcap'] != 0){
                 $new['mcap'] = $val['mcap']*100/$max['mcap'];
+            } else {
+                $new['mcap'] = 0;
             }
 
             if($max['mdef'] != 0){
                 $new['mdef'] = $val['mdef']*100/$max['mdef'];
+            } else {
+                $new['mdef'] = 0;
             }
             $total[$name] =  round(($new['mcap']/5  +  $new['mdef']/5  +  $new['mspo']/5 + $new['mdmg']*0.40),1);
         }
