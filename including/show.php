@@ -16,13 +16,6 @@
     */
 ?>
 <?php
-  /*  $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'tank\_%';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tables = reform($q->fetchAll());
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }*/
     //Geting clan roster fron wargaming or from local DB.
 
     $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
@@ -60,19 +53,6 @@
         $res = $cache->get('res',$config['cache']*3600);
         if ($res === FALSE)  
         {  
-            //Checking for cached player statistic data in DB
-            /*foreach($new['data']['request_data']['items'] as $val){
-            $tmp = checker($val,$lang,$config,$tables,$new['error']);
-
-            if(isset($tmp['link'])){
-            $links[$val['name']] = $tmp['link'];
-            $last_played[$val['name']] = &$tmp['last_played'];
-            }
-            if(isset($tmp['data'])){
-            $data[$val['name']] = $tmp['data'];
-            }    
-            }
-            unset($tmp,$tables);    */
             //Checking if there any link, then starting multiget from wargaming api.
 
             //Trying to lock DB
@@ -119,14 +99,28 @@
             if(!empty($diff_roster['unset'])){
                 unset_diff($res,$diff_roster['unset']);    
             }
-            array_special_merge_res($res,$res_new);
+            if(isset($res_new)) {
+                array_special_merge_res($res,$res_new);
+            }
             lockout_mysql();
             $cache->set('res', $res);
         }
 
     }
     // In $res array stored player statistic.
-    $col_tables = reform($db->query("SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';")->fetchAll());
-    $col_check = count($db->query("SELECT DISTINCT up FROM `col_players`;")->fetchAll());
+    $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col\_tank\_%';";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $col_tables = reform($q->fetchAll());
+    } else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
 
+    $sql = "SELECT DISTINCT up FROM col_players ;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $col_check = count($q->fetchAll());
+    } else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
 ?>
