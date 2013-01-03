@@ -108,7 +108,7 @@
 
     }
     // In $res array stored player statistic.
-    $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col\_tank\_%';";
+    $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
         $col_tables = reform($q->fetchAll());
@@ -116,7 +116,7 @@
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 
-    $sql = "SELECT DISTINCT up FROM col_players ;";
+    $sql = "SELECT DISTINCT up FROM `col_players` ;";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
         $col_check = count($q->fetchAll());
