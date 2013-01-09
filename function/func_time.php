@@ -242,6 +242,42 @@
             $medn['medalKnispel']['type'] =  'major';
             $medn['medalBoelter']['type'] = 'epic';
 
+            $tename = 'tankExperts';
+            $mename = 'mechanicEngineers';
+
+            $medn['sinai']['type'] = 'special';
+
+            $medn['evileye']['type'] = 'hero';
+            $medn['medalDeLanglade']['type'] = 'epic2';
+            $medn['medalTamadaYoshio']['type'] = 'epic2';
+            $medn['medalNikolas']['type'] = 'epic2';
+            $medn['medalLehvaslaiho']['type'] = 'epic2';
+            $medn['medalDumitru']['type'] = 'epic2';
+            $medn['medalPascucci']['type'] = 'epic2';
+            $medn['medalLafayettePool']['type'] = 'epic2';
+            $medn['medalRadleyWalters']['type'] = 'epic2';
+            $medn['medalTarczay']['type'] = 'epic2';
+            $medn['medalBrunoPietro']['type'] = 'epic2';
+            $medn['medalCrucialContribution']['type'] = 'epic';
+            $medn['medalBrothersInArms']['type'] = 'epic';
+            $medn['heroesOfRassenay']['type'] = 'epic2';
+            $medn['bombardier']['type'] = 'special';
+
+            $medn['mechanicEngineer']['type'] = '';
+            
+            $medn[$tename.'_usa']['type'] = 'expert';
+            $medn[$tename.'_france']['type'] = 'expert';
+            $medn[$tename.'_ussr']['type'] = 'expert';
+            $medn[$tename.'_china']['type'] = 'expert';
+            $medn[$tename.'_uk']['type'] = 'expert';
+            $medn[$tename.'_germany']['type'] = 'expert';
+
+            $medn[$mename.'_usa']['type'] = 'expert';
+            $medn[$mename.'_france']['type'] = 'expert';
+            $medn[$mename.'_ussr']['type'] = 'expert';
+            $medn[$mename.'_china']['type'] = 'expert';
+            $medn[$mename.'_uk']['type'] = 'expert';
+            $medn[$mename.'_germany']['type'] = 'expert';
 
             foreach($diff['unsort'] as $id => $vals){
                 foreach($vals as $key => $val){
@@ -424,5 +460,12 @@
             }
         }
         return $new;
+    }
+    function time_summer($array,$name){
+        $sum = 0;
+        foreach($array as $val){
+            $sum += $val[$name];    
+        }
+        return $sum;
     }
 ?>

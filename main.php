@@ -49,7 +49,7 @@
     include_once(ROOT_DIR.'/function/func_gk.php');
     include_once(ROOT_DIR.'/function/func_time.php');
     include_once(ROOT_DIR.'/function/cache.php');
-    
+
     // Including main config files
     include_once(ROOT_DIR.'/function/config.php');
     include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
@@ -107,10 +107,12 @@
 
     //print_r($roster_id);
     // View part.
+
     if(count($res) > 0 ){   
         $tanks_group = tanks_group($res);
         $rand_keys = array_rand($res, 1);
         $eff_rating = eff_rating($res,$lang);
+        //print_r($res[$rand_keys]['medals']); 
         if($config['cron'] == 1 && $col_check > 2){
             $we_loosed = went_players($roster,(now() - 172800),now());
             $new_players = new_players($roster,(now() - 172800),now());
@@ -122,6 +124,7 @@
             //$palyer = player_progress('92327',$col_tables);
             //print_r($roster_id);
             //print_r($main_progress);
+            //print_r($best_medal_progress);
         }                                                             
 
         include_once(ROOT_DIR.'/views/header.php');    

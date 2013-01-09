@@ -61,9 +61,9 @@
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
             }
-            
+
             if($status >= $player_stat || $player_stat == 0){
-                $links[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.5/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+                $links[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
         }
         return($links);
@@ -73,6 +73,8 @@
 
         global $db;
         $data = json_decode($data,TRUE);
+
+        //print_r($data['data']['achievements']);die;
         if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
             if(count($data['data']) > 0){
                 if($log == 1){
@@ -131,7 +133,7 @@
 
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
-                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
 
@@ -168,12 +170,12 @@
                                 $tmp_second[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_fr'] = (int) str_replace(' ','',$val['frags']);
                             }else{
                                 $tank = array(
-                                'tank' => trim($val['localized_name']),
-                                'nation' => $val['nation'],
-                                'type' => $val['class'],
-                                'lvl' => $val['level'],
-                                'link' => $val['image_url'],
-                                'title' => $val['name'],
+                                    'tank' => trim($val['localized_name']),
+                                    'nation' => $val['nation'],
+                                    'type' => $val['class'],
+                                    'lvl' => $val['level'],
+                                    'link' => $val['image_url'],
+                                    'title' => $val['name'],
                                 );
                                 $tsql = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                                 $q = $db->prepare($tsql);
@@ -198,28 +200,28 @@
                                 }
                                 if(count($nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
-                                            `account_id` INT(12),
-                                            `up` INT( 12 ) NOT NULL,
-                                             KEY `up` (`up`) ) ENGINE=MYISAM;";
+                                    `account_id` INT(12),
+                                    `up` INT( 12 ) NOT NULL,
+                                    KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
                                 }
                                 if(count($col_nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
-                                            `account_id` INT(12),
-                                            `up` INT( 12 ) NOT NULL,
-                                             KEY `up` (`up`) ) ENGINE=MYISAM;";
+                                    `account_id` INT(12),
+                                    `up` INT( 12 ) NOT NULL,
+                                    KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
-                                    
+
                                 }
                                 $ask = "ALTER TABLE `col_tank_".$val['nation']."`
-                                        ADD `".$id."_w` INT( 12 ) NOT NULL,
-                                        ADD `".$id."_t` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_w` INT( 12 ) NOT NULL,
+                                ADD `".$id."_t` INT( 12 ) NOT NULL;";
                                 $db->prepare($ask)->execute();
                                 $ask = "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                                       ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_sp` INT( 12 ) NOT NULL,
+                                ADD `".$id."_dd` INT( 12 ) NOT NULL,
+                                ADD `".$id."_sb` INT( 12 ) NOT NULL,
+                                ADD `".$id."_fr` INT( 12 ) NOT NULL;";
                                 $db->prepare($ask)->execute();
 
                                 $tmp[$val['nation']][$id.'_t'] = str_replace(' ','',$val['battle_count']);
@@ -266,11 +268,22 @@
 
                     }
 
+                    foreach($data['data']['achievements']  as $key => $val){
+                        if(is_array($val)){
+                            foreach($val as $yek => $v){
+                                $data['data']['achievements'][$key.'_'.$yek] = (int)$v;
+                                unset($val[$yek]);    
+                            }
+                            unset($data['data']['achievements'][$key]);
+                        }
+                    }
 
                     //print_r($new_med);
                     $data['data']['achievements']['account_id'] = $roster['account_id'];
                     $data['data']['achievements']['up'] = $now;
-                    $q = $db->prepare("INSERT INTO `col_medals` (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');")->execute();
+                    $sql = "INSERT INTO `col_medals` (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');";
+                    //echo $sql;
+                    $q = $db->prepare($sql)->execute();
 
                 }
             } 

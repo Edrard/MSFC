@@ -23,5 +23,5 @@
     $config['rating_link'] = 'http://worldoftanks.com/media/2.2.0.6/common/img/ratings/small/';
     $config['clan_link'] = 'http://worldoftanks.com/uc/clanwars/';
     $config['gm_url'] = 'worldoftanks.com';
-    $config['td'] = 'http://worldoftanks.com';
+    $config['td'] = 'http://api.worldoftanks.com';
 ?>

@@ -173,6 +173,44 @@
     $lang['medal_tankExpert'] = 'Master Tanker';
     $lang['medal_diehard'] = 'Survivor';
     $lang['medal_medalBoelter'] = 'Boelter\'s Medal';
+
+    $lang['medal_maxPiercingSeries'] = 'Master Gunner - max series';
+    $lang['medal_maxKillingSeries'] = 'Reaper - max series';
+    $lang['medal_maxSniperSeries'] = 'Sharpshooter - max series';
+
+    $lang['medal_tankExperts_usa'] = 'Expert: U.S.A';
+    $lang['medal_tankExperts_france'] = 'Expert: France';
+    $lang['medal_tankExperts_ussr'] = 'Expert: U.S.S.R.';
+    $lang['medal_tankExperts_china'] = 'Expert: China';
+    $lang['medal_tankExperts_uk'] = 'Expert: UK';
+    $lang['medal_tankExperts_germany'] = 'Expert: Germany';
+
+    $lang['medal_mechanicEngineers_usa'] = 'Technical Engineer, U.S.A.';
+    $lang['medal_mechanicEngineers_france'] = 'Technical Engineer, France';
+    $lang['medal_mechanicEngineers_ussr'] = 'Technical Engineer, U.S.S.R.';
+    $lang['medal_mechanicEngineers_china'] = 'Technical Engineer, China';
+    $lang['medal_mechanicEngineers_uk'] = 'Technical Engineer, UK';
+    $lang['medal_mechanicEngineers_germany'] = 'Technical Engineer, Germany';
+
+    $lang['medal_sinai'] = 'The Lion of Sinai';
+
+    $lang['medal_evileye'] = 'Patrol Duty';
+    $lang['medal_medalDeLanglade'] = 'de Langlade\'s Medal';
+    $lang['medal_medalTamadaYoshio'] = 'Tamada Yoshio Medal';
+    $lang['medal_medalNikolas'] = 'Nichols’ Medal';
+    $lang['medal_medalLehvaslaiho'] = 'Lehvaslaiho’s Medal';
+    $lang['medal_medalDumitru'] = 'Dumitru’s Medal';
+    $lang['medal_medalPascucci'] = 'Pascucci’s Medal';
+    $lang['medal_medalLafayettePool'] = 'Pool’s Medal';
+    $lang['medal_medalRadleyWalters'] = 'Radley-Walters’ Medal';
+    $lang['medal_medalTarczay'] = 'Tarczay’s Medal';
+    $lang['medal_medalBrunoPietro'] = 'Bruno’s Medal';
+    $lang['medal_medalCrucialContribution'] = 'Crucial Contribution';
+    $lang['medal_medalBrothersInArms'] = 'Brothers in Arms';
+    $lang['medal_heroesOfRassenay'] = 'Raseiniai Heroes\' Medal';
+    $lang['medal_bombardier'] = 'Bombardier';
+
+
     $lang['medal_class'] = 'class';
     $lang['medal_class2'] = 'class';
     $lang['medal_amount'] = 'amount';
@@ -182,6 +220,7 @@
     $lang['special'] = 'Special Achievements';
     $lang['major'] = 'Major Achievements';
     $lang['hero'] = 'Battle Achievements';
+    $lang['expert'] = 'Expert';
     $lang['achiv'] = 'Achievements';
     $lang['title_medalCarius'] = 'Awarded for the destruction of enemy tanks and self-propelled guns in four classes:Class IV - 10 vehicles Class III - 100 vehicles Class II - 1,000 vehicles Class I - 10,000 vehicles';
     $lang['title_medalHalonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.'; 
@@ -219,6 +258,42 @@
     $lang['title_medalKnispel'] = 'Awarded for the total amount of damage caused and received in four classes: Class IV - 10,000 HP Class III - 100,000 HP Class II - 1,000,000 HP Class I - 10,000,000 HP.'; 
     $lang['title_medalBoelter'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.'; 
 
+    $lang['title_maxPiercingSeries'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
+    $lang['title_maxKillingSeries'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
+    $lang['title_maxSniperSeries'] = 'Hit an enemy vehicle ten or more times in a row without missing. The results of the next battle in a row using any vehicle also count towards this number, unless the sequence is broken by a miss. (the icon displays the longest sequence).';
+
+    $lang['title_tankExperts_usa'] = 'Destroy at least one of each type from the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tankExperts_france'] = 'Destroy at least one of each type from the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tankExperts_ussr'] = 'Destroy at least one of each type from the Russian tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tankExperts_china'] = 'Destroy at least one of each type from the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tankExperts_uk'] = 'Destroy at least one of each type from the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tankExperts_germany'] = 'Destroy at least one of each type from the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+
+    $lang['title_mechanicEngineers_usa'] = 'Research all vehicles in the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineers_france'] = 'Research all vehicles in the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineers_ussr'] = 'Research all vehicles in the Soviet tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineers_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineers_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineers_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+
+    $lang['title_sinai'] = 'The Lion of Sinai - Destroy at least 100 tanks of the IS series, and vehicles based on their chassis: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Object 704, or Object 261';
+
+    $lang['title_evileye'] = 'Awarded to the player who helps the team damage at least six enemy vehicles by highlighting them. The tanks must be highlighted only by you when they take damage.';
+    $lang['title_medalDeLanglade'] = 'Awarded to the player who destroys four or more enemy vehicles that were in the process of capturing the player\'s base. On 13 September 1944, Colonel Paul Girot de Langlade\'s Groupement Tactique Langlade (G.T.L), outnumbered by over two to one, attacked a German 112th Panzer Regiment occupying the French village of Dompaire. In the ensuing battle de Langlade\'s 16 M4A2 tanks and 4 M10 tank destroyers, with support from French artillery and American fighter-bombers, destroyed 69 of 90 PzKpfw V Panther and PzKpfw IV tanks.';
+    $lang['title_medalTamadaYoshio'] = 'Awarded to a player who destroys at least three Self-Propelled Guns while driving a light tank, and survives the battle. The targets must be at least two tiers higher than the player\'s tank. Tamada Yoshio commanded the Japanese 4th Tank Regiment (Type 95 Ha-Gō light tanks) in an attack that overran and destroyed twelve Russian artillery guns during the Second Sino-Japanese War in July 1939.';
+    $lang['title_medalNikolas'] = 'Awarded for destroying four or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.Alfie Nicolas was a British tank gunner. During the battle of Al Alamein he destroyed fourteen enemy vehicles.';
+    $lang['title_medalLehvaslaiho'] = 'Awarded for destroying two enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank. Reino Lehväslaiho was a Finnish tank ace who destroyed seven tanks and tank destroyers.';
+    $lang['title_medalDumitru'] = 'Awarded for the destruction of four enemy self-propelled guns. Ion S. Dumitru was a Romanian tank ace. He fought in World War II for just twenty-five days, of which five on the German side, and, after Romania changed sides, twenty days against the Germans. On March 6th, 1945, Dumitru contributed to the destruction of six enemy tank destroyers and capture of a battery of 150 mm guns.';
+    $lang['title_medalPascucci'] = 'Awarded for the destruction of three enemy self-propelled guns. Second Lieutenant Luigi Arbib Pascucci was an Italian tank commander during World War Two. He fought with the Ariete Tank Division in North Africa. Pascucci fought in the Second Battle of El Alamein, where he sacrificed his life in a reckless frontal attack that enabled the rest of his company to escape encirclement.';
+    $lang['title_medalLafayettePool'] = 'Awarded for destroying 10 or more enemy tanks and self-propelled guns with any vehicle. The targets must be at least tier four enemy vehicles. Lafayette G. Pool is widely recognized as the U.S. tank ace of aces, credited with 12 confirmed tank kills and 258 total armored vehicle and self-propelled gun kills.';
+    $lang['title_medalRadleyWalters'] = 'Awarded to players in the 5th or higher tier for destroying 8 or 9 enemy vehicles in one battle. Sydney Valpy Radley-Walters was a Canadian tank ace of the 27th Armored Regiment. In 1944–1945 he destroyed 18 German vehicles with his Sherman Firefly.';
+    $lang['title_medalTarczay'] = 'Awarded to players who destroy at least five enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Ervin Tarczay was a Hungarian tank ace. He fought with the Hungarian 2nd Armored Division and destroyed at least ten enemy vehicles.';
+    $lang['title_medalBrunoPietro'] = 'Awarded to players who destroy three or four enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Pietro Bruno was an Italian tank ace. For exceptional valor in the face of the enemy he was awarded the Gold Medal of Military Valor (Medaglia d\'oro al Valore Militare), the highest Italian award.';
+    $lang['title_medalCrucialContribution'] = 'Awarded to a platoon which destroyed at least 12 enemy vehicles in one battle. Each platoon participant receive this title.';
+    $lang['title_medalBrothersInArms'] = 'Awarded to a platoon in which all platoon members destroy at least 3 enemy vehicles and survive in battle. Each platoon participant receive this title.';
+    $lang['title_heroesOfRassenay'] = 'Awarded to a player who destroys single-handedly all enemy vehicles (at least 14 vehicles). In June 1941, near the Lithuanian town of Raseiniai, roughly 20 KV tanks of the Soviet 3rd Mechanized Corps met the assault of the 6th Panzer Division, with approximately 100 vehicles. A single KV-2 tank managed to hold off the German advance for a full day while being pummeled by a variety of antitank weapons, until finally the KV-2 ran out of ammunition and was knocked out.';
+    $lang['title_bombardier'] = 'Awarded to the player who destroys two or more vehicles with one shot.';
+
     $lang['logout'] = 'Logout';
     $lang['login'] = 'Login';
     $lang['hi'] = 'Hello';
@@ -235,12 +310,12 @@
     $lang['players_best_results'] = 'The best overall results';
     $lang['players_best_medals'] = 'The best results for the awards';
 
-/*    $lang['heavyTank'] = 'Heavy tanks';
+    /*    $lang['heavyTank'] = 'Heavy tanks';
     $lang['mediumTank'] = 'Medium tanks';
     $lang['lightTank'] = 'Light tanks';
     $lang['AT-SPG'] = 'AT-SPG';
     $lang['SPG'] = 'SPG';
-*/    
+    */    
     $lang['all_types'] = 'All types';
     $lang['all_lvls'] = 'All levels';
     $lang['select_tanks'] = 'Pick tanks to show:';

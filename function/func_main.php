@@ -17,41 +17,41 @@
 ?>
 <?php
     function prepare_stat() {
-      global $db;
+        global $db;
 
-      $sql = "SELECT id,tank,nation,title FROM `tanks`;";
-      $q = $db->prepare($sql);
-      if ($q->execute() == TRUE) {
-          $current_tmp = $q->fetchAll();
-      } else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
+        $sql = "SELECT id,tank,nation,title FROM `tanks`;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $current_tmp = $q->fetchAll();
+        } else {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
 
-      $current = array();
-      $tmp = array();
-      foreach($current_tmp as $val){
-          $current[$val['id']] = $val['title'].'_'.$val['nation'];
-      }
-      //Получаем из бд список таблиц col_tank_* и col_rating_tank_*, составляем массив наций для которых они существуют.
+        $current = array();
+        $tmp = array();
+        foreach($current_tmp as $val){
+            $current[$val['id']] = $val['title'].'_'.$val['nation'];
+        }
+        //Получаем из бд список таблиц col_tank_* и col_rating_tank_*, составляем массив наций для которых они существуют.
 
-      $col_rating_tank = array();
-      $col_tank = array();
+        $col_rating_tank = array();
+        $col_tank = array();
 
-      $sql = "show tables like 'col_tank_%';";
-      $q = $db->prepare($sql);
-      if ($q->execute() == TRUE) {
-          $tmp = $q->fetchAll();
-      } else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
-      foreach($tmp as $t) { $col_tank[] = end(explode('_',$t['0'])); }
+        $sql = "show tables like 'col_tank_%';";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $tmp = $q->fetchAll();
+        } else {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        foreach($tmp as $t) { $col_tank[] = end(explode('_',$t['0'])); }
 
-      $t = array();
-      $t['current'] = $current;
-      $t['col_tank'] = $col_tank;
-      unset($col_tank,$current,$current_tmp,$tmp);
+        $t = array();
+        $t['current'] = $current;
+        $t['col_tank'] = $col_tank;
+        unset($col_tank,$current,$current_tmp,$tmp);
 
-      return $t;
+        return $t;
     }
 
     function insert_stat($data,$roster,$config,$transit = array('current' => array(),'col_tank' => array())){
@@ -68,59 +68,59 @@
                     if(!in_array($val['name'].'_'.$val['nation'],$current)){
 
                         $tank = array(
-                        'tank' => trim($val['localized_name']),
-                        'nation' => $val['nation'],
-                        'type' => $val['class'],
-                        'lvl' => $val['level'],
-                        'link' => $val['image_url'],
-                        'title' => $val['name'],
+                            'tank' => trim($val['localized_name']),
+                            'nation' => $val['nation'],
+                            'type' => $val['class'],
+                            'lvl' => $val['level'],
+                            'link' => $val['image_url'],
+                            'title' => $val['name'],
                         );
                         $sqlt = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
                         $q = $db->prepare($sqlt);
                         if ($q->execute() !== TRUE) {
-                           die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
+                            die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
                         }
                         unset($q);
                         $id = $db->lastInsertId(); //шикарная функция на самом деле, возвращает значение автоинкремент поля из последнего запроса
                         $current[$id] = $val['name'].'_'.$val['nation']; //добавляем танк
 
                         if(!in_array($val['nation'],$col_tank)) {
-                          $sql .= "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
-                                        `account_id` INT(12),
-                                        `up` INT( 12 ) NOT NULL,
-                                         KEY `up` (`up`) ) ENGINE=MYISAM;";
-                          $sql .= "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
-                                        `account_id` INT(12),
-                                        `up` INT( 12 ) NOT NULL,
-                                         KEY `up` (`up`) ) ENGINE=MYISAM;";
-                          $col_tank[] = $val['nation']; //добавляем в массив, дабы не создавать еще раз.
+                            $sql .= "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
+                            `account_id` INT(12),
+                            `up` INT( 12 ) NOT NULL,
+                            KEY `up` (`up`) ) ENGINE=MYISAM;";
+                            $sql .= "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
+                            `account_id` INT(12),
+                            `up` INT( 12 ) NOT NULL,
+                            KEY `up` (`up`) ) ENGINE=MYISAM;";
+                            $col_tank[] = $val['nation']; //добавляем в массив, дабы не создавать еще раз.
                         }
 
                         $tsql .= "ALTER TABLE `col_tank_".$val['nation']."`
-                                       ADD `".$id."_w` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_t` INT( 12 ) NOT NULL;";
+                        ADD `".$id."_w` INT( 12 ) NOT NULL,
+                        ADD `".$id."_t` INT( 12 ) NOT NULL;";
                         $tsql .= "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                                       ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                                       ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                        ADD `".$id."_sp` INT( 12 ) NOT NULL,
+                        ADD `".$id."_dd` INT( 12 ) NOT NULL,
+                        ADD `".$id."_sb` INT( 12 ) NOT NULL,
+                        ADD `".$id."_fr` INT( 12 ) NOT NULL;";
                     }
                 }
-            /* Запросы к БД вынесенные за цикл */
-              if($sql != '') {
-                $q = $db->prepare($sql);
-                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
-              }
-              if($tsql != '') {
-                $q = $db->prepare($tsql);
-                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
-              }
+                /* Запросы к БД вынесенные за цикл */
+                if($sql != '') {
+                    $q = $db->prepare($sql);
+                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
+                }
+                if($tsql != '') {
+                    $q = $db->prepare($tsql);
+                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+                }
             }
-        unset($transit); $transit = array('current' => array(),'col_tank' => array());
-        $transit['current'] = $current;
-        $transit['col_tank'] = $col_tank;
+            unset($transit); $transit = array('current' => array(),'col_tank' => array());
+            $transit['current'] = $current;
+            $transit['col_tank'] = $col_tank;
         }
-    return $transit;
+        return $transit;
     }
 
 
@@ -251,14 +251,41 @@
             }elseif($name == 'maxSniperSeries'){
                 $medn['titleSniper']['max'] = $medal; 
                 $medn['titleSniper']['max_name'] = 'maxSniperSeries';   
+            }elseif($name == 'tankExperts' && is_array($medal)){
+                foreach($medal as $spname => $spmed){
+                    $medn[$name.'_'.$spname]['value'] = (int)$spmed;
+                }
+            }elseif($name == 'mechanicEngineers' && is_array($medal)){
+                foreach($medal as $spname => $spmed){
+                    $medn[$name.'_'.$spname]['value'] = (int)$spmed;
+                }
             }else{
                 $medn[$name]['value'] = $medal;
             }
         }
 
-        foreach(array_keys($medn) as $name){
-            $medn[$name]['title'] = $trans['medal_'.$name];     
+        foreach(array_keys($medn) as $name){  
+            if(isset($trans['medal_'.$name])){
+                $medn[$name]['title'] = $trans['medal_'.$name];
+            }     
         }
+
+        $tename = 'tankExperts';
+        $mename = 'mechanicEngineers';
+
+        $medn[$tename.'_usa']['img'] = 'images/medals/TankExpertUSA.png';
+        $medn[$tename.'_france']['img'] = 'images/medals/TankExpertFrance.png';
+        $medn[$tename.'_ussr']['img'] = 'images/medals/TankExpertUSSR.png';
+        $medn[$tename.'_china']['img'] = 'images/medals/Invincible.png';
+        $medn[$tename.'_uk']['img'] = 'images/medals/TankExpertBrit.png';
+        $medn[$tename.'_germany']['img'] = 'images/medals/TankExpertGermany.png';
+
+        $medn[$mename.'_usa']['img'] = 'images/medals/MechanicEngineerUSA.png';
+        $medn[$mename.'_france']['img'] = 'images/medals/MechanicEngineerFrance.png';
+        $medn[$mename.'_ussr']['img'] = 'images/medals/MechanicEngineerUSSR.png';
+        $medn[$mename.'_china']['img'] = 'images/medals/Invincible.png';
+        $medn[$mename.'_uk']['img'] = 'images/medals/MechanicEngineerBrit.png';
+        $medn[$mename.'_germany']['img'] = 'images/medals/MechanicEngineerGermany.png';
 
         $medn['medalCarius']['img'] = 'images/medals/MedalCarius'.$medn['medalCarius']['value'].'.png';
         $medn['medalHalonen']['img'] = 'images/medals/MedalHalonen.png';
@@ -295,7 +322,37 @@
         $medn['tankExpert']['img'] = 'images/medals/TankExpert.png';
         $medn['diehard']['img'] = 'images/medals/Diehard.png';
         $medn['medalKnispel']['img'] = 'images/medals/MedalKnispel'.$medn['medalKnispel']['value'].'.png'; 
+        $medn['sinai']['img'] = 'images/medals/Sinai.png';
 
+        $medn['evileye']['img'] = 'images/medals/Evileye.png';
+        $medn['medalDeLanglade']['img'] = 'images/medals/MedalDeLanglade.png';
+        $medn['medalTamadaYoshio']['img'] = 'images/medals/MedalTamadaYoshio.png';
+        $medn['medalNikolas']['img'] = 'images/medals/MedalNikolas.png';
+        $medn['medalLehvaslaiho']['img'] = 'images/medals/MedalLehvaslaiho.png';
+        $medn['medalDumitru']['img'] = 'images/medals/MedalDumitru.png';
+        $medn['medalPascucci']['img'] = 'images/medals/MedalPascucci.png';
+        $medn['medalLafayettePool']['img'] = 'images/medals/MedalLafayettePool.png';
+        $medn['medalRadleyWalters']['img'] = 'images/medals/MedalRadleyWalters.png';
+        $medn['medalTarczay']['img'] = 'images/medals/MedalTarczay.png';
+        $medn['medalBrunoPietro']['img'] = 'images/medals/MedalBrunoPietro.png';
+        $medn['medalCrucialContribution']['img'] = 'images/medals/MedalCrucialContribution.png';
+        $medn['medalBrothersInArms']['img'] = 'images/medals/MedalBrothersInArms.png';
+        $medn['heroesOfRassenay']['img'] = 'images/medals/HeroesOfRassenay.png';
+        $medn['bombardier']['img'] = 'images/medals/Bombardier.png';
+
+        $medn[$tename.'_usa']['type'] = 'expert';
+        $medn[$tename.'_france']['type'] = 'expert';
+        $medn[$tename.'_ussr']['type'] = 'expert';
+        $medn[$tename.'_china']['type'] = 'expert';
+        $medn[$tename.'_uk']['type'] = 'expert';
+        $medn[$tename.'_germany']['type'] = 'expert';
+
+        $medn[$mename.'_usa']['type'] = 'expert';
+        $medn[$mename.'_france']['type'] = 'expert';
+        $medn[$mename.'_ussr']['type'] = 'expert';
+        $medn[$mename.'_china']['type'] = 'expert';
+        $medn[$mename.'_uk']['type'] = 'expert';
+        $medn[$mename.'_germany']['type'] = 'expert';
 
         $medn['medalCarius']['type'] = 'major';
         $medn['medalHalonen']['type'] = 'epic';
@@ -332,9 +389,28 @@
         $medn['tankExpert']['type'] = 'special';
         $medn['diehard']['type'] = 'special';
         $medn['medalKnispel']['type'] =  'major';
+        $medn['sinai']['type'] = 'special';
+
+        $medn['evileye']['type'] = 'hero';
+        $medn['medalDeLanglade']['type'] = 'epic2';
+        $medn['medalTamadaYoshio']['type'] = 'epic2';
+        $medn['medalNikolas']['type'] = 'epic2';
+        $medn['medalLehvaslaiho']['type'] = 'epic2';
+        $medn['medalDumitru']['type'] = 'epic2';
+        $medn['medalPascucci']['type'] = 'epic2';
+        $medn['medalLafayettePool']['type'] = 'epic2';
+        $medn['medalRadleyWalters']['type'] = 'epic2';
+        $medn['medalTarczay']['type'] = 'epic2';
+        $medn['medalBrunoPietro']['type'] = 'epic2';
+        $medn['medalCrucialContribution']['type'] = 'epic';
+        $medn['medalBrothersInArms']['type'] = 'epic';
+        $medn['heroesOfRassenay']['type'] = 'epic2';
+        $medn['bombardier']['type'] = 'special';
 
         foreach($medn as $name => $val){
-            $nmedn[$val['type']][$name] = $val;
+            if(isset($val['type'])){
+                $nmedn[$val['type']][$name] = $val;
+            }
         }
         unset($nmedn['special']['lumberjack']);
         unset($nmedn['epic']['medalWittmann']);
@@ -410,7 +486,7 @@
                         foreach($types as $type => $tanks){
                             foreach($tanks as $tank){
                                 if(in_array($tank['lvl'],$lvl_s) && in_array($tank['class'],$type_s) && in_array($tank['nation'],$nation_s)){
-                                $name[$type][$lvl][($tank['type'])] = true;
+                                    $name[$type][$lvl][($tank['type'])] = true;
                                 }
                             }
                         }

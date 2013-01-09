@@ -172,7 +172,7 @@
 
         if(count($vals) > 0){
             foreach($vals as $val){
-                $link[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.5/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+                $link[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
         }
 

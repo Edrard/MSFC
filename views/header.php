@@ -25,13 +25,13 @@
     <link rel="stylesheet" href="./css/style.css" type="text/css" media="print, projection, screen" />
     <link rel="stylesheet" href="./css/jquery-ui.css" type="text/css" media="print, projection, screen" /> 
     <?php 
-    if(isset($_GET['ver'])){
-        $vertt = $_GET['ver'];
-    }else{
-        $vertt = 0;
-    }
-    if($config['align'] == 'ver' || $vertt == 1){ 
-        
+        if(isset($_GET['ver'])){
+            $vertt = $_GET['ver'];
+        }else{
+            $vertt = 0;
+        }
+        if($config['align'] == 'ver' || $vertt == 1){ 
+
         ?>
         <link rel="stylesheet" href="./css/ver.css" type="text/css" media="print, projection, screen" />
         <?php }else{ ?>
@@ -54,68 +54,69 @@
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jquery-ui.js"></script>
     <?php if ($config['lang'] == 'ru') { ?>
-    <script type="text/javascript" src="./js/jquery-ui-ru.js"></script>
-    <?php }; ?> 
+        <script type="text/javascript" src="./js/jquery-ui-ru.js"></script>
+        <?php }; ?> 
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="./js/jquery.metadata.js"></script>
     <script type="text/javascript" src="./js/jquery.qtip.js"></script>
     <script type="text/javascript" src="./js/jquery.vticker.js"></script>
-    
+
     <script type="text/javascript" id="js">     
 
         $(document).ready(function() 
-        { 
-            $("#roster").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            
-            $("#best_main").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#best_medal").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            
-            $("#active_main").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#active_medal_1").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#active_medal_2").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#active_medal_3").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#active_medal_4").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            
-            $("#overall").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
-            $("#perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
-            $("#battel").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
-            $("#achiv_epic").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#achiv_major").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#achiv_hero").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#achiv_special").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+            { 
+                $("#roster").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
-            $("#rating").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#rating1").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#rating_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#average_perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#blocked").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#best_main").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#best_medal").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
-            $("#all_tanks_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#perform_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#all_medals_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_main").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_1").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_2").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_3").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_4").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_5").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#active_medal_6").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#overall").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
+                $("#perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
+                $("#battel").tablesorter({sortList:[[0,0]], widgets: ['zebra']}); 
+                $("#achiv_epic").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#achiv_major").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#achiv_hero").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#achiv_special").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
-            $("#attack").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-            $("#poss").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#rating").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#rating1").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#rating_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#average_perform").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#blocked").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
 
-            $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
-            $( "#login_dialog" ).dialog({
-                 title: 'Login',
-                 autoOpen: false,
-                 draggable: false,
-                 resizable: false,
-                 height: 350,
-                 width: 500,
-                 show: "blind",
-			     hide: "blind",
-                 modal: true,
-                 position: { my: "center top", at: "center top", of: "#tabs" , offset: "0, 200", collision: "flip" }
-            });
-            $('#login_opener').click(function() {
-        		$("#login_dialog").dialog('open');
-        		// prevent the default action, e.g., following a link
-        		return false;
-        	});
-            $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
+                $("#all_tanks_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#perform_all").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#all_medals_stat").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+
+                $("#attack").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+                $("#poss").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+
+                $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
+                $( "#login_dialog" ).dialog({
+                    title: 'Login',
+                    autoOpen: false,
+                    draggable: false,
+                    resizable: false,
+                    height: 350,
+                    width: 500,
+                    show: "blind",
+                    hide: "blind",
+                    modal: true,
+                    position: { my: "center top", at: "center top", of: "#tabs" , offset: "0, 200", collision: "flip" }
+                });
+                $('#login_opener').click(function() {
+                    $("#login_dialog").dialog('open');
+                    // prevent the default action, e.g., following a link
+                    return false;
+                });
+                $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
         });
     </script>  
     <script>
@@ -124,7 +125,7 @@
                 ajaxOptions: {
                     error: function( xhr, status, index, anchor ) {
                         $( anchor.hash ).html(
-                        "<?php echo $lang['error_1'];?>");
+                            "<?php echo $lang['error_1'];?>");
                     }
                 }
             });         
@@ -133,47 +134,47 @@
     </script>
     <script>
         $(document).ready(function()
-        {
-            $('.bb[title]').qtip({
-                position: {
-                    target: 'mouse',
-                    adjust: { screen: true, mouse: true }
-                },
-                style: {
-                    background: 'white',
-                    color: 'black',
-                    textAlign: 'center',
-                    padding: '5px 5px',
-                    width: {
-                        max: 400,
-                        min: 0
+            {
+                $('.bb[title]').qtip({
+                    position: {
+                        target: 'mouse',
+                        adjust: { screen: true, mouse: true }
                     },
-                    border: {
-                        width: 1,
-                        radius: 2,
-                        color: '#000'
-                    },
-                    tip: false
-                }
-            });
+                    style: {
+                        background: 'white',
+                        color: 'black',
+                        textAlign: 'center',
+                        padding: '5px 5px',
+                        width: {
+                            max: 400,
+                            min: 0
+                        },
+                        border: {
+                            width: 1,
+                            radius: 2,
+                            color: '#000'
+                        },
+                        tip: false
+                    }
+                });
         });   
     </script> 
     <script>
         $(document).ready(function()
-        {    
-            $('#rotate').vTicker({
-                speed: 500,
-                pause: 5000,
-                showItems: 1,
-                animation: 'fade',
-                mousePause: false,
-                height: 0,
-                direction: 'down'
-            });
+            {    
+                $('#rotate').vTicker({
+                    speed: 500,
+                    pause: 5000,
+                    showItems: 1,
+                    animation: 'fade',
+                    mousePause: false,
+                    height: 0,
+                    direction: 'down'
+                });
         });   
     </script> 
-    </head>
-    <body>
-    <noscript>
+</head>
+<body>
+<noscript>
     <? show_message($lang['js_off']); ?>
     </noscript>
