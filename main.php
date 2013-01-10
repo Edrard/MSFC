@@ -107,7 +107,7 @@
 
     //print_r($roster_id);
     // View part.
-
+    //print_r($res);
     if(count($res) > 0 ){   
         $tanks_group = tanks_group($res);
         $rand_keys = array_rand($res, 1);
@@ -125,6 +125,7 @@
             //print_r($roster_id);
             //print_r($main_progress);
             //print_r($best_medal_progress);
+            //print_r($we_loosed);
         }                                                             
 
         include_once(ROOT_DIR.'/views/header.php');    

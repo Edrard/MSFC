@@ -18,31 +18,32 @@
 <?php
     //Geting clan roster fron wargaming or from local DB.
 
-    $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
-    $tmp_roster = &$cache->get('get_last_roster',0);
-    if($new['error'] != 0){
+    //$new2 = get_player($config['clan'],$config);   //dg65tbhjkloinm 
+    $new = get_api_roster($config['clan'],$config);
+    if(empty($new)){
+        $new['status'] = 'error';
+        $new['status'] = 'ERROR';
+    }
+    
+    //print_r($new);
+    if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
+        $tmp_roster = &$cache->get('get_last_roster',0);
+        $cache->clear('get_last_roster');
+        $cache->set('get_last_roster', $new);
+    }else{
         unset($new);
         $new = $cache->get('get_last_roster',0);
         if($new === FALSE) { die('No cahced data'); }  
-    }else{
-        $cache->clear('get_last_roster');
-        $cache->set('get_last_roster', $new);
-    }
-
-    // Creating empty array if needed.
-    if(empty($new['data']['request_data']['items'])){
-        $new['error'] = 1;
-        $new['data']['request_data']['items'] = array();
     }
 
     //Starting geting data
-    if(!empty($new['data']['request_data']['items'])){
+    if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
         //Sorting roster
 
-        $roster = &roster_sort($new['data']['request_data']['items']);
+        $roster = &roster_sort($new['data']['members']);
         $roster_id = &roster_resort_id($roster);  
         if(!empty($tmp_roster)){
-            $cached_roster =  &roster_sort($tmp_roster['data']['request_data']['items']);
+            $cached_roster =  &roster_sort($tmp_roster['data']['members']);
             $diff_roster =  key_compare_func($cached_roster, $roster);
             unset($cached_roster,$tmp_roster);
         }
@@ -59,7 +60,8 @@
             while(lockin_mysql() !== TRUE){
                 sleep('10');
             }
-            $links = link_creater($new['data']['request_data']['items'],$config);
+            $links = link_creater($new['data']['members'],$config);
+            //print_r($links);
             multiget($links, $result,$config['pars']);
             //print_r($result);
             $transit = prepare_stat();

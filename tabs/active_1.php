@@ -33,10 +33,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['epic'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){  ?>
                                             <td><?=$val;?></td>
                                             <?php } ?>
@@ -62,10 +62,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['epic2'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){  ?>
                                             <td><?=$val;?></td>
                                             <?php } ?>
@@ -91,10 +91,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['special'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){  ?>
                                             <td><?=$val;?></td>
                                             <?php } ?>
@@ -120,10 +120,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['major'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){  ?>
                                             <td><?=$val;?></td>
                                             <?php } ?>
@@ -149,10 +149,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['hero'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){  ?>
                                             <td><?=$val;?></td>
                                             <?php } ?>
@@ -178,10 +178,10 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['expert'] as $account_id => $vals){ 
-                                    if(isset($roster_id[$account_id]['name'])){?>
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
-                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['name'].'/'; ?>" 
-                                            target="_blank"><?php echo $roster_id[$account_id]['name']; ?></a></td>
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
                                         <?php foreach($vals as $val){ 
                                                 $num_n = 0;
                                                 if($val == 1){

@@ -52,13 +52,13 @@
             $end = now();
         }
         $sql = "SELECT name,account_id,role,member_since FROM `col_players` WHERE member_since <= '".$end."' AND member_since >= '".$start."' ORDER BY member_since DESC;";
-
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $result = $q->fetchAll();
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
+        //print_r($result);
         foreach($result as $val){
             $new_res[$val['name']] = $val;
         }

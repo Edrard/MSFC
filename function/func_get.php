@@ -113,66 +113,32 @@
         $new = &$data;
         return $new;
     }
-    function get_player($clan_id,$config)
+    function get_api_roster($clan_id,$config)
     {
-        $error = 0;
-        $data = array();
-        $request = "GET /uc/clans/".$clan_id."/members/?type=table HTTP/1.0\r\n";
-        $request.= "Accept: text/html, */*\r\n";
-        $request.= "User-Agent: Mozilla/3.0 (compatible; easyhttp)\r\n";
-        $request.= "X-Requested-With: XMLHttpRequest\r\n";
-        $request.= "Host: ".$config['gm_url']."\r\n";
-        $request.= "Connection: Keep-Alive\r\n";
-        $request.= "\r\n";
-
-        $wot_host=$config['gm_url'];
-        $n = 1;
-        while(!isset($fp)){
-            $fp = fsockopen($config['gm_url'], 80, $errno, $errstr, 20);
-            if($n == 3){
-                break;
-            }
-            $n++;
+        $url = 'api.'.$config['gm_url']."/community/clans/".$clan_id."/api/1.1/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats" ;
+        $ch = curl_init();
+        $timeout = 10;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $data = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch) ;
+        $header = curl_getinfo($ch);
+        curl_close($ch);
+        if($err == 0){
+            return json_decode(trim($data), true);
+        }else{
+            return array();
         }
-        if (!$fp) {
-            echo "$errstr ($errno)<br>\n";
-        } else {
 
-            stream_set_timeout($fp,20);
-            $info = stream_get_meta_data($fp);
-
-            fwrite($fp, $request);
-            $page = '';
-
-            while (!feof($fp) && (!$info['timed_out'])) { 
-                $page .= fgets($fp, 4096);
-                $info = stream_get_meta_data($fp);
-                //echo $page;
-            }
-            fclose($fp);
-            if ($info['timed_out']) {
-                $error = 1; //Connection Timed Out
-            }
-
-        }
-        if($error == 0){
-            if(preg_match_all("/{\"request(.*?)success\"}/", $page, $matches)) {
-              $data = (json_decode($matches[0][0], true));
-            } else {
-              $error = 1;
-            }
-        }
-        $new['error'] = &$error;
-        $new['data'] = &$data;
-        return $new;
     }
-
     function link_creater($vals,$config){
 
 
         if(count($vals) > 0){
             foreach($vals as $val){
-                $link[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+                $link[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
         }
 

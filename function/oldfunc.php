@@ -603,10 +603,10 @@
                         $tmp[$val[2]][$current_flip[trim($val[$trans['battle']]).'_'.$val[2]].'_w'] = str_replace(' ','',$val[1]);        
                     }else{
                         $tank = array(
-                        'tank' => trim($val[$trans['battle']]),
-                        'nation' => $val[2],
-                        'lvl' => trim($val[0]),
-                        'link' => $val[$trans['tank']],
+                            'tank' => trim($val[$trans['battle']]),
+                            'nation' => $val[2],
+                            'lvl' => trim($val[0]),
+                            'link' => $val[$trans['tank']],
                         );
                         //print_r($tank);
                         $db->prepare("INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');")->execute();
@@ -783,5 +783,58 @@
                 $player['id'] = $db->lastInsertId();  
             }              
         }   
+    }
+    function get_player($clan_id,$config)
+    {
+        $error = 0;
+        $data = array();
+        $request = "GET /uc/clans/".$clan_id."/members/?type=table HTTP/1.0\r\n";
+        $request.= "Accept: text/html, */*\r\n";
+        $request.= "User-Agent: Mozilla/3.0 (compatible; easyhttp)\r\n";
+        $request.= "X-Requested-With: XMLHttpRequest\r\n";
+        $request.= "Host: ".$config['gm_url']."\r\n";
+        $request.= "Connection: Keep-Alive\r\n";
+        $request.= "\r\n";
+
+        $wot_host=$config['gm_url'];
+        $n = 1;
+        while(!isset($fp)){
+            $fp = fsockopen($config['gm_url'], 80, $errno, $errstr, 20);
+            if($n == 3){
+                break;
+            }
+            $n++;
+        }
+        if (!$fp) {
+            echo "$errstr ($errno)<br>\n";
+        } else {
+
+            stream_set_timeout($fp,20);
+            $info = stream_get_meta_data($fp);
+
+            fwrite($fp, $request);
+            $page = '';
+
+            while (!feof($fp) && (!$info['timed_out'])) { 
+                $page .= fgets($fp, 4096);
+                $info = stream_get_meta_data($fp);
+                //echo $page;
+            }
+            fclose($fp);
+            if ($info['timed_out']) {
+                $error = 1; //Connection Timed Out
+            }
+
+        }
+        if($error == 0){
+            if(preg_match_all("/{\"request(.*?)success\"}/", $page, $matches)) {
+                $data = (json_decode($matches[0][0], true));
+            } else {
+                $error = 1;
+            }
+        }
+        $new['error'] = &$error;
+        $new['data'] = &$data;
+        return $new;
     }
 ?>

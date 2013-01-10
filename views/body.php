@@ -23,7 +23,7 @@
 
 <div id="tabs" class="main_container">
     <div style="min-height: 52px;">
-        <div class="num" style="float:left;"><?php echo $lang['total_p']; ?>: <?php echo count($new['data']['request_data']['items']) ?></div>
+        <div class="num" style="float:left;"><?php echo $lang['total_p']; ?>: <?php echo count($new['data']['members']) ?></div>
         <div style="float:left; margin-top: 7px;margin-left: 60px;">
             <?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
                 <iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe> 

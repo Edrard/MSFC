@@ -111,8 +111,12 @@
 
     if($config['cron'] == 1){
         //Geting clan roster fron wargaming or from local DB.
-        $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
-        if($new['error'] != 0){
+        $new = get_api_roster($config['clan'],$config);   //dg65tbhjkloinm 
+        if(empty($new)){
+            $new['status'] = 'error';
+            $new['status'] = 'ERROR';
+        }
+        if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
             unset($new);
             $new = $cache->get('get_last_roster',0);
             if($new === FALSE) { 
@@ -133,16 +137,12 @@
         }
 
         // Creating empty array if needed.
-        if(count($new['data']['request_data']['items']) == 0){
-            $new['error'] = 1;
-            $new['data']['request_data']['items'] = array();
-        }
 
         //Sorting roster
-        $roster = &roster_sort($new['data']['request_data']['items']);
+        $roster = &roster_sort($new['data']['members']);
         $now = now();
         //Starting geting data
-        if(count($new['data']['request_data']['items']) > 0){
+        if(count($new['data']['members']) > 0){
 
             $links = cron_time_checker($roster);
             $count = count($links); 
@@ -170,7 +170,7 @@
     }   
     if($log == 1){
         if(is_numeric($db->count)) {
-          fwrite($fh, $date.": Number of MySQL queries - ".($db->count)."\n");
+            fwrite($fh, $date.": Number of MySQL queries - ".($db->count)."\n");
         }
         fwrite($fh, $date.": End cron\n");
         fwrite($fh, $date."////////////////////////////////////////////--->\n");    

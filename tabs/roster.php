@@ -51,10 +51,10 @@
                         <table cellspacing="2" cellpadding="0" border="0" width="100%">
                             <tbody>
                                 <?php foreach($new_tanks as $name => $val){ ?>
-                                    <?php if(isset($roster_id[$val]['name'])){ ?>
+                                    <?php if(isset($roster_id[$val]['account_name'])){ ?>
                                         <tr>
-                                            <td width="30%" align="left"><a href="<?php echo $config['base'].$roster_id[$val]['name'].'/'; ?>" 
-                                                    target="_blank"><?=$roster_id[$val]['name'];?></a></td>
+                                            <td width="30%" align="left"><a href="<?php echo $config['base'].$roster_id[$val]['account_name'].'/'; ?>" 
+                                                    target="_blank"><?=$roster_id[$val]['account_name'];?></a></td>
                                             <td width="70%" align="right"><?=$name;?></td>
                                         </tr>
                                         <?php } ?>
@@ -98,12 +98,12 @@
             </tr>  
         </thead>
         <tbody>
-            <?php foreach($new['data']['request_data']['items'] as $val){ 
-                    if($val['member_since'] == ''){
-                        $val['member_since'] = '1300000000';
+            <?php foreach($new['data']['members'] as $val){ 
+                    if($val['created_at'] == ''){
+                        $val['created_at'] = '1300000000';
                     }
-                    $date = date('Y.m.d',$val['member_since']);
-                    if(!isset($res[$val['name']]['date']['local_num'])) {$roster_local_num = '1300000000';} else {$roster_local_num = $res[$val['name']]['date']['local_num'];}
+                    $date = date('Y.m.d',$val['created_at']);
+                    if(!isset($res[$val['account_name']]['date']['local_num'])) {$roster_local_num = '1300000000';} else {$roster_local_num = $res[$val['account_name']]['date']['local_num'];}
                     $diff_date = round(((mktime() - $roster_local_num) / 86400),0);
 
                     switch ($diff_date+1) { // Ну вот глючит switch при 0-м значении, хоть убей его. Кто в курсе решения проблемы, сообщите
@@ -126,12 +126,12 @@
 
                 ?>
                 <tr>
-                    <td class="<?=$color?>"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
-                            target="_blank"><?php echo $val['name']; ?></a></td>
+                    <td class="<?=$color?>"><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
+                            target="_blank"><?php echo $val['account_name']; ?></a></td>
                     <td><?php echo $val['account_id']; ?></td>
                     <td><?php echo $date; ?></td>
-                    <td><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)); ?></td>
-                    <td><?php echo $val['role']; ?></td>
+                    <td><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)); ?></td>
+                    <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $lang[$val['role']]; ?></td>
                     <td><?php echo date('Y.m.d',$roster_local_num); ?></td>
                 </tr>
                 <?php } ?>

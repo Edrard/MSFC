@@ -63,7 +63,7 @@
             }
 
             if($status >= $player_stat || $player_stat == 0){
-                $links[$val['name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
         }
         return($links);
@@ -87,7 +87,7 @@
                 $dbb['server'] = $config['server'];
                 $dbb['reg'] = $data['data']['created_at'];
                 $dbb['local'] = $data['data']['updated_at'];
-                $dbb['member_since'] = $roster['member_since'];
+                $dbb['member_since'] = $roster['created_at'];
                 $dbb['up'] = $now;
 
                 $dbb['total'] = $data['data']['summary']['battles_count'];

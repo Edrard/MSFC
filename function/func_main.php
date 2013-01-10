@@ -447,7 +447,7 @@
     {
         $new = array();
         foreach($array as $val){
-            $new[$val['name']] = $val;
+            $new[$val['account_name']] = $val;
         }
         return $new;  //new
     }
@@ -572,5 +572,19 @@
         }
 
         return $top_tanks;
+    }
+    function roster_num($var)
+    {
+        $data['recruit'] = '8';
+        $data['private'] = '7';
+        $data['recruiter'] = '6';    
+        $data['treasurer'] = '5';
+        $data['diplomat'] = '4';
+        $data['commander'] = '3'; 
+        $data['vice_leader'] = '2';  
+        $data['leader'] = '1';
+        
+        return $data[$var];
+            
     }
 ?>

@@ -352,4 +352,13 @@
     $lang['no_war'] = 'У клана нет назначенных боёв.';
     $lang['dateof'] = 'Данные по состоянию на';
     $lang['reg'] = 'Дата регистрации:';    
+
+    $lang['recruit'] = 'Новобранец';
+    $lang['private'] = 'Солдат';
+    $lang['recruiter'] = 'Вербовщик';
+    $lang['diplomat'] = 'Дипломат';
+    $lang['commander'] = 'Полевой командир';
+    $lang['leader'] = 'Командир'; 
+    $lang['vice_leader'] = 'Заместитель командира';
+    $lang['treasurer'] = 'Казначей';
 ?>

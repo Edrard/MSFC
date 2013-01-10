@@ -351,4 +351,13 @@
     $lang['no_war'] = 'The clan has no scheduled battles.';
     $lang['dateof'] = 'Data for';
     $lang['reg'] = 'Registration Date:';
+
+    $lang['recruit'] = 'Recruit';
+    $lang['private'] = 'Private';
+    $lang['recruiter'] = 'Recruiter';
+    $lang['diplomat'] = 'Diplomat';
+    $lang['commander'] = 'Commander';
+    $lang['leader'] = 'Leader'; 
+    $lang['vice_leader'] = 'Vice leader';
+    $lang['treasurer'] = 'Treasurer';
 ?>
