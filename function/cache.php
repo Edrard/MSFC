@@ -24,13 +24,13 @@
         }  
 
         private function _name($key)  
-        {  
+        {                                         
             return sprintf("%s/%s", $this->dir, sha1($key));  
         }  
 
         public function get($key, $expiration = 3600)  //$expiration = 0 No check
         {  
-
+            
             if ( !is_dir($this->dir) OR !is_writable($this->dir))  
             {  
                 return FALSE;  
@@ -76,7 +76,7 @@
 
         public function set($key, $data)  
         {  
-
+            
             if ( !is_dir($this->dir) OR !is_writable($this->dir))  
             {  
                 return FALSE;  
