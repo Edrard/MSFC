@@ -20,98 +20,52 @@
     function get_clan_province($config,$id)
     {
         //echo $search;
-        $error = 0;
-        $data = array();
-        $request = "GET /uc/clans/".$id."/provinces/?type=table HTTP/1.0\r\n";
-        //$request = "GET /uc/clans/?type=table&search=\"The Red\"".$off." HTTP/1.0\r\n"; 
-        //echo $request;
-        $request.= "Accept: text/html, */*\r\n";
-        $request.= "User-Agent: Mozilla/3.0 (compatible; easyhttp)\r\n";
-        $request.= "X-Requested-With: XMLHttpRequest\r\n";
-        $request.= "Host: ".$config['gm_url']."\r\n";
-        $request.= "Connection: Keep-Alive\r\n";
-        $request.= "\r\n";
-        $n = 0;
-        while(!isset($fp)){  
-            $fp = fsockopen($config['gm_url'], 80, $errno, $errstr, 15);
-            if($n == 3){
-                break;
-            }
-            $n++;
+        $url = "http://".$config['gm_url']."/uc/clans/".$id."/provinces/?type=table" ;
+        $ch = curl_init();
+        $timeout = 10;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "X-Requested-With: XMLHttpRequest",
+            "Accept: text/html, */*",
+            "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+            "Connection: Keep-Alive",
+        ));
+        $data = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch) ;
+        curl_close($ch);
+        if($err == 0){
+            return (json_decode(trim($data), true));
+        }else{
+            return array();
         }
-        if (!$fp) {
-            echo "$errstr ($errno)<br>\n";
-        } else {
-
-            stream_set_timeout($fp,20);
-            $info = stream_get_meta_data($fp);
-
-            fwrite($fp, $request);
-            $page = '';
-
-            while (!feof($fp) && (!$info['timed_out'])) { 
-                $page .= fgets($fp, 4096);
-                $info = stream_get_meta_data($fp);
-            }
-            fclose($fp);
-            if ($info['timed_out']) {
-                $error = 1; //Connection Timed Out
-            }
-        }
-        if($error == 0){
-            preg_match_all("/{\"request(.*?)success\"}/", $page, $matches);
-            $data = (json_decode($matches[0][0], true));
-        }
-        $new = &$data;
-        return $new;
     }
     function get_clan_attack($config,$id)
     {
         //echo $search;
-        $error = 0;
-        $data = array();
-        $request = "GET /uc/clans/".$id."/battles/?type=table HTTP/1.0\r\n";
-        //$request = "GET /uc/clans/?type=table&search=\"The Red\"".$off." HTTP/1.0\r\n"; 
-        //echo $request;
-        $request.= "Accept: text/html, */*\r\n";
-        $request.= "User-Agent: Mozilla/3.0 (compatible; easyhttp)\r\n";
-        $request.= "X-Requested-With: XMLHttpRequest\r\n";
-        $request.= "Host: ".$config['gm_url']."\r\n";
-        $request.= "Connection: Keep-Alive\r\n";
-        $request.= "\r\n";
-        $n = 0;
-        while(!isset($fp)){  
-            $fp = fsockopen($config['gm_url'], 80, $errno, $errstr, 15);
-            if($n == 3){
-                break;
-            }
-            $n++;
+        $url = "http://".$config['gm_url']."/uc/clans/".$id."/battles/?type=table" ;
+        $ch = curl_init();
+        $timeout = 10;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "X-Requested-With: XMLHttpRequest",
+            "Accept: text/html, */*",
+            "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+            "Connection: Keep-Alive",
+        ));
+        $data = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch) ;
+        curl_close($ch);
+        if($err == 0){
+            return (json_decode(trim($data), true));
+        }else{
+            return array();
         }
-        if (!$fp) {
-            echo "$errstr ($errno)<br>\n";
-        } else {
-
-            stream_set_timeout($fp,20);
-            $info = stream_get_meta_data($fp);
-
-            fwrite($fp, $request);
-            $page = '';
-
-            while (!feof($fp) && (!$info['timed_out'])) { 
-                $page .= fgets($fp, 4096);
-                $info = stream_get_meta_data($fp);
-            }
-            fclose($fp);
-            if ($info['timed_out']) {
-                $error = 1; //Connection Timed Out
-            }
-        }
-        if($error == 0){
-            preg_match_all("/{\"request(.*?)success\"}/", $page, $matches);
-            $data = (json_decode($matches[0][0], true));
-        }
-        $new = &$data;
-        return $new;
     }
     function get_api_roster($clan_id,$config)
     {
