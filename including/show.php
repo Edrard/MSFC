@@ -62,7 +62,7 @@
             }
             $links = link_creater($new['data']['members'],$config);
             //print_r($links);
-            multiget($links, $result,$config['pars']);
+            multiget($links, $result,$config['pars'],$config['multiget']);
             //print_r($result);
             $transit = prepare_stat();
             foreach($result as $name => $val){ 
@@ -84,7 +84,7 @@
             }
             if(!empty($diff_roster['new'])){
                 $links = link_creater($diff_roster['new'],$config);
-                multiget($links, $result,$config['pars']);
+                multiget($links, $result,$config['pars'],$config['multiget']);
                 //print_r($result);
                 $transit = prepare_stat();
                 foreach($result as $name => $val){

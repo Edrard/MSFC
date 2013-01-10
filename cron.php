@@ -151,7 +151,7 @@
                     fwrite($fh, $date.": Requested players num ".$count."\n");    
                 }
                 unset($count);
-                multiget($links, $result,$config['pars']);    
+                multiget($links, $result,$config['pars'],$config['multiget']);    
             }
 
             foreach($result as $name => $val){ 
