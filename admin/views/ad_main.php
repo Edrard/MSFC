@@ -237,6 +237,10 @@
 
                                     <td><input <?=$news?> type="checkbox" name="news" value="1" size="2" /></td>
                                 </tr>
+                                <tr>
+                                    <td><?=$lang['admin_multiget'];?></td>
+                                    <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
+                                </tr>
                                 <?php } ?>
                         </tbody>
                     </table>

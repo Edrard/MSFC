@@ -36,6 +36,7 @@
     $lang['admin_cron'] = 'Сollect statistics of players in time';
     $lang['admin_cron_time'] = 'The minimum period of data collection';
     $lang['admin_cron_time_warning'] = 'Warning!!! Do not change this this time';
+    $lang['admin_multiget'] = 'Number of players simultaneously loaded';
     $lang['admin_news'] = 'News feed';
     $lang['admin_submit'] = 'Submit';
     $lang['admin_creat'] = 'Create';

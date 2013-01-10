@@ -69,7 +69,7 @@
     }
     function get_api_roster($clan_id,$config)
     {
-        $url = 'api.'.$config['gm_url']."/community/clans/".$clan_id."/api/1.1/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats" ;
+        $url = 'http://api.'.$config['gm_url']."/community/clans/".$clan_id."/api/1.1/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats" ;
         $ch = curl_init();
         $timeout = 10;
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -101,9 +101,9 @@
         return $link;
     }
 
-    function multiget($inurls, &$result,$tcurl = 'curl')
+    function multiget($inurls, &$result,$tcurl = 'curl',$num)
     {
-        $urlss = array_chunk($inurls,10,TRUE);
+        $urlss = array_chunk($inurls,$num,TRUE);
         $result = array();
         if($tcurl == 'curl'){    
             foreach($urlss as $urls){
