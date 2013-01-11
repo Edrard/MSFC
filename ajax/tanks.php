@@ -48,7 +48,7 @@
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
-    $res = $cache->get('res',0);
+    $res = $cache->get('res',0,ROOT_DIR.'/cache/players');
     if($_POST['type'] != 'all'){
         $type = array($_POST['type']);   
     }else{

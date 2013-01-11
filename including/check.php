@@ -21,47 +21,47 @@
         header ("Location: /index.php");
         exit;
     }
-/*
+    /*
     if ( !extension_loaded('pdo') ) {
-        if($language == 'en'){
-            $message = '<i>ERROR:</i> <strong>php-pdo</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
-        }else{
-            $message = '<i>ОШИБКА:</i> <strong>php-pdo</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
-        }
-    }elseif ( !extension_loaded('pdo_mysql') ) {
-        if($language == 'en'){
-            $message = '<i>ERROR:</i> <strong>php-pdo_mysql</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
-        }else{
-            $message = '<i>ОШИБКА:</i> <strong>php-pdo_mysql</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
-        }
+    if($language == 'en'){
+    $message = '<i>ERROR:</i> <strong>php-pdo</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
+    }else{
+    $message = '<i>ОШИБКА:</i> <strong>php-pdo</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
     }
-*/
+    }elseif ( !extension_loaded('pdo_mysql') ) {
+    if($language == 'en'){
+    $message = '<i>ERROR:</i> <strong>php-pdo_mysql</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
+    }else{
+    $message = '<i>ОШИБКА:</i> <strong>php-pdo_mysql</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
+    }
+    }
+    */
 
     /* Обьявляем функцию вывода сообщений о ошибках */
     function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) {
-      echo '<center><div align="center" style="border: 1px solid red; width: 90%; text-align: center; padding:10px; overflow: hidden; margin-bottom: 3px; margin-top: 3px;">';
-      if(isset($message)) {
-          if(is_array($message)) {
-            echo'<div align="left"><pre>';
-            print_r($message);
-            echo'</pre></div>';
-          } else {
-            echo $message.'<br />';
-          }
-      }
-      if(isset($line) and isset($file)) { echo "Error on file <b>$file</b>, on line: <b>$line</b>"; }
-      if(isset($footer)) {
-        if(is_array($footer)) {
-          echo'<div align="left"><pre style="font-size: 12px;">';
-          foreach ($footer as $line_num => $line) {
-              echo "Line #<b>{$line_num}</b> : " . htmlspecialchars(trim($line)) . "<br />";
-          }
-          echo'</pre></div>';
-        } else {
-          echo '<br /><br />Code: <b>'.htmlspecialchars(trim($footer)).'</b>';
+        echo '<center><div align="center" style="border: 1px solid red; width: 90%; text-align: center; padding:10px; overflow: hidden; margin-bottom: 3px; margin-top: 3px;">';
+        if(isset($message)) {
+            if(is_array($message)) {
+                echo'<div align="left"><pre>';
+                print_r($message);
+                echo'</pre></div>';
+            } else {
+                echo $message.'<br />';
+            }
         }
-      }
-      echo '</div></center>';
+        if(isset($line) and isset($file)) { echo "Error on file <b>$file</b>, on line: <b>$line</b>"; }
+        if(isset($footer)) {
+            if(is_array($footer)) {
+                echo'<div align="left"><pre style="font-size: 12px;">';
+                foreach ($footer as $line_num => $line) {
+                    echo "Line #<b>{$line_num}</b> : " . htmlspecialchars(trim($line)) . "<br />";
+                }
+                echo'</pre></div>';
+            } else {
+                echo '<br /><br />Code: <b>'.htmlspecialchars(trim($footer)).'</b>';
+            }
+        }
+        echo '</div></center>';
     }
 
     /* Создаем функцию подменяющую стандартное отображение ошибок, в ней мы добавим вывод ошибок через функцию show_message,
@@ -75,18 +75,18 @@
 
         $code = NULL;
         if(file_exists($errfile) and is_readable($errfile)) {
-          $f = file($errfile);
-          if(isset($_GET['e_show']) and is_numeric($_GET['e_show']))
-          {
-            $up = $errline-$_GET['e_show']; $down = $errline+$_GET['e_show'];
-            if($up < 1) { $up = 1; }
+            $f = file($errfile);
+            if(isset($_GET['e_show']) and is_numeric($_GET['e_show']))
+            {
+                $up = $errline-$_GET['e_show']; $down = $errline+$_GET['e_show'];
+                if($up < 1) { $up = 1; }
 
-            for ($x=$up; $x<=$down; $x++) { $code[$x] = $f[$x-1]; }
+                for ($x=$up; $x<=$down; $x++) { $code[$x] = $f[$x-1]; }
 
-          } else {
-            $code = $f[$errline-1];
-          }
-          unset($f);
+            } else {
+                $code = $f[$errline-1];
+            }
+            unset($f);
         }
 
         show_message($errstr,$errline,$errfile,$code);
@@ -108,24 +108,33 @@
     $lang['chmod_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
     $lang['cronlog_off'] = 'File <b>cron.log</b> doesn\'t exist, or no permission to write. <br /> Файл <b>cron.log</b> не существует, или невозможна запись.';
     $lang['a_chmod_off'] = 'Directory <b>cache_activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
+    $lang['a_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
 
+    
     if ( !extension_loaded('pdo') ) {
-       show_message($lang['pdo_off']);
+        show_message($lang['pdo_off']);
     }
     if ( !extension_loaded('pdo_mysql') ) {
-       show_message($lang['pdo_mysql_off']);
+        show_message($lang['pdo_mysql_off']);
     }
     if(ini_get('short_open_tag') != 1) {
-      show_message($lang['short_tag_off']);
+        show_message($lang['short_tag_off']);
     }
     if(!file_exists(ROOT_DIR.'/cache/') || !is_writable(ROOT_DIR.'/cache/')) {
-      show_message($lang['chmod_off']);
+        show_message($lang['chmod_off']);
     }
     if(!file_exists(ROOT_DIR.'/cache_activity/') || !is_writable(ROOT_DIR.'/cache_activity/')) {
-      show_message($lang['a_chmod_off']);
+        show_message($lang['a_chmod_off']);
     }
     if(!file_exists(ROOT_DIR.'/cron.log') || !is_writable(ROOT_DIR.'/cron.log')) {
-      show_message($lang['cronlog_off']);
+        show_message($lang['cronlog_off']);
+    }
+    if(!is_dir(ROOT_DIR.'/cache/players')){
+        mkdir(ROOT_DIR.'/cache/players',0777);
+        chmod(ROOT_DIR.'/cache/players', 0777);
+    }
+    if(!file_exists(ROOT_DIR.'/cache/players') || !is_writable(ROOT_DIR.'/cache/players')){
+        show_message($lang['b_chmod_off']);
     }
 
 ?>

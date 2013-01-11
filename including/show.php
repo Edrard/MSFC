@@ -24,10 +24,9 @@
         $new['status'] = 'error';
         $new['status'] = 'ERROR';
     }
-    
+
     //print_r($new);
     if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-        $tmp_roster = &$cache->get('get_last_roster',0);
         $cache->clear('get_last_roster');
         $cache->set('get_last_roster', $new);
     }else{
@@ -35,33 +34,35 @@
         $new = $cache->get('get_last_roster',0);
         if($new === FALSE) { die('No cahced data'); }  
     }
-
     //Starting geting data
     if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
         //Sorting roster
 
         $roster = &roster_sort($new['data']['members']);
         $roster_id = &roster_resort_id($roster);  
-        if(!empty($tmp_roster)){
-            $cached_roster =  &roster_sort($tmp_roster['data']['members']);
-            $diff_roster =  key_compare_func($cached_roster, $roster);
-            unset($cached_roster,$tmp_roster);
-        }
         //Check if DB updating now
         while(lock_check() !== TRUE){
             sleep('10');
         } 
-        $res = $cache->get('res',$config['cache']*3600);
-        if ($res === FALSE)  
+        $get = array();
+        foreach($roster as $name => $pldata){
+            $tmp = $cache->get($name,$config['cache']*3600,ROOT_DIR.'/cache/players');
+            if($tmp === FALSE){
+                $get[$name] = $pldata;      
+            }else{
+                $res[$name] = $tmp;
+            }
+        }
+        if (!empty($get))  
         {  
-            //Checking if there any link, then starting multiget from wargaming api.
-
             //Trying to lock DB
             while(lockin_mysql() !== TRUE){
                 sleep('10');
             }
-            $links = link_creater($new['data']['members'],$config);
-            //print_r($links);
+            foreach($get as $val){
+                $cache->clear($val['account_name'],ROOT_DIR.'/cache/players');
+                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+            }
             multiget($links, $result,$config['pars'],$config['multiget']);
             //print_r($result);
             $transit = prepare_stat();
@@ -70,44 +71,15 @@
                 if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
                     $transit = insert_stat($json,$roster[$name],$config,$transit);
                     $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
+                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players');
                     unset($result[$name]);   
                 }
             }
-            unset($result,$json,$links,$transit);
+            unset($result,$json,$links,$transit);            
             // Unlocking DB now
             lockout_mysql();
-            $cache->set('res', $res);
-        }elseif(!empty($diff_roster)){
-            $cache->clear('res');
-            while(lockin_mysql() !== TRUE){
-                sleep('10');
-            }
-            if(!empty($diff_roster['new'])){
-                $links = link_creater($diff_roster['new'],$config);
-                multiget($links, $result,$config['pars'],$config['multiget']);
-                //print_r($result);
-                $transit = prepare_stat();
-                foreach($result as $name => $val){
-                    $json = json_decode($val,TRUE);
-                    if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
-                        $transit = insert_stat($json,$roster[$name],$config,$transit);
-                        $res_new[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
-                        unset($result[$name]);   
-                    }
-                }
-                unset($result,$json,$links,$transit);
-                //print_R($res_new);
-            }
-            if(!empty($diff_roster['unset'])){
-                unset_diff($res,$diff_roster['unset']);    
-            }
-            if(isset($res_new)) {
-                array_special_merge_res($res,$res_new);
-            }
-            lockout_mysql();
-            $cache->set('res', $res);
+            //$cache->set('res', $res,ROOT_DIR.'/cache/players');
         }
-
     }
     // In $res array stored player statistic.
     $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";

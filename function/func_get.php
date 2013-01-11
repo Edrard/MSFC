@@ -87,19 +87,6 @@
         }
 
     }
-    function link_creater($vals,$config){
-
-
-        if(count($vals) > 0){
-            foreach($vals as $val){
-                $link[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
-            }
-        }
-
-
-        //print_r($new);
-        return $link;
-    }
 
     function multiget($inurls, &$result,$tcurl = 'curl',$num)
     {

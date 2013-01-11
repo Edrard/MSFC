@@ -23,20 +23,26 @@
             $this->dir = $dir;
         }  
 
-        private function _name($key)  
+        private function _name($key, $dir = FALSE)  
         {                                         
-            return sprintf("%s/%s", $this->dir, sha1($key));  
+            if($dir == FALSE){
+                $dir = $this->dir;
+            }
+            return sprintf("%s/%s", $dir, sha1($key));  
         }  
 
-        public function get($key, $expiration = 3600)  //$expiration = 0 No check
+        public function get($key, $expiration = 3600, $dir = FALSE)  //$expiration = 0 No check
         {  
-            
-            if ( !is_dir($this->dir) OR !is_writable($this->dir))  
+            if($dir == FALSE){            
+                $dir = $this->dir;
+            }
+
+            if ( !is_dir($dir) OR !is_writable($dir))  
             {  
                 return FALSE;  
             }  
 
-            $cache_path = $this->_name($key);  
+            $cache_path = $this->_name($key,$dir);  
 
             if (!@file_exists($cache_path))  
             {  
@@ -74,15 +80,18 @@
             return $cache;  
         }  
 
-        public function set($key, $data)  
+        public function set($key, $data, $dir = FALSE)  
         {  
             
-            if ( !is_dir($this->dir) OR !is_writable($this->dir))  
+            if($dir == FALSE){            
+                $dir = $this->dir;
+            }
+            if ( !is_dir($dir) OR !is_writable($dir))  
             {  
                 return FALSE;  
             }  
 
-            $cache_path = $this->_name($key);  
+            $cache_path = $this->_name($key,$dir);  
 
             if ( ! $fp = fopen($cache_path, 'wb'))  
             {  
@@ -103,9 +112,13 @@
             return TRUE;  
         }  
 
-        public function clear($key)  
+        public function clear($key, $dir = FALSE)  
         {
-            $cache_path = $this->_name($key);
+            if($dir == FALSE){
+                $dir = $this->dir;
+            }
+
+            $cache_path = $this->_name($key,$dir);
 
             if (file_exists($cache_path))  
             {  
@@ -116,28 +129,32 @@
             return FALSE;  
         }
 
-        public function clear_all($exclude_option = NULL)
+        public function clear_all($exclude_option = NULL,$dir)
         {
-           $exclude_list = array('.', '..');
-           $exclude_last = array();
+            if($dir == FALSE){
+                $dir = $this->dir;
+            }
 
-           if(isset($exclude_option))
-           {
-             if(is_array($exclude_option)) {
-               foreach($exclude_option as $n => $t) { $exclude_last[] = sha1($t); }
-             } elseif(is_string($exclude_option)) {
-               $exclude_last[] = sha1($exclude_option);
-             }
-           }
+            $exclude_list = array('.', '..');
+            $exclude_last = array();
 
-           $exclude_list = array_merge($exclude_list,$exclude_last);
-           $clear_files = array_diff(scandir($this->dir), $exclude_list);
+            if(isset($exclude_option))
+            {
+                if(is_array($exclude_option)) {
+                    foreach($exclude_option as $n => $t) { $exclude_last[] = sha1($t); }
+                } elseif(is_string($exclude_option)) {
+                    $exclude_last[] = sha1($exclude_option);
+                }
+            }
 
-           foreach($clear_files as $files){
-               if(is_file($this->dir.$files)){
-                 unlink($this->dir.$files);
-               }
-           }
+            $exclude_list = array_merge($exclude_list,$exclude_last);
+            $clear_files = array_diff(scandir($dir), $exclude_list);
+
+            foreach($clear_files as $files){
+                if(is_file($dir.$files)){
+                    unlink($dir.$files);
+                }
+            }
         }
     }  
 ?>
