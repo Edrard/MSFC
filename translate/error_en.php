@@ -17,5 +17,5 @@
 ?>
 <?php
   $lang['error_cron_off'] = 'You need to enable collection of players statistics in the admin panel';
-  $lang['error_cron_off_or_none'] = 'Lacks of data to display this tab, or does not on the collection of statistics in the admin panel';
+  $lang['error_cron_off_or_none'] = 'Lacks of data to display this tab, or collection of statistics disabled in the admin panel.<br /><a href="http://wot-news.com/forum/viewtopic.php?f=30&t=2553" target="_blank">Instructions, how to configure and start collection of statistics (currently, only on russian).</a>';
 ?>
