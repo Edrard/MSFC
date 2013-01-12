@@ -50,11 +50,11 @@
     $cache = new Cache(ROOT_DIR.'/cache/');
     $new = $cache->get('get_last_roster',0);
 
-    if(empty($new['data']['request_data']['items'])){
+    if(empty($new['data']['members'])){
         $res = array();
     } else {
-      foreach($new['data']['request_data']['items'] as $activity => $time) {
-        $res[] = $time['name'];
+      foreach($new['data']['members'] as $val) {
+        $res[] = $val['account_name'];
       }
     }
 
