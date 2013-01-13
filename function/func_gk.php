@@ -110,7 +110,7 @@
 
           $check_time = date_parse($gk_data['dateTime']);
           if($check_time['error_count'] == 0) {
-            $battle_time = mktime($check_time['hour'],$check_time['minute'],$check_time['second'],$check_time['month'],$check_time['day'],$check_time['year']);
+          	$battle_time = mktime($check_time['hour'],$check_time['minute'],$check_time['second'],$check_time['month'],$check_time['day'],$check_time['year']);
             $file_error .= $lang['gk_error_10'];
           } else {
             $show_table = false;
@@ -181,7 +181,7 @@
     }
     function gk_clean_db($db)  //удаляем из бд старые записи
     {
-        $sql = "DELETE FROM `gk` WHERE `time` < '".time()."';";
+        $sql = "DELETE FROM `gk` WHERE `time` < '".mktime()."';";
         $q = $db->prepare($sql);
         if($q->execute() != true) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));

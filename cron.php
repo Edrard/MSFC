@@ -139,7 +139,7 @@
         // Creating empty array if needed.
 
         //Sorting roster
-        $roster = roster_sort($new['data']['members']);
+        $roster = &roster_sort($new['data']['members']);
         $now = now();
         //Starting geting data
         if(count($new['data']['members']) > 0){

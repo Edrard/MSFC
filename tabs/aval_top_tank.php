@@ -10,15 +10,13 @@ echo '
 
         $(document).ready(function()
         {
-            $("#aval_top_tank'.$index.'").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : \'{content} {icon}\',  widgets: [\'uitheme\', \'zebra\'],
-                widgetOptions: {uitheme : \'jui\'}
-            });
+            $("#aval_top_tank'.$index.'").tablesorter({sortList:[[0,0]], widgets: [\'zebra\']});
         }
         );
 </script>
 '; ?>
  <div align="center">
-    <table id="aval_top_tank<?=$index?>" width="100%" cellspacing="1">
+    <table id="aval_top_tank<?=$index?>" class="tablesorter wid" cellspacing="1">
         <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th>
@@ -45,22 +43,22 @@ echo '
                 </tr>
                 <?php } ?>
         </tbody>
-     <tfoot>
-      <tr>
-                    <th class="ui-widget-header ui-state-default"><?=$lang['toptank_3']?>:</th>
+	 <tfoot>
+	  <tr>
+                    <th><?=$lang['toptank_3']?>:</th>
                 <?php foreach(array_keys($topTanki) as $column){ ?>
-                    <th class="ui-widget-header ui-state-default" align="center"><?php echo @$countTanks[$column]; ?></th>
+                    <th align='center'><?php echo @$countTanks[$column]; ?></th>
                     <?php } ?>
-                    <th class="ui-widget-header ui-state-default" align="center"><?php echo $y; ?></th>
-      </tr>
+                    <th align='center'><?php echo $y; ?></th>
+	  </tr>
             <tr>
-                <th class="ui-widget-header ui-state-default">&nbsp;</th>
+                <th>&nbsp;</th>
                 <?php foreach($topTanki as $column => $val){ ?>
-                    <th class="ui-widget-header ui-state-default" align="center"><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
+                    <th align='center'><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
                     <?php } ?>
-                <th class="ui-widget-header ui-state-default" align="center"><?=$lang['toptank_1']?></th>
+                <th align='center'><?=$lang['toptank_1']?></th>
             </tr>
-     </tfoot>
+	 </tfoot>
     </table>
   </div>
 <? unset($name); unset($val); unset($column); unset($x); unset($y); unset($tank); unset($stat); unset($countTanks); unset($topTanki); ?>

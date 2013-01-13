@@ -16,7 +16,7 @@
     */
 ?>
 <div align="center">
-    <table id="battel" width="100%" cellspacing="1" cellpadding="2">
+    <table id="battel" class="tablesorter wid" cellspacing="1">              
         <thead> 
             <tr>
                 <th><?php echo $lang['name']; ?></th> 

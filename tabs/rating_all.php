@@ -18,48 +18,54 @@
 <div align="center">
 <script>
 $(document).ready(function() {
-  $( "#triggerrating" ).buttonset();
+    $("#change_ratingplace").button();
+    $("#change_ratingvalue").button().addClass("ui-state-focus");
     $(".ratingplace").hide();
     $("#change_ratingplace").click(function() {
+      $("#change_ratingvalue").removeClass("ui-state-focus");
+      $("#change_ratingplace").addClass("ui-state-focus");
+      //hide all
       $(".ratingvalue").hide();
+      //show selected
       $(".ratingplace").show();
       return false;
     });
     $("#change_ratingvalue").click(function() {
+      $("#change_ratingplace").removeClass("ui-state-focus");
+      $("#change_ratingvalue").addClass("ui-state-focus");
+      //hide all
       $(".ratingplace").hide();
+      //show selected
       $(".ratingvalue").show();
       return false;
     });
 });
 </script>
-<form>
-    <div id="triggerrating" align="center">
-        <input type="radio" id="change_ratingvalue" name="triggerrating" checked="checked" /><label for="change_ratingvalue"><?=$lang['show_ratingvalue'];?></label>
-        <input type="radio" id="change_ratingplace" name="triggerrating" /><label for="change_ratingplace"><?=$lang['show_ratingplace'];?></label>
-    </div>
-</form>
-
-    <table id="rating_all" cellspacing="1" style="width: 100%;">
+  <a href="#" id="change_ratingvalue"><?=$lang['show_ratingvalue'];?></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="#" id="change_ratingplace"><?=$lang['show_ratingplace'];?></a>
+    <table id="rating_all" class="tablesorter" cellspacing="1" style="width: 100%;">
         <thead> 
             <tr>
-                <th><?=$lang['name']; ?></th>
+                <th><?php echo $lang['name']; ?></th> 
                 <?php foreach(array_keys($res[$rand_keys]['rating']) as $column){ 
                      $array = $res[$rand_keys]['rating'][$column];
                      echo "<th align='center' class=\"{sorter: 'digit'} ratingplace\"><img class='bb' src='{$array['link']}' title='<font color=\"royalblue\">{$array['type']}</font><br>{$array['name']}'><br>$column</th>";
                      echo "<th align='center' class=\"{sorter: 'digit'} ratingvalue\"><img class='bb' src='{$array['link']}' title='<font color=\"royalblue\">{$array['type']}</font><br>{$array['name']}'><br>$column</th>";
-                } ?>
+                     } ?>
             </tr>  
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
                 <tr>
-                        <td><a href="<?=$config['base'].$name.'/'; ?>" target="_blank"><?=$name; ?></a></td>
+                    <td><a href="<?php echo $config['base'].$name.'/'; ?>"
+                            target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['rating'] as $result){ ?>
-                        <td class="ratingplace"><?=$result['place']; ?></td>
-                        <td class="ratingvalue"><?=$result['value']; ?></td>
-                    <?php } ?>
+                        <td class="ratingplace"><?php echo $result['place']; ?></td>
+                        <td class="ratingvalue"><?php echo $result['value']; ?></td>
+                        <?php } ?>
                 </tr>
-            <?php } ?>
+                <?php } ?>
         </tbody>  
     </table>
   </div>

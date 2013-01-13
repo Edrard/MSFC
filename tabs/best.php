@@ -17,7 +17,7 @@
 ?>
 <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ ?>
     <div align="center">
-    <table cellspacing="2" cellpadding="8" border="0" width="100%">
+        <table cellspacing="2" cellpadding="8" border="0" class="wid">
             <tbody>
                 <tr>
                     <td align="center" style="font-size: 15px;font-weight: bold;"><?=$lang['players_best_results'];?></td>
@@ -26,7 +26,7 @@
                 <tr>
                     <td valign="top" width="50%">
                         <?php if(time_summer($best_main_progress,'value') != 0){ ?>
-                            <table id="best_main" cellspacing="1">
+                            <table id="best_main" class="tablesorter" cellspacing="1">              
                                 <thead> 
                                     <tr>
                                         <th></th>
@@ -51,7 +51,7 @@
                     </td>
                     <td valign="top" width="50%">
                         <?php if(time_summer($best_medal_progress,'value') != 0){ ?>
-                            <table id="best_medal" cellspacing="1">
+                            <table id="best_medal" class="tablesorter" cellspacing="1">              
                                 <thead> 
                                     <tr>
                                         <th><?=$lang['achiv']?></th>

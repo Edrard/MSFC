@@ -1,7 +1,7 @@
-<?
+﻿<?
 if(isset($_GET['checkdate'])) {
-echo $lang['gk_info_7'].date('d.m.Y H:i:s', time());
-echo $lang['gk_info_8'].date('d.m.Y H:i:s', time()+$config['time']*60*60);
+echo $lang['gk_info_7'].date('d.m.Y H:i:s', mktime());
+echo $lang['gk_info_8'].date('d.m.Y H:i:s', mktime()+$config['time']*60*60);
 echo '<br />';
 }
 $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
@@ -9,7 +9,7 @@ $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("
 
 <script type="text/javascript">
 $(document).ready(function() {
-$('.gksubmit').button();
+$('.gksubmit').css('font-weight','normal').button();
 });
 </script>
 <div class="num" align="left">
@@ -25,9 +25,8 @@ $('.gksubmit').button();
 <script type="text/javascript" id="js">
 
         $(document).ready(function()
-        {   $("#gk_destroyed").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                                            widgetOptions: {uitheme : 'jui'}
-            });
+        {
+            $("#gk_destroyed").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
             $('.gkcheckbox').addClass('ui-checkbox');
         }
         );
@@ -35,7 +34,7 @@ $('.gksubmit').button();
 <div align="center">
     <form action="./main.php#tabs-<?php echo $key; ?>" method="post">
        <input type="hidden" value="<?=$gk_fresult['time'];?>" name="Array[time]">
-        <table id="gk_destroyed" cellspacing="1">
+        <table id="gk_destroyed" class="tablesorter" cellspacing="1">
             <thead>
                 <tr>
                     <th align="center"><?=$lang['name'];?></th>
@@ -60,7 +59,7 @@ $('.gksubmit').button();
 </div>
    <div align="center">
    <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
-      <table id="blocked" cellspacing="1" width="100%">
+      <table id="blocked" class="tablesorter" cellspacing="1" style="width: 100%;">
       <thead>
          <tr>
             <th><?php echo $lang['name'];?></th>

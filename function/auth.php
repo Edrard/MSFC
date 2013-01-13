@@ -1,21 +1,4 @@
 <?php
-    /*
-    * Project:     Clan Stat
-    * License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported
-    * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
-    * -----------------------------------------------------------------------
-    * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
-    * -----------------------------------------------------------------------
-    * @author      $Author: Edd $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
-    * @link        http://wot-news.com
-    * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
-    *
-    */
-?>
-<?php
     if (preg_match ("/auth.php/", $_SERVER['PHP_SELF']))
     {
         header ("Location: /index.php");
@@ -87,7 +70,7 @@
                 if ( count($result) == 0 ) {
                     $this->errors[] = ucfirst($col).' doesn\'t exist.';
                 } else {
-                    $row = $result;
+                    $row = &$result; 
                     if ( $row['password'] == $password ) {
                         if ( $this->type == 'session' ) {
                             $this->set_session($col, $user);
@@ -183,7 +166,7 @@
                     } else {
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
-                    $row = $result;
+                    $row = &$result;
                     if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] ) {
                         $this->logout();
                     }
@@ -197,7 +180,7 @@
                     } else {
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
-                    $row = $result;
+                    $row = &$result;
                     if ( $row[$col] !== $_SESSION[$col] || $row['password'] !== $_SESSION['password'] ) {
                         $this->logout();
                     }
@@ -208,7 +191,7 @@
         public function error() {
             $data = '';
             if ( is_array($this->errors) && !empty($this->errors) ) {
-                $data = '<div align="center">';
+                $data = '<div align="center" style="border:1px solid #CCC; background-color:#FAFAFA; color:#FF0000">';
                 foreach ( $this->errors as $value ) {
                     $data .= $value."<br />";
                 }

@@ -38,15 +38,15 @@
     if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
         //Sorting roster
 
-        $roster = roster_sort($new['data']['members']);
-        $roster_id = roster_resort_id($roster);
+        $roster = &roster_sort($new['data']['members']);
+        $roster_id = &roster_resort_id($roster);  
         //Check if DB updating now
         while(lock_check() !== TRUE){
             sleep('10');
         } 
         $get = array();
         foreach($roster as $name => $pldata){
-            $tmp = $cache->get($name,$config['cache']*3600,ROOT_DIR.'/cache/players/');
+            $tmp = $cache->get($name,$config['cache']*3600,ROOT_DIR.'/cache/players');
             if($tmp === FALSE){
                 $get[$name] = $pldata;      
             }else{
@@ -60,7 +60,7 @@
                 sleep('10');
             }
             foreach($get as $val){
-                $cache->clear($val['account_name'],ROOT_DIR.'/cache/players/');
+                $cache->clear($val['account_name'],ROOT_DIR.'/cache/players');
                 $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }
             multiget($links, $result,$config['pars'],$config['multiget']);
@@ -71,7 +71,7 @@
                 if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
                     $transit = insert_stat($json,$roster[$name],$config,$transit);
                     $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
-                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');
+                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players');
                     unset($result[$name]);   
                 }
             }

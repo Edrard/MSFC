@@ -18,29 +18,31 @@
 <div align="center">
 <script>
 $(document).ready(function() {
-    $( "#triggerperform" ).buttonset();
-
+    $("#change_button_averageshow").button();
+    $("#change_button_fullshow").button().addClass("ui-state-focus");
     $(".averageshow").hide();
     $("#change_button_averageshow").click(function() {
+      $("#change_button_fullshow").removeClass("ui-state-focus");
+      $("#change_button_averageshow").addClass("ui-state-focus");
+      //hide all
       $(".fullshow").hide();
+      //show selected
       $(".averageshow").show();
       return false;
     });
     $("#change_button_fullshow").click(function() {
+      $("#change_button_averageshow").removeClass("ui-state-focus");
+      $("#change_button_fullshow").addClass("ui-state-focus");
+      //hide all
       $(".averageshow").hide();
+      //show selected
       $(".fullshow").show();
       return false;
     });
 });
 </script>
-<form>
-    <div id="triggerperform" align="center">
-        <input type="radio" id="change_button_fullshow" name="triggerperform" checked="checked" /><label for="change_button_fullshow"><?=$lang['show_full_perform'];?></label>
-        <input type="radio" id="change_button_averageshow" name="triggerperform" /><label for="change_button_averageshow"><?=$lang['show_average_perform'];?></label>
-    </div>
-</form>
-
-    <table id="perform_all" width="100%" cellspacing="1">
+<a href="#" id="change_button_fullshow"><?=$lang['show_full_perform'];?></a>&nbsp;&nbsp;&nbsp;<a href="#" id="change_button_averageshow"><?=$lang['show_average_perform'];?></a>
+    <table id="perform_all" class="tablesorter wid" cellspacing="1">
         <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
@@ -60,16 +62,16 @@ $(document).ready(function() {
                             target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['perform'] as $cat => $result){ ?>
                         <?php if($cat == $lang['hit_ratio']) { ?>
-                            <td class='fullshow averageshow'>
-                            <?php echo $result; ?>
-                            </td>
+                			<td class='fullshow averageshow'>
+                			<?php echo $result; ?>
+                			</td>
                         <?php } else { ?>
-                            <td class='averageshow'>
-                            <? if($val['overall'][$lang['games_p']] > 0) { echo round($result/$val['overall'][$lang['games_p']],2); } else { echo '0'; } ?>
-                            </td>
-                            <td class='fullshow'>
-                            <?php echo $result; ?>
-                            </td>
+                			<td class='averageshow'>
+                			<? if($val['overall'][$lang['games_p']] > 0) { echo round($result/$val['overall'][$lang['games_p']],2); } else { echo '0'; } ?>
+                			</td>
+                			<td class='fullshow'>
+                			<?php echo $result; ?>
+                			</td>
                        <?php }
                        } ?>
                 </tr>

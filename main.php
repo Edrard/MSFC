@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.0 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -21,12 +21,12 @@
     if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
         define('ROOT_DIR', dirname(__FILE__));
     }else{
-        define('ROOT_DIR', '.');
+        define('ROOT_DIR', '.');    
     }
     //Starting script time execution timer
     $begin_time = microtime(true);
 
-    //Checker
+    //Cheker
     include_once(ROOT_DIR.'/including/check.php');
 
     //MYSQL
@@ -44,6 +44,7 @@
     include_once(ROOT_DIR.'/function/rating.php');
     include_once(ROOT_DIR.'/function/func.php');
     include_once(ROOT_DIR.'/function/func_main.php');
+    include_once(ROOT_DIR.'/function/oldfunc.php');
     include_once(ROOT_DIR.'/function/func_get.php');
     include_once(ROOT_DIR.'/function/func_gk.php');
     include_once(ROOT_DIR.'/function/func_time.php');
@@ -64,6 +65,9 @@
     include_once(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
+    //if($config['cache']){
+    //    $cache->setExpiryInterval($config['cache']*3600);
+    //}
     //Authentication
     $auth = new Auth($db);
 
@@ -72,40 +76,66 @@
     }
 
     if ( isset($_POST['login']) ) {
+        //echo $_POST['login'];
         $auth->login($_POST['user'], $_POST['pass']); // This order: User/Email Password True/False (if you want to use email as auth
     }
     if (isset($_GET['error'])){
-        $data['msg'][] = 'You need to login';
+        $data['msg'][] = 'You need to login';    
     }
 
     $logged = 0;
     if($auth->isLoggedIn(1)){
         $logged = 1;
-    }
+    }    
     if($auth->isLoggedInAdmin(1)){
         $logged = 2;
+    }    
+    //print_r($lang);
+    //Including Tabs array   
+    include_once(ROOT_DIR.'/function/tabs.php');
+
+
+    if(!isset($_GET['ver'])){
+        $_GET['ver'] = '0';
     }
 
-    include_once(ROOT_DIR.'/function/tabs.php');
-    include_once(ROOT_DIR.'/including/show.php');
-    include_once(ROOT_DIR.'/views/header.php');
-    if(count($new) > 0 ){
+    // Including Forming players statistic manipulations.
+    include_once(ROOT_DIR.'/including/show.php');                 
+
+    // Including Global map manipulation
+    include_once(ROOT_DIR.'/including/gk.php');
+
+    //print_r($roster_id);
+    // View part.
+    //print_r($res);
+    if(count($res) > 0 ){   
         $tanks_group = tanks_group($res);
         $rand_keys = array_rand($res, 1);
         $eff_rating = eff_rating($res,$lang);
+        //print_r($res[$rand_keys]['medals']); 
         if($config['cron'] == 1 && $col_check > 2){
-            $we_loosed = went_players($roster,(now(1) - 172800),now());
+            $we_loosed = went_players($roster,(now() - 172800),now());
             $new_players = new_players($roster,(now() - 172800),now());
             $main_progress = player_progress_main((now() - 259200),now());
             $best_main_progress = best_player_progress_main($main_progress);
             $medal_progress = medal_progress((now() - 259200),now());
             $best_medal_progress = best_medal_progress($medal_progress['unsort']);
             $new_tanks = new_tanks($roster,$col_tables,(now() - 259200),now());
-        }
-        include_once(ROOT_DIR.'/views/body.php');
-    }else{
-        include_once(ROOT_DIR.'/views/error.php');
-    }
-    include_once(ROOT_DIR.'/views/footer.php');
-?>
+            //$palyer = player_progress('92327',$col_tables);
+            //print_r($roster_id);
+            //print_r($main_progress);
+            //print_r($best_medal_progress);
+            //print_r($we_loosed);
+        }                                                             
 
+        include_once(ROOT_DIR.'/views/header.php');    
+        include_once(ROOT_DIR.'/views/body.php');
+        include_once(ROOT_DIR.'/views/footer.php');
+
+    }else{
+        include_once(ROOT_DIR.'/views/header.php');
+        include_once(ROOT_DIR.'/views/error.php');
+        include_once(ROOT_DIR.'/views/footer.php');    
+    }
+
+?>

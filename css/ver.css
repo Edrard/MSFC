@@ -1,0 +1,41 @@
+.num{
+    margin-left: 8px;
+}
+table.wid {
+    width: 100%;
+}
+#tabs {
+    position: relative;
+    padding-left: 6.5em;
+}
+#tabs .ui-tabs-nav {
+    position: absolute;
+    left: 0.25em;
+    top: 0.25em;
+    bottom: 0.25em;
+    width: 170px;
+    padding: 0.2em 0 0.2em 0.2em;
+}
+#tabs .ui-tabs-nav li {
+    right: 1px;
+    width: 100%;
+    border-right: none;
+    border-bottom-width: 1px !important;
+    border-radius: 4px 0px 0px 4px;
+    -moz-border-radius: 4px 0px 0px 4px;
+    -webkit-border-radius: 4px 0px 0px 4px;
+    overflow: hidden;
+}
+#tabs .ui-tabs-nav li.ui-tabs-selected {
+    border-right: 1px solid transparent;
+}
+#tabs .ui-tabs-nav li a {
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+#tabs > div {
+    height: auto;
+    margin-left: 170px;
+    min-height: 700px;
+}

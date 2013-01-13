@@ -93,7 +93,7 @@
             preg_match_all("/{\"request(.*?)success\"}/", $page, $matches);
             $data = (json_decode($matches[0][0], true));
         }
-        $new = $data;
+        $new = &$data;
         return $new;
     }
     function base_dir($local = null)
@@ -108,7 +108,7 @@
     } 
     function error($msg) 
     {
-        $data = '<div align="center" class="ui-state-error ui-corner-all">';
+        $data = '<div align="center" style="border:1px solid #CCC; background-color:#FAFAFA; color:#FF0000">';
         foreach ( $msg as $value ) {
             $data .= $value."<br />";
         }

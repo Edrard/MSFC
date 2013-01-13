@@ -15,11 +15,13 @@
     *
     */
 ?>
-    <div>
+    <div class="admain">
+        <br><br>
         <div align="center"><?=$lang['log_to_tab'];?></div>
+        <br><br>
         <div class="adinsider">
             <form action="<?=$_SERVER['PHP_SELF'];?>?auth" method="post">
-                <table width="300px" border="0" cellspacing="4" cellpadding="0">
+                <table width="300" border="0" cellspacing="4" cellpadding="0">
                     <tr>
                         <td colspan="2" align="center">
                             <br>      
@@ -48,15 +50,15 @@
                 </table> 
             </form>
         </div>
-        <br>
-        <div class="ui-state-error ui-corner-all" align="center">
-        <?php
-            if ($auth->error()){
-                echo $auth->error();
-            }
-            if (isset($data['msg'])){
-                echo '<br>'.error($data['msg']);
-            }
-        ?>
-        </div>
+    </div>
+    <div align="center">
+    <?php
+        if ($auth->error()){
+            echo $auth->error();
+        }
+
+        if (isset($data['msg'])){
+            echo '<br>'.error($data['msg']);
+        }
+    ?>
     </div>

@@ -90,37 +90,27 @@
 
     function multiget($inurls, &$result,$tcurl = 'curl',$num)
     {
-        global $db;
-        $current_time = now();
         $urlss = array_chunk($inurls,$num,TRUE);
         $result = array();
-         foreach($urlss as $urls){
-           If ((now()-$current_time)>=5) {
-                    $sql = "SELECT `value` FROM  `config` LIMIT 0 , 1;";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                       $current_time = now();
-                    } else {
-                        Print_R('Something go wrong,');
-                        Print_R($q->errorInfo());
-                    }
-           };
-           if($tcurl == 'curl'){
+        if($tcurl == 'curl'){    
+            foreach($urlss as $urls){
                 $curl = new CURL();
                 $curl->retry = 2;
-                $opts = array( CURLOPT_RETURNTRANSFER => true );
+                $opts = array( CURLOPT_RETURNTRANSFER => true );  
                 foreach($urls as $key => $link){
                     $curl->addSession( $link, $key, $opts );
                 }  
                 $res = $curl->exec();  
                 $curl->clear();
                 $result = array_special_merge($result,$res);
-           } else{
+            }
+        }else{
+            foreach($urlss as $urls){
                 $curl = new MCurl; 
                 $curl->threads = 100;  
                 $curl->timeout = 15;    
                 $curl->sec_multiget($urls, $result);
-           }
+            }  
         }
     }
 ?>

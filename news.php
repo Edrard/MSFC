@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.4 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
@@ -23,11 +23,12 @@
     }else{
         define('ROOT_DIR', '.');    
     }
+    //Starting script time execution timer
+    $begin_time = microtime(true);
 
-    //Checker
+    //Cheсker
 
     //MYSQL
-    include_once(ROOT_DIR.'/function/mysql.php');
     //Connecting to MySQL
 
     //HTML Dom
@@ -35,8 +36,7 @@
 
     // Include Module functions
     include_once(ROOT_DIR.'/function/func.php');
-    // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
+
     //Loding language pack
     $config['align'] = '';
     $lang['error_1'] = '';
@@ -46,11 +46,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php if (!isset($config['theme'])) {
-                   $config['theme'] = 'ui-lightness'; } ?>
-        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+
+    <link rel="stylesheet" href="./css/jq.css" type="text/css" media="print, projection, screen" /> 
+    <link rel="stylesheet" href="./css/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="./css/jquery-ui.css" type="text/css" media="print, projection, screen" /> 
     <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui-ru.js"></script>
+    <script type="text/javascript" src="./js/jquery.tablesorter.js"></script> 
+    <script type="text/javascript" src="./js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="./js/jquery.qtip.js"></script>
     <script type="text/javascript" src="./js/jquery.vticker.js"></script>
 
     <script>
@@ -68,13 +73,12 @@
         });   
     </script> 
     </head>
-<div class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+
 <table border="0" cellpadding="0" cellspacing="0" width="450px">
     <tbody>
         <tr>
-            <td>Последние новости в "Мире Танков"</td>
-        </tr>
-        <tr>
+            <td>Последние новости в "Мире Танков"</td> 
+        </tr><tr>
             <td>
                 <div id="rotate" class="width:450px">
                     <ul>
@@ -92,6 +96,5 @@
 
     </tbody>
 </table>
-</div>
 </body>                   
 </html>
