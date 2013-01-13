@@ -111,4 +111,5 @@
 
     $lang['admin_clear_a_cache'] = 'Clear cached activity data';
     $lang['admin_clear_a_cache_form'] = 'Delete activity cache, except last <input type="text" size="1" name="clear_a_cache_date" value="7" /> days.';
+    $lang['themes'] = 'Theme:';
 ?>

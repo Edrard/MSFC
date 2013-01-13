@@ -44,7 +44,10 @@
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        foreach($tmp as $t) { $col_tank[] = end(explode('_',$t['0'])); }
+        foreach($tmp as $t) {
+           $temp = explode('_',$t['0']);
+           $col_tank[] = end($temp);
+        }
 
         $t = array();
         $t['current'] = $current;

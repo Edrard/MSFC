@@ -86,53 +86,63 @@
             </tbody>
         </table>
         <? } ?>
-    <table id="roster" class="tablesorter wid" cellspacing="1">              
+    <table id="roster" width="100%" cellspacing="1">
         <thead> 
             <tr>
-                <th><?php echo $lang['name']; ?></th> 
+                <th><?=$lang['name']; ?></th>
                 <th>ID</th> 
-                <th><?php echo $lang['in_clan']; ?></th>
-                <th><?php echo $lang['day_clan']; ?></th> 
-                <th><?php echo $lang['role']; ?></th>
-                <th><?php echo $lang['dateof']; ?></th>
+                <th><?=$lang['in_clan']; ?></th>
+                <th><?=$lang['day_clan']; ?></th>
+                <th><?=$lang['role']; ?></th>
+                <th class="{sorter: 'usLongDate'}"><?=$lang['dateof']; ?></th>
             </tr>  
         </thead>
         <tbody>
             <?php foreach($new['data']['members'] as $val){ 
                     if($val['created_at'] == ''){
-                        $val['created_at'] = '1300000000';
-                    }
-                    $date = date('Y.m.d',$val['created_at']);
-                    if(!isset($res[$val['account_name']]['date']['local_num'])) {$roster_local_num = '1300000000';} else {$roster_local_num = $res[$val['account_name']]['date']['local_num'];}
-                    $diff_date = round(((mktime() - $roster_local_num) / 86400),0);
-
-                    switch ($diff_date+1) { // Ну вот глючит switch при 0-м значении, хоть убей его. Кто в курсе решения проблемы, сообщите
-                    case ($diff_date <= 3):
-                    $color = 'col_blue';
-                    break;
-                    case ($diff_date <= 7):
-                    $color = 'col_green';
-                    break;
-                    case ($diff_date <= 14):
-                    $color = 'col_red';
-                    break;
-                    case ($diff_date <= 30):
-                    $color = 'col_grey';
-                    break;
-                    default:
-                    $color = 'col_black';
-                    break;
+                        $val['created_at'] = 'Н/Д';
+                        $date = $val['created_at'];
+                    } else {
+                        $date = date('Y.m.d',$val['created_at']);
                     }
 
+                    if(!isset($res[$val['account_name']]['date']['local_num'])) {$roster_local_num = 'Н/Д';} else {$roster_local_num = $res[$val['account_name']]['date']['local_num'];}
+
+                    If(is_numeric($roster_local_num)){
+                       $diff_date = round(((time() - $roster_local_num) / 86400),0);
+
+                       switch ($diff_date+1) { // Ну вот глючит switch при 0-м значении, хоть убей его. Кто в курсе решения проблемы, сообщите
+                       case ($diff_date <= 3):
+                       $color = 'col_blue';
+                       break;
+                       case ($diff_date <= 7):
+                       $color = 'col_green';
+                       break;
+                       case ($diff_date <= 14):
+                       $color = 'col_red';
+                       break;
+                       case ($diff_date <= 30):
+                       $color = 'col_grey';
+                       break;
+                       default:
+                       $color = 'col_black';
+                       break;
+                       }
+                    } else { $color = 'col_black';}
                 ?>
                 <tr>
-                    <td class="<?=$color?>"><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
-                            target="_blank"><?php echo $val['account_name']; ?></a></td>
-                    <td><?php echo $val['account_id']; ?></td>
-                    <td><?php echo $date; ?></td>
-                    <td><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)); ?></td>
+                    <td><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
+                            target="_blank"><?=$val['account_name']; ?></a></td>
+                    <td><?=$val['account_id']; ?></td>
+                    <td><?=$date; ?></td>
+                    <td><?php If (is_numeric($val['created_at'])){
+                                       echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24));
+                              } else { echo $val['created_at']; }; ?></td>
                     <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $lang[$val['role']]; ?></td>
-                    <td><?php echo date('Y.m.d',$roster_local_num); ?></td>
+                    <td class="<?=$color?>">
+                        <?php if (is_numeric($roster_local_num)){
+                                      echo date('Y.m.d (H:i)',$roster_local_num);
+                              } else {echo $roster_local_num;}; ?></td>
                 </tr>
                 <?php } ?>
         </tbody>  

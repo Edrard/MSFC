@@ -51,7 +51,7 @@
     $new_roster = $cache->get('get_last_roster',0);
     //print_r($new_roster);
     foreach($new_roster['data']['members'] as $val){
-        $res[$val['account_name']] = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players');
+        $res[$val['account_name']] = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players/');
     }
     if($_POST['type'] != 'all'){
         $type = array($_POST['type']);   
@@ -74,18 +74,19 @@
 ?>
 <script type="text/javascript" id="js">     
     $(document).ready(function() 
-        { 
-            $("#tankslist").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
+    {  $("#tankslist").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
+           widgetOptions: {uitheme : 'jui'}
+       });
     });
 </script>
-<table id="tankslist" class="tablesorter wid" cellspacing="1">
+<table id="tankslist" width="100%" cellspacing="1">
     <thead>
         <tr>
-            <th><?php echo $lang['name']; ?></th>
+            <th><?=$lang['name']; ?></th>
             <?php foreach($tanks_group as $type => $types){
                     foreach($types as $lvl => $tank) {
                         foreach($tank as $column => $tmp){ ?>
-                        <th><?php echo $column; ?></th>
+                        <th><?=$column; ?></th>
                         <?php }
                     }
                 }
@@ -96,7 +97,7 @@
         <?php foreach($res as $name => $val){ ?>
             <tr>
                 <td><a href="<?php echo $config['base'].$name.'/'; ?>"
-                    target="_blank"><?php echo $name; ?></a></td>
+                    target="_blank"><?=$name; ?></a></td>
                 <?php foreach($tanks_group as $type => $types){
                         foreach($types as $lvl => $tmp){
                             foreach($tmp as $column => $one){ ?>

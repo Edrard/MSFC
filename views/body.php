@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -21,20 +21,32 @@
     }
 ?>
 
-<div id="tabs" class="main_container">
-    <div style="min-height: 52px;">
-        <div class="num" style="float:left;"><?php echo $lang['total_p']; ?>: <?php echo count($new['data']['members']) ?></div>
-        <div style="float:left; margin-top: 7px;margin-left: 60px;">
-            <?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
-                <iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe> 
-                <?php } ?>
-        </div>
-        <div style="float:right;">
+<div style="min-height: 100%; padding: 0; margin: 0;" id="allcontainer" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+  <table style="width: 100%;" cellpadding="4" cellspacing="0">
+    <tbody>
+      <tr style="height: 100px;" valign="center">
+        <td width="16px" class="ui-state-highlight ui-corner-all" onclick="magic2(this)" rowspan="2" >
+            <div id="chan" style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-w">
+            &nbsp;
+            </div>
+        </td>
+        <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
+        <td align="center">
+           <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
+                                   height="64px" width="64px" border="0"; title='<?= $new["data"]["description_html"];?>'/> <br>
+           <?php print_R('<font color="'.$new['data']['color'].'">') ?>
+           <?php print_R($new['data']['abbreviation'].'<br>'.$new['data']['motto'].'</font>') ?>
+        </td>
+        <td width="300px"><img src="./images/logo_small.png" /></td>
+        <?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
+        <td width="420px"><iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe></td>
+        <?php } ?>
+        <td>
             <?php if($logged > 0){ ?>
-                <table border="0" cellpadding="4" cellspacing="0" width="440" >
+                <table border="0" cellpadding="4" cellspacing="0">
                     <tbody>
                         <tr>
-                            <td rowspan="2"><img src="./images/logo_small.png" /></td>
+
                             <td><strong><?=$lang['hi'];?> <?=$_COOKIE['user'];?></strong></td>
                         </tr>
                         <tr>
@@ -48,50 +60,73 @@
                     </tbody>
                 </table>
                 <?php }else{ ?>
-                <img src="./images/logo_small.png" style="margin-right: 40px;" />
-                <style>
-                  .ui-dialog-titlebar {
-                    background-color:  #8DBDD8;
-                    border: 1px solid black;
-                    border-bottom: 0px;
-                    border-collapse: collapse;
-                  }
-
-                </style>
-                <div id="login_dialog" class="ui-dialog hidden" style="background: white; border: 1px solid black; border-collapse: collapse;">
-                	<div><?php include(ROOT_DIR.'/login.php'); ?></div>
-                </div>
-                <div style="float: right;">
-                <a href="#" id="login_opener"><?=$lang['login'];?></a>
+                     <div id="login_dialog" class="ui-dialog hidden" style="border: 1px solid; border-collapse: collapse;">
+                        <div><?php include(ROOT_DIR.'/login.php'); ?></div>
+                     </div>
+                <div>
+                   <a href="#" id="login_opener"><?=$lang['login'];?></a>
                 </div>
                 <?php  } ?>
-        </div>
-    </div>
-    <ul>
-        <?php foreach($tabs as $key => $val){ 
-                foreach(array_keys($val) as $link){    
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" id="tohide2">
+          <ul id="menu">
+            <?php $i=0;
+              foreach($tabs as $key => $val){
+                foreach(array_keys($val) as $link){
                     if(is_numeric($key)){ ?>
-                    <li><a href="#tabs-<?php echo $key; ?>"><?php echo $link; ?></a></li>
+                    <li><a <?php if($i==0) echo 'id="id-0"'; ?> onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
                     <?php }else{  ?>
-                    <li><a href="<?php echo $key; ?>"><?php echo $link; ?></a></li>
-                    <?php  } 
+                    <li><a onclick="magic(this)" href="<?=$key; ?>"><?=$link; ?></a></li>
+                    <?php  }
+                    $i++;
                 }  
-        } ?>
-    </ul>
-    <?php foreach($tabs as $key => $val){ 
-            foreach($val as $file){
-                if(is_numeric($key)){ 
-                    if(!is_array($file)){?>
-                    <div id="tabs-<?php echo $key; ?>">
-                    <a href="#tabs-<?php echo $key; ?>"></a>
-                        <?php include_once(ROOT_DIR.'/tabs/'.$file); ?>
-                    </div>
-                    <?php  }else{ ?>
-                    <div id="tabs-<?php echo $key; ?>">
-                        <?php include(ROOT_DIR.'/login.php'); ?>
-                    </div>
-                    <?php  } ?>
-                <?php  } ?> 
-            <?php  } ?>   
-        <?php  } ?> 
+            } ?>
+          </ul>
+        </td>
+        <td valign="top" colspan="5">
+           <div>
+              <?php
+                foreach($tabs as $key => $val){
+                  foreach($val as $file){    
+                      if(is_numeric($key)){ 
+                          if(!is_array($file)){?>
+                            <div id="tabs-<?=$key; ?>">
+                              <a href="#tabs-<?=$key; ?>"></a>
+                              <?php include_once(ROOT_DIR.'/tabs/'.$file); ?>
+                            </div>
+                          <?php  }else{ ?>
+                            <div id="tabs-<?=$key; ?>">
+                              <?php include(ROOT_DIR.'/login.php'); ?>
+                            </div>
+                          <?php }
+                      }
+                  }
+                } ?>
+           </div>
+        </td>
+      </tr>
+      <?php
+          if( function_exists('memory_get_usage') ) {
+              $mem_usage = memory_get_peak_usage(true);
+              if ($mem_usage < 1024)
+                  $memory_usage = $mem_usage." bytes";
+              elseif ($mem_usage < 1048576)
+                  $memory_usage = round($mem_usage/1024,2)." кб";
+              else
+                  $memory_usage = round($mem_usage/1048576,2)." ".$lang['mb'];
+          }   
+      ?>
+      <tr>
+        <td valign="top" colspan="6">
+          <div align="center" class="ui-accordion-content ui-widget-content ui-corner-bottom ui-accordion-content-active">
+            © 2011-<?=date('Y') ?> <a href="http://wot-news.com/">Wot-news.com</a> <?=$lang['version']; ?> <?php echo VER; ?><br>
+            <?php $end_time = microtime(true); echo $lang['ex_time'].' - '.round($end_time - $begin_time,4).' '.$lang['sec']; ?><br>
+            <?php if(isset($memory_usage)){echo $lang['memory'].' '.$memory_usage;} ?>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

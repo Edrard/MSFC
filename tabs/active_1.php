@@ -22,7 +22,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['epic'], 1); ?>
-                    <table id="active_medal_1" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_1" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
@@ -51,7 +51,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['epic2'], 1); ?>
-                    <table id="active_medal_5" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_5" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
@@ -80,7 +80,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['special'], 1); ?>
-                    <table id="active_medal_2" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_2" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
@@ -109,7 +109,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['major'], 1); ?>
-                    <table id="active_medal_3" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_3" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
@@ -138,7 +138,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['hero'], 1); ?>
-                    <table id="active_medal_4" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_4" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
@@ -167,7 +167,7 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['expert'], 1); ?>
-                    <table id="active_medal_6" class="tablesorter" cellspacing="1">              
+                    <table id="active_medal_6" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
