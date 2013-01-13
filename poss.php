@@ -65,17 +65,24 @@
 
     include_once(ROOT_DIR.'/views/header.php');
 ?>
-
+<script type="text/javascript" id="js">
+        $(document).ready(function()
+        {
+            $("#poss").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}', widgets: ['uitheme', 'zebra'],
+                                     widgetOptions: {uitheme : 'bootstrap'}
+            });
+        });
+</script> 
 <div align="center">
-    <table id="poss" class="tablesorter" cellspacing="1" style="width: 70%;"> 
+    <table id="poss" cellspacing="1" cellpadding="2" width="100%">
         <thead> 
             <tr>
-                <th width="40"><?php echo $lang['type']; ?></th>
-                <th><?php echo $lang['title_name']; ?></th>
-                <th><?php echo $lang['map']; ?></th>
-                <th><?php echo $lang['prime_time']; ?></th>
-                <th><?php echo $lang['income']; ?></th>
-                <th><?php echo $lang['owned']; ?></th>
+                <th width="40"><?=$lang['type']; ?></th>
+                <th><?=$lang['title_name']; ?></th>
+                <th><?=$lang['map']; ?></th>
+                <th><?=$lang['prime_time']; ?></th>
+                <th><?=$lang['income']; ?></th>
+                <th><?=$lang['owned']; ?></th>
 
             </tr> 
         </thead> 

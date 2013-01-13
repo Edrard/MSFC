@@ -65,10 +65,17 @@
 
     include_once(ROOT_DIR.'/views/header.php');
 ?>
-
+<script type="text/javascript" id="js">
+        $(document).ready(function()
+        {
+            $("#attack").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}', widgets: ['uitheme', 'zebra'],
+                                     widgetOptions: {uitheme : 'bootstrap'}
+            });
+        });
+</script> 
 <div align="center">
-    <table id="attack" class="tablesorter" cellspacing="1" style="width: 70%;"> 
-        <thead> 
+    <table id="attack" cellspacing="1" cellpadding="2" width="100%">
+        <thead>
             <tr>
                 <th width="40"><?=$lang['type']; ?></th>
                 <th><?=$lang['time']; ?></th>
