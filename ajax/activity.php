@@ -96,11 +96,12 @@
 <?php if($empty != 0 or ($a_all == 1)) { ?>
 <script type="text/javascript" id="js">
     $(document).ready(function()
-    {
-        $("#activity_table").tablesorter({sortList:[[0,0]], widgets: ['zebra']});
-    });
+        {   $("#activity_table").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
+                                              widgetOptions: {uitheme : 'jui'}
+            });
+        });
 </script>
-<table id="activity_table" class="tablesorter wid" cellspacing="1">
+<table id="activity_table" cellspacing="1" width="100%">
     <thead>
         <tr>
             <th><?=$lang['name']; ?></th>

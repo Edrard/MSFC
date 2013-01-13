@@ -39,7 +39,7 @@
 
     /* Обьявляем функцию вывода сообщений о ошибках */
     function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) {
-        echo '<center><div align="center" style="border: 1px solid red; width: 90%; text-align: center; padding:10px; overflow: hidden; margin-bottom: 3px; margin-top: 3px;">';
+        echo '<center><div align="center" class="ui-state-error ui-corner-all">';
         if(isset($message)) {
             if(is_array($message)) {
                 echo'<div align="left"><pre>';
@@ -108,7 +108,7 @@
     $lang['chmod_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
     $lang['cronlog_off'] = 'File <b>cron.log</b> doesn\'t exist, or no permission to write. <br /> Файл <b>cron.log</b> не существует, или невозможна запись.';
     $lang['a_chmod_off'] = 'Directory <b>cache_activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
-    $lang['a_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
+    $lang['b_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
 
     
     if ( !extension_loaded('pdo') ) {
@@ -133,7 +133,7 @@
         mkdir(ROOT_DIR.'/cache/players',0777);
         chmod(ROOT_DIR.'/cache/players', 0777);
     }
-    if(!file_exists(ROOT_DIR.'/cache/players') || !is_writable(ROOT_DIR.'/cache/players')){
+    if(!file_exists(ROOT_DIR.'/cache/players/') || !is_writable(ROOT_DIR.'/cache/players/')){
         show_message($lang['b_chmod_off']);
     }
 

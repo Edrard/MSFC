@@ -27,7 +27,7 @@
                         mkdir(ROOT_DIR.'/cache/players',0777);
                         chmod(ROOT_DIR.'/cache/players', 0777);
                     }
-                    if(is_writable(ROOT_DIR.'/cache/players')){
+                    if(is_writable(ROOT_DIR.'/cache/players/')){
                     ?>
                     <h3><?=$lang['admin_db_creat'];?></h3>
                     <form action="./index.php" method="post">

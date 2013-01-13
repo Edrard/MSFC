@@ -19,13 +19,8 @@
     $(document).ready(function() {
         $(".allmedalhide").hide();
         $(".heroshow").show();
-        $("#show_hero").button().addClass("ui-state-focus");
-        $("#show_major").button();
-        $("#show_epic").button();
-        $("#show_epic2").button();
-        $("#show_special").button();
-        $("#show_expert").button();
-        var medals_change = '#show_hero';
+        $("#triggermedals").buttonset();
+
         $("#show_hero").click(function() {
             $(".allmedalhide").hide();
             $(".heroshow").show();
@@ -78,17 +73,22 @@
 </script>
 <div align="center">
     <?=$lang['select_medals'];?><br /><br />
-    <a href="#" id="show_hero"><?=$lang['hero'];?></a>&nbsp;&nbsp;&nbsp;
-    <a href="#" id="show_major"><?=$lang['major'];?></a>&nbsp;&nbsp;&nbsp;
-    <a href="#" id="show_epic"><?=$lang['epic'];?> - 1</a>&nbsp;&nbsp;&nbsp;
-    <a href="#" id="show_epic2"><?=$lang['epic'];?> - 2</a>&nbsp;&nbsp;&nbsp;
-    <a href="#" id="show_special"><?=$lang['special'];?></a>&nbsp;&nbsp;&nbsp;
-    <a href="#" id="show_expert"><?=$lang['expert'];?></a>
-    <br />
-    <table id="all_medals_stat" class="tablesorter wid" cellspacing="1">
+<form>
+    <div id="triggermedals" align="center">
+        <input type="radio" id="show_hero" name="triggermedals" checked="checked" /><label for="show_hero"><?=$lang['hero'];?></label>
+        <input type="radio" id="show_major" name="triggermedals" /><label for="show_major"><?=$lang['major'];?></label>
+        <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?></label>
+        <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic2'];?></label>
+        <input type="radio" id="show_special" name="triggermedals" /><label for="show_special"><?=$lang['special'];?></label>
+        <input type="radio" id="show_expert" name="triggermedals" /><label for="show_tankexpert"><?=$lang['expert'];?></label>
+    </div>
+</form>
+
+<br />
+    <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2">
         <thead> 
             <tr>
-                <th><?php echo $lang['name']; ?></th> 
+                <th><?=$lang['name']; ?></th>
                 <?php foreach($res[$rand_keys]['medals'] as $tmed => $hkey){
                         foreach($hkey as $tm => $column) { ?>
                         <th align='center' class="{sorter: 'digit'} bb allmedalhide <?=$tmed;?>show" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>><?php echo '<img src=\'./'.$column['img'].'\' /><br>'.$column['title']; ?></th>
@@ -143,7 +143,7 @@
         </tbody>  
     </table>
     <div class="allmedalhide specialshow" align="left">
-        <span style="color:red;">*</span> <?php echo $lang['medal_max2']; ?><br />
-        <span style="color:red;">**</span> <?php echo $lang['medal_max']; ?>
+        <span style="color:red;">*</span> <?=$lang['medal_max2']; ?><br />
+        <span style="color:red;">**</span> <?=$lang['medal_max']; ?>
     </div>
 </div>

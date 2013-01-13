@@ -23,7 +23,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){
 ?>
 
 <div align="center">
-    <table id="active_main" class="tablesorter" cellspacing="1">              
+    <table id="active_main" cellspacing="1">
         <thead> 
             <tr>
                 <th><?=$lang['name'];?></th>

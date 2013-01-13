@@ -11,34 +11,43 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
-<div class="admin_container">
-    <div class="adinsider_img">
-        <img src="../images/logo.png" width="500"/>
-    </div>
-    <div id="tabs">
-        <ul>
-            <li><a href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
-            <li><a href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
-            <li><a href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
-            <li><a href="#tabs-4"><?=$lang['admin_db'];?></a></li>
-            <li><a href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
-            <li><a href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
-            <li style="float:right;"><a href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
-        </ul>
-        <?php
-            if(isset($message['text']) && isset($message['color'])){
-                echo '<div align="center"><h3><span style="color:'.$message['color'].';">'.$message['text'].'</span></h3></div>'; 
-            }
-        ?>
-        <div id="tabs-7">
+
+<div id="adminalltabs"  style="min-height: 100%; padding: 0; margin: 0;" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+  <?php
+    if(isset($message['text']) && isset($message['color'])){
+       echo '<div align="center"><h3><span style="color:'.$message['color'].';">'.$message['text'].'</span></h3></div>';
+    }
+  ?>
+  <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
+    <tbody>
+      <tr style="height: 100px;" valign="center">
+         <td colspan="2" align="center">
+             <img src="../images/logo.png" width="500px"/>
+         </td>
+      </tr>
+      <tr>
+        <td valign="top" width="222px">
+          <ul id="ad_menu">
+            <li><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
+            <li><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
+            <li><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
+            <li><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
+            <li><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
+            <li><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
+            <li style="margin-top: 100px;"><a onclick="magic(this)" id="out" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
+          </ul>
+         </td>
+         <td valign="top">
+          <div>
+           <div id="tabs-7">
             <br><br>
             <div align="center">
                 <form action="./index.php?page=main#tabs-7" method="post">
-                    <table id="tanks_list" class="tablesorter" cellspacing="1">
+                    <table id="tanks_list" width="100%" cellspacing="1">
                         <thead>
                             <tr>
                                 <th align="center"><?=$lang['tank_list_title'];?></th>
@@ -63,11 +72,11 @@
                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
                 </form>
             </div>
-        </div>
-        <div id="tabs-6">
+           </div>
+           <div id="tabs-6">
             <div align="center">
                 <form action="./index.php?page=main#tabs-6" method="post">
-                    <table id="top_tanks" class="tablesorter" cellspacing="1">
+                    <table id="top_tanks" width="100%" cellspacing="1">
                         <thead>
                             <tr>
                                 <th align="center"><?=$lang['admin_tab_top_tanks_name'];?></th>
@@ -116,8 +125,8 @@
                     <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
                 </form>
             </div>
-        </div>
-        <div id="tabs-1">
+           </div>
+           <div id="tabs-1">
             <div align="center">
                 <br>
                 <form action="./index.php?page=main#tabs-1" method="post">
@@ -171,23 +180,6 @@
                                 <td><input type="text" name="cache" value="<?=$config['cache']; ?>" size="2" /></td>
                             </tr>
                             <tr>
-                                <td><?=$lang['admin_tabs_align'];?></td>
-                                <td>
-                                    <select name="align">
-                                        <?php if($config['align'] == 'ver'){?>
-                                            <option value="ver" selected="selected"><?=$lang['admin_ver'];?></option>
-                                            <?php }else{ ?>
-                                            <option value="ver"><?=$lang['admin_ver'];?></option>
-                                            <?php } ?>
-                                        <?php if($config['align'] == 'hor'){?>
-                                            <option value="hor" selected="selected"><?=$lang['admin_hor'];?></option>
-                                            <?php }else{ ?>
-                                            <option value="hor"><?=$lang['admin_hor'];?></option>
-                                            <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td><?=$lang['admin_curl_lib'];?></td>
                                 <td>
                                     <select name="pars">
@@ -225,30 +217,60 @@
                                 <td><input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /><br><?=$lang['admin_cron_time_warning'];?></td>
                             </tr>
                             <?php if($config['lang'] == 'ru'){?>
-                                <tr>
-                                    <td><?=$lang['admin_news'];?></td>
-                                    <?php 
-                                        if($config['news'] == '1'){
-                                            $news = 'checked="yes"';
-                                        }else{
-                                            $news = '';
-                                        }
-                                    ?>
-
-                                    <td><input <?=$news?> type="checkbox" name="news" value="1" size="2" /></td>
+                            <tr>
+                                <td><?=$lang['admin_news'];?></td>
+                            <?php
+                                if($config['news'] == '1'){
+                                   $news = 'checked="yes"';
+                                }else{
+                                    $news = '';
+                                }
+                            ?>
+                                <td><input <?=$news?> type="checkbox" name="news" value="1" size="2" /></td>
                                 </tr>
+                                <?php } ?>
                                 <tr>
                                     <td><?=$lang['admin_multiget'];?></td>
                                     <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
                                 </tr>
-                                <?php } ?>
+                            <tr>
+                                <td><?=$lang['themes'];?></td>
+                                <td>
+                                <?php $dir_val = scandir(ROOT_DIR.'./theme/');
+                                      array_shift($dir_val);array_shift($dir_val);
+                                      unset($config['theme']);
+                                      $sql = "select value from `config`  where `name`='theme'";
+                                         $q = $db->prepare($sql);
+                                         if ($q->execute() != TRUE) {
+                                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                                         }else {
+                                            $misk = $q->fetch();
+                                            $config['theme']=$misk['value'];
+                                         }
+                                      if (!isset($config['theme'])) {
+                                         $sql = "INSERT INTO `config` (`name`, `value`) VALUES ('theme', 'ui-lightness')";
+                                         $config['theme'] = 'ui-lightness';
+                                         $q = $db->prepare($sql);
+                                         if ($q->execute() != TRUE) {
+                                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                                            }
+                                      }
+                                      if (count($dir_val)>0) { ?>
+                                          <select name="theme">
+                                          <?php foreach ($dir_val as $val){
+                                                   if ($val<>'style.css') {?>
+
+                                            <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
+                                          <?php }  }
+                                      }?> </td>
+                            </tr>
                         </tbody>
                     </table>
                     <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub"></p>
                 </form>
             </div>
-        </div>
-        <div id="tabs-2">
+           </div>
+           <div id="tabs-2">
             <div align="center">
                 <br>
                 <div>
@@ -278,7 +300,7 @@
                         <div style="float:right;"><button id="loadrus">Загрузить русские имена</button></div>
                     </div><br>
                     <form enctype="multipart/form-data" action="./index.php?page=main#tabs-2" method="POST">
-                        <table id="files" class="tablesorter" cellspacing="1">
+                        <table id="files" width="100%" cellspacing="1">
                             <thead>
                                 <tr>
                                     <th><?=$lang['admin_tab_base'];?></th>
@@ -359,8 +381,8 @@
                     <span style="color:red;"><?=$lang['admin_tab_delete_n'];?></span>
                 </div>
             </div>
-        </div>
-        <div id="tabs-3">
+           </div>
+           <div id="tabs-3">
             <div align="center">
                 <br>
                 <h3><?=$lang['admin_new_user_title']?></h3>
@@ -384,7 +406,7 @@
                         </tbody>
                     </table>
                 </form><br>
-                <table id="users" class="tablesorter" cellspacing="1">
+                <table id="users" width="100%" cellspacing="1">
                     <thead>
                         <tr>
                             <th align="center"><?=$lang['admin_user_name'];?></th>
@@ -438,8 +460,8 @@
                     </div>
                     <?php } ?>
             </div>
-        </div>
-        <div id="tabs-4">
+           </div>
+           <div id="tabs-4">
             <div align="center">
                 <h3><?=$lang['admin_db_recreat'];?></h3>
                 <form action="./index.php?page=main#tabs-4" method="post">
@@ -463,12 +485,19 @@
                     <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="newup" /><br />
                     <?=$lang['admin_db_up_warning'];?>
                 </form><br>
-            </div>
-        </div>
-    </div>
-    <?php if($ver['value'] != VER){
-        ?>
-        <div align="center"><span style="color:red;"><?=$lang['admin_new_version_1'].' '.$ver['value'].' '.$lang['admin_new_version_2']?> <a href="http://wot-news.com/main/clanstat">WoT-News.Com</a></span>
-        </div>
-        <?php } ?>
+              </div>
+             </div>
+        </td>
+      </tr>
+      <?php if($ver['value'] != VER){ ?>
+      <tr valign="bottom">
+         <td colspan="2" align="center">
+           <div align="center" style="width:100%;" class="ui-state-error ui-corner-all">
+             <?=$lang['admin_new_version_1'].' '.$ver['value'].' '.$lang['admin_new_version_2']?> <a href="http://wot-news.com/main/clanstat">WoT-News.Com</a>
+           </div>
+         </td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
 </div>

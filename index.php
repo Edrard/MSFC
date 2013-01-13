@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
+    * @version     $Rev: 2.1.4 $
     *
     */
 ?>
@@ -19,10 +19,9 @@
     if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
         define('ROOT_DIR', dirname(__FILE__));
     }else{
-        define('ROOT_DIR', '.');    
+        define('ROOT_DIR', '.');
     }
-    //Cheker
-    //Cheker
+    //Checker
     include_once(ROOT_DIR.'/including/check.php');
 
     //MYSQL
@@ -58,66 +57,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />   
-        <script type="text/javascript">    
-            var url = 'main.php'; //the details page you want to display... 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <?php if (!isset($config['theme'])) {
+                   $config['theme'] = 'ui-lightness'; } ?>
+        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+        <script type="text/javascript">
+            var url = 'main.php';
         </script>
         <script language="JavaScript" type="text/javascript">
             function reFresh() {
                 location.reload(true)
             }
-            window.setInterval("reFresh()",89000);
+            window.setInterval("reFresh()",99989000);
         </script>
-        <style>    
-            .loading-indicator {    
-                font-size:8pt;    
-                background-repeat: no-repeat;      
-                background-position:top left;    
-                padding-left:20px;    
-                height:18px;    
-                text-align:left;    
-            }    
-            #loading{    
-                position:absolute;         
-                background:white;    
-                padding:10px;    
-                font:bold 14px verdana,tahoma,helvetica;    
-                color:#003366;    
-                width:100%;
-                height: 100%;    
-                text-align:center;    
-            } 
 
-            .main {
+        <style>
+            #main {
                 left: 0px;
                 margin: 0 auto;
                 position: relative;
-                width: 700px;
-                padding-top: 300px;
+                height: 100%;
+                text-align: center;
             }
-        </style>   
-    </head> 
+        </style>
+    </head>
     <body onload="location.href = url;" style="overflow:hidden;overflow-y:hidden">
-        <div id="loading">    
-            <div class="main">
+        <div id="main" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+            <table style="width: 100%; height:100%;" cellpadding="4" cellspacing="0">
                 <?php if($config['lang'] == 'ru'){ ?>
-                    <div align="center">
-                        <iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe><br>
-                    </div>
+                <tr style="vertical-align: bottom;">
+                    <td align="center">
+                        <iframe src="./news.php" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
+                    </td>
+                </tr>
                     <?php } ?>
-                <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
-            </div>     
-        </div>    
-    </body>    
-    <script>    
-        if(document.layers) {    
-            document.write('<Layer src="' + url + '" visibility="hide"></Layer>');    
-        }    
-        else if(document.all || document.getElementById) {    
-            document.write('<iframe src="' + url + '" style="visibility:hidden;"></iframe>');    
-        }    
-        else {    
-            location.href = url;    
-        }    
-    </script>    
+                <tr style="vertical-align: top;">
+                    <td align="center">
+
+                    <div class="ui-state-highlight ui-corner-all">
+                        <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
+                    </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <script>
+        if(document.layers) {
+            document.write('<Layer src="' + url + '" visibility="hide"></Layer>');
+        }
+        else if(document.all || document.getElementById) {
+            document.write('<iframe src="' + url + '" style="visibility:hidden;"></iframe>');
+        }
+        else {
+            location.href = url;
+        }
+    </script>
 </html>
