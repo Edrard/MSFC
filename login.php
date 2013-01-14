@@ -37,26 +37,27 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <br>      
+                            <br>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <input type="submit" name="login" value="<?=$lang['log_auth'];?>"  />      
+                            <input type="submit" name="login" value="<?=$lang['log_auth'];?>"  />
                         </td>
                     </tr>
                 </table> 
             </form>
         </div>
         <br>
-        <div class="ui-state-error ui-corner-all" align="center">
-        <?php
-            if ($auth->error()){
-                echo $auth->error();
-            }
-            if (isset($data['msg'])){
-                echo '<br>'.error($data['msg']);
-            }
-        ?>
-        </div>
+        <?php if ($auth->error()){ ?>
+                <div class="ui-state-error ui-corner-all" align="center">
+                  <? echo $auth->error(); ?>
+                </div>
+        <?php }?>
+
+        <?php if (isset($data['msg'])){ ?>
+                <div class="ui-state-error ui-corner-all" align="center">
+                  <? echo '<br>'.error($data['msg']); ?>
+                </div>
+        <?php }?>
     </div>
