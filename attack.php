@@ -92,7 +92,7 @@
         <script type="text/javascript" id="js">
             $(document).ready(function()
                 {
-                    $("#attack").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
+                    $("#attack").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
                         widgetOptions: {uitheme : 'jui'}
                     });
             });
