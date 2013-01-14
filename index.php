@@ -69,7 +69,7 @@
             function reFresh() {
                 location.reload(true)
             }
-            window.setInterval("reFresh()",99989000);
+            window.setInterval("reFresh()",<?php echo ($exec_refresh*1000) ?>);
         </script>
 
         <style>

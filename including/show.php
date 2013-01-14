@@ -62,20 +62,10 @@
             foreach($get as $val){
                 $cache->clear($val['account_name'],ROOT_DIR.'/cache/players/');
                 $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
-            }
-            multiget($links, $result,$config['pars'],$config['multiget']);
+            }   
+            multiget($links, $res,$config,prepare_stat(),$roster,$lang);
             //print_r($result);
-            $transit = prepare_stat();
-            foreach($result as $name => $val){ 
-                $json = json_decode($val,TRUE);
-                if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
-                    $transit = insert_stat($json,$roster[$name],$config,$transit);
-                    $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
-                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');
-                    unset($result[$name]);   
-                }
-            }
-            unset($result,$json,$links,$transit);            
+            unset($links);           
             // Unlocking DB now
             lockout_mysql();
             //$cache->set('res', $res,ROOT_DIR.'/cache/players');

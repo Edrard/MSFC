@@ -139,7 +139,7 @@
 
     function lockin_mysql()
     {
-        global $db;
+        global $db,$exec_time;
         //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
         $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
@@ -150,7 +150,7 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
-        if((now() - $check_if['value']) > 900){
+        if((now() - $check_if['value']) > ($exec_time + 5)){
             $sql = "UPDATE `config` SET value = '".now()."' WHERE name = 'lockin';";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
@@ -175,7 +175,7 @@
     }
     function lock_check()
     {
-        global $db;
+        global $db,$exec_time;
         //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
         $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
@@ -186,7 +186,7 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
-        if((now() - $check_if['value']) > 900){
+        if((now() - $check_if['value']) > ($exec_time + 5)){
             $sql = "UPDATE `config` SET value = '0' WHERE name = 'lockin';";
             $db->prepare($sql)->execute();
             return true;

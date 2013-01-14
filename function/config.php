@@ -24,16 +24,26 @@
     }
 
     $config = get_config();
-        
+
     define("VER",'2.1.6');
 
-  
+
     $data = array();
     $links = array();
     $res_tmp = array();
     $result = array();
     $res = array();
-    
+
+    $exec_time = ini_get('max_execution_time');
+    $exec_refresh = ($exec_time + 10)/2;
+    if($exec_time === FALSE || !is_numeric($exec_time)){
+        $exec_time = 300;    
+        $exec_refresh = 29;
+    } 
+    if($exec_time == 0){
+        $exec_time = 300;
+        $exec_refresh = 29;    
+    }
 
     //Special function
 

@@ -88,39 +88,48 @@
 
     }
 
-    function multiget($inurls, &$result,$tcurl = 'curl',$num)
+    function multiget($inurls, &$res,$config,$transit,$roster,$lang)
     {
-        global $db;
+        global $db,$cache;
+        $tcurl = $config['pars'];
+        $num = $config['multiget'];
         $current_time = now();
         $urlss = array_chunk($inurls,$num,TRUE);
-        $result = array();
-         foreach($urlss as $urls){
-           If ((now()-$current_time)>=5) {
-                    $sql = "SELECT `value` FROM  `config` LIMIT 0 , 1;";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                       $current_time = now();
-                    } else {
-                        Print_R('Something go wrong,');
-                        Print_R($q->errorInfo());
-                    }
-           };
-           if($tcurl == 'curl'){
+        foreach($urlss as $urls){
+            If ((now()-$current_time)>=5) {
+                $sql = "SELECT `value` FROM  `config` LIMIT 0 , 1;";
+                $q = $db->prepare($sql);
+                if ($q->execute() == TRUE) {
+                    $current_time = now();
+                } else {
+                    Print_R('Something go wrong,');
+                    Print_R($q->errorInfo());
+                }
+            };
+            if($tcurl == 'curl'){
                 $curl = new CURL();
                 $curl->retry = 2;
                 $opts = array( CURLOPT_RETURNTRANSFER => true );
                 foreach($urls as $key => $link){
                     $curl->addSession( $link, $key, $opts );
                 }  
-                $res = $curl->exec();  
+                $result = $curl->exec();  
                 $curl->clear();
-                $result = array_special_merge($result,$res);
-           } else{
+            } else{
                 $curl = new MCurl; 
                 $curl->threads = 100;  
                 $curl->timeout = 15;    
                 $curl->sec_multiget($urls, $result);
-           }
+            }
+            foreach($result as $name => $val){ 
+                $json = json_decode($val,TRUE);
+                if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
+                    $transit = insert_stat($json,$roster[$name],$config,$transit);
+                    $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
+                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');  
+                }
+            }
+            unset($result,$json);
         }
     }
 ?>
