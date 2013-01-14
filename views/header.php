@@ -143,7 +143,7 @@
             });
             $("#all_medals_stat").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
                 widgetOptions: {uitheme : 'jui'}
-            });
+            });     
 
             $( "#login_dialog" ).dialog({
                  title: 'Login',

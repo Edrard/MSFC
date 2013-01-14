@@ -18,7 +18,7 @@
 <?php
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
-        if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
+    if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
         define('ROOT_DIR', dirname(__FILE__));
     }else{
         define('ROOT_DIR', '.');    
@@ -63,61 +63,88 @@
         $battel = get_clan_attack($config,$config['clan']);
     }
 
-    include_once(ROOT_DIR.'/views/header.php');
+    //include_once(ROOT_DIR.'/views/header.php');
 ?>
-<script type="text/javascript" id="js">
-        $(document).ready(function()
-        {
-            $("#attack").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}', widgets: ['uitheme', 'zebra'],
-                                     widgetOptions: {uitheme : 'bootstrap'}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?=$lang['page_title']; ?></title>
+        <?php if (!isset($config['theme'])) {
+            $config['theme'] = 'ui-lightness'; } ?>
+        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+        <script type="text/javascript" src="./js/jquery.js"></script>
+        <script type="text/javascript" src="./js/jquery.metadata.js"></script>
+        <script type="text/javascript" src="./js/jquery.qtip.js"></script>
+        <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
+        <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
+        <script type="text/javascript" src="./js/jquery.ui.js"></script>
+        <script type="text/javascript" src="./js/jquery.ui.button.js"></script>
+        <script type="text/javascript" src="./js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="./js/jquery.ui.menu.js"></script>
+        <script type="text/javascript" src="./js/jquery.ui.position.js"></script>
+        <?php if ($config['lang'] == 'ru') { ?>
+            <script type="text/javascript" src="./js/jquery.ui.ru.js"></script>
+            <?php }; ?>
+        <script type="text/javascript" src="./js/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="./js/jquery.vticker.js"></script>           
+        <script type="text/javascript" id="js">
+            $(document).ready(function()
+                {
+                    $("#attack").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
+                        widgetOptions: {uitheme : 'jui'}
+                    });
             });
-        });
-</script> 
-<div align="center">
-    <table id="attack" cellspacing="1" cellpadding="2" width="100%">
-        <thead>
-            <tr>
-                <th width="40"><?=$lang['type']; ?></th>
-                <th><?=$lang['time']; ?></th>
-                <th><?=$lang['province']; ?></th>
+        </script>
+    </head>
+    <body>
 
-            </tr> 
-        </thead> 
-        <tbody>
-            <?php if (isset($battel['request_data'])){
-                        foreach ($battel['request_data']['items'] as $val){ 
-                            if (strlen($val['time']) > 1){
-                                $date = date('H:i',($val['time'] + $config['time']*60*60));
-                            } else {
-                                $date = '--:--';
-                            }
-                            if ($val['type'] == 'landing'){
-                                $type = '<img src="./images/landing.png">';    
-                            } elseif ($val['type'] == 'for_province'){
-                                $type = '<img src="./images/attacked.png">';
-                            } elseif ($val['type'] == 'meeting_engagement'){
-                                $type = '<img src="./images/combats_running.png">';
+        <div align="center">
+            <table id="attack" cellspacing="1" cellpadding="2" width="100%">
+                <thead>
+                    <tr>
+                        <th width="40"><?=$lang['type']; ?></th>
+                        <th><?=$lang['time']; ?></th>
+                        <th><?=$lang['province']; ?></th>
+
+                    </tr> 
+                </thead> 
+                <tbody>
+                    <?php if (isset($battel['request_data'])){
+                            foreach ($battel['request_data']['items'] as $val){ 
+                                if (strlen($val['time']) > 1){
+                                    $date = date('H:i',($val['time'] + $config['time']*60*60));
+                                } else {
+                                    $date = '--:--';
+                                }
+                                if ($val['type'] == 'landing'){
+                                    $type = '<img src="./images/landing.png">';    
+                                } elseif ($val['type'] == 'for_province'){
+                                    $type = '<img src="./images/attacked.png">';
+                                } elseif ($val['type'] == 'meeting_engagement'){
+                                    $type = '<img src="./images/combats_running.png">';
+                                };
+                            ?>
+                            <tr>
+                                <td align="center"><?=$type; ?></td>
+                                <td><?=$date; ?></td>
+                                <td><a href="<?=$config['clan_link']; ?>maps/?province=<?=$val['provinces'][0]['id']; ?>" target="_blank"><?=$val['provinces'][0]['name']; ?></a></td>
+                            </tr>
+                            <?php };
+                            if ((isset($battel['request_data'])) && (count($battel['request_data']['items']) == 0 )) {  ?>
+                            <tr>
+                                <td colspan="3" align="center"><?=$lang['no_war']; ?></td>
+                            </tr>
+                            <?php 
                             };
-                ?>
-                <tr>
-                    <td align="center"><?=$type; ?></td>
-                    <td><?=$date; ?></td>
-                    <td><a href="<?=$config['clan_link']; ?>maps/?province=<?=$val['provinces'][0]['id']; ?>" target="_blank"><?=$val['provinces'][0]['name']; ?></a></td>
-                </tr>
-                <?php };
-                    if ((isset($battel['request_data'])) && (count($battel['request_data']['items']) == 0 )) {  ?>
-                <tr>
-                    <td colspan="3" align="center"><?=$lang['no_war']; ?></td>
-                </tr>
-                <?php 
-                    };
-                  } else { ?>
-                <tr>
-                    <td colspan="3" align="center"><?=$lang['error_1']?></td>
-                </tr>
-                <?php }; ?> 
-        </tbody>
-    </table>
-</div>
+                        } else { ?>
+                        <tr>
+                            <td colspan="3" align="center"><?=$lang['error_1']?></td>
+                        </tr>
+                        <?php }; ?> 
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
