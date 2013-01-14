@@ -30,14 +30,9 @@
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
     <script type="text/javascript" src="./js/jquery.ui.js"></script>
-    <script type="text/javascript" src="./js/jquery.ui.button.js"></script>
-    <script type="text/javascript" src="./js/jquery.ui.core.js"></script>
-    <script type="text/javascript" src="./js/jquery.ui.menu.js"></script>
-    <script type="text/javascript" src="./js/jquery.ui.position.js"></script>
     <?php if ($config['lang'] == 'ru') { ?>
     <script type="text/javascript" src="./js/jquery.ui.ru.js"></script>
     <?php }; ?>
-    <script type="text/javascript" src="./js/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="./js/jquery.vticker.js"></script>
 
     <script type="text/javascript" id="js">

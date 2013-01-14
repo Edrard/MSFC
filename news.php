@@ -66,8 +66,9 @@
                 direction: 'down'
             });
         });   
-    </script> 
-    </head>
+    </script>
+</head>
+<body>
 <div class="ui-accordion-content ui-widget-content ui-accordion-content-active">
 <table border="0" cellpadding="0" cellspacing="0" width="450px">
     <tbody>

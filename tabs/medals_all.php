@@ -24,51 +24,27 @@
         $("#show_hero").click(function() {
             $(".allmedalhide").hide();
             $(".heroshow").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_hero").addClass("ui-state-focus");
-            medals_change = '#show_hero';
-            return false;
         });
         $("#show_major").click(function() {
             $(".allmedalhide").hide();
             $(".majorshow").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_major").addClass("ui-state-focus");
-            medals_change = '#show_major';
-            return false;
         });
         $("#show_epic").click(function() {
             $(".allmedalhide").hide();
             $(".epicshow").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_epic").addClass("ui-state-focus");
-            medals_change = '#show_epic';
-            return false;
         });
         $("#show_epic2").click(function() {
             $(".allmedalhide").hide();
             $(".epic2show").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_epic2").addClass("ui-state-focus");
-            medals_change = '#show_epic2';
-            return false;
         });
         $("#show_special").click(function() {
             $(".allmedalhide").hide();
             $(".specialshow").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_special").addClass("ui-state-focus");
-            medals_change = '#show_special';
-            return false;
         });
         $("#show_expert").click(function() {
             $(".allmedalhide").hide();
             $(".expertshow").show();
-            $(medals_change).removeClass("ui-state-focus");
-            $("#show_expert").addClass("ui-state-focus");
-            medals_change = '#show_expert';
-            return false;
-        }); 
+        });
     });
 </script>
 <div align="center">
@@ -77,10 +53,10 @@
     <div id="triggermedals" align="center">
         <input type="radio" id="show_hero" name="triggermedals" checked="checked" /><label for="show_hero"><?=$lang['hero'];?></label>
         <input type="radio" id="show_major" name="triggermedals" /><label for="show_major"><?=$lang['major'];?></label>
-        <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?></label>
-        <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic2'];?></label>
+        <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?> - 1</label>
+        <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic'];?> - 2</label>
         <input type="radio" id="show_special" name="triggermedals" /><label for="show_special"><?=$lang['special'];?></label>
-        <input type="radio" id="show_expert" name="triggermedals" /><label for="show_tankexpert"><?=$lang['expert'];?></label>
+        <input type="radio" id="show_expert" name="triggermedals" /><label for="show_expert"><?=$lang['expert'];?></label>
     </div>
 </form>
 
