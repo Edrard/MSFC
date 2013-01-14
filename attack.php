@@ -69,26 +69,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?=$lang['page_title']; ?></title>
         <?php if (!isset($config['theme'])) {
             $config['theme'] = 'ui-lightness'; } ?>
         <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
         <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/jquery.metadata.js"></script>
-        <script type="text/javascript" src="./js/jquery.qtip.js"></script>
         <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
-        <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
-        <script type="text/javascript" src="./js/jquery.ui.js"></script>
-        <script type="text/javascript" src="./js/jquery.ui.button.js"></script>
-        <script type="text/javascript" src="./js/jquery.ui.core.js"></script>
-        <script type="text/javascript" src="./js/jquery.ui.menu.js"></script>
-        <script type="text/javascript" src="./js/jquery.ui.position.js"></script>
-        <?php if ($config['lang'] == 'ru') { ?>
-            <script type="text/javascript" src="./js/jquery.ui.ru.js"></script>
-            <?php }; ?>
-        <script type="text/javascript" src="./js/jquery.ui.widget.js"></script>
-        <script type="text/javascript" src="./js/jquery.vticker.js"></script>           
+        <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script>        
         <script type="text/javascript" id="js">
             $(document).ready(function()
                 {
