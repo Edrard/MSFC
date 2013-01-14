@@ -25,7 +25,7 @@
   <table style="width: 100%;" cellpadding="4" cellspacing="0">
     <tbody>
       <tr style="height: 100px;" valign="center">
-        <td width="16px" class="ui-state-highlight ui-corner-all" onclick="magic2(this)" rowspan="2" >
+        <td width="16px" class="ui-state-default ui-corner-all" onclick="magic2(this)" rowspan="2" >
             <div id="chan" style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-w">
             &nbsp;
             </div>
@@ -38,9 +38,9 @@
            <?php print_R($new['data']['abbreviation'].'<br>'.$new['data']['motto'].'</font>') ?>
         </td>
         <td width="300px"><img src="./images/logo_small.png" /></td>
-        <?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
-        <td width="420px"><iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe></td>
-        <?php } ?>
+        <td width="420px"><?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
+        <iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
+        <?php } ?></td>
         <td>
             <?php if($logged > 0){ ?>
                 <table border="0" cellpadding="4" cellspacing="0">
