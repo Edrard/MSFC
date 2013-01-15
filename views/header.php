@@ -76,35 +76,34 @@
             $.tablesorter.defaults.widgets = ['uitheme', 'zebra'];
             $.tablesorter.defaults.widthFixed = false;
             $.tablesorter.defaults.sortList = [[0,0]];
-            $.tablesorter.defaults.sortList = {'uitheme' : 'jui'};
 
-            $("#roster").tablesorter({sortList:[[1,0]]});
+            $("#roster").tablesorter({sortList:[[1,0]], widgetOptions: {uitheme : 'jui'}});
 
-            $("#best_main").tablesorter();
-            $("#best_medal").tablesorter();
-            $("#active_main").tablesorter();
-            $("#active_medal_1").tablesorter();
-            $("#active_medal_2").tablesorter();
-            $("#active_medal_3").tablesorter();
-            $("#active_medal_4").tablesorter();
+            $("#best_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#best_medal").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_1").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_2").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_3").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_4").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
-            $("#overall").tablesorter();
-            $("#perform").tablesorter();
-            $("#battel").tablesorter();
-            $("#achiv_epic").tablesorter();
-            $("#achiv_major").tablesorter();
-            $("#achiv_hero").tablesorter();
-            $("#achiv_special").tablesorter();
+            $("#overall").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#battel").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_epic").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_major").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_hero").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_special").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
-            $("#rating").tablesorter();
-            $("#rating1").tablesorter();
-            $("#rating_all").tablesorter();
-            $("#average_perform").tablesorter();
-            $("#blocked").tablesorter();
+            $("#rating").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#rating1").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#rating_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#average_perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#blocked").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
-            $("#all_tanks_stat").tablesorter();
-            $("#perform_all").tablesorter();
-            $("#all_medals_stat").tablesorter();
+            $("#all_tanks_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#perform_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#all_medals_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
             $( "#login_dialog" ).dialog({
                  title: 'Login',
