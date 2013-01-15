@@ -234,27 +234,9 @@
                                     <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
                                 </tr>
                             <tr>
-                                <td><?=$lang['themes'];?></td>
+                                <td><?=$lang['admin_themes'];?></td>
                                 <td>
-                                <?php $dir_val = scandir(ROOT_DIR.'./theme/');
-                                      array_shift($dir_val);array_shift($dir_val);
-                                      unset($config['theme']);
-                                      $sql = "select value from `config`  where `name`='theme'";
-                                         $q = $db->prepare($sql);
-                                         if ($q->execute() != TRUE) {
-                                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                         }else {
-                                            $misk = $q->fetch();
-                                            $config['theme']=$misk['value'];
-                                         }
-                                      if (!isset($config['theme'])) {
-                                         $sql = "INSERT INTO `config` (`name`, `value`) VALUES ('theme', 'ui-lightness')";
-                                         $config['theme'] = 'ui-lightness';
-                                         $q = $db->prepare($sql);
-                                         if ($q->execute() != TRUE) {
-                                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                            }
-                                      }
+                                <?php 
                                       if (count($dir_val)>0) { ?>
                                           <select name="theme">
                                           <?php foreach ($dir_val as $val){

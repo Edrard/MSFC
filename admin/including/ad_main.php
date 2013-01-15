@@ -81,18 +81,18 @@
         insert_file(LOCAL_DIR.'/sql/clan.sql');
     }
     /**if (isset($_POST['syncdb'])){
-        if(is_valid_url($config['td']) == true){
-            $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
-            if($new['error'] != 0){
-                $message['text'] = $lang['admin_con_error'];
-                $message['color'] = 'red';  
-            }else{
-                sync_roster($new['data']['request_data']['items']);
-            }
-        }else{
-            $message['text'] = $lang['admin_con_error'];
-            $message['color'] = 'red';
-        }
+    if(is_valid_url($config['td']) == true){
+    $new = get_player($config['clan'],$config);   //dg65tbhjkloinm 
+    if($new['error'] != 0){
+    $message['text'] = $lang['admin_con_error'];
+    $message['color'] = 'red';  
+    }else{
+    sync_roster($new['data']['request_data']['items']);
+    }
+    }else{
+    $message['text'] = $lang['admin_con_error'];
+    $message['color'] = 'red';
+    }
 
     }  **/
     if (isset($_POST['newup'])){
@@ -111,6 +111,8 @@
             $message['color'] = 'red';
         }
     } 
+    $dir_val = scandir(ROOT_DIR.'./theme/');
+    array_shift($dir_val);array_shift($dir_val);
 
     $ver = json_decode(get_url('http://wot-news.com/ajax/clanstat'),TRUE);
     // Config
@@ -155,13 +157,13 @@
     //Clear activity cache
     if (isset($_POST['admclearacache'])){
         if(isset($_POST['clear_a_cache_date']) and is_numeric($_POST['clear_a_cache_date'])) {
-          $left_days = $_POST['clear_a_cache_date'];
+            $left_days = $_POST['clear_a_cache_date'];
         } else {
-          $left_days = 7;
+            $left_days = 7;
         }
         $exclude_list = array();
         for($i=$left_days;$i>=0;$i--) {
-          $exclude_list[] = date('d.m.Y',mktime(0, 0, 0, date('m'), date('d')-$i, date('Y')));
+            $exclude_list[] = date('d.m.Y',mktime(0, 0, 0, date('m'), date('d')-$i, date('Y')));
         }
         $cache_activity = new Cache(ROOT_DIR.'/cache_activity/');
         $cache_activity->clear_all($exclude_list);

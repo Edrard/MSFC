@@ -111,5 +111,5 @@
 
     $lang['admin_clear_a_cache'] = 'Удалить кэшированные данные о активности';
     $lang['admin_clear_a_cache_form'] = 'Удалить кэшированные данные о активности, кроме последних <input type="text" size="1" name="clear_a_cache_date" value="7" /> дней.';
-    $lang['themes'] = 'Тема:';
+    $lang['admin_themes'] = 'Тема:';
 ?>

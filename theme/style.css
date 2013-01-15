@@ -1,22 +1,22 @@
 /* jqModal base Styling courtesy of;
-  Brice Burgess <bhb@iceburg.net> */
+Brice Burgess <bhb@iceburg.net> */
 
 /* The Window's CSS z-index value is respected (takes priority). If none is supplied,
-  the Window's z-index value will be set to 3000 by default (in jqModal.js). You
-  can change this value by either;
-    a) supplying one via CSS
-    b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
-  
+the Window's z-index value will be set to 3000 by default (in jqModal.js). You
+can change this value by either;
+a) supplying one via CSS
+b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
+
 .jqmWindow {
     display: none;
-    
+
     position: fixed;
     top: 17%;
     left: 50%;
-    
+
     margin-left: -300px;
     width: 600px;
-    
+
     border: 1px solid black;
     padding: 12px;
 }
@@ -24,11 +24,11 @@
 .jqmOverlay { background-color: #000; }
 
 /* Fixed posistioning emulation for IE6
-     Star selector used to hide definition from browsers other than IE6
-     For valid CSS, use a conditional include instead */
+Star selector used to hide definition from browsers other than IE6
+For valid CSS, use a conditional include instead */
 * html .jqmWindow {
-     position: absolute;
-     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+    position: absolute;
+    top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
 }
 
 
@@ -54,109 +54,109 @@
     border-radius: 4px 4px 4px 4px !important;
 }
 .col_red {
-color: #800000;
+    color: #800000;
 }
 
 .col_red a:link {
-color: #800000;
-text-decoration:none;
+    color: #800000;
+    text-decoration:none;
 }
 .col_red a:visited {
-color: #800000;
-text-decoration:none;
+    color: #800000;
+    text-decoration:none;
 }
 .col_red a:hover {
-color: #800000;
-text-decoration:none;
+    color: #800000;
+    text-decoration:none;
 }
 .col_red a:active {
-color: #800000;
-text-decoration:none;
+    color: #800000;
+    text-decoration:none;
 }
 
 .col_grey {
-color: slategray;
+    color: slategray;
 }
 
 .col_grey a:link {
-color: slategray;
-text-decoration:none;
+    color: slategray;
+    text-decoration:none;
 }
 .col_grey a:visited {
-color: slategray;
-text-decoration:none;
+    color: slategray;
+    text-decoration:none;
 }
 .col_grey a:hover {
-color: slategray;
-text-decoration:none;
+    color: slategray;
+    text-decoration:none;
 }
 .col_grey a:active {
-color: slategray;
-text-decoration:none;
+    color: slategray;
+    text-decoration:none;
 }
 
 
 .col_blue {
-color: royalblue;
+    color: royalblue;
 }
 
 .col_blue a:link {
-color: royalblue;
-text-decoration:none;
+    color: royalblue;
+    text-decoration:none;
 }
 .col_blue a:visited {
-color: royalblue;
-text-decoration:none;
+    color: royalblue;
+    text-decoration:none;
 }
 .col_blue a:hover {
-color: royalblue;
-text-decoration:none;
+    color: royalblue;
+    text-decoration:none;
 }
 .col_blue a:active {
-color: royalblue;
-text-decoration:none;
+    color: royalblue;
+    text-decoration:none;
 }
 
 .col_green {
-color: green;
+    color: green;
 }
 
 .col_green a:link {
-color: green;
-text-decoration:none;
+    color: green;
+    text-decoration:none;
 }
 .col_green a:visited {
-color: green;
-text-decoration:none;
+    color: green;
+    text-decoration:none;
 }
 .col_green a:hover {
-color: green;
-text-decoration:none;
+    color: green;
+    text-decoration:none;
 }
 .col_green a:active {
-color: green;
-text-decoration:none;
+    color: green;
+    text-decoration:none;
 }
 
 .col_black {
-color: black;
+    color: black;
 }
 
 .col_black a:link {
-color: black;
-text-decoration:none;
+    color: black;
+    text-decoration:none;
 }
 .col_black a:visited {
-color: black;
-text-decoration:none;
+    color: black;
+    text-decoration:none;
 }
 .col_black a:hover {
-color: black;
-text-decoration:none;
+    color: black;
+    text-decoration:none;
 }
 .col_black a:active {
-color: black;
-text-decoration:none;
+    color: black;
+    text-decoration:none;
 }
 
 /* main */
@@ -174,3 +174,27 @@ table .tablesorter { margin: 20px 0 0 0;}
 .ui-tabs .ui-tabs-nav {padding: 0;!important;}
 .ui-tabs .ui-tabs-nav li a { float: none !important; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active { margin-bottom: 0; padding-bottom: 0; text-align:right;}
+
+.tr_cell
+{
+    display: table-row;
+    vertical-align: inherit;
+    border-collapse: separate;
+    border-spacing: 2px;
+    text-indent: 0;
+    width: auto;
+}
+
+.td_cell {
+    display: table-cell;
+    padding-bottom: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 1px;
+    text-align: inherit;
+    vertical-align: inherit;
+    border-collapse: separate;
+    border-spacing: 2px;
+    text-indent: 0;
+    width: auto;
+}
