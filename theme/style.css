@@ -50,6 +50,14 @@ For valid CSS, use a conditional include instead */
 }
 
 /***** Exinaus ******/
+.tablesorter-header-inner {
+  position: relative;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.ui-tabs-panel {
+  padding: 0px !important;
+}
 .ui-button {
     border-radius: 4px 4px 4px 4px !important;
 }
@@ -169,7 +177,7 @@ table .tablesorter { margin: 20px 0 0 0;}
 
 .ui-widget { font-size: 0.9em !important; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-size: 0.9em !important; }
-.ui-widget-header .ui-icon { position: absolute; top: 2px; right: 2px;}
+.ui-widget-header .ui-icon { position: absolute; top: 0px; right: 0px;}
 
 .ui-tabs .ui-tabs-nav {padding: 0;!important;}
 .ui-tabs .ui-tabs-nav li a { float: none !important; }

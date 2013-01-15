@@ -57,93 +57,54 @@
             $.extend($.tablesorter.themes.bootstrap, {
             table      : 'ui-widget ui-widget-content', // table classes
             header     : 'ui-widget-header ui-state-default', // header classes
-            footerRow  : '', 
-            footerCells: '', 
+            footerRow  : '',
+            footerCells: '',
             icons      : '', // icon class added to the <i> in the header
             sortNone   : '',
             sortAsc    : '',
             sortDesc   : '',
             active     : '', // applied when column is sorted
             hover      : '',  // hover class
-            filterRow  : '', 
+            filterRow  : '',
             even       : 'ui-widget-content', // odd row zebra striping
             odd        : 'ui-priority-secondary'   // even row zebra striping
             });
          });
         $(document).ready(function()
         {
-            $("#roster").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#best_main").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#best_medal").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#active_main").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#active_medal_1").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#active_medal_2").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#active_medal_3").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#active_medal_4").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            
-            $("#overall").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#perform").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#battel").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#achiv_epic").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#achiv_major").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#achiv_hero").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#achiv_special").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
+            $.tablesorter.defaults.headerTemplate = '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}';
+            $.tablesorter.defaults.widgets = ['uitheme', 'zebra'];
+            $.tablesorter.defaults.widthFixed = false;
+            $.tablesorter.defaults.sortList = [[0,0]];
+            $.tablesorter.defaults.sortList = {'uitheme' : 'jui'};
 
-            $("#rating").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#rating1").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#rating_all").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#average_perform").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#blocked").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
+            $("#roster").tablesorter({sortList:[[1,0]]});
 
-            $("#all_tanks_stat").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#perform_all").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });
-            $("#all_medals_stat").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                widgetOptions: {uitheme : 'jui'}
-            });     
+            $("#best_main").tablesorter();
+            $("#best_medal").tablesorter();
+            $("#active_main").tablesorter();
+            $("#active_medal_1").tablesorter();
+            $("#active_medal_2").tablesorter();
+            $("#active_medal_3").tablesorter();
+            $("#active_medal_4").tablesorter();
+
+            $("#overall").tablesorter();
+            $("#perform").tablesorter();
+            $("#battel").tablesorter();
+            $("#achiv_epic").tablesorter();
+            $("#achiv_major").tablesorter();
+            $("#achiv_hero").tablesorter();
+            $("#achiv_special").tablesorter();
+
+            $("#rating").tablesorter();
+            $("#rating1").tablesorter();
+            $("#rating_all").tablesorter();
+            $("#average_perform").tablesorter();
+            $("#blocked").tablesorter();
+
+            $("#all_tanks_stat").tablesorter();
+            $("#perform_all").tablesorter();
+            $("#all_medals_stat").tablesorter();
 
             $( "#login_dialog" ).dialog({
                  title: 'Login',
