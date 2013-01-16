@@ -15,7 +15,8 @@
     *
     */
 ?>
-<?php
+<?php 
+
     if (isset($_POST['ajaxcre'])){
         if(creat_ajax_tab($_POST) == TRUE){
             $message['text'] = $_POST['file'].' '.$lang['admin_ajax_new_error'];
@@ -26,9 +27,16 @@
         delete_tab($_GET);
         header ( 'Location: index.php?page=main#tabs-2' );
     }
+    if (isset($_GET['removeclan'])){
+        delete_multi($_GET);
+        header ( 'Location: index.php?page=main#tabs-8' );
+    }
     if (isset($_POST['consub'])){
         insert_config($_POST);
     } 
+    if (isset($_POST['mcsort'])){
+        edit_multi_clan($_POST);
+    }
     if (isset($_POST['tabsub'])){
         $error = tabs_info_db($_POST);
         if($error == 1){
@@ -126,6 +134,29 @@
     $current_tab = read_tabs();
     $current_user = read_users();
 
+    /**Мультиклан считываем**/ 
+
+    $multiclan = read_multiclan();
+
+    foreach($multiclan as $clan){
+        $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
+        if($multiclan_info[$clan['id']] === FALSE) {
+            $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);    
+        }
+        if(empty($multiclan_info)){
+            $multiclan_info[$clan['id']]['status'] = 'error';
+            $multiclan_info[$clan['id']]['status'] = 'ERROR';
+        }
+        if($multiclan_info[$clan['id']]['status'] == 'ok' &&  $multiclan_info[$clan['id']]['status_code'] == 'NO_ERROR'){
+            $cache->clear('get_last_roster_'.$clan['id']);
+            $cache->set('get_last_roster_'.$clan['id'], $multiclan_info[$clan['id']]);
+        }else{
+            die('No cahced data');
+        }
+    }
+    //print_r($multiclan_info);
+
+    /*-----------------------------------*/
     //Update top tanks tab info
     if(isset($_POST['toptanksupd'])) {
         update_top_tanks($_POST['Array']);

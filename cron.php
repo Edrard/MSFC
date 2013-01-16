@@ -118,7 +118,7 @@
         }
         if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
             unset($new);
-            $new = $cache->get('get_last_roster',0);
+            $new = $cache->get('get_last_roster_'.$config['clan'],0);
             if($new === FALSE) { 
                 if($log == 1){
                     fwrite($fh, $date.": No cahced data\n");    
@@ -129,8 +129,8 @@
                 fwrite($fh, $date.": Used cached roster\n");    
             }  
         }else{
-            $cache->clear('get_last_roster', $new);
-            $cache->set('get_last_roster', $new);
+            $cache->clear('get_last_roster_'.$config['clan'], $new);
+            $cache->set('get_last_roster_'.$config['clan'], $new);
             if($log == 1){
                 fwrite($fh, $date.": Used roster from WG\n");    
             }

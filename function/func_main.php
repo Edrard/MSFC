@@ -45,8 +45,8 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($tmp as $t) {
-           $temp = explode('_',$t['0']);
-           $col_tank[] = end($temp);
+            $temp = explode('_',$t['0']);
+            $col_tank[] = end($temp);
         }
 
         $t = array();
@@ -586,8 +586,19 @@
         $data['commander'] = '3'; 
         $data['vice_leader'] = '2';  
         $data['leader'] = '1';
-        
+
         return $data[$var];
-            
+
+    }
+    function read_multiclan()
+    {
+        global $db;
+        $sql = "SELECT * FROM multiclan;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }else{ 
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }     
     }
 ?>

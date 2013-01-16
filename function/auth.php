@@ -98,7 +98,11 @@
                             $this->set_cookie('password', $password);
                             $this->set_cookie('group', $row['group']);
                         }
-                        header('Location: '.$_SERVER['PHP_SELF']);
+                        $multi_get = '';
+                        if(isset($_GET['multi'])){
+                            $multi_get = '?multi='.$_GET['multi'];
+                        }
+                        header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
                     } else {
                         $this->errors[] = 'Incorrect password';
                     }
@@ -162,7 +166,11 @@
                 $this->destroy_cookie('group');
                 $this->destroy_cookie($col);
             }
-            header('Location: '.$_SERVER['PHP_SELF']);
+            $multi_get = '';
+            if(isset($_GET['multi'])){
+                $multi_get = '?multi='.$_GET['multi'];
+            }
+            header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
         }
 
         private function check() {

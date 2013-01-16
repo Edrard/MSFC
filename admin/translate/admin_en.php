@@ -99,7 +99,7 @@
 
     $lang['admin_new_version_1'] = 'New version';
     $lang['admin_new_version_2'] = 'of module available now, pls visit';
-    
+
     $lang['tank_list_title'] = 'Title';
     $lang['tank_list_nation'] = 'Nation';
     $lang['tank_list_lvl'] = 'Level';
@@ -112,6 +112,20 @@
     $lang['admin_clear_a_cache'] = 'Clear cached activity data';
     $lang['admin_clear_a_cache_form'] = 'Delete activity cache, except last <input type="text" size="1" name="clear_a_cache_date" value="7" /> days.';
     $lang['admin_themes'] = 'Theme:';
+
+    $lang['admin_cln_control'] = 'Clans Control';
+    $lang['admin_current_calns'] = 'Current clans';
     
-    $lang['admin_caln_control']
+    $lang['admin_add_clan'] = 'Add new clan';
+
+    $lang['admin_multi_id'] = 'Clan ID';
+    $lang['admin_multi_teg'] = 'Abbreviation';
+    $lang['admin_multi_mem_count'] = 'Number of players';
+    $lang['admin_multi_prefix'] = 'Prefix in DB';
+    $lang['admin_multi_index'] = 'Index number';
+    $lang['admin_multi_main'] = 'Status';
+    $lang['admin_multi_server'] = 'Server';
+    $lang['admin_multi_main_msg'] = 'Main'; 
+    $lang['admin_multi_add_new'] = 'Add';
+    $lang['admin_multi_link'] = 'Link';
 ?>

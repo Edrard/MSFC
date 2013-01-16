@@ -22,8 +22,8 @@
     </head>
     <body>
         <div align="center"><br><br><br><br><br><br>
-            <?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/')){ 
-                    if(!is_dir(ROOT_DIR.'/cache/players')){
+            <?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/')){   
+                if(!is_dir(ROOT_DIR.'/cache/players')){
                         mkdir(ROOT_DIR.'/cache/players',0777);
                         chmod(ROOT_DIR.'/cache/players', 0777);
                     }

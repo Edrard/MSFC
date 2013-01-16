@@ -48,7 +48,7 @@
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
-    $new = $cache->get('get_last_roster',0);
+    $new = $cache->get('get_last_roster_'.$config['clan'],0);
 
     if(empty($new['data']['members'])){
         $res = array();

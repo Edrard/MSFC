@@ -24,10 +24,10 @@
 
     $dbhost ='localhost';
     // username and password to log onto db SERVER
-    $dbuser ='';
-    $dbpass  ='';
+    $dbuser ='root';
+    $dbpass  ='Kndr:34.';
     // name of database
-    $dbname='';
+    $dbname='test2';
     //en - Prefix must be min 1 symbol, max 5 symbols, with _ at the end. Only a-z, A-Z and numbers allowed. For example: $dbprefix = 'msfc_';
     //ru - Префикс должен быть не менее 1 и не более 5 символов, в конце префикса должен быть символ _. Разрешены только английские буквы и цифры.
     //Для примера: $dbprefix = 'msfc_';
@@ -91,6 +91,23 @@
             return parent::exec($statement);
         }
     }
+    if (isset($_POST['multiadd'])){
+        if($_POST['id'] && $_POST['prefix'] && $_POST['sort']){
+            if(is_numeric($_POST['id'])){  
+                $_POST['prefix'] = strtolower($_POST['prefix']);
+                if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'], $match)){
+                    $dbprefix = $match[0];
+                }else{
+                    preg_match("/[a-zA-Z0-9]{1,5}/s", $_POST['prefix'], $match );
+                    $dbprefix = $match[0].'_';
+                }
+                $_POST['prefix'] = $dbprefix;
+            }
+        }   
+    }
+    if(isset($_GET['multi'])){
+        $dbprefix = $_GET['multi'].'_';
+    }
 
     try {
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
@@ -98,8 +115,33 @@
         //echo $e->getMessage();
         die(show_message($e->getMessage()));
     }
-
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
+
+
+    function read_multiclan_main($dbprefix)
+    {
+        global $db;
+
+        if(!$dbprefix){
+            $dbprefix = 'msfc';    
+        }
+        $sql = "SELECT COUNT(*) FROM multiclan WHERE main = '1' AND prefix = '".$dbprefix."';";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $multi = $q->fetchAll();
+        }else{ 
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }     
+        if($multi[0][0] != 1){
+            $insert = "prefix = '".$dbprefix."'";;
+            $sql = "UPDATE multiclan SET ".$insert." WHERE main = '1';";
+            //echo $sql;
+            $q = $db->prepare($sql);
+            $q->execute();       
+        }
+    }
+    /* Проверяем совпадает ли данные в конфиге и в мультиклане для основного клана */
+    //read_multiclan_main($dbprefix);
 ?>

@@ -48,7 +48,7 @@
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
-    $new_roster = $cache->get('get_last_roster',0);
+    $new_roster = $cache->get('get_last_roster_'.$config['clan'],0);
     //print_r($new_roster);
     foreach($new_roster['data']['members'] as $val){
         $res[$val['account_name']] = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players/');

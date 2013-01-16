@@ -20,10 +20,10 @@
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
-        
+
         include_once(LOCAL_DIR.'/func_admin.php');
         include_once(LOCAL_DIR.'/translate/tabs.php');
-        
+
         define('ROOT_DIR', base_dir('admin'));
 
         //Cheker
@@ -47,7 +47,7 @@
         define('LOCAL_DIR', '.');
         define('ROOT_DIR', '..');
 
-         //Cheker
+        //Cheker
         include_once(ROOT_DIR.'/including/check.php');
 
         include_once(LOCAL_DIR.'/func_admin.php');
@@ -92,14 +92,22 @@
         if($config['error'] == '2'){
             $page = 'install';
         }
+        if (isset($_POST['multiadd'])){
+            add_multiclan($_POST);
+            $page = 'main';      
+        }
     }
-
+    $multi_get = '';
+    if(isset($_GET['multi'])){
+        $multi_get = '&multi='.$_GET['multi'];
+    }
+    
     switch ($page) {
 
 
         case 'login':
             if ( $auth->isLoggedInAdmin(1) ) { 
-                header ( 'Location: index.php?page=main' );
+                header ( 'Location: index.php?page=main'.$multi_get );
             }
 
             include_once(LOCAL_DIR.'/views/ad_header.php');
@@ -110,7 +118,7 @@
         case 'main':
 
             if ( !$auth->isLoggedInAdmin(1) ) {
-                header ( 'Location: index.php?error=1' );
+                header ( 'Location: index.php?error=1'.$multi_get );
 
             }
             //cache

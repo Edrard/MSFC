@@ -19,6 +19,7 @@
     if (isset($_POST['recdb'])){
         recreat_db();
         insert_file(LOCAL_DIR.'/sql/clan.sql');
+        insert_multicaln('37','ru',$dbprefix);
         header ( 'Location: index.php' );
     }
 ?>

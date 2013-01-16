@@ -112,4 +112,20 @@
     $lang['admin_clear_a_cache'] = 'Удалить кэшированные данные о активности';
     $lang['admin_clear_a_cache_form'] = 'Удалить кэшированные данные о активности, кроме последних <input type="text" size="1" name="clear_a_cache_date" value="7" /> дней.';
     $lang['admin_themes'] = 'Тема:';
-?>
+
+    $lang['admin_cln_control'] = 'Управление кланами';
+    $lang['admin_current_calns'] = 'Текущие кланы';
+    
+    $lang['admin_add_clan'] = 'Добавить новый клан';
+    
+    $lang['admin_multi_id'] = 'ID клана';
+    $lang['admin_multi_teg'] = 'Аббревиатура';
+    $lang['admin_multi_mem_count'] = 'Количество игроков';
+    $lang['admin_multi_prefix'] = 'Префикс в базе';
+    $lang['admin_multi_index'] = 'Порядковый номер';
+    $lang['admin_multi_main'] = 'Статус';
+    $lang['admin_multi_server'] = 'Сервер';
+    $lang['admin_multi_main_msg'] = 'Основной';
+    $lang['admin_multi_add_new'] = 'Добавить';
+    $lang['admin_multi_link'] = 'Ссылка';
+    ?>

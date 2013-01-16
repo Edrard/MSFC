@@ -155,6 +155,20 @@ CREATE TABLE IF NOT EXISTS `col_players` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `multiclan`
+--
+
+CREATE TABLE IF NOT EXISTS `multiclan` (
+  `id` int(25) NOT NULL,
+  `prefix` varchar(64) NOT NULL,
+  `sort` int(9) NOT NULL,
+  `main` int(1) NOT NULL DEFAULT '0',
+  `server` varchar(3) NOT NULL,
+  KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+--
 -- Структура таблицы `config`
 --
 

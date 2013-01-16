@@ -21,6 +21,12 @@
     }else{
         define('ROOT_DIR', '.');
     }
+    //Multiget check
+    $sender = '';
+    if(isset($_GET['multi']) && !isset($_GET['page'])){
+        $sender = '?multi='.$_GET['multi'];
+    }
+
     //Checker
     include_once(ROOT_DIR.'/including/check.php');
 
@@ -59,11 +65,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php if (!isset($config['theme'])) {
-                   $config['theme'] = 'ui-lightness'; } ?>
+            $config['theme'] = 'ui-lightness'; } ?>
         <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
         <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
         <script type="text/javascript">
-            var url = 'main.php';
+            var url = 'main.php<?=$sender;?>';
         </script>
         <script language="JavaScript" type="text/javascript">
             function reFresh() {
@@ -86,18 +92,18 @@
         <div id="main" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
             <table style="width: 100%; height:100%;" cellpadding="4" cellspacing="0">
                 <?php if($config['lang'] == 'ru'){ ?>
-                <tr style="vertical-align: bottom;">
-                    <td align="center">
-                        <iframe src="./news.php" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
-                    </td>
-                </tr>
+                    <tr style="vertical-align: bottom;">
+                        <td align="center">
+                            <iframe src="./news.php" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
+                        </td>
+                    </tr>
                     <?php } ?>
                 <tr style="vertical-align: top;">
                     <td align="center">
 
-                    <div class="ui-state-highlight ui-corner-all">
-                        <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
-                    </div>
+                        <div class="ui-state-highlight ui-corner-all">
+                            <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
+                        </div>
                     </td>
                 </tr>
             </table>

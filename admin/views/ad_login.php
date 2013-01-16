@@ -19,11 +19,17 @@
 <div style="height: 100%; width:100%;" align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
     <div style="height: 25%;"></div>
     <div>
-       <img style="width:500px; height:89px;" src="../images/logo.png"/>
+        <img style="width:500px; height:89px;" src="../images/logo.png"/>
     </div>
     <div style="height: 5%;"></div>
     <div class="adinsider">
-        <form action="<?=$_SERVER['PHP_SELF'];?>?auth" method="post">
+        <?php
+            $multi_get = '';
+            if(isset($_GET['multi'])){
+                $multi_get = '&multi='.$_GET['multi'];
+            }
+        ?>
+        <form action="<?=$_SERVER['PHP_SELF'];?>?auth<?=$multi_get?>" method="post">
             <table width="300px" border="0" cellspacing="4" cellpadding="0">
                 <tr>
                     <td colspan="2" align="center">
@@ -55,14 +61,14 @@
     </div>
 </div>
 <?php if ($auth->error()){ ?>
-          <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
-               style="position: absolute; width:100%; bottom: 0px;">
-<?php     echo $auth->error(); ?>
-          </div>
-<?php }
-      if (isset($data['msg'])){ ?>
-          <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
-               style="position: absolute; width:100%; bottom: 0px;">
-<?php     echo '<br>'.error($data['msg']); ?>
-          </div>
-<?php }
+    <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
+        style="position: absolute; width:100%; bottom: 0px;">
+        <?php     echo $auth->error(); ?>
+    </div>
+    <?php }
+    if (isset($data['msg'])){ ?>
+    <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
+        style="position: absolute; width:100%; bottom: 0px;">
+        <?php     echo '<br>'.error($data['msg']); ?>
+    </div>
+    <?php }
