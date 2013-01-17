@@ -168,9 +168,8 @@ For valid CSS, use a conditional include instead */
 }
 
 /* main */
-html { height:100%; }
 
-body { margin:0; padding:0; height:100%; width: 100%; }
+html, body {margin:0; padding:0; width:100%; height:100%;}
 
 div { padding: 2px; }
 table .tablesorter { margin: 20px 0 0 0;}

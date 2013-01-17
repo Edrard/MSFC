@@ -16,13 +16,32 @@
     */
 ?>
 
-<div id="adminalltabs"  style="min-height: 100%; padding: 0; margin: 0;" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+<div id="adminalltabs" style="min-height: 100%; width:100%; padding:0px; margin: 0px; border: 0px inset black !important; "
+                       class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+
+    <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
+        <tbody>
     <?php
-        if(isset($message['text']) && isset($message['color'])){
-            echo '<div align="center"><h3><span style="color:'.$message['color'].';">'.$message['text'].'</span></h3></div>';
-        }
-    ?>
+        if(isset($message['text']) && isset($message['color'])){ ?>
+            <tr valign="center">
+                <td colspan="2" align="center">
+                <?php if ($message['color'] == 'red') {
+                  echo '<div class="ui-state-error ui-corner-all" align="center">';
+                } else {
+                  echo '<div class="ui-state-highlight ui-corner-all" align="center">';
+                }
+                echo '<h3>'.$message['text'].'</h3></div>'; ?>
+                </td>
+            </tr>
+    <?php } ?>
+            <tr style="height: 100px;" valign="center">
+                <td colspan="2" align="center">
+                    <img src="../images/logo.png" width="500px"/>
+                </td>
+            </tr>
     <?php if(count($multiclan) > 1){ ?>
+            <tr valign="center">
+                <td colspan="2">
         <div style="margin-left:16px ;">
             <?php
                 foreach($multiclan as $val){
@@ -45,14 +64,9 @@
                 }
             ?>
         </div>
-        <?php } ?>
-    <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
-        <tbody>
-            <tr style="height: 100px;" valign="center">
-                <td colspan="2" align="center">
-                    <img src="../images/logo.png" width="500px"/>
                 </td>
             </tr>
+        <?php } ?>
             <tr>
                 <td valign="top" width="222px">
                     <ul id="ad_menu">
@@ -69,8 +83,8 @@
                 <td valign="top">
                     <div>
                     <div id="tabs-7">
-                        <br><br>
                         <div align="center">
+                          <?php if (!empty($tanks_list)){?>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
                                 <table id="tanks_list" width="100%" cellspacing="1">
                                     <thead>
@@ -96,10 +110,12 @@
                                 </table>
                                 <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
                             </form>
+                          <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                         </div>
                     </div>
                     <div id="tabs-6">
                         <div align="center">
+                          <?php if (!empty($adm_top_tanks)){?>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
                                 <table id="top_tanks" width="100%" cellspacing="1">
                                     <thead>
@@ -149,11 +165,11 @@
                                 <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
                                 <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
                             </form>
+                          <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                         </div>
                     </div>
                     <div id="tabs-1">
                         <div align="center">
-                            <br>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-1" method="post">
                                 <table width="98%" border="0" cellpadding="8">
                                     <tbody>
@@ -279,10 +295,7 @@
                     </div>
                     <div id="tabs-2">
                         <div align="center">
-                            <br>
-                            <div>
-                                <h3><?=$lang['admin_file_upload_new_tab'];?></h3>
-                            </div>
+                            <h3><?=$lang['admin_file_upload_new_tab'];?></h3>
                             <br>
                             <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
                                 <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
@@ -391,7 +404,6 @@
                     </div>
                     <div id="tabs-3">
                         <div align="center">
-                            <br>
                             <h3><?=$lang['admin_new_user_title']?></h3>
                             <br>  
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
@@ -497,6 +509,7 @@
                     <div id="tabs-8">
                         <div align="center">
                             <h3><?=$lang['admin_add_clan'];?></h3>
+                            <br>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
                                 <table width="300" cellspacing="1">
                                     <tr>

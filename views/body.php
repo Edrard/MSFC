@@ -25,7 +25,8 @@
         $("#nummm").button();
     });
 </script>
-<div style="min-height: 100%; padding: 0; margin: 0;" id="allcontainer" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+<div id="allcontainer" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important;"
+                       class="ui-accordion-content ui-widget-content ui-accordion-content-active">
     <?php if(count($multiclan) > 1){ ?>
         <div style="margin-left:16px ;">
             <?php

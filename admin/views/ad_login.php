@@ -15,13 +15,25 @@
     *
     */
 ?>
-<body style="height: 100% !important;">
-<div style="height: 100%; width:100%;" align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
-    <div style="height: 25%;"></div>
+<body>
+<div align="center" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
+                    class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
+    <div style="height: 25%; ">
+      <?php if ($auth->error()){ ?>
+        <div class="ui-state-error ui-corner-all" style="width:100%; padding:0px; margin: 0px; " align="center">
+          <?php echo $auth->error(); ?>
+        </div>
+      <?php }
+            if (isset($data['msg'])){ ?>
+        <div class="ui-state-error ui-corner-all" style="width:100%; padding:0px; margin: 0px; " align="center">
+          <?=error($data['msg']); ?>
+        </div>
+      <?php } ?>
+    </div>
     <div>
         <img style="width:500px; height:89px;" src="../images/logo.png"/>
     </div>
-    <div style="height: 5%;"></div>
+    <div style="height: 5%; "></div>
     <div class="adinsider">
         <?php
             $multi_get = '';
@@ -60,15 +72,3 @@
         </form>
     </div>
 </div>
-<?php if ($auth->error()){ ?>
-    <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
-        style="position: absolute; width:100%; bottom: 0px;">
-        <?php     echo $auth->error(); ?>
-    </div>
-    <?php }
-    if (isset($data['msg'])){ ?>
-    <div align="center" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active"
-        style="position: absolute; width:100%; bottom: 0px;">
-        <?php     echo '<br>'.error($data['msg']); ?>
-    </div>
-    <?php }

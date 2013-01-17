@@ -128,4 +128,5 @@
     $lang['admin_multi_main_msg'] = 'Основной';
     $lang['admin_multi_add_new'] = 'Добавить';
     $lang['admin_multi_link'] = 'Ссылка';
-    ?>
+    $lang['admin_no_tanks'] = 'Нет информации о танках в БД модуля';
+?>

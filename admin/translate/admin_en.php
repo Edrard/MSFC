@@ -128,4 +128,5 @@
     $lang['admin_multi_main_msg'] = 'Main'; 
     $lang['admin_multi_add_new'] = 'Add';
     $lang['admin_multi_link'] = 'Link';
+    $lang['admin_no_tanks'] = 'No data about tanks in DB';
 ?>
