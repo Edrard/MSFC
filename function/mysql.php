@@ -24,10 +24,10 @@
 
     $dbhost ='localhost';
     // username and password to log onto db SERVER
-    $dbuser ='';
-    $dbpass  ='';
+    $dbuser ='root';
+    $dbpass  ='Kndr:34.';
     // name of database
-    $dbname='';
+    $dbname='test2';
     //en - Prefix must be min 1 symbol, max 5 symbols, with _ at the end. Only a-z, A-Z and numbers allowed. For example: $dbprefix = 'msfc_';
     //ru - Префикс должен быть не менее 1 и не более 5 символов, в конце префикса должен быть символ _. Разрешены только английские буквы и цифры.
     //Для примера: $dbprefix = 'msfc_';
@@ -90,21 +90,25 @@
             $this->sqls[$this->count] = $statement;
             return parent::exec($statement);
         }
-    }
-    if (isset($_POST['multiadd'])){
+    }     
+    if (isset($_POST['multiadd'])){ 
         if($_POST['id'] && $_POST['prefix'] && $_POST['sort']){
-            if(is_numeric($_POST['id'])){  
-                $_POST['prefix'] = strtolower($_POST['prefix']);
-                if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'], $match)){
-                    $dbprefix = $match[0];
-                }else{
-                    preg_match("/[a-zA-Z0-9]{1,5}/s", $_POST['prefix'], $match );
-                    $dbprefix = $match[0].'_';
+            if(is_numeric($_POST['id'])){ 
+                if(preg_match('/^\d/', $_POST['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_POST['prefix'])) <=5){
+                    if(ctype_alnum($_POST['prefix'])){ 
+                        $_POST['prefix'] = strtolower($_POST['prefix']);
+                        if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'])){
+                            $dbprefix = $_POST['prefix'];
+                        }else{;
+                            $dbprefix = $_POST['prefix'].'_';
+                        }
+                        $_POST['prefix'] = $dbprefix;
+                    }
                 }
-                $_POST['prefix'] = $dbprefix;
             }
-        }   
+        }                                 
     }
+    //print_r($_POST);  die;
     if(isset($_GET['multi'])){
         $dbprefix = $_GET['multi'].'_';
     }
@@ -142,6 +146,8 @@
             $q->execute();       
         }
     }
+    
+    
     /* Проверяем совпадает ли данные в конфиге и в мультиклане для основного клана */
     //read_multiclan_main($dbprefix);
 ?>

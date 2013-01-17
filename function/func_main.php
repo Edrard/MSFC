@@ -129,8 +129,10 @@
 
     function pars_data2($result,$fname,$stat_config,$trans,$roster)
     {
-
         //Даты
+        $new['data']['name'] = $result['data']['name']; 
+        $new['data']['account_id'] = $result['data']['account_id'];
+        
         $new['date']['reg'] = $trans['reg'].' '.date('d.m.Y',$result['data']['created_at']);
         $new['date']['reg_num'] = $result['data']['created_at'];
         $new['date']['local'] = $trans['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);

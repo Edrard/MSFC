@@ -17,56 +17,56 @@
 ?>
 
 <div id="adminalltabs" style="min-height: 100%; width:100%; padding:0px; margin: 0px; border: 0px inset black !important; "
-                       class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+    class="ui-accordion-content ui-widget-content ui-accordion-content-active">
 
     <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
-    <?php
-        if(isset($message['text']) && isset($message['color'])){ ?>
-            <tr valign="center">
-                <td colspan="2" align="center">
-                <?php if ($message['color'] == 'red') {
-                  echo '<div class="ui-state-error ui-corner-all" align="center">';
-                } else {
-                  echo '<div class="ui-state-highlight ui-corner-all" align="center">';
-                }
-                echo '<h3>'.$message['text'].'</h3></div>'; ?>
-                </td>
-            </tr>
-    <?php } ?>
+            <?php
+                if(isset($message['text']) && isset($message['color'])){ ?>
+                <tr valign="center">
+                    <td colspan="2" align="center">
+                        <?php if ($message['color'] == 'red') {
+                                echo '<div class="ui-state-error ui-corner-all" align="center">';
+                            } else {
+                                echo '<div class="ui-state-highlight ui-corner-all" align="center">';
+                            }
+                            echo '<h3>'.$message['text'].'</h3></div>'; ?>
+                    </td>
+                </tr>
+                <?php } ?>
             <tr style="height: 100px;" valign="center">
                 <td colspan="2" align="center">
                     <img src="../images/logo.png" width="500px"/>
                 </td>
             </tr>
-    <?php if(count($multiclan) > 1){ ?>
-            <tr valign="center">
-                <td colspan="2">
-        <div style="margin-left:16px ;">
-            <?php
-                foreach($multiclan as $val){
-                ?>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#<?=$val['prefix'].'1';?>").button();
-                    });
-                </script>
-                <?php    
-                    $multi_get = '';
-                    if($val['main'] == 0){
-                        $multi_get = '&multi='.str_replace('_','',$val['prefix']);   
-                    }
-                ?>                                                             
-                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
-                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px;display:block;font: 15px; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
-                </a>
-                <?php
-                }
-            ?>
-        </div>
-                </td>
-            </tr>
-        <?php } ?>
+            <?php if(count($multiclan) > 1){ ?>
+                <tr valign="center">
+                    <td colspan="2">
+                        <div style="margin-left:16px ;">
+                            <?php
+                                foreach($multiclan as $val){
+                                ?>
+                                <script type="text/javascript">
+                                    $(document).ready(function(){
+                                        $("#<?=$val['prefix'].'1';?>").button();
+                                    });
+                                </script>
+                                <?php    
+                                    $multi_get = '';
+                                    if($val['main'] == 0){
+                                        $multi_get = '&multi='.str_replace('_','',$val['prefix']);   
+                                    }
+                                ?>                                                             
+                                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
+                                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px;display:block;font: 15px; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                                </a>
+                                <?php
+                                }
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+                <?php } ?>
             <tr>
                 <td valign="top" width="222px">
                     <ul id="ad_menu">
@@ -76,7 +76,7 @@
                         <li><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
                         <li><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
                         <li><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
-                        <li><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
+                        <li id="ccontrol"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
                         <li style="margin-top: 100px;"><a onclick="magic(this)" id="out" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
                     </ul>
                 </td>
@@ -84,88 +84,88 @@
                     <div>
                     <div id="tabs-7">
                         <div align="center">
-                          <?php if (!empty($tanks_list)){?>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
-                                <table id="tanks_list" width="100%" cellspacing="1">
-                                    <thead>
-                                        <tr>
-                                            <th align="center"><?=$lang['tank_list_title'];?></th>
-                                            <th align="center"><?=$lang['tank_list_nation'];?></th>
-                                            <th align="center"><?=$lang['tank_list_lvl'];?></th>
-                                            <th align="center"><?=$lang['tank_list_type'];?></th>
-                                            <th align="center"><?=$lang['tank_list_link'];?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach($tanks_list as $val) { ?>
+                            <?php if (!empty($tanks_list)){?>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
+                                    <table id="tanks_list" width="100%" cellspacing="1">
+                                        <thead>
                                             <tr>
-                                                <td align="center"><span class="hidden"><?=$val['tank'];?></span><?=$val['tank']?></td>
-                                                <td align="center"><span class="hidden"><?=$val['nation'];?></span><input type="text" size="10" value="<?=$val['nation']?>" name="Array[<?=$val['id']?>][nation]"></td>
-                                                <td align="center"><span class="hidden"><?=$val['lvl'];?></span><input type="text" size="2" value="<?=$val['lvl']?>" name="Array[<?=$val['id']?>][lvl]"></td>
-                                                <td align="center"><span class="hidden"><?=$val['type'];?></span><input type="text" size="12" value="<?=$val['type']?>" name="Array[<?=$val['id']?>][type]"></td>
-                                                <td align="center"><span class="hidden"><?=$val['link'];?></span><input type="text" size="82" value="<?=$val['link']?>" name="Array[<?=$val['id']?>][link]"></td>
+                                                <th align="center"><?=$lang['tank_list_title'];?></th>
+                                                <th align="center"><?=$lang['tank_list_nation'];?></th>
+                                                <th align="center"><?=$lang['tank_list_lvl'];?></th>
+                                                <th align="center"><?=$lang['tank_list_type'];?></th>
+                                                <th align="center"><?=$lang['tank_list_link'];?></th>
                                             </tr>
-                                            <?php } ?>
-                                    </tbody>
-                                </table>
-                                <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
-                            </form>
-                          <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($tanks_list as $val) { ?>
+                                                <tr>
+                                                    <td align="center"><span class="hidden"><?=$val['tank'];?></span><?=$val['tank']?></td>
+                                                    <td align="center"><span class="hidden"><?=$val['nation'];?></span><input type="text" size="10" value="<?=$val['nation']?>" name="Array[<?=$val['id']?>][nation]"></td>
+                                                    <td align="center"><span class="hidden"><?=$val['lvl'];?></span><input type="text" size="2" value="<?=$val['lvl']?>" name="Array[<?=$val['id']?>][lvl]"></td>
+                                                    <td align="center"><span class="hidden"><?=$val['type'];?></span><input type="text" size="12" value="<?=$val['type']?>" name="Array[<?=$val['id']?>][type]"></td>
+                                                    <td align="center"><span class="hidden"><?=$val['link'];?></span><input type="text" size="82" value="<?=$val['link']?>" name="Array[<?=$val['id']?>][link]"></td>
+                                                </tr>
+                                                <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
+                                </form>
+                                <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                         </div>
                     </div>
                     <div id="tabs-6">
                         <div align="center">
-                          <?php if (!empty($adm_top_tanks)){?>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                                <table id="top_tanks" width="100%" cellspacing="1">
-                                    <thead>
-                                        <tr>
-                                            <th align="center"><?=$lang['admin_tab_top_tanks_name'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_top_class'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_top_lvl'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_top_order'];?></th>
-                                            <th align="center" class="{sorter: false}"><?=$lang['admin_tab_top_show'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_top_shortname'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_top_index'];?></th>
-                                            <th align="center"><?=$lang['admin_tab_del'];?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <? foreach($adm_top_tanks as $adm_tname => $val) { ?>
+                            <?php if (!empty($adm_top_tanks)){?>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                                    <table id="top_tanks" width="100%" cellspacing="1">
+                                        <thead>
                                             <tr>
-                                                <td align="center"><?=$adm_tname?></td>
-                                                <td align="center"><?=$lang['class'][$val['type']]?></td>
-                                                <td align="center"><?=$val['lvl']?></td>
-                                                <td align="center"><div class="hidden"><?=$val['order']?></div><input type="text" value="<?=$val['order']?>" name="Array[<?=$val['title']?>][order]" style="width: 30px;"></td>
-                                                <td align="center"><input type="checkbox" <?=$val['show']?> name="Array[<?=$val['title']?>][show]"></td>
-                                                <td align="center"><input type="text" value="<?=$val['shortname']?>" name="Array[<?=$val['title']?>][shortname]"></td>
-                                                <td align="center"><div class="hidden"><?=$val['index']?></div>
-                                                    <select name="Array[<?=$val['title']?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
-                                                </td>
-                                                <td align="center"><a href="./index.php?removetoptank=1&tank=<?=$val['title']?>&page=main#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$adm_tname;?>?')"><img src="../images/cred.png" /></a></td>
+                                                <th align="center"><?=$lang['admin_tab_top_tanks_name'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_top_class'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_top_lvl'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_top_order'];?></th>
+                                                <th align="center" class="{sorter: false}"><?=$lang['admin_tab_top_show'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_top_shortname'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_top_index'];?></th>
+                                                <th align="center"><?=$lang['admin_tab_del'];?></th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            <? foreach($adm_top_tanks as $adm_tname => $val) { ?>
+                                                <tr>
+                                                    <td align="center"><?=$adm_tname?></td>
+                                                    <td align="center"><?=$lang['class'][$val['type']]?></td>
+                                                    <td align="center"><?=$val['lvl']?></td>
+                                                    <td align="center"><div class="hidden"><?=$val['order']?></div><input type="text" value="<?=$val['order']?>" name="Array[<?=$val['title']?>][order]" style="width: 30px;"></td>
+                                                    <td align="center"><input type="checkbox" <?=$val['show']?> name="Array[<?=$val['title']?>][show]"></td>
+                                                    <td align="center"><input type="text" value="<?=$val['shortname']?>" name="Array[<?=$val['title']?>][shortname]"></td>
+                                                    <td align="center"><div class="hidden"><?=$val['index']?></div>
+                                                        <select name="Array[<?=$val['title']?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
+                                                    </td>
+                                                    <td align="center"><a href="./index.php?removetoptank=1&tank=<?=$val['title']?>&page=main#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$adm_tname;?>?')"><img src="../images/cred.png" /></a></td>
+                                                </tr>
+                                                <? } ?>
+                                        </tbody>
+                                    </table>
+                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
+                                </form>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                                    <h3><?=$lang['adm_tank_top_add'];?></h3>
+                                    <select name="adm_top_tanks_action">
+                                        <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option><option value="delete"><?=$lang['adm_tank_top_add2'];?></option></select>
+                                    <?=$lang['adm_tank_top_add3'];?>
+                                    <select name="adm_top_tanks_lvl"><? for($i = 10; $i >= 1; $i--){?><option value="<?=$i?>"><?=$i?></option><?}?></select>
+                                    <?=$lang['adm_tank_top_add4'];?>
+                                    <select name="adm_top_tanks_type">
+                                        <? foreach($lang['class'] as $name => $val) { ?>
+                                            <option value="<?=$name?>"><?=$val?></option>
                                             <? } ?>
-                                    </tbody>
-                                </table>
-                                <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
-                            </form>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                                <h3><?=$lang['adm_tank_top_add'];?></h3>
-                                <select name="adm_top_tanks_action">
-                                    <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option><option value="delete"><?=$lang['adm_tank_top_add2'];?></option></select>
-                                <?=$lang['adm_tank_top_add3'];?>
-                                <select name="adm_top_tanks_lvl"><? for($i = 10; $i >= 1; $i--){?><option value="<?=$i?>"><?=$i?></option><?}?></select>
-                                <?=$lang['adm_tank_top_add4'];?>
-                                <select name="adm_top_tanks_type">
-                                    <? foreach($lang['class'] as $name => $val) { ?>
-                                        <option value="<?=$name?>"><?=$val?></option>
-                                        <? } ?>
-                                </select>
-                                <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
-                                <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
-                                <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
-                            </form>
-                          <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                                    </select>
+                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
+                                    <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
+                                    <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
+                                </form>
+                                <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                         </div>
                     </div>
                     <div id="tabs-1">
@@ -507,33 +507,60 @@
                         </div>
                     </div>
                     <div id="tabs-8">
-                        <div align="center">
+                        <div align="center" id="dccontrol">
                             <h3><?=$lang['admin_add_clan'];?></h3>
                             <br>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
+                            <form id="multiclan" action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
                                 <table width="300" cellspacing="1">
                                     <tr>
-                                        <td align="right"><?=$lang['admin_multi_id'];?>:</td><td><input type="text" value="" name="id" size="12"></td>
+                                        <td align="right"><?=$lang['admin_multi_id'];?>:</td><td><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
                                     </tr><tr> 
                                         <td align="right"><?=$lang['admin_server'];?></td>
                                         <td>                                                 
                                             <select name="server">
-                                                <option value="ru">RU</option>
-                                                <option value="eu">EU</option>
-                                                <option value="us">US</option>                     
+                                                <?php if(!isset($_POST['server'])){ ?>
+                                                    <option value="ru">RU</option>
+                                                    <option value="eu">EU</option>
+                                                    <option value="us">US</option> 
+                                                    <?php }else{ ?>
+                                                    <option value="ru" <?=($_POST['server'] == 'ru' ? 'selected="selected"' : '') ?>>RU</option>
+                                                    <option value="eu" <?=($_POST['server'] == 'eu' ? 'selected="selected"' : '') ?>>EU</option>
+                                                    <option value="us" <?=($_POST['server'] == 'us' ? 'selected="selected"' : '') ?>>US</option>
+                                                    <?php } ?>                    
                                             </select>
                                         </td>
                                     </tr><tr> 
-                                        <td align="right"><?=$lang['admin_multi_prefix'];?>:</td><td><input type="text" value="" name="prefix" size="20"></td>
+                                        <td align="right"><?=$lang['admin_multi_prefix'];?>:</td><td><input type="text" value="<?=(isset($_POST['prefix']) ? $_POST['prefix'] : '') ?>" name="prefix" size="20"></td>
                                     </tr><tr>
-                                        <td align="right"><?=$lang['admin_multi_index'];?>:</td><td><input type="text" value="" name="sort" size="3"></td>
+                                        <td align="right"><?=$lang['admin_multi_index'];?>:</td><td><input type="text" value="<?=(isset($_POST['sort']) ? $_POST['sort'] : '') ?>" name="sort" size="3"></td>
                                     </tr>
                                 </table><br />
+                                <input type="hidden" value="1" name="multiadd">
                                 <input type="submit" value="<?=$lang['admin_multi_add_new'];?>" name="multiadd"><br />
-                            </form> <br><br>
+                            </form>
+                            <script>
+                                $("#multiclan").validator().submit(function(e) {
+                                    var form = $(this);
+                                    if (!e.isDefaultPrevented()) {
+
+                                        // submit with AJAX
+                                        $.getJSON("/ajax/mc_valid.php?" + form.serialize(), function(json) {
+                                            // everything is ok. (server returned true)
+                                            if (json["id"] === "true")  {
+                                                document.forms["multiclan"].submit();
+                                            } else {     
+                                                      
+                                                form.data("validator").invalidate(json);    
+                                            }
+                                        });      
+                                        e.preventDefault();
+                                    }
+                                });  
+                            </script>
+                            <br><br>
                             <h3><?=$lang['admin_current_calns'];?></h3>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
-                                <table id="multiclan" width="100%" cellspacing="1">
+                                <table id="multiclan_table" width="100%" cellspacing="1">
                                     <thead>
                                         <tr>
                                             <th align="center"><?=$lang['admin_multi_index'];?></th>

@@ -22,7 +22,7 @@
     $new = get_api_roster($config['clan'],$config);
     if(empty($new)){
         $new['status'] = 'error';
-        $new['status'] = 'ERROR';
+        $new['status_code'] = 'ERROR';
     }
 
     //print_r($new);
@@ -109,7 +109,6 @@
             $multiclan_info[$clan['id']] = &$new;    
         }
     }
-    //print_r($multiclan);
     //print_r($multiclan_info);
 
 ?>

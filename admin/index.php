@@ -68,6 +68,7 @@
             }
         } 
     }
+
     if (!isset($config['error'])){
         $auth = new Auth($db); // This order: Database User Password Host
     }
@@ -93,15 +94,14 @@
             $page = 'install';
         }
         if (isset($_POST['multiadd'])){
-            add_multiclan($_POST);
-            $page = 'main';      
+            add_multiclan($_POST,$lang);     
         }
     }
     $multi_get = '';
     if(isset($_GET['multi'])){
         $multi_get = '&multi='.$_GET['multi'];
     }
-    
+
     switch ($page) {
 
 

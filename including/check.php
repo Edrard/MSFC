@@ -125,7 +125,7 @@
     if(!file_exists(ROOT_DIR.'/cache/') || !is_writable(ROOT_DIR.'/cache/')) {
         show_message($lang['chmod_off']);
     }
-    if(!file_exists(ROOT_DIR.'/admin/sql') || !is_writable(ROOT_DIR.'/admin/sql')) {
+    if(!file_exists(ROOT_DIR.'/admin/sql/') || !is_writable(ROOT_DIR.'/admin/sql')) {
         show_message($lang['c_chmod_off']);
     }
     if(!file_exists(ROOT_DIR.'/cache_activity/') || !is_writable(ROOT_DIR.'/cache_activity/')) {

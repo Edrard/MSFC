@@ -32,6 +32,7 @@
     <script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="../js/jquery.tablesorter.widgets.js"></script>
     <script type="text/javascript" src="../js/jquery.ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
     <?php if ($config['lang'] == 'ru') { ?>
         <script type="text/javascript" src="../js/jquery.ui.ru.js"></script>
         <?php }; ?>
@@ -53,6 +54,8 @@
             <?php if(isset($_GET['multi'])){ ?>
                 $("#iserver").prop('disabled', true);
                 $("#iclan").prop('disabled', true);
+                $("#ccontrol").hide();
+                $("#dccontrol").hide();
                 <?php } ?>
             $.extend($.tablesorter.themes.jui, {
 
@@ -143,7 +146,7 @@
                     widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'}
                 });
-                $("#multiclan").tablesorter({
+                $("#multiclan_table").tablesorter({
                     sortList: [[1, 0]],
                     widthFixed: false,
                     headerTemplate : '{content} {icon}',

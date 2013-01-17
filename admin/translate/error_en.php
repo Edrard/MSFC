@@ -16,5 +16,6 @@
     */
 ?>
 <?php
-    $lang['error_1'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";;
+    $lang['error_1'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
+    
 ?>

@@ -16,6 +16,14 @@
     */
 ?>
 <?php
-  $lang['error_cron_off'] = 'You need to enable collection of players statistics in the admin panel';
-  $lang['error_cron_off_or_none'] = 'Lacks of data to display this tab, or collection of statistics disabled in the admin panel.<br /><a href="http://wot-news.com/forum/viewtopic.php?f=30&t=2553" target="_blank">Instructions, how to configure and start collection of statistics (currently, only on russian).</a>';
+    $lang['error_cron_off'] = 'You need to enable collection of players statistics in the admin panel';
+    $lang['error_cron_off_or_none'] = 'Lacks of data to display this tab, or collection of statistics disabled in the admin panel.<br /><a href="http://wot-news.com/forum/viewtopic.php?f=30&t=2553" target="_blank">Instructions, how to configure and start collection of statistics (currently, only on russian).</a>';
+
+    $lang['error_multi_1'] = "Please fill in all input fields";
+    $lang['error_multi_2'] = "Clan ID must be numeric";
+    $lang['error_multi_3'] = "The prefix must not start with a number and be greater than 5 characters";
+    $lang['error_multi_4'] = "In the prefix, you can use only letters or numbers";
+    $lang['error_multi_6'] = "The clan with such ID already exists";
+    $lang['error_multi_5'] = "Invalid ID Clan";
+    $lang['error_multi_7'] = "The clan with such prefix already";
 ?>

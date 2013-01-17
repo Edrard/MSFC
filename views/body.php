@@ -26,7 +26,7 @@
     });
 </script>
 <div id="allcontainer" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important;"
-                       class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+    class="ui-accordion-content ui-widget-content ui-accordion-content-active">
     <?php if(count($multiclan) > 1){ ?>
         <div style="margin-left:16px ;">
             <?php
@@ -37,9 +37,9 @@
                         $("#<?=$val['prefix'].'1';?>").button();
                     });
                 </script>
-                <?php    
-                    $multi_get = '';
-                    if($val['main'] == 0){
+                <?php
+                    $multi_get = '';    
+                    if(isset($_GET['multi'])){
                         $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
                     }
                 ?>                                                             
@@ -80,6 +80,12 @@
                                 <tr>
                                     <td>
                                         <? if($logged == 2) { ?>
+                                            <?php    
+                                                $multi_get = '';
+                                                if($val['main'] == 1){
+                                                    $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
+                                                }
+                                            ?> 
                                             <a href="./admin/index.php<?=$multi_get?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
                                             <? } ?>
                                         <?php    
