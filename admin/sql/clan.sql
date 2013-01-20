@@ -188,7 +188,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('server', 'ru'),
 ('clan', '37'),
 ('cache', '12'),
-('align', 'ver'),
+('themeинтерфейс', 'ui-lightness'),
 ('pars', 'curl'),
 ('time', '0'),
 ('cron', '1'),
