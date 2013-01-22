@@ -93,19 +93,8 @@
         global $db,$cache;
         $tcurl = $config['pars'];
         $num = $config['multiget'];
-        $current_time = now();
         $urlss = array_chunk($inurls,$num,TRUE);
         foreach($urlss as $urls){
-            If ((now()-$current_time)>=5) {
-                $sql = "SELECT `value` FROM  `config` LIMIT 0 , 1;";
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $current_time = now();
-                } else {
-                    Print_R('Something go wrong,');
-                    Print_R($q->errorInfo());
-                }
-            };
             if($tcurl == 'curl'){
                 $curl = new CURL();
                 $curl->retry = 2;
