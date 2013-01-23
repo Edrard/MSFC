@@ -106,7 +106,7 @@
             $("#all_medals_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
             $( "#login_dialog" ).dialog({
-                 title: 'Login',
+                 title: "<?php echo $lang['login']; ?>",
                  autoOpen: false,
                  draggable: false,
                  resizable: false,

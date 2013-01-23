@@ -15,7 +15,8 @@
     *
     */
 ?>
-<div align="center"><br><br><br><br><br><br>
+<div align="center"style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
+                    class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
   <?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/')){
     if(!is_dir(ROOT_DIR.'/cache/players')){
       mkdir(ROOT_DIR.'/cache/players',0777);
@@ -23,11 +24,51 @@
     }
     if(is_writable(ROOT_DIR.'/cache/players/')){
   ?>
-  <h3><?=$lang['admin_db_creat'];?></h3>
-  <form action="./index.php" method="post">
-    <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb"><br /><br>
-    <?=$lang['admin_db_cwarning'];?>
-  </form>
+  <div style="height: 25%; "></div>
+  <div class="adinsider">
+    <form action="./index.php" method="post">
+      <table width="300px" border="0" cellspacing="4" cellpadding="0">
+        <tr>
+          <td colspan="2" align="center">
+            <h3><?=$lang['admin_db_creat'];?></h3>
+          </td>
+        </tr>
+        <tr>
+          <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_lang'];?>: </td>
+          <td align="left">
+            <select name="lang">
+              <option value="ru">Русский</option>
+              <option value="en">English</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_server'];?>: </td>
+          <td align="left">
+            <select id="iserver" name="server">
+              <option value="ru">RU</option>
+              <option value="eu">EU</option>
+              <option value="us">US</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_clan_id'];?>: </td>
+          <td align="left">
+            <input id="iclan" type="text" name="clan" value="37" size="18" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><br></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb">
+          </td>
+        </tr>
+      </table>
+    </form>
   <?php }
   } ?>
+  </div>
 </div>

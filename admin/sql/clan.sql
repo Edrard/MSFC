@@ -194,7 +194,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('cron', '1'),
 ('news', '1'),
 ('cron_time', '23'),
-('multiget', '10');
+('multiget', '10'),
 ('autoclean', '0');
 
 -- --------------------------------------------------------
