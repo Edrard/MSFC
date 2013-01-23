@@ -130,9 +130,9 @@
     function pars_data2($result,$fname,$stat_config,$trans,$roster)
     {
         //Даты
-        $new['data']['name'] = $result['data']['name']; 
-        $new['data']['account_id'] = $result['data']['account_id'];
-        
+        $new['data']['name'] = $roster['account_name']; 
+        $new['data']['account_id'] = $roster['account_id'];
+
         $new['date']['reg'] = $trans['reg'].' '.date('d.m.Y',$result['data']['created_at']);
         $new['date']['reg_num'] = $result['data']['created_at'];
         $new['date']['local'] = $trans['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);
@@ -602,5 +602,39 @@
         }else{ 
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }     
+    }
+    function autoclean($time,$multi,$config,$directory)
+    {
+        global $cache,$db;
+        //$global = array(); 
+        if(($config['autoclean'] + $time) <= now()){
+            $map = directory_map($directory);
+            foreach($multi as $val){
+                $new = $cache->get('get_last_roster_'.$val['id'],0);
+                if($new === FALSE) 
+                { 
+                    $new = get_api_roster($val['id'],$config); 
+                }else{
+                    $cache->clear('get_last_roster_'.$val['id']);
+                    $cache->set('get_last_roster_'.$val['id'], $new);
+                }
+                //print_r($new); die;
+                foreach($new['data']['members'] as $player){
+                    foreach($map as $key => $file){
+                        if(sha1($player['account_name']) == $file){
+                            unset($map[$key]);
+                        }
+                    }
+                } 
+                $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
+                $q = $db->prepare($sql);
+                if ($q->execute() != TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                }
+            }              
+        }
+        foreach($map as $file){ 
+            unlink($directory.$file);   
+        }   
     }
 ?>

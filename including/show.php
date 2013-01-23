@@ -109,6 +109,7 @@
             $multiclan_info[$clan['id']] = &$new;    
         }
     }
-    //print_r($multiclan_info);
-
+    //Autoclener
+   autoclean((86400*7),$multiclan,$config,ROOT_DIR.'/cache/players/'); 
+   
 ?>

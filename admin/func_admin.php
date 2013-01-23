@@ -225,7 +225,7 @@
         //header ("Location: ./index.php?page=main#tabs-2");
     }
     function delete_multi($get){
-        global $db;
+        global $db,$cache;
         if($get['removeclan'] == 1){
             if(isset($get['clan'])){
                 if(is_numeric($get['clan'])){
@@ -264,7 +264,8 @@
                         if ($q->execute() != TRUE) {
                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         } 
-                    }  
+                    } 
+                    $cache->clear('get_last_roster_'.$get['clan']); 
                 }        
             }
         }

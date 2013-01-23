@@ -195,6 +195,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('news', '1'),
 ('cron_time', '23'),
 ('multiget', '10');
+('autoclean', '0');
 
 -- --------------------------------------------------------
 

@@ -39,7 +39,7 @@
                 </script>
                 <?php
                     $multi_get = '';    
-                    if(isset($_GET['multi'])){
+                    if($val['main'] != 1){
                         $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
                     }
                 ?>                                                             
