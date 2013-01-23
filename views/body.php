@@ -23,7 +23,7 @@
 <div id="allcontainer" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important;"
     class="ui-accordion-content ui-widget-content ui-accordion-content-active">
     <?php if(count($multiclan) > 1){ ?>
-        <div style="margin-left:16px ;">
+        <div style="padding-left:26px" class="ui-accordion-content ui-widget-content ui-corner-top ui-accordion-content-active">
             <?php
                 foreach($multiclan as $val){
                 ?>
@@ -38,8 +38,8 @@
                         $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
                     }
                 ?>                                                             
-                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="/index.php<?=$multi_get?>">
-                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px;display:block;font: 15px; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                <a style="margin: 0 5px;" id="<?=$val['prefix'].'1';?>" href="/index.php<?=$multi_get?>">
+                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
                 </a>
                 <?php
                 }

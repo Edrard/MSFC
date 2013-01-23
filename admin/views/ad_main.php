@@ -17,6 +17,26 @@
 ?>
 <div id="adminalltabs" style="min-height: 100%; width:100%; padding:0px; margin: 0px; border: 0px inset black !important; "
     class="ui-accordion-content ui-widget-content ui-accordion-content-active">
+    <?php if(count($multiclan) > 1){ ?>
+        <div style="padding-left:26px" class="ui-accordion-content ui-widget-content ui-corner-top ui-accordion-content-active">
+        <?php
+          foreach($multiclan as $val){ ?>
+            <script type="text/javascript">
+              $(document).ready(function(){
+                $("#<?=$val['prefix'].'1';?>").button();
+              });
+            </script>
+            <?php $multi_get = '';
+                  if($val['main'] == 0){
+                    $multi_get = '&multi='.str_replace('_','',$val['prefix']);
+                  } ?>
+            <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
+              <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+            </a>
+            <?php
+          } ?>
+        </div>
+      <?php } ?>
 
     <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
@@ -38,34 +58,6 @@
                     <img src="../images/logo.png" width="500px"/>
                 </td>
             </tr>
-            <?php if(count($multiclan) > 1){ ?>
-                <tr valign="center">
-                    <td colspan="2">
-                        <div style="margin-left:16px ;">
-                            <?php
-                                foreach($multiclan as $val){
-                                ?>
-                                <script type="text/javascript">
-                                    $(document).ready(function(){
-                                        $("#<?=$val['prefix'].'1';?>").button();
-                                    });
-                                </script>
-                                <?php    
-                                    $multi_get = '';
-                                    if($val['main'] == 0){
-                                        $multi_get = '&multi='.str_replace('_','',$val['prefix']);   
-                                    }
-                                ?>                                                             
-                                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
-                                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px;display:block;font: 15px; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
-                                </a>
-                                <?php
-                                }
-                            ?>
-                        </div>
-                    </td>
-                </tr>
-                <?php } ?>
             <tr>
                 <td valign="top" width="222px">
                     <ul id="ad_menu">
