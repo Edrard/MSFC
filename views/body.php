@@ -20,11 +20,6 @@
         echo $message;
     }
 ?>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#nummm").button();
-    });
-</script>
 <div id="allcontainer" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important;"
     class="ui-accordion-content ui-widget-content ui-accordion-content-active">
     <?php if(count($multiclan) > 1){ ?>
@@ -86,18 +81,18 @@
                                 <tr>
                                     <td>
                                         <? if($logged == 2) { ?>
-                                            <?php    
+                                            <?php
                                                 $multi_get = '';
-                                                if($val['main'] == 1){
-                                                    $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
+                                                if(isset($_GET['multi'])){
+                                                   $multi_get = '?multi='.str_replace('_','',$_GET['multi']);
                                                 }
                                             ?> 
                                             <a href="./admin/index.php<?=$multi_get?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
                                             <? } ?>
                                         <?php    
                                             $multi_get = '';
-                                            if($val['main'] == 0){
-                                                $multi_get = '&multi='.str_replace('_','',$val['prefix']);   
+                                                if(isset($_GET['multi'])){
+                                                $multi_get = '&multi='.str_replace('_','',$_GET['multi']);
                                             }
                                         ?>     
                                         <a href="./main.php?logout=true<?=$multi_get?>"><?=$lang['logout'];?></a>
