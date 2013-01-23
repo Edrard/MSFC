@@ -133,7 +133,7 @@
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
-    $db->query ( 'SET SESSION wait_timeout = '.$exec_time.';');
+    $db->query ( 'SET SESSION wait_timeout = 300;');
 
     function read_multiclan_main($dbprefix)
     {
