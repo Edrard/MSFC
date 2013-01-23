@@ -140,6 +140,7 @@
             //Controller
             include_once(LOCAL_DIR.'/including/ad_install.php');
             //Viewing
+            include_once(LOCAL_DIR.'/views/ad_header.php');
             include_once(LOCAL_DIR.'/views/ad_install.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
             break;

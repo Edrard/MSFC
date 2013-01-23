@@ -15,7 +15,6 @@
     *
     */
 ?>
-<body>
 <div align="center" style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
                     class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
     <div style="height: 25%; ">

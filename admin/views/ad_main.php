@@ -15,7 +15,6 @@
     *
     */
 ?>
-
 <div id="adminalltabs" style="min-height: 100%; width:100%; padding:0px; margin: 0px; border: 0px inset black !important; "
     class="ui-accordion-content ui-widget-content ui-accordion-content-active">
 
