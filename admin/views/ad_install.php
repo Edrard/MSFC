@@ -20,6 +20,13 @@
         recreat_db();
         insert_file(LOCAL_DIR.'/sql/clan.sql');
         insert_multicaln('37','ru',$dbprefix);
-        header ( 'Location: index.php' );
+        if (!headers_sent()) {
+           header ( 'Location: index.php' );
+           exit;
+        } else { ?>
+           <script type="text/javascript">
+             location.replace("index.php");
+           </script>
+<?      }
     }
 ?>

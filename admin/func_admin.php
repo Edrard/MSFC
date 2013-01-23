@@ -264,9 +264,9 @@
                         if ($q->execute() != TRUE) {
                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         } 
-                    } 
-                    $cache->clear('get_last_roster_'.$get['clan']); 
-                }        
+                    }
+                    $cache->clear('get_last_roster_'.$get['clan']);
+                }
             }
         }
     }
@@ -321,14 +321,28 @@
                                 if(isset($_GET['multi'])){
                                     $multi_get = '&multi='.$_GET['multi'];
                                 }
-                                header ( 'Location: index.php?page=main#tabs-8'.$multi_get ); 
+                                if (!headers_sent()) {
+                                  header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
+                                  exit;
+                                } else { print_R('<script type="text/javascript">
+                                     location.replace("Location: index.php?page=main#tabs-8'.$multi_get.'");
+                                   </script>');
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        header ( 'Location: index.php?page=main#tabs-8' );
+
+        if (!headers_sent()) {
+           header ( 'Location: index.php?page=main#tabs-8' );
+           exit;
+        } else { ?>
+           <script type="text/javascript">
+             location.replace("index.php?page=main#tabs-8");
+           </script>
+<?      }
     }
 
 

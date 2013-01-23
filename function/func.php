@@ -19,8 +19,13 @@
 
     if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
     {
-        header ("Location: ./index.php");
-        exit;
+        if (!headers_sent()) {
+          header ("Location: ./index.php");
+          exit;
+        } else { print_R('<script type="text/javascript">
+          location.replace("./index.php");
+          </script>');
+        }
     }
     function array_resort($array,$param){
         foreach($array as $val){

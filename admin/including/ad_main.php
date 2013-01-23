@@ -25,11 +25,25 @@
     }
     if (isset($_GET['del'])){
         delete_tab($_GET);
-        header ( 'Location: index.php?page=main#tabs-2' );
+        if (!headers_sent()) {
+           header ( 'Location: index.php?page=main#tabs-2' );
+           exit;
+        } else { ?>
+           <script type="text/javascript">
+             location.replace("index.php?page=main#tabs-2");
+           </script>
+<?      }
     }
     if (isset($_GET['removeclan'])){
         delete_multi($_GET);
-        header ( 'Location: index.php?page=main#tabs-8' );
+        if (!headers_sent()) {
+           header ( 'Location: index.php?page=main#tabs-8' );
+           exit;
+        } else { ?>
+           <script type="text/javascript">
+             location.replace("index.php?page=main#tabs-8");
+           </script>
+<?      }
     }
     if (isset($_POST['consub'])){
         insert_config($_POST);
@@ -52,7 +66,14 @@
             $message['text'] = $lang['admin_del_user_error'];
             $message['color'] = 'red';    
         }else{
-            header ( 'Location: index.php?page=main#tabs-2' );
+            if (!headers_sent()) {
+               header ( 'Location: index.php?page=main#tabs-2' );
+               exit;
+            } else { ?>
+               <script type="text/javascript">
+                 location.replace("index.php?page=main#tabs-2");
+               </script>
+    <?      }
         }
     }
     if (isset($_POST['edituser'])){

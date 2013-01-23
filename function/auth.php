@@ -18,8 +18,13 @@
 <?php
     if (preg_match ("/auth.php/", $_SERVER['PHP_SELF']))
     {
-        header ("Location: /index.php");
-        exit;
+        if (!headers_sent()) {
+          header ("Location: /index.php");
+          exit;
+        } else { print_R('<script type="text/javascript">
+          location.replace("/index.php");
+          </script>');
+        }
     }
 
     /*
@@ -102,7 +107,13 @@
                         if(isset($_GET['multi'])){
                             $multi_get = '?multi='.$_GET['multi'];
                         }
-                        header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+                        if (!headers_sent()) {
+                          header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+                          exit;
+                        } else { print_R('<script type="text/javascript">
+                          location.replace("'.$_SERVER['PHP_SELF'].$multi_get.'");
+                          </script>');
+                        }
                     } else {
                         $this->errors[] = 'Incorrect password';
                     }
@@ -170,7 +181,13 @@
             if(isset($_GET['multi'])){
                 $multi_get = '?multi='.$_GET['multi'];
             }
-            header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+            if (!headers_sent()) {
+              header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+              exit;
+            } else { print_R('<script type="text/javascript">
+              location.replace("'.$_SERVER['PHP_SELF'].$multi_get.'");
+              </script>');
+            }
         }
 
         private function check() {

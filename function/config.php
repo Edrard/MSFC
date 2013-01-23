@@ -19,8 +19,13 @@
 
     if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
     {
-        header ("Location: /index.php");
-        exit;
+        if (!headers_sent()) {
+          header ("Location: /index.php");
+          exit;
+        } else { print_R('<script type="text/javascript">
+          location.replace("/index.php");
+          </script>');
+        }
     }
 
     $config = get_config();
