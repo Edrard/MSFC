@@ -151,7 +151,7 @@
             $clear_files = array_diff(scandir($dir), $exclude_list);
 
             foreach($clear_files as $files){
-                if(is_file($dir.$files)){
+                if(is_file($dir.$files)&& !is_dir($dir.$files)){
                     unlink($dir.$files);
                 }
             }
