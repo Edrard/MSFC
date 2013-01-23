@@ -608,6 +608,7 @@
         global $cache,$db;
         //$global = array(); 
         if(($config['autoclean'] + $time) <= now()){
+            echo 1; die;
             $map = directory_map($directory);
             foreach($multi as $val){
                 $new = $cache->get('get_last_roster_'.$val['id'],0);
@@ -632,9 +633,9 @@
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
             }              
+            foreach($map as $file){ 
+                unlink($directory.$file);   
+            }      
         }
-        foreach($map as $file){ 
-            unlink($directory.$file);   
-        }   
     }
 ?>

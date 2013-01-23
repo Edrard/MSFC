@@ -25,9 +25,9 @@
     $dbhost ='localhost';
     // username and password to log onto db SERVER
     $dbuser ='root';
-    $dbpass  ='Kndr:34.';
+    $dbpass  ='';
     // name of database
-    $dbname='test2';
+    $dbname='';
     //en - Prefix must be min 1 symbol, max 5 symbols, with _ at the end. Only a-z, A-Z and numbers allowed. For example: $dbprefix = 'msfc_';
     //ru - Префикс должен быть не менее 1 и не более 5 символов, в конце префикса должен быть символ _. Разрешены только английские буквы и цифры.
     //Для примера: $dbprefix = 'msfc_';
