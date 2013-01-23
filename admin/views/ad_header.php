@@ -132,7 +132,7 @@
                 $("#files").tablesorter({
                     sortList: [[2, 0]],
                     widthFixed: false,
-                    headerTemplate : '{content} {icon}',
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
                     widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'},
                     textExtraction: function(node) {
@@ -142,14 +142,14 @@
                 $("#users").tablesorter({
                     sortList: [[1, 0]],
                     widthFixed: false,
-                    headerTemplate : '{content} {icon}',
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
                     widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'}
                 });
                 $("#multiclan_table").tablesorter({
                     sortList: [[1, 0]],
                     widthFixed: false,
-                    headerTemplate : '{content} {icon}',
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
                     widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'}
                 });
@@ -157,7 +157,7 @@
                     $("#top_tanks").tablesorter({
                         sortList:[[6,0],[3,0]],
                         widthFixed: false,
-                        headerTemplate : '{content} {icon}',
+                        headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
                         widgets: ['uitheme', 'zebra'],
                         widgetOptions: {uitheme : 'jui'}
                     });
@@ -166,7 +166,7 @@
                     $("#tanks_list").tablesorter({
                         sortList: [[2, 0]],
                         widthFixed: false,
-                        headerTemplate : '{content} {icon}',
+                        headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
                         widgets: ['uitheme', 'zebra'],
                         widgetOptions: {uitheme : 'jui'},
                         textExtraction: function(node) {

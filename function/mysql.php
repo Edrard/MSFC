@@ -41,6 +41,7 @@
         var $prefix;
         var $sqls;
         var $count;
+        var $oldprefix;
         private $pattern = array();
         private $replacement = array();
         private $matches;
@@ -90,6 +91,16 @@
             $this->sqls[$this->count] = $statement;
             return parent::exec($statement);
         }
+        public function change_prefix($new_prefix) {
+            if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $new_prefix, $this->matches)) {
+                $this->oldprefix = $this->prefix;
+                $this->prefix = $this->matches[0];
+                $this->replacement = '$1'.$this->prefix.'$2$3';
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        }
     }     
     if (isset($_POST['multiadd'])){ 
         if($_POST['id'] && $_POST['prefix'] && $_POST['sort']){
@@ -122,7 +133,7 @@
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
-    $db->query ( 'SET SESSION wait_timeout = 3600;');
+    $db->query ( 'SET SESSION wait_timeout = '.$exec_time.';');
 
     function read_multiclan_main($dbprefix)
     {

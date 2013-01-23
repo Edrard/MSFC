@@ -74,7 +74,7 @@
 ?>
 <script type="text/javascript" id="js">     
     $(document).ready(function() 
-    {  $("#tankslist").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
+    {  $("#tankslist").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',  widgets: ['uitheme', 'zebra'],
            widgetOptions: {uitheme : 'jui'}
        });
     });
