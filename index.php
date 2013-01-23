@@ -94,7 +94,13 @@
                 <?php if($config['lang'] == 'ru'){ ?>
                     <tr style="vertical-align: bottom;">
                         <td align="center">
-                            <iframe src="./news.php" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
+                            <?php
+                                $multi_get = '';    
+                                if(isset($_GET['multi'])){
+                                    $multi_get = '?multi='.$_GET['multi'];   
+                                }
+                            ?> 
+                            <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
                         </td>
                     </tr>
                     <?php } ?>

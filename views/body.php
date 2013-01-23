@@ -68,7 +68,13 @@
                 </td>
                 <td width="300px"><img src="./images/logo_small.png" /></td>
                 <td width="420px"><?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
-                        <iframe src="./news.php" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
+                        <?php
+                            $multi_get = '';    
+                            if(isset($_GET['multi'])){
+                                $multi_get = '?multi='.$_GET['multi'];   
+                            }
+                        ?> 
+                        <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
                     <?php } ?></td>
                 <td>
                     <?php if($logged > 0){ ?>
