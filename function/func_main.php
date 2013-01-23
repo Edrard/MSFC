@@ -608,7 +608,6 @@
         global $cache,$db;
         //$global = array(); 
         if(($config['autoclean'] + $time) <= now()){
-            echo 1; die;
             $map = directory_map($directory);
             foreach($multi as $val){
                 $new = $cache->get('get_last_roster_'.$val['id'],0);
