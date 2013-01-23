@@ -83,7 +83,7 @@
         public function set($key, $data, $dir = FALSE)  
         {  
             
-            if($dir == FALSE){            
+            if($dir == FALSE){
                 $dir = $this->dir;
             }
             if ( !is_dir($dir) OR !is_writable($dir))  
@@ -129,7 +129,7 @@
             return FALSE;  
         }
 
-        public function clear_all($exclude_option = NULL,$dir)
+        public function clear_all($exclude_option = NULL,$dir == FALSE)
         {
             if($dir == FALSE){
                 $dir = $this->dir;
