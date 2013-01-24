@@ -104,6 +104,20 @@
     /* Применяем созданную функцию */
     set_error_handler("myErrorHandler");
 
+    /* Создаем папки для кэша */
+
+    if(!is_dir(ROOT_DIR.'/cache/')){
+        mkdir(ROOT_DIR.'/cache/',0777);
+        chmod(ROOT_DIR.'/cache/', 0777);
+    }
+    if(!is_dir(ROOT_DIR.'/cache/players/')){
+        mkdir(ROOT_DIR.'/cache/players/',0777);
+        chmod(ROOT_DIR.'/cache/players/', 0777);
+    }
+    if(!is_dir(ROOT_DIR.'/cache/activity/')){
+        mkdir(ROOT_DIR.'/cache/activity/',0777);
+        chmod(ROOT_DIR.'/cache/activity/', 0777);
+    }
 
     /* Выводим сообщения о ошибках */
 
@@ -138,10 +152,6 @@
     }
     if(!file_exists(ROOT_DIR.'/cron.log') || !is_writable(ROOT_DIR.'/cron.log')) {
         show_message($lang['cronlog_off']);
-    }
-    if(!is_dir(ROOT_DIR.'/cache/players')){
-        mkdir(ROOT_DIR.'/cache/players',0777);
-        chmod(ROOT_DIR.'/cache/players', 0777);
     }
     if(!file_exists(ROOT_DIR.'/cache/players/') || !is_writable(ROOT_DIR.'/cache/players/')){
         show_message($lang['b_chmod_off']);
