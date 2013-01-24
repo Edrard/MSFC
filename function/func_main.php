@@ -637,4 +637,11 @@
             }      
         }
     }
+    function multi_main($multi){
+        foreach($multi as $key => $val){
+            if($val['main'] == '1'){
+                return $multi[$key];
+            }
+        }
+    }
 ?>

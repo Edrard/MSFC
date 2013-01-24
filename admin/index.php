@@ -29,6 +29,10 @@
         //Cheker
         include_once(ROOT_DIR.'/including/check.php');
 
+        //Multiget CURL
+        include_once(ROOT_DIR.'/function/curl.php');
+        include_once(ROOT_DIR.'/function/mcurl.php');
+
         include_once(ROOT_DIR.'/function/auth.php');
         include_once(ROOT_DIR.'/function/cache.php');
         include_once(ROOT_DIR.'/function/mysql.php');
@@ -49,6 +53,10 @@
 
         //Cheker
         include_once(ROOT_DIR.'/including/check.php');
+
+        //Multiget CURL
+        include_once(ROOT_DIR.'/function/curl.php');
+        include_once(ROOT_DIR.'/function/mcurl.php');
 
         include_once(LOCAL_DIR.'/func_admin.php');
         include_once(LOCAL_DIR.'/translate/tabs.php');
@@ -107,11 +115,11 @@
         case 'login':
             if ( $auth->isLoggedInAdmin(1) ) { 
                 if (!headers_sent()) {
-                  header ( 'Location: index.php?page=main'.$multi_get );
-                  exit;
+                    header ( 'Location: index.php?page=main'.$multi_get );
+                    exit;
                 } else { print_R('<script type="text/javascript">
-                  location.replace("Location: index.php?page=main'.$multi_get.'");
-                  </script>');
+                    location.replace("Location: index.php?page=main'.$multi_get.'");
+                    </script>');
                 }
             }
 
@@ -124,11 +132,11 @@
 
             if ( !$auth->isLoggedInAdmin(1) ) {
                 if (!headers_sent()) {
-                header ( 'Location: index.php?error=1'.$multi_get );
-                  exit;
+                    header ( 'Location: index.php?error=1'.$multi_get );
+                    exit;
                 } else { print_R('<script type="text/javascript">
-                  location.replace("Location: index.php?error=1'.$multi_get.'");
-                  </script>');
+                    location.replace("Location: index.php?error=1'.$multi_get.'");
+                    </script>');
                 }
             }
             //cache
@@ -144,13 +152,13 @@
         case 'install':
             if ( $config['error'] != 2) {
                 if (!headers_sent()) {
-                  header ( 'Location: index.php' );
-                  exit;
+                    header ( 'Location: index.php' );
+                    exit;
                 } else { ?>
-                  <script type="text/javascript">
+                <script type="text/javascript">
                     location.replace("index.php");
-                  </script>
-        <?      }
+                </script>
+                <?      }
             }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');

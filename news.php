@@ -28,10 +28,10 @@
 
     //MYSQL
     include_once(ROOT_DIR.'/function/mysql.php');
-    //Connecting to MySQL
-
-    //HTML Dom
+    
     //Multiget CURL
+    include_once(ROOT_DIR.'/function/curl.php');
+    include_once(ROOT_DIR.'/function/mcurl.php');
 
     // Include Module functions
     include_once(ROOT_DIR.'/function/func.php');
@@ -40,7 +40,7 @@
     //Loding language pack
     $config['align'] = '';
     $lang['error_1'] = '';
-    $lates_news = json_decode(get_url('http://wot-news.com/ajax/lastnews'),TRUE);
+    $lates_news = json_decode(get_url('http://wot-news.com/ajax/lastnews',$config),TRUE);
     ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -88,7 +88,8 @@
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
     $multiclan = read_multiclan();
-
+    $multiclan_main = multi_main($multiclan);
+    
     foreach($multiclan as $clan){
         if($clan['id'] != $config['clan']){
             $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);

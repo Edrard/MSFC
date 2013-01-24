@@ -20,11 +20,11 @@
     if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
     {
         if (!headers_sent()) {
-          header ("Location: ./index.php");
-          exit;
+            header ("Location: ./index.php");
+            exit;
         } else { print_R('<script type="text/javascript">
-          location.replace("./index.php");
-          </script>');
+            location.replace("./index.php");
+            </script>');
         }
     }
     function array_resort($array,$param){
@@ -345,16 +345,24 @@
         }
         return $array;
     }
-    function get_url($url)
+    function get_url($link,$config)
     {
-        $ch = curl_init();
-        $timeout = 5;
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
+        $url[0] = $link;
+        if($config['pars'] == 'curl'){
+            $curl = new CURL();
+            $curl->retry = 4;
+            $opts = array( CURLOPT_RETURNTRANSFER => true );
+            $curl->addSession( $url[0], 0, $opts );
+            $result = $curl->exec();
+            $curl->clear();
+        } else{
+            $curl = new MCurl;
+            $curl->threads = 100;
+            $curl->timeout = 15;
+            $curl->sec_multiget($url, $result);
+        }
+
+        return $result[0];
     }
     function directory_map($source_dir, $directory_depth = 0, $hidden = FALSE)
     {

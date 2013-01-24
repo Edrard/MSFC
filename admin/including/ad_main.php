@@ -143,7 +143,7 @@
     $dir_val = scandir(ROOT_DIR.'./theme/');
     array_shift($dir_val);array_shift($dir_val);
 
-    $ver = json_decode(get_url('http://wot-news.com/ajax/clanstat'),TRUE);
+    $ver = json_decode(get_url('http://wot-news.com/ajax/clanstat',$config),TRUE);
     // Config
     $config = update_array($config,get_config());
     // Scaning /tabs/ directory
@@ -158,7 +158,8 @@
     /**Мультиклан считываем**/ 
 
     $multiclan = read_multiclan();
-
+    $multiclan_main = multi_main($multiclan);
+    
     foreach($multiclan as $clan){
         $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
         if($multiclan_info[$clan['id']] === FALSE) {

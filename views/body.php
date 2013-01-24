@@ -30,6 +30,11 @@
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#<?=$val['prefix'].'1';?>").button();
+                        <?php if(isset($_GET['multi'])){ ?>
+                            $("#<?=$_GET['multi'].'_1'?>").addClass('ui-state-focus');
+                            <?php }else{ ?>
+                            $("#<?=$multiclan_main['prefix'].'1'?>").addClass('ui-state-focus');
+                            <?php } ?>
                     });
                 </script>
                 <?php
@@ -84,14 +89,14 @@
                                             <?php
                                                 $multi_get = '';
                                                 if(isset($_GET['multi'])){
-                                                   $multi_get = '?multi='.str_replace('_','',$_GET['multi']);
+                                                    $multi_get = '?multi='.str_replace('_','',$_GET['multi']);
                                                 }
                                             ?> 
                                             <a href="./admin/index.php<?=$multi_get?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
                                             <? } ?>
                                         <?php    
                                             $multi_get = '';
-                                                if(isset($_GET['multi'])){
+                                            if(isset($_GET['multi'])){
                                                 $multi_get = '&multi='.str_replace('_','',$_GET['multi']);
                                             }
                                         ?>     

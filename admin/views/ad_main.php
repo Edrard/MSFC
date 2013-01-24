@@ -19,24 +19,29 @@
     class="ui-accordion-content ui-widget-content ui-accordion-content-active">
     <?php if(count($multiclan) > 1){ ?>
         <div style="padding-left:26px" class="ui-accordion-content ui-widget-content ui-corner-top ui-accordion-content-active">
-        <?php
-          foreach($multiclan as $val){ ?>
-            <script type="text/javascript">
-              $(document).ready(function(){
-                $("#<?=$val['prefix'].'1';?>").button();
-              });
-            </script>
-            <?php $multi_get = '';
-                  if($val['main'] == 0){
-                    $multi_get = '&multi='.str_replace('_','',$val['prefix']);
-                  } ?>
-            <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
-              <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
-            </a>
             <?php
-          } ?>
+                foreach($multiclan as $val){ ?>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#<?=$val['prefix'].'1';?>").button();
+                        <?php if(isset($_GET['multi'])){ ?>
+                            $("#<?=$_GET['multi'].'_1'?>").addClass('ui-state-focus');
+                            <?php }else{ ?>
+                            $("#<?=$multiclan_main['prefix'].'1'?>").addClass('ui-state-focus');
+                            <?php } ?>
+                    });
+                </script>
+                <?php $multi_get = '';
+                    if($val['main'] == 0){
+                        $multi_get = '&multi='.str_replace('_','',$val['prefix']);
+                } ?>
+                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
+                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                </a>
+                <?php
+            } ?>
         </div>
-      <?php } ?>
+        <?php } ?>
 
     <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
@@ -540,7 +545,7 @@
                                             if (json["id"] === "true")  {
                                                 document.forms["multiclan"].submit();
                                             } else {     
-                                                      
+
                                                 form.data("validator").invalidate(json);    
                                             }
                                         });      

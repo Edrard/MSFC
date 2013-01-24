@@ -47,55 +47,6 @@
             }    
         }
     }
-    function get_clanstat_ver()
-    {
-        //echo $search;
-        $error = 0;
-        $data = array();
-        $request = "GET /ajax/clanstat HTTP/1.0\r\n";
-        //$request = "GET /uc/clans/?type=table&search=\"The Red\"".$off." HTTP/1.0\r\n"; 
-        //echo $request;
-        $request.= "Accept: text/html, */*\r\n";
-        $request.= "User-Agent: Mozilla/3.0 (compatible; easyhttp)\r\n";
-        $request.= "X-Requested-With: XMLHttpRequest\r\n";
-        $request.= "Host: wot-news.com\r\n";
-        $request.= "Connection: Keep-Alive\r\n";
-        $request.= "\r\n";
-        $n = 0;
-        print_r($request);
-        while(!isset($fp)){  
-            $fp = fsockopen('wot-news.com', 80, $errno, $errstr, 15);
-            if($n == 3){
-                break;
-            }
-            $n++;
-        }
-        if (!$fp) {
-            echo "$errstr ($errno)<br>\n";
-        } else {
-
-            stream_set_timeout($fp,20);
-            $info = stream_get_meta_data($fp);
-
-            fwrite($fp, $request);
-            $page = '';
-
-            while (!feof($fp) && (!$info['timed_out'])) { 
-                $page .= fgets($fp, 4096);
-                $info = stream_get_meta_data($fp);
-            }
-            fclose($fp);
-            if ($info['timed_out']) {
-                $error = 1; //Connection Timed Out
-            }
-        }
-        if($error == 0){
-            preg_match_all("/{\"request(.*?)success\"}/", $page, $matches);
-            $data = (json_decode($matches[0][0], true));
-        }
-        $new = $data;
-        return $new;
-    }
     function base_dir($local = null)
     {
         if($local == null){
@@ -131,6 +82,13 @@
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            if($name == 'clan'){
+                $sql = "UPDATE multiclan SET id = '".$var."' WHERE main = '1';";
+                $q = $db->prepare($sql);
+                if ($q->execute() != TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                }
             }
         }
     }
@@ -192,7 +150,8 @@
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }    
+            }   
+
         }   
 
     }
@@ -286,7 +245,7 @@
                         }else{
                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }
-                              
+
                         $sql = "SELECT COUNT(id) FROM multiclan WHERE prefix = '".$post['prefix']."';";
                         $q = $db->prepare($sql);
                         if ($q->execute() == TRUE) {
@@ -322,11 +281,11 @@
                                     $multi_get = '&multi='.$_GET['multi'];
                                 }
                                 if (!headers_sent()) {
-                                  header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
-                                  exit;
+                                    header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
+                                    exit;
                                 } else { print_R('<script type="text/javascript">
-                                     location.replace("Location: index.php?page=main#tabs-8'.$multi_get.'");
-                                   </script>');
+                                    location.replace("Location: index.php?page=main#tabs-8'.$multi_get.'");
+                                    </script>');
                                 }
                             }
                         }
@@ -336,13 +295,13 @@
         }
 
         if (!headers_sent()) {
-           header ( 'Location: index.php?page=main#tabs-8' );
-           exit;
+            header ( 'Location: index.php?page=main#tabs-8' );
+            exit;
         } else { ?>
-           <script type="text/javascript">
-             location.replace("index.php?page=main#tabs-8");
-           </script>
-<?      }
+        <script type="text/javascript">
+            location.replace("index.php?page=main#tabs-8");
+        </script>
+        <?      }
     }
 
 
