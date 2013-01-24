@@ -17,16 +17,8 @@
 ?>
 <div align="center"style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
 class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
-<?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/')){
-    if(!is_dir(ROOT_DIR.'/cache/activity/')){
-        mkdir(ROOT_DIR.'/cache/activity/',0777);
-        chmod(ROOT_DIR.'/cache/activity/', 0777);
-    }
-    if(!is_dir(ROOT_DIR.'/cache/players/')){
-        mkdir(ROOT_DIR.'/cache/players/',0777);
-        chmod(ROOT_DIR.'/cache/players/', 0777);
-    }
-    if(is_writable(ROOT_DIR.'/cache/players/') && is_writable(ROOT_DIR.'/cache/activity/')){
+<?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/') 
+        && is_writable(ROOT_DIR.'/cache/players/') && is_writable(ROOT_DIR.'/cache/activity/')){
     ?>
     <div style="height: 25%; "></div>
     <div class="adinsider">
@@ -72,7 +64,6 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                 </tr>
             </table>
         </form>
-        <?php }
-    } ?>
+        <?php }  ?>
   </div>
 </div>
