@@ -27,15 +27,22 @@
     //Starting script time execution timer
     $begin_time = microtime(true);
 
+    //Config
+
+    /*******************************/
+    define('STATE', '0'); // 1 if you want to use Authentication, and any another number if you do not want
+    define('MULTI', '0'); // 1 if you want ro use GET request to change clan, any another number if u want to use cycling
+    /*******************************/
+
+
     if(!isset($_GET['user']) && !isset($_GET['pass'])){
         $user = '';
         $pass = '';
     }else{
         $user = $_GET['user'];
         $pass = $_GET['pass'];
-    }
+    }                                          
     // Check Admin(1) 
-    define('STATE', '1');
 
     //Cheker
     include_once(ROOT_DIR.'/including/check.php');
@@ -61,8 +68,8 @@
     include_once(ROOT_DIR.'/function/func_gk.php');
 
     // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+    include(ROOT_DIR.'/function/config.php');
+    include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
     //Loding language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
@@ -85,6 +92,41 @@
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
+    //Multiclan
+    $multiclan = read_multiclan();
+    $multi_prefix = array_resort($multiclan,'prefix');
+    if(!$dbprefix){
+        $dbprefix = 'msfc_';
+    }
+
+    if(MULTI != 1){
+        // Multiget.
+        foreach($multiclan as $val){
+            if(($val['cron'] + $config['cron_time']*3600) <= now() ){
+                $db = null; 
+                $dbprefix = $val['prefix'];
+                try {
+                    $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
+                } catch (PDOException $e) {
+                    //echo $e->getMessage();
+                    die(show_message($e->getMessage()));
+                }
+                $db->query ( 'SET character_set_connection = '.$sqlchar );
+                $db->query ( 'SET character_set_client = '.$sqlchar );
+                $db->query ( 'SET character_set_results = '.$sqlchar );
+                $db->query ( 'SET SESSION wait_timeout = 60;'); 
+
+                unset($config);
+                include(ROOT_DIR.'/function/config.php');
+                include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+                break;
+            }
+        }
+    }
+    if($log == 1){
+        fwrite($fh, $date."Current db prefix: ".$dbprefix."\n");    
+    }
+    unset($multiclan);
     //Authentication
     if(STATE == 1){
 
@@ -108,64 +150,67 @@
             die($lang['log_to_cron']);
         }    
     }
-
-    if($config['cron'] == 1){
-        //Geting clan roster fron wargaming or from local DB.
-        $new = get_api_roster($config['clan'],$config);   //dg65tbhjkloinm 
-        if(empty($new)){
-            $new['status'] = 'error';
-            $new['status'] = 'ERROR';
-        }
-        if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-            unset($new);
-            $new = $cache->get('get_last_roster_'.$config['clan'],0);
-            if($new === FALSE) { 
-                if($log == 1){
-                    fwrite($fh, $date.": No cahced data\n");    
-                }
-                die('No cahced data'); 
+    if(($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
+        if($config['cron'] == 1){
+            //Geting clan roster fron wargaming or from local DB.
+            $new = get_api_roster($config['clan'],$config);   //dg65tbhjkloinm 
+            if(empty($new)){
+                $new['status'] = 'error';
+                $new['status_code'] = 'ERROR';
             }
-            if($log == 1){
-                fwrite($fh, $date.": Used cached roster\n");    
-            }  
+            if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
+                unset($new);
+                $new = $cache->get('get_last_roster_'.$config['clan'],0);
+                if($new === FALSE) { 
+                    if($log == 1){
+                        fwrite($fh, $date.": No cahced data\n");    
+                    }
+                    die('No cahced data'); 
+                }
+                if($log == 1){
+                    fwrite($fh, $date.": Used cached roster\n");    
+                }  
+            }else{
+                $cache->clear('get_last_roster_'.$config['clan'], $new);
+                $cache->set('get_last_roster_'.$config['clan'], $new);
+                if($log == 1){
+                    fwrite($fh, $date.": Used roster from WG\n");    
+                }
+            }
+            //Sorting roster
+            $roster = roster_sort($new['data']['members']);
+            $now = now();
+            //Starting geting data
+            if(count($new['data']['members']) > 0){
+
+                $links = cron_links($roster,$config);
+                //print_r($links); die;
+                $count = count($links); 
+                if($count > 0){
+                    if($log == 1){
+                        fwrite($fh, $date.": Requested players num ".$count."\n");    
+                    }
+                    unset($count);
+                    multiget($links, $res,$config,prepare_stat(),$roster,$lang,1);    
+                }
+                foreach($res as $name => $val){ 
+                    cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date);
+                }
+                update_multi_cron($dbprefix);
+                if($log == 1){
+                    fwrite($fh, $date.": ".$lang['cron_done']."\n");    
+                }
+                echo $lang['cron_done'];
+                // In $res array stored player statistic.  
+            }
         }else{
-            $cache->clear('get_last_roster_'.$config['clan'], $new);
-            $cache->set('get_last_roster_'.$config['clan'], $new);
             if($log == 1){
-                fwrite($fh, $date.": Used roster from WG\n");    
+                fwrite($fh, $date.": ".$lang['error_cron_off']."\n");
             }
-        }
-
-        // Creating empty array if needed.
-
-        //Sorting roster
-        $roster = roster_sort($new['data']['members']);
-        $now = now();
-        //Starting geting data
-        if(count($new['data']['members']) > 0){
-
-            $links = cron_time_checker($roster);
-            $count = count($links); 
-            if($count > 0){
-                if($log == 1){
-                    fwrite($fh, $date.": Requested players num ".$count."\n");    
-                }
-                unset($count);
-                multiget($links, $result,$config['pars'],$config['multiget']);    
-            }
-
-            foreach($result as $name => $val){ 
-                cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date);
-            }
-            if($log == 1){
-                fwrite($fh, $date.": ".$lang['cron_done']."\n");    
-            }
-            echo $lang['cron_done'];
-            // In $res array stored player statistic.  
         }
     }else{
         if($log == 1){
-            fwrite($fh, $date.": ".$lang['error_cron_off']."\n");
+            fwrite($fh, $date.": Time limit excided"."\n");
         }
     }   
     if($log == 1){

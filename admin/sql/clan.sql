@@ -164,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `multiclan` (
   `sort` int(9) NOT NULL,
   `main` int(1) NOT NULL DEFAULT '0',
   `server` varchar(3) NOT NULL,
+  `cron` int(13) NOT NULL,
   KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

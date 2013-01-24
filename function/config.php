@@ -30,8 +30,6 @@
 
     $config = get_config();
 
-    define("VER",'2.1.6');
-
 
     $data = array();
     $links = array();

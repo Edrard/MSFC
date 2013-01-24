@@ -38,34 +38,14 @@
         fwrite($fh, $date.": Current run number ".($player_stat + 1)."\n"); 
 
     } 
-    function cron_time_checker($players)
+    function cron_links($players,$config)
     {
-        global $db, $config;
+
         $links = array();
         foreach($players as $val){
-            $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$val['account_id']."';";
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $player_stat = $q->fetchColumn();
-            } else {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-            $status = 0;
-            if($player_stat > 0){
-                $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$val['account_id']."' AND up < '".(now() - $config['cron_time']*3600)."';";
-                //echo $sql;
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $status = $q->fetchColumn();
-                } else {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-            }
-
-            if($status >= $player_stat || $player_stat == 0){
-                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
-            }
+            $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
         }
+
         return($links);
     }
 
@@ -292,6 +272,15 @@
                 fwrite($fh, $date.": No data for player with ID ".$roster['account_id']."\n");    
             }
         }
+    }
+    function update_multi_cron($dbprefix)
+    {
+        global $db;
+        $sql = "UPDATE multiclan SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }    
     }
 
 ?>

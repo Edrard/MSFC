@@ -159,4 +159,6 @@
         show_message($lang['b_chmod_off']);
     }
 
+    
+    define("VER",'2.1.6');
 ?>

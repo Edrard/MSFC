@@ -88,7 +88,7 @@
 
     }
 
-    function multiget($inurls, &$res,$config,$transit,$roster,$lang)
+    function multiget($inurls, &$res,$config,$transit,$roster,$lang,$multi = 0)
     {
         global $db,$cache;
         $tcurl = $config['pars'];
@@ -117,8 +117,14 @@
                     $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
                     $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');  
                 }
+            }              
+            if($multi != 0){
+                foreach($result as $name => $val){
+                    $res[$name] = $val;
+                }   
             }
             unset($result,$json);
+
         }
     }
 ?>
