@@ -106,17 +106,19 @@
 
     /* Создаем папки для кэша */
 
-    if(!is_dir(ROOT_DIR.'/cache/')){
-        mkdir(ROOT_DIR.'/cache/',0777);
-        chmod(ROOT_DIR.'/cache/', 0777);
-    }
-    if(!is_dir(ROOT_DIR.'/cache/players/')){
-        mkdir(ROOT_DIR.'/cache/players/',0777);
-        chmod(ROOT_DIR.'/cache/players/', 0777);
-    }
-    if(!is_dir(ROOT_DIR.'/cache/activity/')){
-        mkdir(ROOT_DIR.'/cache/activity/',0777);
-        chmod(ROOT_DIR.'/cache/activity/', 0777);
+    if(is_writable(ROOT_DIR)) {
+      if(!is_dir(ROOT_DIR.'/cache/')){
+          mkdir(ROOT_DIR.'/cache/',0777);
+          chmod(ROOT_DIR.'/cache/', 0777);
+      }
+      if(!is_dir(ROOT_DIR.'/cache/players/')){
+          mkdir(ROOT_DIR.'/cache/players/',0777);
+          chmod(ROOT_DIR.'/cache/players/', 0777);
+      }
+      if(!is_dir(ROOT_DIR.'/cache/activity/')){
+          mkdir(ROOT_DIR.'/cache/activity/',0777);
+          chmod(ROOT_DIR.'/cache/activity/', 0777);
+      }
     }
 
     /* Выводим сообщения о ошибках */
