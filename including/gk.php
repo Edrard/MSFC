@@ -115,7 +115,7 @@ unset($gk_result5);
 if(isset($_POST['activityreplay']) and isset($_FILES['filename']['name']) and ($logged == 2)) {
 
 $res_check = array_keys($res);
-$cache_activity = new Cache(ROOT_DIR.'/cache_activity/');
+$cache_activity = new Cache(ROOT_DIR.'/cache/activity/');
 
 $file_error = null;
 $battle_time = null;

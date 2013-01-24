@@ -61,7 +61,7 @@
     $time = array();
     $activity = array();
 
-    $cache_activity = new Cache(ROOT_DIR.'/cache_activity/');
+    $cache_activity = new Cache(ROOT_DIR.'/cache/activity/');
 
     if(isset($_POST['a_from']) and isset($_POST['a_to']) and preg_match('/[0-9]{2}.[0-9]{2}.[0-9]{4}/',$_POST['a_from']) and preg_match('/[0-9]{2}.[0-9]{2}.[0-9]{4}/',$_POST['a_to'])) {
       $t1 = explode('.',$_POST['a_from']);

@@ -113,7 +113,7 @@
     $lang['short_tag_off'] = 'Using of <b>short_open_tag</b> are disabled in PHP settings. Please enable it for correct work of this site.<br /> В настройках PHP вашего хостинга отключено использование <b>short_open_tag</b>, без него корректная работа модуля статистики невозможна.';
     $lang['chmod_off'] = 'Directory <b>cache</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache</b> не существует, или невозможна запись.';
     $lang['cronlog_off'] = 'File <b>cron.log</b> doesn\'t exist, or no permission to write. <br /> Файл <b>cron.log</b> не существует, или невозможна запись.';
-    $lang['a_chmod_off'] = 'Directory <b>cache_activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
+    $lang['a_chmod_off'] = 'Directory <b>cache/activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
     $lang['b_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
     $lang['c_chmod_off'] = 'Directory <b>/admin/sql</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/admin/sql</b> не существует, или невозможна запись.';
 
@@ -133,7 +133,7 @@
     if(!file_exists(ROOT_DIR.'/admin/sql/') || !is_writable(ROOT_DIR.'/admin/sql')) {
         show_message($lang['c_chmod_off']);
     }
-    if(!file_exists(ROOT_DIR.'/cache_activity/') || !is_writable(ROOT_DIR.'/cache_activity/')) {
+    if(!file_exists(ROOT_DIR.'/cache/activity/') || !is_writable(ROOT_DIR.'/cache/activity/')) {
         show_message($lang['a_chmod_off']);
     }
     if(!file_exists(ROOT_DIR.'/cron.log') || !is_writable(ROOT_DIR.'/cron.log')) {
