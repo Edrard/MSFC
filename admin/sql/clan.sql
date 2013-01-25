@@ -198,8 +198,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('multiget', '10'),
 ('autoclean', '0'),
 ('cron_auth', '0'),
-('cron_multi', '0'),
-('cron_cache', '0');
+('cron_multi', '0');
 
 -- --------------------------------------------------------
 

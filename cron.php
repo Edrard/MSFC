@@ -85,26 +85,31 @@
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
     //Multiclan
+    $multiclan = read_multiclan();
+    $multi_prefix = array_resort($multiclan,'prefix');
 
     if($config['cron_multi'] == 1){
         // Multiget.
-        $multiclan = multiclan_lower_time();
-        if(($multiclan[0]['cron'] + $config['cron_time']*3600) <= now() ){
-            if($db->change_prefix($multiclan[0]['prefix']) == TRUE){ 
-                $dbprefix = $multiclan[0]['prefix'];
-                unset($config);
-                include(ROOT_DIR.'/function/config.php');
-                include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+        foreach($multiclan as $val){
+            $cron_time = get_config_cron_time($val['prefix']);
+            if(($val['cron'] + $cron_time[0]['value']*3600) <= now() ){
+                if($db->change_prefix($val['prefix']) == TRUE){ 
+                    $dbprefix = $val['prefix'];
+                    unset($config);
+                    include(ROOT_DIR.'/function/config.php');
+                    include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+                    break;
+                }
             }
         }
-    }         
+    }                 
+    unset($multiclan);
     if(!$dbprefix){
         $dbprefix = 'msfc_';
     }
     if($log == 1){
         fwrite($fh, $date."Current db prefix: ".$dbprefix."\n");    
     }
-    $multiclan = read_multiclan($dbprefix);
     //Authentication
     if($config['cron_auth'] == 1){
 
@@ -128,7 +133,7 @@
             die($lang['log_to_cron']);
         }    
     }
-    if(($multiclan[0]['cron'] + $config['cron_time']*3600) <= now() ){
+    if(($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
         if($config['cron'] == 1){
             //Geting clan roster fron wargaming or from local DB.
             $new = get_api_roster($config['clan'],$config);   //dg65tbhjkloinm 
@@ -160,9 +165,8 @@
             $now = now();
             //Starting geting data
             if(count($new['data']['members']) > 0){
-
+                
                 $links = cron_links($roster,$config);
-                //print_r($links); die;
                 $count = count($links); 
                 if($count > 0){
                     if($log == 1){

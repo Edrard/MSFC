@@ -109,19 +109,20 @@
                 $curl->threads = 100;  
                 $curl->timeout = 15;    
                 $curl->sec_multiget($urls, $result);
-            }
-            foreach($result as $name => $val){ 
-                $json = json_decode($val,TRUE);
-                if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
-                    $transit = insert_stat($json,$roster[$name],$config,$transit);
-                    $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
-                    $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');  
-                }
-            }              
+            }             
             if($multi != 0){
                 foreach($result as $name => $val){
                     $res[$name] = $val;
                 }   
+            }else{
+                foreach($result as $name => $val){ 
+                    $json = json_decode($val,TRUE);
+                    if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
+                        $transit = insert_stat($json,$roster[$name],$config,$transit);
+                        $res[$name] = pars_data2($json,$name,$config,$lang,$roster[$name]);
+                        $cache->set($name, $res[$name],ROOT_DIR.'/cache/players/');  
+                    }
+                }
             }
             unset($result,$json);
 

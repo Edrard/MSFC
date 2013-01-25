@@ -638,10 +638,6 @@
 
                                             <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
                                         </tr>
-                                        <tr>
-                                            <td><?=$lang['admin_cron_cache'];?></td>
-                                            <td><input type="text" name="cron_cache" value="<?=$config['cron_cache']; ?>" size="2" /> <?=$lang['admin_min'];?></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></p>

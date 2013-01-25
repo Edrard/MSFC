@@ -48,12 +48,13 @@
 
         return($links);
     }
-
     function cron_insert_pars_data($data,$roster,$config,$now,$log,$fh,$date){   
 
         global $db;
-        $data = json_decode($data,TRUE);
-
+        //print_r($data);
+        if(!is_array($data)){ 
+            $data = json_decode($data,TRUE);
+        }
         //print_r($data['data']['achievements']);die;
         if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
             if(count($data['data']) > 0){
@@ -282,22 +283,17 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }    
     }
-    function multiclan_lower_time()
+    function get_config_cron_time($prefix)
     {
-    global $db;
-        $sql = "
-        SELECT *
-        FROM multiclan m,
-        (SELECT min(cron) as mincron
-        FROM multiclan
-        LIMIT 1) minresults
-        WHERE m.cron = minresults.mincron";
+        global $db;
+        $sql = "SELECT * FROM ".$prefix."config WHERE name = 'cron_time';";    
+
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            return $q->fetchAll(PDO :: FETCH_ASSOC);
-        } else {
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }else{ 
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-    }  
+        }  
+    }
 
 ?>
