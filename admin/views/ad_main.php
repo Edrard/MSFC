@@ -217,7 +217,7 @@
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_cache'];?></td>
-                                            <td><input type="text" name="cache" value="<?=$config['cache']; ?>" size="2" /></td>
+                                            <td><input type="text" name="cache" value="<?=$config['cache']; ?>" size="2" /> <?=$lang['admin_hour'];?></td>
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_curl_lib'];?></td>
@@ -238,7 +238,7 @@
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_offset'];?></td>
-                                            <td><input type="text" name="time" value="<?=$config['time']; ?>" size="2" /></td>
+                                            <td><input type="text" name="time" value="<?=$config['time']; ?>" size="2" /> <?=$lang['admin_hour'];?></td>
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_cron'];?></td>
@@ -254,7 +254,7 @@
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_cron_time'];?></td>
-                                            <td><input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /><br><?=$lang['admin_cron_time_warning'];?></td>
+                                            <td><input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /> <?=$lang['admin_hour'];?><br><?=$lang['admin_cron_time_warning'];?></td>
                                         </tr>
                                         <?php if($config['lang'] == 'ru'){?>
                                             <tr>
@@ -640,7 +640,7 @@
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_cron_cache'];?></td>
-                                            <td><input type="text" name="cron_cache" value="<?=$config['cron_cache']; ?>" size="2" /></td>
+                                            <td><input type="text" name="cron_cache" value="<?=$config['cron_cache']; ?>" size="2" /> <?=$lang['admin_min'];?></td>
                                         </tr>
                                     </tbody>
                                 </table>

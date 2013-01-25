@@ -96,7 +96,7 @@
     $lang['admin_db_cbut'] = 'Установить';
     $lang['admin_dir_cache'] = 'Проверьте папку cache, сейчас нет прав на запись';
     $lang['admin_dir_sql'] = 'Проверьте папку admin/sql, сейчас нет прав на запись';
-    
+
     $lang['admin_new_version_1'] = 'Новая версия';
     $lang['admin_new_version_2'] = 'уже доступна, пожалуйста посетите';
 
@@ -115,9 +115,9 @@
 
     $lang['admin_cln_control'] = 'Управление кланами';
     $lang['admin_current_calns'] = 'Текущие кланы';
-    
+
     $lang['admin_add_clan'] = 'Добавить новый клан';
-    
+
     $lang['admin_multi_id'] = 'ID клана';
     $lang['admin_multi_teg'] = 'Аббревиатура';
     $lang['admin_multi_mem_count'] = 'Количество игроков';
@@ -133,4 +133,6 @@
     $lang['admin_cron_auth'] = 'Аутентификация';
     $lang['admin_cron_multi'] = 'Мультиклан';
     $lang['admin_cron_cache'] = 'Использование кеша';
+    $lang['admin_min'] = 'мин.';
+    $lang['admin_hour'] = 'час.';
 ?>

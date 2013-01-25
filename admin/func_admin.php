@@ -69,7 +69,7 @@
     function insert_config($config)
     {
         global $db;
-        
+
         if(isset($config['consub'])){
             if(!isset($config['cron'])){
                 $config['cron'] = 0;
@@ -668,5 +668,5 @@
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-    }       
+    }     
 ?>

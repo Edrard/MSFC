@@ -592,10 +592,14 @@
         return $data[$var];
 
     }
-    function read_multiclan()
+    function read_multiclan($dbprefix = FALSE)
     {
         global $db;
-        $sql = "SELECT * FROM multiclan;";
+        if($dbprefix == FALSE){
+            $sql = "SELECT * FROM multiclan;";
+        }else{
+            $sql = "SELECT * FROM multiclan WHERE prefix = '".$dbprefix."';";    
+        }
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll(PDO::FETCH_ASSOC);

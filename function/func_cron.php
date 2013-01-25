@@ -282,5 +282,22 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }    
     }
+    function multiclan_lower_time()
+    {
+    global $db;
+        $sql = "
+        SELECT *
+        FROM multiclan m,
+        (SELECT min(cron) as mincron
+        FROM multiclan
+        LIMIT 1) minresults
+        WHERE m.cron = minresults.mincron";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            return $q->fetchAll(PDO :: FETCH_ASSOC);
+        } else {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+    }  
 
 ?>

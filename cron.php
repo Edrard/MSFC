@@ -27,14 +27,6 @@
     //Starting script time execution timer
     $begin_time = microtime(true);
 
-    //Config
-
-    /*******************************/
-    define('STATE', '0'); // 1 if you want to use Authentication, and any another number if you do not want
-    define('MULTI', '0'); // 1 if you want ro use GET request to change clan, any another number if u want to use cycling
-    /*******************************/
-
-
     if(!isset($_GET['user']) && !isset($_GET['pass'])){
         $user = '';
         $pass = '';
@@ -86,49 +78,35 @@
     if($fh = fopen($myFile, 'a')){
         $log = 1;
         fwrite($fh, $date.": Loging Started\n");
-        fwrite($fh, $date.": STATE ".STATE."\n");
+        fwrite($fh, $date.": Authentication: ".$config['cron_auth']."\n");
         cron_current_run($fh,$date);
     }
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
     //Multiclan
-    $multiclan = read_multiclan();
-    $multi_prefix = array_resort($multiclan,'prefix');
-    if(!$dbprefix){
-        $dbprefix = 'msfc_';
-    }
 
-    if(MULTI != 1){
+    if($config['cron_multi'] == 1){
         // Multiget.
-        foreach($multiclan as $val){
-            if(($val['cron'] + $config['cron_time']*3600) <= now() ){
-                $db = null; 
-                $dbprefix = $val['prefix'];
-                try {
-                    $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
-                } catch (PDOException $e) {
-                    //echo $e->getMessage();
-                    die(show_message($e->getMessage()));
-                }
-                $db->query ( 'SET character_set_connection = '.$sqlchar );
-                $db->query ( 'SET character_set_client = '.$sqlchar );
-                $db->query ( 'SET character_set_results = '.$sqlchar );
-                $db->query ( 'SET SESSION wait_timeout = 60;'); 
-
+        $multiclan = multiclan_lower_time();
+        if(($multiclan[0]['cron'] + $config['cron_time']*3600) <= now() ){
+            if($db->change_prefix($multiclan[0]['prefix']) == TRUE){ 
+                $dbprefix = $multiclan[0]['prefix'];
                 unset($config);
                 include(ROOT_DIR.'/function/config.php');
                 include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
-                break;
             }
         }
+    }         
+    if(!$dbprefix){
+        $dbprefix = 'msfc_';
     }
     if($log == 1){
         fwrite($fh, $date."Current db prefix: ".$dbprefix."\n");    
     }
-    unset($multiclan);
+    $multiclan = read_multiclan($dbprefix);
     //Authentication
-    if(STATE == 1){
+    if($config['cron_auth'] == 1){
 
         $auth = new Auth($db);
 
@@ -150,7 +128,7 @@
             die($lang['log_to_cron']);
         }    
     }
-    if(($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
+    if(($multiclan[0]['cron'] + $config['cron_time']*3600) <= now() ){
         if($config['cron'] == 1){
             //Geting clan roster fron wargaming or from local DB.
             $new = get_api_roster($config['clan'],$config);   //dg65tbhjkloinm 

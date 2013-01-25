@@ -134,4 +134,7 @@
     $lang['admin_cron_auth'] = 'Authentication';
     $lang['admin_cron_multi'] = 'Multiclan';
     $lang['admin_cron_cache'] = 'Using the cache';
+    $lang['admin_min'] = 'min';
+    $lang['admin_hour'] = 'hour';
+    
 ?>
