@@ -88,6 +88,7 @@
 
     include_once(ROOT_DIR.'/function/tabs.php');
     include_once(ROOT_DIR.'/including/show.php');
+    include_once(ROOT_DIR.'/including/gk.php');
     include_once(ROOT_DIR.'/views/header.php');
     if(count($new) > 0 ){
         $tanks_group = tanks_group($res);
