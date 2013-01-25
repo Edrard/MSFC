@@ -86,6 +86,7 @@
             $("#active_medal_2").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#active_medal_3").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#active_medal_4").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_5").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
             $("#overall").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
@@ -104,6 +105,11 @@
             $("#all_tanks_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#perform_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#all_medals_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#msfc7").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#msfc8").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#msfc9").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+
+            $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
 
             $( "#login_dialog" ).dialog({
                  title: "<?php echo $lang['login']; ?>",

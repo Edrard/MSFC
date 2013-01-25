@@ -17,18 +17,14 @@
 ?>
 <div align="center">
     <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ ?>
-        <table cellspacing="1" cellpadding="8" border="0">
-            <thead>
-                <tr>
-                    <th align="center" style="font-size: 15px;font-weight: bold;"><?=$lang['loosed_today']?></th>
-                    <th align="center" style="font-size: 15px;font-weight: bold;"><?=$lang['new_tanks']?></th>
-                    <th align="center" style="font-size: 15px;font-weight: bold;"><?=$lang['new_players']?></th>
-                </tr>
-            </thead>
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <tbody>
                 <tr>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%">
+                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="msfc7">
+                            <thead style="font-weight: bold;">
+                               <th colspan="3" align="center"><?=$lang['loosed_today'];?></th>
+                            </thead>
                             <tbody>
                                 <?php if (count($we_loosed) > 0){?>
                                     <?php foreach($we_loosed as $val){ ?>
@@ -48,22 +44,28 @@
                         </table>
                     </td>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%">
+                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="msfc8">
+                            <thead style="font-weight: bold;">
+                               <th colspan="3" align="center"><?=$lang['new_tanks'];?></th>
+                            </thead>
                             <tbody>
-                                <?php foreach($new_tanks as $name => $val){ ?>
-                                    <?php if(isset($roster_id[$val]['account_name'])){ ?>
-                                        <tr>
-                                            <td width="30%" align="left"><a href="<?php echo $config['base'].$roster_id[$val]['account_name'].'/'; ?>" 
-                                                    target="_blank"><?=$roster_id[$val]['account_name'];?></a></td>
-                                            <td width="70%" align="right"><?=$name;?></td>
-                                        </tr>
-                                        <?php } ?>
-                                    <?php } ?>
+                                <?php foreach($new_tanks as $val){
+                                        if(isset($roster_id[$val['account_id']]['account_name'])){ ?>
+                                         <tr>
+                                            <td width="30%" align="left"><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>" 
+                                                    target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
+                                            <td width="70%" align="right"><?=$val['tank'];?></td>
+                                         </tr>
+                                        <?php }
+                                      }?>
                             </tbody>
                         </table>
                     </td>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%">
+                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="msfc9">
+                            <thead style="font-weight: bold;">
+                               <th colspan="3" align="center"><?=$lang['new_players'];?></th>
+                            </thead>
                             <tbody> 
                                 <?php if (count($new_players) > 0){?>
                                     <?php foreach($new_players as $name => $val){ ?>
@@ -94,7 +96,7 @@
                 <th><?=$lang['in_clan']; ?></th>
                 <th><?=$lang['day_clan']; ?></th>
                 <th><?=$lang['role']; ?></th>
-                <th class="{sorter: 'usLongDate'}"><?=$lang['dateof']; ?></th>
+                <th><?=$lang['dateof']; ?></th>
             </tr>  
         </thead>
         <tbody>
@@ -140,8 +142,9 @@
                               } else { echo $val['created_at']; }; ?></td>
                     <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $lang[$val['role']]; ?></td>
                     <td class="<?=$color?>">
-                        <?php if (is_numeric($roster_local_num)){
-                                      echo date('Y.m.d (H:i)',$roster_local_num);
+                        <?php if (is_numeric($roster_local_num)){ ?>
+                                 <span class="hidden"><?php echo $roster_local_num; ?></span>
+                                 <?php echo date('Y.m.d (H:i)',$roster_local_num);
                               } else {echo $roster_local_num;}; ?></td>
                 </tr>
                 <?php } ?>

@@ -63,8 +63,8 @@
                 <td align="center">
                     <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
                     height="64px" width="64px" border="0"; title='<?= $new["data"]["description_html"];?>'/> <br>
-                    <?php print_R('<font color="'.$new['data']['color'].'">') ?>
-                    <?php print_R($new['data']['abbreviation'].'<br>'.$new['data']['motto'].'</font>') ?>
+                    <?php print_R('<font color="'.$new['data']['color'].'">');
+                          print_R('<br>'.$new['data']['name'].'</font>') ?>
                 </td>
                 <td width="300px"><img src="./images/logo_small.png" /></td>
                 <td width="420px"><?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>

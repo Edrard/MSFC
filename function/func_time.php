@@ -447,11 +447,10 @@
                                 $tmp = explode('_',$key);
                                 if($tmp[1] == 't'){
                                     if(!isset($vals[$first][$key])){
-                                        $new[$tank_name[($tmp[0])]['tank']] = $vals[0]['account_id'];  
+                                        $new[] = array('account_id'=> $vals[0]['account_id'],'tank' => $tank_name[($tmp[0])]['tank'],'title'=> $tank_name[($tmp[0])]['title']);
                                     }   
                                     if($vals[$first][$key] == 0 && $val > 0){
-                                        $new[$tank_name[($tmp[0])]['tank']] = $vals[0]['account_id'];
-                                    }
+                                        $new[] = array('account_id'=> $vals[0]['account_id'],'tank' => $tank_name[($tmp[0])]['tank'],'title'=> $tank_name[($tmp[0])]['title']);                                    }
                                 }
                             }
                         }
