@@ -209,7 +209,8 @@
 
     //Clear cache
     if (isset($_POST['admclearcache'])){
-        $cache->clear_all();
+        $cache->clear_all(array(), ROOT_DIR.'/cache/');
+        $cache->clear_all(array(), ROOT_DIR.'/cache/players/');
     }
 
     //Clear activity cache
