@@ -125,7 +125,9 @@
     <?=$lang['activity_2'];?>
     <input type="text" id="a_to" name="a_to" value="" />
     <button id="activity_settings_b">Settings</button>
+    <?php if($logged > 1) { ?>
     <button id="activity_upload_b">Upload</button>
+    <?php } ?>
     <a href="#tabs-<?php echo $key; ?>" id="a_show_activity"><?=$lang['select_show'];?></a>
     <br />
     <div id="activity_settings_m" style="text-align: left; width: 400px;" align="center">
