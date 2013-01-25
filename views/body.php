@@ -29,6 +29,11 @@
                 ?>
                 <script type="text/javascript">
                     $(document).ready(function(){
+                        $("#pane").hover(function() {
+                          $("#pane").addClass('ui-state-focus');
+                        }, function() {
+                          $("#pane").removeClass('ui-state-focus');
+                        });
                         $("#<?=$val['prefix'].'1';?>").button();
                         <?php if(isset($_GET['multi'])){ ?>
                             $("#<?=$_GET['multi'].'_1'?>").addClass('ui-state-focus');
@@ -54,7 +59,7 @@
     <table style="width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
             <tr style="height: 100px;" valign="center">
-                <td width="16px" class="ui-state-default ui-corner-all" onclick="magic2(this)" rowspan="2" >
+                <td id="pane" width="16px" class="ui-state-default ui-corner-all" onclick="magic2(this)" rowspan="2" >
                     <div id="chan" style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-w">
                         &nbsp;
                     </div>
