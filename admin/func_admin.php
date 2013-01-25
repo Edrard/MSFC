@@ -516,24 +516,42 @@
     }
     function recreat_db()
     {
-        global $db,$cache;
+        global $db,$config;
 
-        $sql = "show tables like '".$db->prefix."%'";
+        $sql = "SELECT `prefix` FROM `multiclan`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $tables = $q->fetchAll();
+            $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
         }else{
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }  
-        foreach($tables as $tab){
-            $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
-            //echo $sql;
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }    
         }
-        $cache->clear_all();
+        foreach($all_prefix as $t) {
+
+          $sql = "show tables like '".$t['prefix']."%'";
+          $q = $db->prepare($sql);
+          if ($q->execute() == TRUE) {
+              $tables = $q->fetchAll();
+          }else{
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          foreach($tables as $tab){
+              $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
+              //echo $sql;
+              $q = $db->prepare($sql);
+              if ($q->execute() != TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+              }
+          }
+
+        }
+
+        $sql = "DROP TABLE IF EXISTS multiclan;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
     }
     function insert_multicaln($id_clan,$server,$dbprefix)
     {

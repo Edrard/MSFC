@@ -107,7 +107,12 @@
     //DB
     if (isset($_POST['recdb'])){
         recreat_db();
+        //Чистим кэш
+        $cache->clear_all(array(), ROOT_DIR.'/cache/');
+        $cache->clear_all(array(), ROOT_DIR.'/cache/players/');
         insert_file(LOCAL_DIR.'/sql/clan.sql');
+        insert_multicaln($config['clan'],$config['server'],$dbprefix);
+        insert_config($config);
     }
     /**if (isset($_POST['syncdb'])){
     if(is_valid_url($config['td']) == true){
