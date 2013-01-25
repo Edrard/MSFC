@@ -43,7 +43,16 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all='+($("#a_all").is(":checked") ? 1:0),
+                data: {
+                  a_from  :  $('#a_from').val(),
+                  a_to    :  $('#a_to').val(),
+                  a_all   : ($("#a_all").is(":checked") ? 1:0),
+                  a_total : ($("#a_total").is(":checked") ? 1:0),
+                  a_cat_1 : ($("#a_cat_1").is(":checked") ? 1:0),
+                  a_cat_2 : ($("#a_cat_2").is(":checked") ? 1:0),
+                  a_cat_3 : ($("#a_cat_3").is(":checked") ? 1:0),
+                  a_cat_4 : ($("#a_cat_4").is(":checked") ? 1:0)
+                },
                 url: "./ajax/activity.php",
                 success: function(msg){
                     $("#activity_result").html(msg).show();
@@ -53,12 +62,59 @@
         $.ajax({
             cache: true,
             type: "POST",
-            data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all=1',
+            data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all=1&a_cat_1=1&a_cat_2=1&a_cat_3=1&a_cat_4=1',
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
             }
         });
+        $("#activity_settings_b").button({
+            icons: {
+            primary: "ui-icon-gear",
+            secondary: "ui-icon-triangle-1-s"
+            },
+            text: false
+        }).click( function() {
+          $("#activity_settings_m").toggle();
+          return false;
+        });
+        $("#activity_settings_m").hide();
+
+<?php if($logged > 1) { ?>
+
+        $("#activity_add_replay").button({
+            icons: {
+            primary: "ui-icon-plus"
+            },
+            text: false
+        });
+        var id = 2;
+        var form = '';
+        $("#activity_add_replay").click( function() {
+          //1
+          $("#activity_upload_form").append('<br /><input type="file" name="filename'+id+'">');
+          form = form + '<select name="cat'+id+'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+          form = form + '<option value="cat_1" selected="selected"><?=$lang["a_cat_1"];?></option>';
+          form = form + '<option value="cat_2"><?=$lang["a_cat_2"];?></option>';
+          form = form + '<option value="cat_3"><?=$lang["a_cat_3"];?></option>';
+          form = form + '<option value="cat_4"><?=$lang["a_cat_4"];?></option>';
+          form = form + '</select>';
+          $("#activity_upload_form").append(form);
+          id = id + 1;
+          form = '';
+          return false;
+        });
+        $("#activity_upload_b").button({
+            icons: {
+            primary: "ui-icon-folder-open"
+            },
+            text: false
+        }).click( function() {
+          $("#activity_upload_form_main").toggle();
+          return false;
+        });
+        $("#activity_upload_form_main").hide();
+<? } ?>
 });
 </script>
 <div align="center">
@@ -68,16 +124,39 @@
     <input type="text" id="a_from" name="a_from" value="" />
     <?=$lang['activity_2'];?>
     <input type="text" id="a_to" name="a_to" value="" />
-    <a href="#" id="a_show_activity"><?=$lang['select_show'];?></a>
+    <button id="activity_settings_b">Settings</button>
+    <button id="activity_upload_b">Upload</button>
+    <a href="#tabs-<?php echo $key; ?>" id="a_show_activity"><?=$lang['select_show'];?></a>
     <br />
-    <input type="checkbox" name="a_all" id="a_all" checked="checked" style="margin:0px; padding:0px;" /> - <?=$lang['activity_3'];?>
+    <div id="activity_settings_m" style="text-align: left; width: 400px;" align="center">
+    <div align="center"><?=$lang['activity_6'];?></div>
+    <input type="checkbox" name="a_cat_1" id="a_cat_1" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_1'];?><br />
+    <input type="checkbox" name="a_cat_2" id="a_cat_2" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_2'];?><br />
+    <input type="checkbox" name="a_cat_3" id="a_cat_3" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_3'];?><br />
+    <input type="checkbox" name="a_cat_4" id="a_cat_4" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_4'];?><br />
+    <br />
+    <input type="checkbox" name="a_all" id="a_all" checked="checked" style="margin:0px; padding:0px;" /> - <?=$lang['activity_3'];?><br />
+    <input type="checkbox" name="a_total" id="a_total" style="margin:0px; padding:0px;" /> - <?=$lang['activity_5'];?><br />
+    </div>
     </form>
     <? if($logged > 1) { ?>
+    <br />
+    <div align="left" id="activity_upload_form_main">
     <form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
-    <input type="file" name="filename">
+    <span id="activity_upload_form">
+    <input type="file" name="filename1"><select name="cat1">
+      <option value="cat_1" selected="selected"><?=$lang['a_cat_1'];?></option>
+      <option value="cat_2"><?=$lang['a_cat_2'];?></option>
+      <option value="cat_3"><?=$lang['a_cat_3'];?></option>
+      <option value="cat_4"><?=$lang['a_cat_4'];?></option>
+    </select>
+    </span>
+    <button id="activity_add_replay">Add replay</button>
+    <br />
     <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="activityreplay">
     </form>
+    </div>
     <?php } ?>
-    <? if(isset($activity_error)) { echo '<br />'.$activity_error; } ?>
+    <? if(isset($activity_error)) { echo '<div align="left">'.$activity_error.'</div>'; } ?>
     <div id="activity_result"></div>
 </div>

@@ -110,74 +110,87 @@ unset($gk_result5);
 
 /********** End **********/
 
-
 /********** Parse activity replay **********/
-if(isset($_POST['activityreplay']) and isset($_FILES['filename']['name']) and ($logged == 2)) {
+if(isset($_POST['activityreplay']) and isset($_FILES) and ($logged == 2)) {
 
-$res_check = array_keys($res);
-$cache_activity = new Cache(ROOT_DIR.'/cache/activity/');
+$activity_error = '';
 
-$file_error = null;
-$battle_time = null;
+  foreach($_FILES as $a_filename => $a_file) {
 
-if($_FILES['filename']['size'] > (1024*3*1024)) { $file_error .= $lang['gk_error_1']; }
+  $res_check = array_keys($res);
+  $cache_activity = new Cache(ROOT_DIR.'/cache/activity/');
+  $file_num = substr($a_filename, -1);
 
-if(is_uploaded_file($_FILES['filename']['tmp_name']) and $_FILES['filename']['error'] == 0 and !isset ($file_error)) {
-    $lines = file($_FILES["filename"]["tmp_name"]);
-}else{
-    $file_error .= $lang['gk_error_2'];
-}
-unset($_FILES);
+  $file_error = null;
+  $battle_time = null;
 
-if(!$file_error ) {
-    $handle  = trim($lines[0]);
-    if(isset($lines[1])) {$handle .= trim($lines[1]);}
+  if($a_file['size'] > (1024*3*1024)) { $file_error .= $lang['gk_error_1']; }
 
-    if(!preg_match('/{\"mapName(.*)\"}/', $handle, $a_result)) {
-        $file_error .= $lang['gk_error_3'];
+  if(is_uploaded_file($a_file['tmp_name']) and $a_file['error'] == 0 and !isset ($file_error)) {
+      $lines = file($a_file["tmp_name"]);
+  }else{
+      $file_error .= $lang['gk_error_2'];
+  }
+  unset($a_filename);
+
+  if(!$file_error ) {
+      $handle  = trim($lines[0]);
+      if(isset($lines[1])) {$handle .= trim($lines[1]);}
+
+      if(!preg_match('/{\"mapName(.*)\"}/', $handle, $a_result)) {
+          $file_error .= $lang['gk_error_3'];
+      }
+  unset($lines);
+  }
+
+  if(!$file_error) {
+    $a_data = json_decode($a_result['0'], true);
+    $check_time = date_parse($a_data['dateTime']);
+    if($check_time['error_count'] == 0) {
+    	$battle_time = mktime($check_time['hour'],$check_time['minute'],$check_time['second'],$check_time['month'],$check_time['day'],$check_time['year']);
+    } else {
+      $file_error .= ':-( :\'(';
     }
-unset($lines);
-}
+  unset($a_result);
+  }
+  if(!$file_error) {
+    $activity = $cache_activity->get(date('d.m.Y',$battle_time),0);
+    if(empty($activity)){
+        $activity = array();
+    }
+    if(isset($activity['map'][$a_data['mapName']])) {
+       foreach($activity['map'][$a_data['mapName']] as $val) {
+         if($val == $battle_time) {$file_error .= $lang['activity_error_1'];}
+       }
+    }
+  }
 
-if(!$file_error) {
-  $a_data = json_decode($a_result['0'], true);
-  $check_time = date_parse($a_data['dateTime']);
-  if($check_time['error_count'] == 0) {
-  	$battle_time = mktime($check_time['hour'],$check_time['minute'],$check_time['second'],$check_time['month'],$check_time['day'],$check_time['year']);
-  } else {
-    $file_error .= ':-( :\'(';
-  }
-unset($a_result);
-}
-if(!$file_error) {
-  $activity = $cache_activity->get(date('d.m.Y',$battle_time),0);
-  if(empty($activity)){
-      $activity = array();
-  }
-  if(isset($activity['map'][$a_data['mapName']])) {
-     foreach($activity['map'][$a_data['mapName']] as $val) {
-       if($val == $battle_time) {$file_error .= $lang['activity_error_1'];}
-     }
-  }
-}
-
-if(!$file_error){
-  foreach($a_data['vehicles'] as $id => $val) {
-    if(in_array($val['name'],$res_check)) {
-      if(isset($activity['players'][$val['name']])) {
-        $activity['players'][$val['name']] += 1;
-      } else {
-        $activity['players'][$val['name']] = 1;
+  if(!$file_error){
+    /* Категории файлов */
+    if(isset($_POST['cat'.$file_num])) {
+      $a_cat = $_POST['cat'.$file_num];
+    } else {
+      $a_cat = 'cat_1';
+    }
+    foreach($a_data['vehicles'] as $id => $val) {
+      if(in_array($val['name'],$res_check)) {
+        if(isset($activity[$a_cat][$val['name']])) {
+          $activity[$a_cat][$val['name']] += 1;
+        } else {
+          $activity[$a_cat][$val['name']] = 1;
+        }
       }
     }
+    $activity['map'][$a_data['mapName']][] = $battle_time;
+    $cache_activity->clear(date('d.m.Y',$battle_time));
+    $cache_activity->set(date('d.m.Y',$battle_time),$activity);
   }
-  $activity['map'][$a_data['mapName']][] = $battle_time;
-  $cache_activity->clear(date('d.m.Y',$battle_time));
-  $cache_activity->set(date('d.m.Y',$battle_time),$activity);
-}
 
-if($file_error) {$activity_error = $file_error;}
-unset($res_check,$a_data,$check_time,$battle_timem,$file_error,$cache_activity,$activity,$a_data,$val,$id);
+  if($file_error) {$activity_error .= $lang['activity_7'].' <b>'.$a_file['name'].'</b><br />'.$file_error;}
+  unset($res_check,$a_data,$check_time,$battle_timem,$file_error,$cache_activity,$activity,$a_data,$val,$id,$file_num,$a_cat,$a_file);
+
+  }
+
 }
 /********** End of parsing activity replay **********/
 }

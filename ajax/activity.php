@@ -60,6 +60,7 @@
 
     $time = array();
     $activity = array();
+    $activity_total = array();
 
     $cache_activity = new Cache(ROOT_DIR.'/cache/activity/');
 
@@ -79,18 +80,104 @@
     } else {
       $a_all = 0;
     }
-
+    if(isset($_POST['a_total']) and $_POST['a_total'] ==1) {
+      $a_total = 1;
+    } else {
+      $a_total = 0;
+    }
+    if($a_total == 1) {
+      $a_all = 0;
+    }
+    if(isset($_POST['a_cat_1']) and $_POST['a_cat_1'] ==1) {
+      $cat_1 = 1;
+    } else {
+      $cat_1 = 0;
+    }
+    if(isset($_POST['a_cat_2']) and $_POST['a_cat_2'] ==1) {
+      $cat_2 = 1;
+    } else {
+      $cat_2 = 0;
+    }
+    if(isset($_POST['a_cat_3']) and $_POST['a_cat_3'] ==1) {
+      $cat_3 = 1;
+    } else {
+      $cat_3 = 0;
+    }
+    if(isset($_POST['a_cat_4']) and $_POST['a_cat_4'] ==1) {
+      $cat_4 = 1;
+    } else {
+      $cat_4 = 0;
+    }
+    /* Если не задано категорий, отображаем первую */
+    if($cat_1 == 0 and $cat_2 == 0 and $cat_3 == 0 and $cat_4 == 0) {
+      $cat_1 = 1;
+    }
     for($i=$time['from'];$i<=$time['to'];$i+=86400) {
       $t[date('d.m.Y',$i)] = $cache_activity->get(date('d.m.Y',$i),0);
     }
 
     $empty = 0;
     foreach($t as $date => $val) {
+      //1
+        //echo '<pre><div align="left">',$date,'<br />';
+        //$activity[]
+        /* Поддержка старых реплеев, все старые данные заносим в общую категорию */
+        if(isset($val['players']) and $cat_1 == 1) {
+          foreach($val['players'] as $name => $count) {
+            if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
+            $activity[$date][$name] += $count;
+            ++$empty;
+            if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
+          }
+        }
+        /* Первая категория */
+        if(isset($val['cat_1']) and $cat_1 == 1) {
+          foreach($val['cat_1'] as $name => $count) {
+            if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
+            $activity[$date][$name] += $count;
+            ++$empty;
+            if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
+          }
+        }
+        /* Вторая категория */
+        if(isset($val['cat_2']) and $cat_2 == 1) {
+          foreach($val['cat_2'] as $name => $count) {
+            if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
+            $activity[$date][$name] += $count;
+            ++$empty;
+            if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
+          }
+        }
+        /* Третья категория */
+        if(isset($val['cat_3']) and $cat_3 == 1) {
+          foreach($val['cat_3'] as $name => $count) {
+            if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
+            $activity[$date][$name] += $count;
+            ++$empty;
+            if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
+          }
+        }
+        /* Четвертая категория */
+        if(isset($val['cat_4']) and $cat_4 == 1) {
+          foreach($val['cat_4'] as $name => $count) {
+            if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
+            $activity[$date][$name] += $count;
+            ++$empty;
+            if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
+          }
+        }
+        //echo '</div></pre>';
+
+    }
+/*
+    foreach($t as $date => $val) {
       if(isset($val)) {
         $activity[$date] = $val['players'];
         if(!empty($val['players'])) { ++$empty; }
       }
     }
+*/
+    //foreach
     unset($t,$cache_activity);
 ?>
 <?php if($empty != 0 or ($a_all == 1)) { ?>
@@ -105,29 +192,30 @@
     <thead>
         <tr>
             <th><?=$lang['name']; ?></th>
-            <?php for($i=$time['from'];$i<=$time['to'];$i+=86400) { ?>
+            <?php if($a_total == 0) { ?>
+               <?php for($i=$time['from'];$i<=$time['to'];$i+=86400) { ?>
                   <?php if(isset($activity[date('d.m.Y',$i)]) or ($a_all == 1)) { ?>
                         <th align="center"><?php echo date('d.m.Y',$i); ?></th>
                   <?php } ?>
+               <?php } ?>
             <?php } ?>
             <th align='center' style="min-width: 30px;"><?=$lang['activity_4'];?></th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($res as $val => $name){ $x = 0; ?>
+        <?php foreach($res as $val => $name){ ?>
             <tr>
                 <td><a href="<?php echo $config['base'].$name.'/'; ?>"
                         target="_blank"><?=$name; ?></a></td>
-                <?php for($i=$time['from'];$i<=$time['to'];$i+=86400) {
-                  if(isset($activity[date('d.m.Y',$i)]) or ($a_all == 1)) {
-                  if(isset($activity[date('d.m.Y',$i)][$name])) { ?>
-                    <td align="center"><?=$activity[date('d.m.Y',$i)][$name];?></td> <? $x += $activity[date('d.m.Y',$i)][$name];
-                  } else { ?>
-                    <td></td>
-               <? }
+                <?php
+                if($a_total == 0) {
+                  for($i=$time['from'];$i<=$time['to'];$i+=86400) {
+                    if(isset($activity[date('d.m.Y',$i)]) or ($a_all == 1)) { ?>
+                       <td align="center"><? echo isset($activity[date('d.m.Y',$i)][$name]) ? $activity[date('d.m.Y',$i)][$name] : ''; ?></td>
+                <?  }
                   }
                 } ?>
-                <td align='center'><?=$x; ?></td>
+                <td align='center'><? echo isset($activity_total[$name]) ? $activity_total[$name] : 0; ?></td>
             </tr>
             <?php } ?>
     </tbody>
@@ -135,4 +223,4 @@
 <?php } else {
  echo $lang['activity_error_2'];
  } 
-unset($activity);?>
+unset($activity,$activity_total);?>
