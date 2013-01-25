@@ -278,19 +278,19 @@
         $tename = 'tankExperts';
         $mename = 'mechanicEngineers';
 
-        $medn[$tename.'_usa']['img'] = 'images/medals/TankExpertUSA.png';
-        $medn[$tename.'_france']['img'] = 'images/medals/TankExpertFrance.png';
-        $medn[$tename.'_ussr']['img'] = 'images/medals/TankExpertUSSR.png';
-        $medn[$tename.'_china']['img'] = 'images/medals/Invincible.png';
-        $medn[$tename.'_uk']['img'] = 'images/medals/TankExpertBrit.png';
-        $medn[$tename.'_germany']['img'] = 'images/medals/TankExpertGermany.png';
+        $medn[$tename.'_usa']['img'] = 'images/medals/TankExperts_usa.png';
+        $medn[$tename.'_france']['img'] = 'images/medals/TankExperts_france.png';
+        $medn[$tename.'_ussr']['img'] = 'images/medals/TankExperts_ussr.png';
+        $medn[$tename.'_china']['img'] = 'images/medals/TankExperts_china.png';
+        $medn[$tename.'_uk']['img'] = 'images/medals/TankExperts_uk.png';
+        $medn[$tename.'_germany']['img'] = 'images/medals/TankExperts_germany.png';
 
-        $medn[$mename.'_usa']['img'] = 'images/medals/MechanicEngineerUSA.png';
-        $medn[$mename.'_france']['img'] = 'images/medals/MechanicEngineerFrance.png';
-        $medn[$mename.'_ussr']['img'] = 'images/medals/MechanicEngineerUSSR.png';
-        $medn[$mename.'_china']['img'] = 'images/medals/Invincible.png';
-        $medn[$mename.'_uk']['img'] = 'images/medals/MechanicEngineerBrit.png';
-        $medn[$mename.'_germany']['img'] = 'images/medals/MechanicEngineerGermany.png';
+        $medn[$mename.'_usa']['img'] = 'images/medals/MechanicEngineers_usa.png';
+        $medn[$mename.'_france']['img'] = 'images/medals/MechanicEngineers_france.png';
+        $medn[$mename.'_ussr']['img'] = 'images/medals/MechanicEngineers_ussr.png';
+        $medn[$mename.'_china']['img'] = 'images/medals/MechanicEngineers_china.png';
+        $medn[$mename.'_uk']['img'] = 'images/medals/MechanicEngineers_uk.png';
+        $medn[$mename.'_germany']['img'] = 'images/medals/MechanicEngineers_germany.png';
 
         $medn['medalCarius']['img'] = 'images/medals/MedalCarius'.$medn['medalCarius']['value'].'.png';
         $medn['medalHalonen']['img'] = 'images/medals/MedalHalonen.png';
@@ -391,7 +391,7 @@
         $medn['medalKolobanov']['type'] = 'epic';
         $medn['invincible']['type'] = 'special';
         $medn['lumberjack']['type'] = 'special';
-        $medn['tankExpert']['type'] = 'special';
+        $medn['tankExpert']['type'] = 'expert';
         $medn['diehard']['type'] = 'special';
         $medn['medalKnispel']['type'] =  'major';
         $medn['sinai']['type'] = 'special';

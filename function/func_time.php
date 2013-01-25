@@ -237,7 +237,7 @@
             $medn['medalKolobanov']['type'] = 'epic';
             $medn['invincible']['type'] = 'special';
             $medn['lumberjack']['type'] = 'special';
-            $medn['tankExpert']['type'] = 'special';
+            $medn['tankExpert']['type'] = 'expert';
             $medn['diehard']['type'] = 'special';
             $medn['medalKnispel']['type'] =  'major';
             $medn['medalBoelter']['type'] = 'epic';
