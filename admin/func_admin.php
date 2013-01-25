@@ -69,14 +69,24 @@
     function insert_config($config)
     {
         global $db;
-        unset($config['consub']);
-        if(!isset($config['cron'])){
-            $config['cron'] = 0;
+        
+        if(isset($config['consub'])){
+            if(!isset($config['cron'])){
+                $config['cron'] = 0;
+            }
+            if(!isset($config['news'])){
+                $config['news'] = 0;
+            }
         }
-        if(!isset($config['news'])){
-            $config['news'] = 0;
-        }
-
+        if(isset($config['consub_2'])){
+            if(!isset($config['cron_multi'])){
+                $config['cron_multi'] = 0;
+            }
+            if(!isset($config['cron_auth'])){
+                $config['cron_auth'] = 0;
+            }
+        }      
+        unset($config['consub'],$config['consub_2']);
         foreach($config as $name => $var){
             $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
             $q = $db->prepare($sql);

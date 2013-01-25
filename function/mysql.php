@@ -106,7 +106,7 @@
         if($_POST['id'] && $_POST['prefix'] && $_POST['sort']){
             if(is_numeric($_POST['id'])){
                 if(preg_match('/^\d/', $_POST['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_POST['prefix'])) <=5){
-                    if(ctype_alnum($_POST['prefix'])){
+                        if(ctype_alnum(preg_replace('/(.*)_/','$1',$_POST['prefix']))){
                         $_POST['prefix'] = strtolower($_POST['prefix']);
                         if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'])){
                             $dbprefix = $_POST['prefix'];

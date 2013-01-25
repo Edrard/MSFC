@@ -115,7 +115,7 @@
 
     $lang['admin_cln_control'] = 'Clans Control';
     $lang['admin_current_calns'] = 'Current clans';
-    
+
     $lang['admin_add_clan'] = 'Add new clan';
 
     $lang['admin_multi_id'] = 'Clan ID';
@@ -129,4 +129,9 @@
     $lang['admin_multi_add_new'] = 'Add';
     $lang['admin_multi_link'] = 'Link';
     $lang['admin_no_tanks'] = 'No data about tanks in DB';
+
+    $lang['admin_cron_control'] = 'Data collection in time';
+    $lang['admin_cron_auth'] = 'Authentication';
+    $lang['admin_cron_multi'] = 'Multiclan';
+    $lang['admin_cron_cache'] = 'Using the cache';
 ?>

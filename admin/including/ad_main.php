@@ -45,7 +45,7 @@
            </script>
 <?      }
     }
-    if (isset($_POST['consub'])){
+    if (isset($_POST['consub']) || isset($_POST['consub_2'])){
         insert_config($_POST);
     } 
     if (isset($_POST['mcsort'])){
