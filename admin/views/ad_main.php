@@ -578,9 +578,9 @@
                                             <tr>
                                                 <td align="center"><div class="hidden"><?=$mclan['sort']?></div><input type="text" value="<?=$mclan['sort']?>" name="Array[<?=$mclan['id']?>][order]" style="width: 30px;"></td>
                                                 <?php if($mclan['main'] == 0){?>
-                                                    <td align="center"><a target="_blank" href="/index.php?multi=<?=str_replace('_','',$mclan['prefix'])?>"><?=$lang['admin_multi_link']?></a></td>
+                                                    <td align="center"><a target="_blank" href="../index.php?multi=<?=str_replace('_','',$mclan['prefix'])?>"><?=$lang['admin_multi_link']?></a></td>
                                                     <?php }else{ ?>
-                                                    <td align="center"><a target="_blank" href="/index.php" ><?=$lang['admin_multi_link']?></a></td>
+                                                    <td align="center"><a target="_blank" href="../index.php" ><?=$lang['admin_multi_link']?></a></td>
                                                     <?php } ?>
                                                 <td align="center"><?=$mclan['server']?></td>
                                                 <td align="center"><?=$mclan['id']?></td>
