@@ -51,7 +51,8 @@
                   a_cat_1 : ($("#a_cat_1").is(":checked") ? 1:0),
                   a_cat_2 : ($("#a_cat_2").is(":checked") ? 1:0),
                   a_cat_3 : ($("#a_cat_3").is(":checked") ? 1:0),
-                  a_cat_4 : ($("#a_cat_4").is(":checked") ? 1:0)
+                  a_cat_4 : ($("#a_cat_4").is(":checked") ? 1:0),
+                  db_pref : '<?php echo $db->prefix; ?>'
                 },
                 url: "./ajax/activity.php",
                 success: function(msg){
@@ -62,7 +63,18 @@
         $.ajax({
             cache: true,
             type: "POST",
-            data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all=1&a_cat_1=1&a_cat_2=1&a_cat_3=1&a_cat_4=1',
+            //data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all=1&a_cat_1=1&a_cat_2=1&a_cat_3=1&a_cat_4=1',
+            data: {
+              a_from  :  $('#a_from').val(),
+              a_to    :  $('#a_to').val(),
+              a_all   :  1,
+              a_total :  0,
+              a_cat_1 :  1,
+              a_cat_2 :  1,
+              a_cat_3 :  1,
+              a_cat_4 :  1,
+              db_pref : '<?php echo $db->prefix; ?>'
+            },
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
