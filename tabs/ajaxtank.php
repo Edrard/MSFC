@@ -29,7 +29,13 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                data: 'type='+ $('#type').val()+'&nation='+$('#nation').val()+'&lvl='+$('#lvl').val(),
+                //data: 'type='+ $('#type').val()+'&nation='+$('#nation').val()+'&lvl='+$('#lvl').val(),
+                data: {
+                  type    :  $('#type').val(),
+                  nation  :  $('#nation').val(),
+                  lvl     :  $('#lvl').val(),
+                  db_pref : '<?php echo $db->prefix; ?>'
+                },
                 url: "./ajax/tanks.php",
                 success: function(msg){
                     $("#result").html(msg).show();
@@ -39,7 +45,13 @@
         $.ajax({
             cache: true,
             type: "POST",
-            data: 'type=all&nation=all&lvl=1',
+            //data: 'type=all&nation=all&lvl=1',
+            data: {
+              type    :  'all',
+              nation  :  'all',
+              lvl     :  1,
+              db_pref : '<?php echo $db->prefix; ?>'
+            },
             url: "./ajax/tanks.php",
             success: function(msg){
                 $("#result").html(msg).show();

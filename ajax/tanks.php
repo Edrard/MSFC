@@ -34,6 +34,7 @@
     include_once(ROOT_DIR.'/including/check.php');
     include_once(ROOT_DIR.'/function/auth.php');
     include_once(ROOT_DIR.'/function/mysql.php');
+    $db->change_prefix($_POST['db_pref']);
     include_once(ROOT_DIR.'/function/func.php');
     include_once(ROOT_DIR.'/function/func_main.php');
     include_once(ROOT_DIR.'/function/config.php');
