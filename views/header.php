@@ -118,12 +118,10 @@
                  width: 500,
                  show: "blind",
                  hide: "blind",
-                 modal: true,
-                 position: { my: "center top", at: "center top", of: "#allcontainer" , offset: "0, 100", collision: "flip" }
+                 modal: true
             });
             $('#login_opener').click(function() {
                 $("#login_dialog").dialog('open');
-                // prevent the default action, e.g., following a link
                 return false;
             });
             $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);

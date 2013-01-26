@@ -44,6 +44,7 @@
                         $('#dialog_<?=$val['user']?>').dialog({appendTo: "#adminalltabs", autoOpen: false});
                         $('.trigger_<?=$val['user']?>').click(function(){
                            $('#dialog_<?=$val['user']?>').dialog("open");
+                           return false;
                         });
                     <?php } ?>
             });
