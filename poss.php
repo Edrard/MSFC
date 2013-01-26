@@ -78,14 +78,17 @@
         <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
         <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script>        
         <script type="text/javascript" id="js">
-            $(document).ready(function()
-                {
-                    $("#poss").tablesorter({sortList:[[1,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                        widgetOptions: {uitheme : 'jui'}
-                    });
-            });
+           $(document).ready(function()
+           {
+               $("#poss").tablesorter({
+                  headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
+                  widgets: ["uitheme", "zebra"],
+                  widthFixed : false,
+                  sortList:[[1,0]],
+                  widgetOptions: {uitheme : "jui"}
+               });
+           });
         </script>
-
     </head>
     <body>
 <div align="center">

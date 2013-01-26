@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jquery.metadata.js"></script>
-    <script type="text/javascript" src="./js/jquery.qtip.js"></script>
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
     <script type="text/javascript" src="./js/jquery.ui.js"></script>
@@ -128,27 +127,20 @@
                 return false;
             });
             $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
-            $('.bb[title]').qtip({
-                position: {
-                    target: 'mouse',
-                    adjust: { screen: true, mouse: true }
-                },
-                style: {
-                    classes: 'ui-overlay',
-                    textAlign: 'center',
-                    padding: '5px 5px',
-                    width: {
-                        max: 400,
-                        min: 0
-                    },
-                    border: {
-                        width: 1,
-                        radius: 2,
-                        color: '#000'
-                    },
-                    tip: false
+
+            $('.bb[title]').tooltip({
+                track: false,
+                delay: 0,
+                fade: 250,
+                items: "[title]",
+                content: function() {
+                  var element = $( this );
+                  if ( element.is( "[title]" ) ) {
+                    return element.attr( "title" );
+                  }
                 }
-            });
+             });
+
             $('#rotate').vTicker({
                 speed: 500,
                 pause: 5000,

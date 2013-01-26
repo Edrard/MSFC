@@ -10,11 +10,14 @@ echo '
 
         $(document).ready(function()
         {
-            $("#aval_top_tank'.$index.'").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : \'{content} {icon}\',  widgets: [\'uitheme\', \'zebra\'],
-                widgetOptions: {uitheme : \'jui\'}
+            $("#aval_top_tank'.$index.'").tablesorter({
+               headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
+               widgets: ["uitheme", "zebra"],
+               widthFixed : false,
+               sortList:[[0,0]],
+               widgetOptions: {uitheme : "jui"}
             });
-        }
-        );
+        });
 </script>
 '; ?>
  <div align="center">
@@ -34,11 +37,14 @@ echo '
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($topTanki as $tank => $stat){ ?>
                         <td align='center' style='padding: 0px !important; vertical-align: middle;'>
-                        <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0) { echo '<img src="./images/yes.png">'; @$countTanks[$tank] +=1; ++$x; ++$y;
+                        <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0) {
+                          echo '<span class="hidden">y</span><img src="./images/yes.png">'; @$countTanks[$tank] +=1; ++$x; ++$y;
                           if(isset($blocked[$name][$tank])) {
-                            echo '<img src="./images/no2.png">';
+                            echo '<span class="hidden">b</span><img src="./images/no2.png" alt="blocked">';
                           }
-                        } ?>
+                        } else {
+                           echo '<span class="hidden">n</span>';
+                        }?>
                         </td>
                         <?php } ?>
                     <td align='center'><?php echo $x; ?></td>

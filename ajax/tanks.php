@@ -73,12 +73,18 @@
 
     //print_r($res);
 ?>
-<script type="text/javascript" id="js">     
-    $(document).ready(function() 
-    {  $("#tankslist").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',  widgets: ['uitheme', 'zebra'],
-           widgetOptions: {uitheme : 'jui'}
-       });
-    });
+<script type="text/javascript" id="js">
+
+        $(document).ready(function()
+        {
+            $("#tankslist").tablesorter({
+               headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
+               widgets: ["uitheme", "zebra"],
+               widthFixed : false,
+               sortList:[[0,0]],
+               widgetOptions: {uitheme : "jui"}
+            });
+        });
 </script>
 <table id="tankslist" width="100%" cellspacing="1">
     <thead>

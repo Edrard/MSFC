@@ -183,9 +183,15 @@
 ?>
 <?php if($empty != 0 or ($a_all == 1)) { ?>
 <script type="text/javascript" id="js">
-    $(document).ready(function()
-        {   $("#activity_table").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',  widgets: ['uitheme', 'zebra'],
-                                              widgetOptions: {uitheme : 'jui'}
+
+        $(document).ready(function()
+        {
+            $("#activity_table").tablesorter({
+               headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
+               widgets: ["uitheme", "zebra"],
+               widthFixed : false,
+               sortList:[[0,0]],
+               widgetOptions: {uitheme : "jui"}
             });
         });
 </script>

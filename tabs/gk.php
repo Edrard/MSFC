@@ -23,14 +23,16 @@ $('.gksubmit').button();
 <? if(isset($gk_fresult['error']) and !is_null($gk_fresult['error'])) { echo $gk_fresult['error']; } ?>
 <? if(isset($gk_fresult['team']) and !is_null($gk_fresult['team'])) { ?>
 <script type="text/javascript" id="js">
-
-        $(document).ready(function()
-        {   $("#gk_destroyed").tablesorter({sortList:[[0,0]], widthFixed: false, headerTemplate : '{content} {icon}',  widgets: ['uitheme', 'zebra'],
-                                            widgetOptions: {uitheme : 'jui'}
+        $(document).ready(function(){
+            $("#gk_destroyed").tablesorter({
+               headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
+               widgets: ["uitheme", "zebra"],
+               widthFixed : false,
+               sortList:[[0,0]],
+               widgetOptions: {uitheme : "jui"}
             });
             $('.gkcheckbox').addClass('ui-checkbox');
-        }
-        );
+        });
 </script>
 <div align="center">
     <form action="./main.php#tabs-<?php echo $key; ?>" method="post">

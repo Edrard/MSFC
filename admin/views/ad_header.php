@@ -27,8 +27,6 @@
 
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/jquery.metadata.js"></script>
-    <script type="text/javascript" src="../js/jquery.modal.js"></script>
-    <script type="text/javascript" src="../js/jquery.qtip.js"></script>
     <script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="../js/jquery.tablesorter.widgets.js"></script>
     <script type="text/javascript" src="../js/jquery.ui.js"></script>
@@ -43,8 +41,11 @@
             $(document).ready(function() 
                 {  
                     <?php foreach($current_user as $val){?>
-                        $('#dialog_<?=$val['user']?>').jqm({trigger: 'a.trigger_<?=$val['user']?>'}); 
-                        <?php } ?>
+                        $('#dialog_<?=$val['user']?>').dialog({appendTo: "#adminalltabs", autoOpen: false});
+                        $('.trigger_<?=$val['user']?>').click(function(){
+                           $('#dialog_<?=$val['user']?>').dialog("open");
+                        });
+                    <?php } ?>
             });
         </script>
         <?php    }  ?>

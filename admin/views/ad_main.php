@@ -445,36 +445,23 @@
                                 </tbody>
                             </table>
                             <?php foreach($current_user as $val){?>
-                                <div class="jqmWindow" id="dialog_<?=$val['user']?>">
+                                <div id="dialog_<?=$val['user']?>">
                                     <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
                                         <div align="center"><h3><?=$lang['admin_new_user_edit'];?></h3></div>
                                         <table border="0" cellspacing="6" cellpadding="2">
                                             <tbody>
-                                                <tr>
-                                                    <td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" value="<?=$val['user']?>" /></td>
-                                                </tr><tr>
-                                                    <td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td>
-                                                </tr><tr>
-                                                    <td><?=$lang['admin_new_user_group'];?>:</td> <td><select name="group">
-                                                            <?php if($val['group'] == 'admin'){?>
-                                                                <option value="admin" selected="selected">Admin</option>
-                                                                <?php }else{ ?>
-                                                                <option value="admin">Admin</option>
-                                                                <?php } ?>
-                                                            <?php if($val['group'] == 'user'){?>
-                                                                <option value="user" selected="selected">User</option>
-                                                                <?php }else{ ?>
-                                                                <option value="user">User</option>
-                                                                <?php } ?>
-                                                        </select></td>
-                                                </tr><tr>
-                                                    <td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_submit'];?>" name="edituser"></td>
-                                                </tr>
+                                                <tr><td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" value="<?=$val['user']?>" /></td></tr>
+                                                <tr><td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td></tr>
+                                                <tr><td><?=$lang['admin_new_user_group'];?>:</td> <td>
+                                                    <select name="group">
+                                                            <option value="admin" <?php if($val['group'] == 'admin'){?> selected="selected" <?php }; ?>>Admin</option>
+                                                            <option value="user"  <?php if($val['group'] == 'user') {?> selected="selected" <?php }; ?>>User</option>
+                                                    </select></td></tr>
+                                                <tr><td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_submit'];?>" name="edituser"></td></tr>
                                             </tbody>
                                         </table>
                                         <input type="hidden" name="oldname" value="<?=$val['user']?>">
                                     </form>
-                                    <a href="#" class="jqmClose">Close</a>
                                 </div>
                                 <?php } ?>
                         </div>

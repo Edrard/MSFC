@@ -76,7 +76,7 @@
     $lang['admin_new_user_confirm_2'] = 'добавлен';
     $lang['admin_del_user_error'] = 'Пользователь для удаления отсутствует';
 
-    $lang['admin_new_user_edit'] = 'Редактировать пользоватлея';
+    $lang['admin_new_user_edit'] = 'Редактировать пользователя';
 
     $lang['admin_db_recreat'] = 'Пересоздать базу';
     $lang['admin_db_warning'] = '<span style="color:red;">Предупреждение!!! Все данные будут удалены</span>';
