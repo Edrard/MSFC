@@ -543,7 +543,7 @@
                                     if (!e.isDefaultPrevented()) {
 
                                         // submit with AJAX
-                                        $.getJSON("/ajax/mc_valid.php?" + form.serialize(), function(json) {
+                                        $.getJSON("../ajax/mc_valid.php?" + form.serialize(), function(json) {
                                             // everything is ok. (server returned true)
                                             if (json["id"] === "true")  {
                                                 document.forms["multiclan"].submit();
