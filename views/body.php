@@ -30,9 +30,9 @@
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#pane").hover(function() {
-                          $("#pane").addClass('ui-state-focus');
-                        }, function() {
-                          $("#pane").removeClass('ui-state-focus');
+                            $("#pane").addClass('ui-state-focus');
+                            }, function() {
+                                $("#pane").removeClass('ui-state-focus');
                         });
                         $("#<?=$val['prefix'].'1';?>").button();
                         <?php if(isset($_GET['multi'])){ ?>
@@ -69,7 +69,7 @@
                     <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
                     height="64px" width="64px" border="0"; title='<?= $new["data"]["description_html"];?>'/> <br>
                     <?php print_R('<font color="'.$new['data']['color'].'">');
-                          print_R('<br>'.$new['data']['name'].'</font>') ?>
+                        print_R('<br>'.$new['data']['name'].'</font>') ?>
                 </td>
                 <td width="300px"><img src="./images/logo_small.png" /></td>
                 <td width="420px"><?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
@@ -129,7 +129,7 @@
                                     if(is_numeric($key)){ ?>
                                     <li><a <?php if($i==0) echo 'id="id-0"'; ?> onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
                                     <?php }else{  ?>
-                                    <li><a onclick="magic(this)" href="<?=$key; ?>"><?=$link; ?></a></li>
+                                    <li><a onclick="magic(this)" href="<?php echo $key; if(isset($_GET['multi'])){if(substr_count($key, '?') > 0){echo '&multi='.$_GET['multi'];}else{echo '?multi='.$_GET['multi'];}}?>"><?=$link; ?></a></li>
                                     <?php  }
                                     $i++;
                                 }  
