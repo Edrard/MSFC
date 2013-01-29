@@ -11,60 +11,59 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.0.2 $
+    * @version     $Rev: 2.1.6 $
     *
     */
 ?>
-<?php
-    if (isset($_POST['recdb'])){
-
-        recreat_db();
-        insert_file(LOCAL_DIR.'/sql/clan.sql');
-        if (isset($_POST['clan'])){
-           $config['clan'] = $_POST['clan'];
-        }  else {
-           $config['clan'] = '37';
-        }
-        if (isset($_POST['lang'])){
-           $config['lang'] = $_POST['lang'];
-        }  else {
-           $config['lang'] = 'ru';
-        }
-        if (isset($_POST['server'])){
-           $config['server'] = $_POST['server'];
-        }  else {
-           $config['server'] = 'ru';
-        }
-        insert_multicaln($config['clan'],$config['server'],$dbprefix);
-        insert_config($config);
-
-        if ($config['lang'] <> 'ru') {
-           $sql = "SELECT file, name FROM `tabs`;";
-           $q = $db->prepare($sql);
-           if ($q->execute() == TRUE) {
-               $tabsindb = $q->fetchAll();
-           }else{
-               die(show_message($q->errorInfo(),__line__,__file__,$sql));
-           };
-           foreach($tabs_lang['ru'] as $key => $val2){
-              foreach ($tabsindb as $val) {
-                  if (($val['name']) == $val2) {
-                     $sql = "UPDATE `tabs` SET name = '".$tabs_lang[$config['lang']][$key]."' WHERE file = '".$val['file']."'; ";
-                     $q = $db->prepare($sql);
-                     if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                     };
-                  }
-              }
-           }
-         }
-        if (!headers_sent()) {
-           header ( 'Location: index.php' );
-           exit;
-        } else { ?>
-           <script type="text/javascript">
-             location.replace("index.php");
-           </script>
-<?      }
-    }
-?>
+<div align="center"style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
+class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
+<?php if(is_writable(ROOT_DIR.'/cache/') && is_writable(LOCAL_DIR.'/sql/') 
+        && is_writable(ROOT_DIR.'/cache/players/') && is_writable(ROOT_DIR.'/cache/activity/')){
+    ?>
+    <div style="height: 25%; "></div>
+    <div class="adinsider">
+        <form action="./index.php" method="post">
+            <table width="300px" border="0" cellspacing="4" cellpadding="0">
+                <tr>
+                    <td colspan="2" align="center">
+                        <h3><?=$lang['admin_db_creat'];?></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_lang'];?>: </td>
+                    <td align="left">
+                        <select name="lang">
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_server'];?>: </td>
+                    <td align="left">
+                        <select id="iserver" name="server">
+                            <option value="ru">RU</option>
+                            <option value="eu">EU</option>
+                            <option value="us">US</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_clan_id'];?>: </td>
+                    <td align="left">
+                        <input id="iclan" type="text" name="clan" value="37" size="18" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="<?=$lang['admin_db_cbut'];?>" name="recdb">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <?php }  ?>
+  </div>
+</div>

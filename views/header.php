@@ -86,6 +86,7 @@
             $("#active_medal_3").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#active_medal_4").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#active_medal_5").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_6").tablesorter({widgetOptions: {uitheme : 'jui'}});
 
             $("#overall").tablesorter({widgetOptions: {uitheme : 'jui'}});
             $("#perform").tablesorter({widgetOptions: {uitheme : 'jui'}});

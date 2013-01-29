@@ -61,7 +61,7 @@
             }
             foreach($get as $val){
                 $cache->clear($val['account_name'],ROOT_DIR.'/cache/players/');
-                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.8/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.9/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
             }   
             multiget($links, $res,$config,prepare_stat(),$roster,$lang);
             //print_r($result);

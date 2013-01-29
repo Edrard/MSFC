@@ -109,7 +109,7 @@
     $lang['error_1'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
     $lang['error_2'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
     $lang['error_3'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site"; 
-    $lang['type'] = 'Type';
+    $lang = 'Type';
     $lang['title_name'] = 'Name';
     $lang['map'] = 'Map';
     $lang['prime_time'] = 'Prime time';
@@ -210,6 +210,11 @@
     $lang['medal_heroesOfRassenay'] = 'Raseiniai Heroes\' Medal';
     $lang['medal_bombardier'] = 'Bombardier';
 
+    $lang['medal_huntsman'] = ' Ranger';
+    $lang['medal_luckyDevil'] = 'Lucky';
+    $lang['medal_ironMan'] = 'Cool-Headed';
+    $lang['medal_sturdy'] = 'Spartan';
+    $lang['medal_pattonValley'] = 'Patton Valley';
 
     $lang['medal_class'] = 'class';
     $lang['medal_class2'] = 'class';
@@ -293,6 +298,12 @@
     $lang['title_medalBrothersInArms'] = 'Awarded to a platoon in which all platoon members destroy at least 3 enemy vehicles and survive in battle. Each platoon participant receive this title.';
     $lang['title_heroesOfRassenay'] = 'Awarded to a player who destroys single-handedly all enemy vehicles (at least 14 vehicles). In June 1941, near the Lithuanian town of Raseiniai, roughly 20 KV tanks of the Soviet 3rd Mechanized Corps met the assault of the 6th Panzer Division, with approximately 100 vehicles. A single KV-2 tank managed to hold off the German advance for a full day while being pummeled by a variety of antitank weapons, until finally the KV-2 ran out of ammunition and was knocked out.';
     $lang['title_bombardier'] = 'Awarded to the player who destroys two or more vehicles with one shot.';
+
+    $lang['title_huntsman'] = 'Destroy all the enemy light tanks (must be at least three) in the course of a single battle.';
+    $lang['title_luckyDevil'] = 'Witness the destruction of an enemy vehicle by an enemy team player. You must be within 10 meters or less from the enemy vehicle at the moment of its destruction.';
+    $lang['title_ironMan'] = 'Survive at least 10 ricochets and non-penetrations in a row from enemy players.';
+    $lang['title_sturdy'] = 'Survive a ricochet or non-penetrating shot from an enemy player. Your vehicle must have less than 10% of its hit points (HP) left and you must survive the battle.';
+    $lang['title_pattonValley'] = 'Destroy 100 M46 Patton or M48A1 Patton III.';
 
     $lang['logout'] = 'Logout';
     $lang['login'] = 'Login';

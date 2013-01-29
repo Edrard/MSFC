@@ -345,6 +345,12 @@
         $medn['heroesOfRassenay']['img'] = 'images/medals/HeroesOfRassenay.png';
         $medn['bombardier']['img'] = 'images/medals/Bombardier.png';
 
+        $medn['huntsman']['img'] = 'images/medals/Huntsman.png';
+        $medn['luckyDevil']['img'] = 'images/medals/LuckyDevil.png';
+        $medn['ironMan']['img'] = 'images/medals/IronMan.png';
+        $medn['sturdy']['img'] = 'images/medals/Sturdy.png';
+        $medn['pattonValley']['img'] = 'images/medals/PattonValley.png';
+
         $medn[$tename.'_usa']['type'] = 'expert';
         $medn[$tename.'_france']['type'] = 'expert';
         $medn[$tename.'_ussr']['type'] = 'expert';
@@ -411,6 +417,12 @@
         $medn['medalBrothersInArms']['type'] = 'epic';
         $medn['heroesOfRassenay']['type'] = 'epic2';
         $medn['bombardier']['type'] = 'special';
+
+        $medn['huntsman']['type'] = 'special2';
+        $medn['luckyDevil']['type'] = 'special2';
+        $medn['ironMan']['type'] = 'special2';
+        $medn['sturdy']['type'] = 'special2';
+        $medn['pattonValley']['type'] = 'special';
 
         foreach($medn as $name => $val){
             if(isset($val['type'])){

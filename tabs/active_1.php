@@ -76,7 +76,7 @@
                     </table>
                 </div>
             </div>
-            <h3><a href="#"><?=$lang['special']?></a></h3>
+            <h3><a href="#"><?=$lang['special']?> - 1</a></h3>
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['special'], 1); ?>
@@ -91,6 +91,35 @@
                         </thead>
                         <tbody>
                             <?php foreach($medal_progress['sorted']['special'] as $account_id => $vals){ 
+                                    if(isset($roster_id[$account_id]['account_name'])){?>
+                                    <tr> 
+                                        <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 
+                                            target="_blank"><?php echo $roster_id[$account_id]['account_name']; ?></a></td>
+                                        <?php foreach($vals as $val){  ?>
+                                            <td><?=$val;?></td>
+                                            <?php } ?>
+                                    </tr>
+                                    <?php } ?>
+                                <?php } ?>
+                        </tbody>  
+                    </table>
+                </div>
+            </div>
+            <h3><a href="#"><?=$lang['special']?> - 2</a></h3>
+            <div>
+                <div align="center">
+                    <?php $rand_medal_progress = array_rand($medal_progress['sorted']['special2'], 1); ?>
+                    <table id="active_medal_6" cellspacing="1">
+                        <thead> 
+                            <tr>
+                                <th><?=$lang['name'];?></th>
+                                <?php foreach(array_keys($medal_progress['sorted']['special2'][$rand_medal_progress]) as $title){?>
+                                    <th class="bb" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./images/medals/'.ucfirst($title).'.png\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$lang['medal_'.$title].'.</span><br> '.$lang['title_'.$title].'</td></tr></table>"';?>><?=$lang['medal_'.$title];?></th>
+                                    <?php } ?>
+                            </tr>  
+                        </thead>
+                        <tbody>
+                            <?php foreach($medal_progress['sorted']['special2'] as $account_id => $vals){ 
                                     if(isset($roster_id[$account_id]['account_name'])){?>
                                     <tr> 
                                         <td><a href="<?php echo $config['base'].$roster_id[$account_id]['account_name'].'/'; ?>" 

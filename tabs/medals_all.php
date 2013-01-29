@@ -41,6 +41,10 @@
             $(".allmedalhide").hide();
             $(".specialshow").show();
         });
+        $("#show_special2").click(function() {
+            $(".allmedalhide").hide();
+            $(".special2show").show();
+        });
         $("#show_expert").click(function() {
             $(".allmedalhide").hide();
             $(".expertshow").show();
@@ -49,18 +53,19 @@
 </script>
 <div align="center">
     <?=$lang['select_medals'];?><br /><br />
-<form>
-    <div id="triggermedals" align="center">
-        <input type="radio" id="show_hero" name="triggermedals" checked="checked" /><label for="show_hero"><?=$lang['hero'];?></label>
-        <input type="radio" id="show_major" name="triggermedals" /><label for="show_major"><?=$lang['major'];?></label>
-        <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?> - 1</label>
-        <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic'];?> - 2</label>
-        <input type="radio" id="show_special" name="triggermedals" /><label for="show_special"><?=$lang['special'];?></label>
-        <input type="radio" id="show_expert" name="triggermedals" /><label for="show_expert"><?=$lang['expert'];?></label>
-    </div>
-</form>
+    <form>
+        <div id="triggermedals" align="center">
+            <input type="radio" id="show_hero" name="triggermedals" checked="checked" /><label for="show_hero"><?=$lang['hero'];?></label>
+            <input type="radio" id="show_major" name="triggermedals" /><label for="show_major"><?=$lang['major'];?></label>
+            <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?> - 1</label>
+            <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic'];?> - 2</label>
+            <input type="radio" id="show_special" name="triggermedals" /><label for="show_special"><?=$lang['special'];?> - 1</label>
+            <input type="radio" id="show_special2" name="triggermedals" /><label for="show_special2"><?=$lang['special'];?> - 2</label>
+            <input type="radio" id="show_expert" name="triggermedals" /><label for="show_expert"><?=$lang['expert'];?></label>
+        </div>
+    </form>
 
-<br />
+    <br />
     <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2">
         <thead> 
             <tr>

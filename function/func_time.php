@@ -263,8 +263,14 @@
             $medn['heroesOfRassenay']['type'] = 'epic2';
             $medn['bombardier']['type'] = 'special';
 
+            $medn['huntsman']['type'] = 'special2';
+            $medn['luckyDevil']['type'] = 'special2';
+            $medn['ironMan']['type'] = 'special2';
+            $medn['sturdy']['type'] = 'special2';
+            $medn['pattonValley']['type'] = 'special';
+
             $medn['mechanicEngineer']['type'] = '';
-            
+
             $medn[$tename.'_usa']['type'] = 'expert';
             $medn[$tename.'_france']['type'] = 'expert';
             $medn[$tename.'_ussr']['type'] = 'expert';
