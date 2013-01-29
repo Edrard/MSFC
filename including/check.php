@@ -19,11 +19,11 @@
     if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
     {
         if (!headers_sent()) {
-          header ("Location: /index.php");
-          exit;
+            header ("Location: /index.php");
+            exit;
         } else { print_R('<script type="text/javascript">
-          location.replace("/index.php");
-          </script>');
+            location.replace("/index.php");
+            </script>');
         }
     }
     /*
@@ -99,7 +99,7 @@
         /* Не запускаем внутренний обработчик ошибок PHP */
         return true;
     }
-    
+
 
     /* Применяем созданную функцию */
     set_error_handler("myErrorHandler");
@@ -107,18 +107,33 @@
     /* Создаем папки для кэша */
 
     if(is_writable(ROOT_DIR)) {
-      if(!is_dir(ROOT_DIR.'/cache/')){
-          mkdir(ROOT_DIR.'/cache/',0777);
-          chmod(ROOT_DIR.'/cache/', 0777);
-      }
-      if(!is_dir(ROOT_DIR.'/cache/players/')){
-          mkdir(ROOT_DIR.'/cache/players/',0777);
-          chmod(ROOT_DIR.'/cache/players/', 0777);
-      }
-      if(!is_dir(ROOT_DIR.'/cache/activity/')){
-          mkdir(ROOT_DIR.'/cache/activity/',0777);
-          chmod(ROOT_DIR.'/cache/activity/', 0777);
-      }
+        if(!is_dir(ROOT_DIR.'/cache/')){
+            mkdir(ROOT_DIR.'/cache/',0777);
+            chmod(ROOT_DIR.'/cache/', 0777);
+        }
+        if(!is_dir(ROOT_DIR.'/cache/players/')){
+            mkdir(ROOT_DIR.'/cache/players/',0777);
+            chmod(ROOT_DIR.'/cache/players/', 0777);
+        }
+        if(!is_dir(ROOT_DIR.'/cache/activity/')){
+            mkdir(ROOT_DIR.'/cache/activity/',0777);
+            chmod(ROOT_DIR.'/cache/activity/', 0777);
+        }
+    }
+
+    /* Попытка создать cron.log */
+    if(!file_exists(ROOT_DIR.'/cron.log')) {
+        if($fh = fopen(ROOT_DIR.'/cron.log', 'a')){
+            fclose($fh);
+        }
+        chmod(ROOT_DIR.'/cron.log', 0777);
+    }
+    if(!is_writable(ROOT_DIR.'/cron.log')){
+        chmod(ROOT_DIR.'/cron.log', 0777); 
+    }
+    /* Попытка сделать SQL читаймой */
+    if(!is_writable(ROOT_DIR.'/admin/sql')) {
+        chmod(ROOT_DIR.'/admin/sql', 0777);
     }
 
     /* Выводим сообщения о ошибках */
@@ -159,6 +174,6 @@
         show_message($lang['b_chmod_off']);
     }
 
-    
+
     define("VER",'2.1.6');
 ?>

@@ -68,8 +68,8 @@
                     <ul id="ad_menu">
                         <li><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
                         <?php if($config['cron'] == 1){ ?>
-                        <li><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
-                        <?php } ?>
+                            <li><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
+                            <?php } ?>
                         <li><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
                         <li><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
@@ -454,8 +454,8 @@
                                                 <tr><td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td></tr>
                                                 <tr><td><?=$lang['admin_new_user_group'];?>:</td> <td>
                                                     <select name="group">
-                                                            <option value="admin" <?php if($val['group'] == 'admin'){?> selected="selected" <?php }; ?>>Admin</option>
-                                                            <option value="user"  <?php if($val['group'] == 'user') {?> selected="selected" <?php }; ?>>User</option>
+                                                        <option value="admin" <?php if($val['group'] == 'admin'){?> selected="selected" <?php }; ?>>Admin</option>
+                                                        <option value="user"  <?php if($val['group'] == 'user') {?> selected="selected" <?php }; ?>>User</option>
                                                     </select></td></tr>
                                                 <tr><td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_submit'];?>" name="edituser"></td></tr>
                                             </tbody>
@@ -596,42 +596,62 @@
                         </div>
                     </div>
                     <?php if($config['cron'] == 1){ ?>
-                    <div id="tabs-9">
-                        <div align="center">
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
-                                <table width="98%" border="0" cellpadding="8">
-                                    <tbody>
-                                        <tr>
-                                            <td width="150"><?=$lang['admin_cron_auth'];?></td>
-                                            <?php 
-                                                if($config['cron_auth'] == '1'){
-                                                    $cron_auth = 'checked="yes"';
-                                                }else{
-                                                    $cron_auth = '';
-                                                }
-                                            ?>
+                        <div id="tabs-9">
+                            <div>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
+                                    <table width="98%" border="0" cellpadding="8">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150"><?=$lang['admin_cron_auth'];?></td>
+                                                <?php 
+                                                    if($config['cron_auth'] == '1'){
+                                                        $cron_auth = 'checked="yes"';
+                                                    }else{
+                                                        $cron_auth = '';
+                                                    }
+                                                ?>
 
-                                            <td><input <?=$cron_auth?> type="checkbox" name="cron_auth" value="1" size="2" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td><?=$lang['admin_cron_multi'];?></td>
-                                            <?php 
-                                                if($config['cron_multi'] == '1'){
-                                                    $cron_multi = 'checked="yes"';
-                                                }else{
-                                                    $cron_multi = '';
-                                                }
-                                            ?>
+                                                <td><input <?=$cron_auth?> type="checkbox" name="cron_auth" value="1" size="2" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_multi'];?></td>
+                                                <?php 
+                                                    if($config['cron_multi'] == '1'){
+                                                        $cron_multi = 'checked="yes"';
+                                                    }else{
+                                                        $cron_multi = '';
+                                                    }
+                                                ?>
 
-                                            <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></p>
-                            </form>
+                                                <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <br><br>
+                                <h3><?=$lang['current_cron'];?></h3>
+                                <?php if(file_exists(ROOT_DIR.'/cron.log') || is_readable(ROOT_DIR.'/cron.log')){ ?>
+                                    <textarea rows="10" cols="145" name="text">
+                                        <?=file_get_contents(ROOT_DIR.'/cron.log'); ?>
+                                    </textarea>
+                                    <?php } ?>
+                                <br><br>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
+                                    <h3><?=$lang['recreat_cron'];?></h3>
+                                    <input type="submit" value="<?=$lang['recreat_cron'];?>" name="cron_recreat" />
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <?php } ?>
+                        <?php } ?>
                 </td>
             </tr>
             <?php if($ver['value'] != VER){ ?>

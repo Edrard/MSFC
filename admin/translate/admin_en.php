@@ -137,4 +137,7 @@
     $lang['admin_min'] = 'min';
     $lang['admin_hour'] = 'hour';
     
+    $lang['current_cron'] = 'Current cron log';
+    $lang['recreat_cron'] = 'Recreat cron log file';
+    
 ?>

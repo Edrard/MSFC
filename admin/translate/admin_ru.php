@@ -135,4 +135,7 @@
     $lang['admin_cron_cache'] = 'Использование кеша';
     $lang['admin_min'] = 'мин.';
     $lang['admin_hour'] = 'час.';
+    
+    $lang['current_cron'] = 'Текущий лог крона';
+    $lang['recreat_cron'] = 'Пересоздать крон лог файл';
 ?>

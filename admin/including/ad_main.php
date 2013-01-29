@@ -16,7 +16,9 @@
     */
 ?>
 <?php 
-
+    if (isset($_POST['cron_recreat'])){
+        cron_file_recreat();
+    }
     if (isset($_POST['ajaxcre'])){
         if(creat_ajax_tab($_POST) == TRUE){
             $message['text'] = $_POST['file'].' '.$lang['admin_ajax_new_error'];
@@ -26,24 +28,24 @@
     if (isset($_GET['del'])){
         delete_tab($_GET);
         if (!headers_sent()) {
-           header ( 'Location: index.php?page=main#tabs-2' );
-           exit;
+            header ( 'Location: index.php?page=main#tabs-2' );
+            exit;
         } else { ?>
-           <script type="text/javascript">
-             location.replace("index.php?page=main#tabs-2");
-           </script>
-<?      }
+        <script type="text/javascript">
+            location.replace("index.php?page=main#tabs-2");
+        </script>
+        <?      }
     }
     if (isset($_GET['removeclan'])){
         delete_multi($_GET);
         if (!headers_sent()) {
-           header ( 'Location: index.php?page=main#tabs-8' );
-           exit;
+            header ( 'Location: index.php?page=main#tabs-8' );
+            exit;
         } else { ?>
-           <script type="text/javascript">
-             location.replace("index.php?page=main#tabs-8");
-           </script>
-<?      }
+        <script type="text/javascript">
+            location.replace("index.php?page=main#tabs-8");
+        </script>
+        <?      }
     }
     if (isset($_POST['consub']) || isset($_POST['consub_2'])){
         insert_config($_POST);
@@ -67,13 +69,13 @@
             $message['color'] = 'red';    
         }else{
             if (!headers_sent()) {
-               header ( 'Location: index.php?page=main#tabs-2' );
-               exit;
+                header ( 'Location: index.php?page=main#tabs-2' );
+                exit;
             } else { ?>
-               <script type="text/javascript">
-                 location.replace("index.php?page=main#tabs-2");
-               </script>
-    <?      }
+            <script type="text/javascript">
+                location.replace("index.php?page=main#tabs-2");
+            </script>
+            <?      }
         }
     }
     if (isset($_POST['edituser'])){
@@ -164,7 +166,7 @@
 
     $multiclan = read_multiclan();
     $multiclan_main = multi_main($multiclan);
-    
+
     foreach($multiclan as $clan){
         $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
         if($multiclan_info[$clan['id']] === FALSE) {
@@ -232,5 +234,4 @@
     //Get top tanks for Tab
     $adm_top_tanks = get_top_tanks_list();
     $tanks_list = get_tanks_list();
-
 ?>

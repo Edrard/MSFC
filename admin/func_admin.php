@@ -514,6 +514,19 @@
             }
         }
     }
+    function cron_file_recreat()
+    {
+        if(file_exists(ROOT_DIR.'/cron.log')) {
+            unlink(ROOT_DIR.'/cron.log');
+        }
+        if(!file_exists(ROOT_DIR.'/cron.log')) {
+            if($fh = fopen(ROOT_DIR.'/cron.log', 'a')){
+                fclose($fh);
+            }
+            chmod(ROOT_DIR.'/cron.log', 0777);
+        }
+    }
+
     function recreat_db()
     {
         global $db,$config;
@@ -527,21 +540,21 @@
         }
         foreach($all_prefix as $t) {
 
-          $sql = "show tables like '".$t['prefix']."%'";
-          $q = $db->prepare($sql);
-          if ($q->execute() == TRUE) {
-              $tables = $q->fetchAll();
-          }else{
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
-          foreach($tables as $tab){
-              $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
-              //echo $sql;
-              $q = $db->prepare($sql);
-              if ($q->execute() != TRUE) {
-                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-              }
-          }
+            $sql = "show tables like '".$t['prefix']."%'";
+            $q = $db->prepare($sql);
+            if ($q->execute() == TRUE) {
+                $tables = $q->fetchAll();
+            }else{
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            foreach($tables as $tab){
+                $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
+                //echo $sql;
+                $q = $db->prepare($sql);
+                if ($q->execute() != TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                }
+            }
 
         }
 
