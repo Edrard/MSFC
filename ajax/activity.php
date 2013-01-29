@@ -7,11 +7,11 @@
     * Began:       2011
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd $
+    * @author      $Author: Edd, Exinaus, Shw  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
+    * @version     $Rev: 2.2.0 $
     *
     */
 ?>
@@ -109,7 +109,7 @@
     } else {
       $cat_4 = 0;
     }
-    /* Если не задано категорий, отображаем первую */
+    /* ???? ?? ?????? ?????????, ?????????? ?????? */
     if($cat_1 == 0 and $cat_2 == 0 and $cat_3 == 0 and $cat_4 == 0) {
       $cat_1 = 1;
     }
@@ -122,7 +122,7 @@
       //1
         //echo '<pre><div align="left">',$date,'<br />';
         //$activity[]
-        /* Поддержка старых реплеев, все старые данные заносим в общую категорию */
+        /* ????????? ?????? ???????, ??? ?????? ?????? ??????? ? ????? ????????? */
         if(isset($val['players']) and $cat_1 == 1) {
           foreach($val['players'] as $name => $count) {
             if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
@@ -131,7 +131,7 @@
             if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
           }
         }
-        /* Первая категория */
+        /* ?????? ????????? */
         if(isset($val['cat_1']) and $cat_1 == 1) {
           foreach($val['cat_1'] as $name => $count) {
             if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
@@ -140,7 +140,7 @@
             if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
           }
         }
-        /* Вторая категория */
+        /* ?????? ????????? */
         if(isset($val['cat_2']) and $cat_2 == 1) {
           foreach($val['cat_2'] as $name => $count) {
             if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
@@ -149,7 +149,7 @@
             if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
           }
         }
-        /* Третья категория */
+        /* ?????? ????????? */
         if(isset($val['cat_3']) and $cat_3 == 1) {
           foreach($val['cat_3'] as $name => $count) {
             if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}
@@ -158,7 +158,7 @@
             if(isset($activity_total[$name])) {$activity_total[$name] += $count;} else {$activity_total[$name] = $count;}
           }
         }
-        /* Четвертая категория */
+        /* ????????? ????????? */
         if(isset($val['cat_4']) and $cat_4 == 1) {
           foreach($val['cat_4'] as $name => $count) {
             if(!isset($activity[$date][$name])) {$activity[$date][$name] = 0;}

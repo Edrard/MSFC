@@ -7,11 +7,11 @@
     * Began:       2011
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd $
+    * @author      $Author: Edd, Exinaus, Shw  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.1.6 $
+    * @version     $Rev: 2.2.0 $
     *
     */
 ?>

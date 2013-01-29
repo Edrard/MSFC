@@ -1,4 +1,4 @@
-Текущая версия 2.1.6
+Текущая версия 2.2.0
 
 Данный програмный продукт Clan Stat распространяеться по лицензии Creative Common Licence: Attribution-Noncommercial-Share Alike 3.0
 Вы вправе:
@@ -46,6 +46,6 @@ php-pdo_mysql
 
 Имеются некоторые ограничения при использовании статистики на програмном продукте Denwer.
 
-После установки продукта, не забудьте выставить права 777 на папки cache/ cache_activity/ и /admin/sql 
+После установки продукта, не забудьте выставить права 777 на папки cache/ и /admin/sql 
 
 Подробную инструкцию по установке вы можете прочесть здесь - https://docs.google.com/document/d/1PWj81jEnCduP538RihEu3tImB18DaamBnyhxWC_bL7U/edit
