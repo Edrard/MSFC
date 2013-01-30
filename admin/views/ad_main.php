@@ -640,7 +640,7 @@
                                 <br><br>
                                 <h3><?=$lang['current_cron'];?></h3>
                                 <?php if(file_exists(ROOT_DIR.'/cron.log') || is_readable(ROOT_DIR.'/cron.log')){ ?>
-                                    <textarea rows="10" cols="145" name="text">
+                                    <textarea rows="10" cols="85" name="text">
                                         <?=file_get_contents(ROOT_DIR.'/cron.log'); ?>
                                     </textarea>
                                     <?php } ?>
