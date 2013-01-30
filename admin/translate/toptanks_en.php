@@ -24,11 +24,11 @@
     $lang['admin_tab_top_order'] = 'Show order';
     $lang['admin_tab_top_shortname'] = 'Short title';
     $lang['admin_tab_top_index'] = 'Tab index';
-    $lang['class']['lightTank'] = 'Light';
-    $lang['class']['mediumTank'] = 'Medium';
-    $lang['class']['AT-SPG'] = 'AT-SPG';
-    $lang['class']['SPG'] = 'SPG';
-    $lang['class']['heavyTank'] = 'Heavy';
+    $lang_s['class']['lightTank'] = 'Light';
+    $lang_s['class']['mediumTank'] = 'Medium';
+    $lang_s['class']['AT-SPG'] = 'AT-SPG';
+    $lang_s['class']['SPG'] = 'SPG';
+    $lang_s['class']['heavyTank'] = 'Heavy';
     $lang['adm_tank_top_submit'] = 'Submit';
     $lang['adm_tank_top_add'] = 'Add (delete) tanks to table';
     $lang['adm_tank_top_add1'] = 'Add';

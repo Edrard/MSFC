@@ -24,11 +24,11 @@
   $lang['admin_tab_top_order'] = 'Порядок отображения';
   $lang['admin_tab_top_shortname'] = 'Короткое название';
   $lang['admin_tab_top_index'] = 'Индекс таба';
-  $lang['class']['lightTank'] = 'ЛТ';
-  $lang['class']['mediumTank'] = 'СТ';
-  $lang['class']['AT-SPG'] = 'ПТ';
-  $lang['class']['SPG'] = 'Сау';
-  $lang['class']['heavyTank'] = 'ТТ';
+  $lang_s['class']['lightTank'] = 'ЛТ';
+  $lang_s['class']['mediumTank'] = 'СТ';
+  $lang_s['class']['AT-SPG'] = 'ПТ';
+  $lang_s['class']['SPG'] = 'Сау';
+  $lang_s['class']['heavyTank'] = 'ТТ';
   $lang['adm_tank_top_submit'] = 'Отправить';
   $lang['adm_tank_top_add'] = 'Добавить (удалить) танки в таблицу';
   $lang['adm_tank_top_add1'] = 'Добавить';

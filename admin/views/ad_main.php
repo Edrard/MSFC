@@ -133,7 +133,7 @@
                                             <? foreach($adm_top_tanks as $adm_tname => $val) { ?>
                                                 <tr>
                                                     <td align="center"><?=$adm_tname?></td>
-                                                    <td align="center"><?=$lang['class'][$val['type']]?></td>
+                                                    <td align="center"><?=$lang_s['class'][$val['type']]?></td>
                                                     <td align="center"><?=$val['lvl']?></td>
                                                     <td align="center"><div class="hidden"><?=$val['order']?></div><input type="text" value="<?=$val['order']?>" name="Array[<?=$val['title']?>][order]" style="width: 30px;"></td>
                                                     <td align="center"><input type="checkbox" <?=$val['show']?> name="Array[<?=$val['title']?>][show]"></td>
@@ -156,9 +156,9 @@
                                     <select name="adm_top_tanks_lvl"><? for($i = 10; $i >= 1; $i--){?><option value="<?=$i?>"><?=$i?></option><?}?></select>
                                     <?=$lang['adm_tank_top_add4'];?>
                                     <select name="adm_top_tanks_type">
-                                        <? foreach($lang['class'] as $name => $val) { ?>
+                                        <? foreach($lang_s['class'] as $name => $val) { ?>
                                             <option value="<?=$name?>"><?=$val?></option>
-                                            <? } ?>
+                                        <? } ?>
                                     </select>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
                                     <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
