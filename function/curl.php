@@ -65,7 +65,7 @@
         * @param $key int, id of session to execute
         * @return array of content if CURLOPT_RETURNTRANSFER is set
         */
-        public function execSingle( )
+        public function execSingle( $id )
         {
             if( $this->retry > 0 )
             {
@@ -74,16 +74,19 @@
                 while( $retry >= 0 && ( $code[0] == 0 || $code[0] >= 400 ) )
                 {
                     foreach ( $this->sessions as $i => $url ){
-                        $res = curl_exec( $this->sessions[$i] );
-                        $code = $this->info( $i, CURLINFO_HTTP_CODE );
-
+                        if($id == $i){
+                            $res = curl_exec( $this->sessions[$i] );
+                            $code = $this->info( $i, CURLINFO_HTTP_CODE );
+                        }
                         $retry--;
                     }
                 }
             }
             else
                 foreach ( $this->sessions as $i => $url ){
-                    $res = curl_exec( $this->sessions[$i] );
+                    if($id == $i){
+                        $res = curl_exec( $this->sessions[$i] );
+                    }
             }
 
             return $res;
