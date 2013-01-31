@@ -109,7 +109,7 @@
     $lang['error_1'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
     $lang['error_2'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
     $lang['error_3'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site"; 
-    $lang = 'Type';
+    $lang['type'] = 'Type';
     $lang['title_name'] = 'Name';
     $lang['map'] = 'Map';
     $lang['prime_time'] = 'Prime time';
@@ -356,7 +356,7 @@
     $lang['mediumTank'] = 'mt';
     $lang['heavyTank'] = 'ht';
 
-    $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it in the database remains. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
+    $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it remains in the database. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
     $lang['days'] = ' days';    
     $lang['no_province'] = 'The clan owns no provinces on the Global Map.';
     $lang['no_war'] = 'The clan has no scheduled battles.';
