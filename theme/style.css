@@ -113,23 +113,23 @@
 }
 
 .col_black {
-    color: black;
+    color: #FF8000;
 }
 
 .col_black a:link {
-    color: black;
+    color: #FF8000;
     text-decoration:none;
 }
 .col_black a:visited {
-    color: black;
+    color: #FF8000;
     text-decoration:none;
 }
 .col_black a:hover {
-    color: black;
+    color: #FF8000;
     text-decoration:none;
 }
 .col_black a:active {
-    color: black;
+    color: #FF8000;
     text-decoration:none;
 }
 

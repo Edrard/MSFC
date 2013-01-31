@@ -121,10 +121,10 @@
                        $color = 'col_green';
                        break;
                        case ($diff_date <= 14):
-                       $color = 'col_red';
+                       $color = 'col_grey';
                        break;
                        case ($diff_date <= 30):
-                       $color = 'col_grey';
+                       $color = 'col_red';
                        break;
                        default:
                        $color = 'col_black';
