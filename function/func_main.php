@@ -566,15 +566,15 @@
         }
     }
     /***** Exinaus *****/
-    function get_top_tanks_tab($index)
+    function get_available_tanks()
     {
         global $db;
         $top_tanks=array();
 
-        $sql='SELECT tt.lvl, tt.type, tt.shortname, t.tank
+        $sql='SELECT tt.lvl, tt.type, tt.shortname, t.tank, tt.index
         FROM `top_tanks` tt, `tanks` t
-        WHERE t.title = tt.title AND tt.show = "1" AND tt.index = "'.$index.'"
-        ORDER BY tt.order ASC, t.tank ASC;';
+        WHERE t.title = tt.title AND tt.show = "1"
+        ORDER BY tt.index ASC, tt.order ASC, t.tank ASC;';
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $top_tanks_unsorted = $q->fetchAll();
@@ -586,10 +586,38 @@
             $top_tanks[$val['tank']]['lvl'] = $val['lvl'];
             $top_tanks[$val['tank']]['type'] = $val['type'];
             $top_tanks[$val['tank']]['short'] = isset($val['shortname']) ? $val['shortname'] : '';
+            $top_tanks[$val['tank']]['index'] = $val['index'];
         }
 
         return $top_tanks;
     }
+    function get_available_tanks_index()
+    {
+        global $db;
+        $top_tanks=array();
+
+        $sql='SELECT DISTINCT tt.index
+        FROM `top_tanks` tt
+        WHERE tt.show = "1"
+        ORDER BY tt.index ASC;';
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $top_tanks_unsorted = $q->fetchAll();
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+
+        $count = 0;
+
+        foreach($top_tanks_unsorted as $val) {
+            $top_tanks['index'][] = $val['index'];
+            $count++;
+        }
+        $top_tanks['count'] = $count;
+
+        return $top_tanks;
+    }
+    /**** end ****/
     function roster_num($var)
     {
         $data['recruit'] = '8';

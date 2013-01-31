@@ -230,8 +230,25 @@
         $cache_activity->clear_all($exclude_list);
         unset($exclude_list,$cache_activity,$left_days);
     }
-
+    //Save available tanks index's
+    if (isset($_POST['available_tanks_add_index'])){
+        $index_list = array();
+        foreach($_POST['Array']['title'] as $index => $value) {
+          if(isset($value)) {
+            $index_list[$index] = $value;
+          } else {
+            $index_list[$index] = $index;
+          }
+        }
+        $cache->clear('available_tanks_'.$config['clan']);
+        $cache->set('available_tanks_'.$config['clan'],$index_list);
+        unset($index_list);
+    }
     //Get top tanks for Tab
     $adm_top_tanks = get_top_tanks_list();
+    $adm_avalTanks = get_available_tanks_index();
+    if($adm_avalTanks['count'] > 1) {
+      $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0);
+    }
     $tanks_list = get_tanks_list();
 ?>

@@ -23,7 +23,7 @@
     $tabs_lang['ru']['ajax_player'] = 'Динамика игрока';
     $tabs_lang['ru']['ajaxstat'] = 'Танковые показатели';
     $tabs_lang['ru']['ajaxtank'] = 'Техника';
-    $tabs_lang['ru']['aval_top_tank'] =  'Наличие танков';
+    $tabs_lang['ru']['available_tanks'] =  'Наличие танков';
     $tabs_lang['ru']['avt'] = 'Приветственное';
     $tabs_lang['ru']['battel'] =  'Боевой опыт'; 
     $tabs_lang['ru']['best'] =  'Лучшие результаты';
@@ -48,7 +48,7 @@
     $tabs_lang['en']['ajaxstat'] = 'Tanks detail';
     $tabs_lang['en']['ajaxtank'] =  'Vehicles';
 
-    $tabs_lang['en']['aval_top_tank'] =  'Presented tanks';
+    $tabs_lang['en']['available_tanks'] =  'Presented tanks';
     $tabs_lang['en']['avt'] = 'Greeting';
     $tabs_lang['en']['battel'] =  'Battle Experience';  
     $tabs_lang['en']['best'] =  'Best results';

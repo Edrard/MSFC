@@ -14,7 +14,8 @@
     * @version     $Rev: 2.2.0 $
     *
     */
-
+?>
+<?php
     $lang['admin_tab_top_tanks'] = 'Availability of tanks';
     $lang['admin_tab_top_tanks_name'] = 'Title';
     $lang['admin_tab_top_class'] = 'Type';
@@ -36,4 +37,5 @@
     $lang['adm_tank_top_add4'] = ', Type';
     $lang['adm_tank_top_add5'] = 'If selected tanks already in table, only missing tanks will be added (if any)';
     $lang['adm_tank_top_add6'] = 'Before adding vehicles, be sure to run the module, to collecte data of the players';
+    $lang['adm_tank_top_index_add'] = 'Change displayed "Index" names';
 ?>

@@ -248,7 +248,7 @@ INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
 (60, 'Награды', 'medals_all.php', 0, 1, 'all'),
 (110, 'Блокированная техника', 'gk.php', 0, 1, 'all'),
 (30, 'Лучшие результаты', 'best.php', 0, 1, 'all'),
-(90, 'Наличие танков', 'aval_top_tank.php', 0, 1, 'all'),
+(90, 'Наличие танков', 'available_tanks.php', 0, 1, 'all'),
 (100, 'Боевой опыт', 'battel.php', 0, 1, 'all'),
 (80, 'Техника', 'ajaxtank.php', 0, 1, 'all'),
 (10, 'Активность общая', 'active.php', 0, 1, 'all'),

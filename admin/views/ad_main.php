@@ -165,6 +165,15 @@
                                     <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
                                 </form>
                                 <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                            <?php if($adm_avalTanks['count'] > 1) { ?>
+                            <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
+                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                              <?php foreach($adm_avalTanks['index'] as $index){ ?>
+                                 <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
+                              <?php } ?>
+                            <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
+                            </form>
+                            <?php } ?>
                         </div>
                     </div>
                     <div id="tabs-1">
