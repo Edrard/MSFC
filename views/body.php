@@ -59,7 +59,7 @@
     <table style="width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
             <tr style="height: 100px;" valign="center">
-                <td id="pane" width="16px" class="ui-state-default" onclick="magic2(this)" rowspan="2" >
+                <td id="pane" width="16px" class="ui-state-default" onclick="magic2(this)" rowspan="2" style="background-image: none;">
                     <div id="chan" style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-w">
                         &nbsp;
                     </div>
