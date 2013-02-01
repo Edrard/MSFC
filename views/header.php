@@ -38,7 +38,7 @@
         $(function() {
             $.extend($.tablesorter.themes.jui, {
 
-                table      : 'ui-widget ui-widget-content', // table classes
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
                 header     : 'ui-widget-header ui-state-default', // header classes
                 footerRow  : '', 
                 footerCells: '', 
@@ -54,7 +54,7 @@
             });
 
             $.extend($.tablesorter.themes.bootstrap, {
-                table      : 'ui-widget ui-widget-content', // table classes
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
                 header     : 'ui-widget-header ui-state-default', // header classes
                 footerRow  : '',
                 footerCells: '',

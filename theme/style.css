@@ -16,6 +16,18 @@
 }
 
 /***** Exinaus ******/
+.table-borders, .table-borders tbody td, .table-borders tfoot th {
+  border: 1px solid #dddddd !important;
+  border-collapse: collapse !important;
+  padding: 1px !important;
+  margin: 0px !important;
+}
+.table-borders thead th {
+  border-bottom: 1px solid #dddddd !important;
+  border-collapse: collapse !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
 .tablesorter-header-inner {
   position: relative;
   padding-right: 0px;
