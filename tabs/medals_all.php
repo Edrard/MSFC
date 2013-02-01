@@ -72,7 +72,9 @@
                 <th><?=$lang['name']; ?></th>
                 <?php foreach($res[$rand_keys]['medals'] as $tmed => $hkey){
                         foreach($hkey as $tm => $column) { ?>
-                        <th align='center' class="{sorter: 'digit'} bb allmedalhide <?=$tmed;?>show" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>><?php echo '<img src=\'./'.$column['img'].'\' /><br>'.$column['title']; ?></th>
+                        <th align='center' valign='top' class="{sorter: 'digit'} allmedalhide <?=$tmed;?>show" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>>
+                            <?php echo '<img src="'.$column['img'].'" style="width:60px;" /><br>'.$column['title']; ?>
+                        </th>
                         <?php   }
                     }
                 ?>

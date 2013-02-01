@@ -261,13 +261,13 @@
             $medn['medalCrucialContribution']['type'] = 'epic';
             $medn['medalBrothersInArms']['type'] = 'epic';
             $medn['heroesOfRassenay']['type'] = 'epic2';
-            $medn['bombardier']['type'] = 'special';
+            $medn['bombardier']['type'] = 'special2';
 
             $medn['huntsman']['type'] = 'special2';
             $medn['luckyDevil']['type'] = 'special2';
             $medn['ironMan']['type'] = 'special2';
             $medn['sturdy']['type'] = 'special2';
-            $medn['pattonValley']['type'] = 'special';
+            $medn['pattonValley']['type'] = 'special2';
 
             $medn['mechanicEngineer']['type'] = '';
 
