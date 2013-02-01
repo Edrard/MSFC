@@ -83,7 +83,7 @@
                     <?php } ?></td>
                 <td align="right" width="180px">
                     <?php if($logged > 0){ ?>
-                        <table border="0" cellpadding="4" cellspacing="0" class="ui-widget">
+                        <table border="0" cellpadding="4" cellspacing="0" class="ui-widget ui-widget-content">
                             <tbody>
                                 <tr>   
                                     <td><strong><?=$lang['hi'];?> <?=$_COOKIE['user'];?></strong></td>
