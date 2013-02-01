@@ -80,7 +80,6 @@
                     </ul>
                 </td>
                 <td valign="top">
-                    <div>
                     <div id="tabs-7">
                         <div align="center">
                             <?php if (!empty($tanks_list)){?>
@@ -285,15 +284,16 @@
                                         <tr>
                                             <td><?=$lang['admin_themes'];?></td>
                                             <td>
-                                                <?php 
+                                                <?php
                                                     if (count($dir_val)>0) { ?>
                                                     <select name="theme">
                                                     <?php foreach ($dir_val as $val){
                                                         if ($val<>'style.css') {?>
 
                                                         <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
-                                                        <?php }  }
-                                            }?> </td>
+                                                        <?php }  } ?>
+                                                    </select>
+                                                <?php }?> </td>
                                         </tr>
                                     </tbody>
                                 </table>
