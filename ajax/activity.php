@@ -186,6 +186,22 @@
 
         $(document).ready(function()
         {
+            $.extend($.tablesorter.themes.jui, {
+
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
+                header     : 'ui-widget-header ui-state-default', // header classes
+                footerRow  : '',
+                footerCells: '',
+                icons      : 'ui-icon', // icon class added to the <i> in the header
+                sortNone   : 'ui-icon-triangle-2-n-s',
+                sortAsc    : 'ui-icon-triangle-1-n',
+                sortDesc   : 'ui-icon-triangle-1-s',
+                active     : 'ui-state-active', // applied when column is sorted
+                hover      : 'ui-state-hover',  // hover class
+                filterRow  : '',
+                even       : 'ui-widget-content', // odd row zebra striping
+                odd        : 'ui-priority-secondary'   // even row zebra striping
+            });
             $("#activity_table").tablesorter({
                headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
                widgets: ["uitheme", "zebra"],
