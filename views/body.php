@@ -81,9 +81,9 @@
                         ?> 
                         <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
                     <?php } ?></td>
-                <td>
+                <td align="right" width="180px">
                     <?php if($logged > 0){ ?>
-                        <table border="0" cellpadding="4" cellspacing="0">
+                        <table border="0" cellpadding="4" cellspacing="0" class="ui-widget">
                             <tbody>
                                 <tr>   
                                     <td><strong><?=$lang['hi'];?> <?=$_COOKIE['user'];?></strong></td>
@@ -114,7 +114,7 @@
                         <div id="login_dialog" class="ui-dialog hidden" style="border: 1px solid; border-collapse: collapse;">
                             <div><?php include(ROOT_DIR.'/login.php'); ?></div>
                         </div>
-                        <div>
+                        <div class="ui-widget">
                             <a href="#" id="login_opener"><?=$lang['login'];?></a>
                         </div>
                         <?php  } ?>
