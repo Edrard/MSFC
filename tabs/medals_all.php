@@ -51,7 +51,7 @@
         });
     });
 </script>
-<div align="center">
+<div align="center" style="overflow-x: scroll; max-width: 1000px;">
     <?=$lang['select_medals'];?><br /><br />
     <form>
         <div id="triggermedals" align="center">
