@@ -59,6 +59,7 @@
                     $("#activity_result").html(msg).show();
                 }
             });
+            return false;
         });
         $.ajax({
             cache: true,
@@ -129,7 +130,7 @@
 <? } ?>
 });
 </script>
-<div align="center">
+<div align="center" style="overflow-x: scroll; max-width: 1000px;">
     <form method="post" enctype="multipart/form-data">
     <br />
     <?=$lang['activity_1'];?>

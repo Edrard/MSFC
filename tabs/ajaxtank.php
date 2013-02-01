@@ -41,6 +41,7 @@
                     $("#result").html(msg).show();
                 }
             });
+            return false;
         });
         $.ajax({
             cache: true,
@@ -59,7 +60,7 @@
         });
     });
 </script>
-<div align="center">
+<div align="center" style="overflow-x: scroll; max-width: 1000px;">
     <br>
     <?=$lang['alltanks_choise_tank']?>
 
@@ -82,7 +83,7 @@
             <option value="<?=$val['lvl']?>"><?=$val['lvl']?></option>
             <?php } ?>
     </select>
-    <a href="#" id="change_button_tanks"><?=$lang['select_show'];?></a>
+    <a href="#tabs-<?php echo $key; ?>" id="change_button_tanks"><?=$lang['select_show'];?></a>
     <br>
     <div id="result" ></div>  
 </div>
