@@ -159,27 +159,3 @@ table .tablesorter { margin: 20px 0 0 0;}
 .ui-tabs .ui-tabs-nav {padding: 0;!important;}
 .ui-tabs .ui-tabs-nav li a { float: none !important; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {text-align:right;}
-
-.tr_cell
-{
-    display: table-row;
-    vertical-align: inherit;
-    border-collapse: separate;
-    border-spacing: 2px;
-    text-indent: 0;
-    width: auto;
-}
-
-.td_cell {
-    display: table-cell;
-    padding-bottom: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
-    padding-top: 1px;
-    text-align: inherit;
-    vertical-align: inherit;
-    border-collapse: separate;
-    border-spacing: 2px;
-    text-indent: 0;
-    width: auto;
-}

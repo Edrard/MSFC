@@ -59,7 +59,7 @@
     <table style="width: 100%;" cellpadding="4" cellspacing="0">
         <tbody>
             <tr style="height: 100px;" valign="center">
-                <td id="pane" width="16px" class="ui-state-default ui-corner-all" onclick="magic2(this)" rowspan="2" >
+                <td id="pane" width="16px" class="ui-state-default" onclick="magic2(this)" rowspan="2" >
                     <div id="chan" style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-w">
                         &nbsp;
                     </div>
@@ -171,7 +171,7 @@
             ?>
             <tr>
                 <td valign="top" colspan="6">
-                    <div align="center" class="ui-widget ui-widget-content ui-corner-all">
+                    <div align="center" class="ui-widget ui-widget-content ui-corner-bottom">
                         © 2011-<?=date('Y') ?> <a href="http://wot-news.com/">Wot-news.com</a> <?=$lang['version']; ?> <?php echo VER; ?><br>
                         <?php $end_time = microtime(true); echo $lang['ex_time'].' - '.round($end_time - $begin_time,4).' '.$lang['sec']; ?><br>
                         <?php if(isset($memory_usage)){echo $lang['memory'].' '.$memory_usage;} ?>
