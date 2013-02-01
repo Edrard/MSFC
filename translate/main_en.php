@@ -226,6 +226,7 @@
     $lang['major'] = 'Major Achievements';
     $lang['hero'] = 'Battle Achievements';
     $lang['expert'] = 'Expert';
+    $lang['mechanic'] = 'Technical Engineer';
     $lang['achiv'] = 'Achievements';
     $lang['title_medalCarius'] = 'Awarded for the destruction of enemy tanks and self-propelled guns in four classes:Class IV - 10 vehicles Class III - 100 vehicles Class II - 1,000 vehicles Class I - 10,000 vehicles';
     $lang['title_medalHalonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.'; 
@@ -321,12 +322,6 @@
     $lang['players_best_results'] = 'The best overall results';
     $lang['players_best_medals'] = 'The best results for the awards';
 
-    /*    $lang['heavyTank'] = 'Heavy tanks';
-    $lang['mediumTank'] = 'Medium tanks';
-    $lang['lightTank'] = 'Light tanks';
-    $lang['AT-SPG'] = 'AT-SPG';
-    $lang['SPG'] = 'SPG';
-    */    
     $lang['all_types'] = 'All types';
     $lang['all_lvls'] = 'All levels';
     $lang['select_tanks'] = 'Pick tanks to show:';
@@ -371,4 +366,5 @@
     $lang['leader'] = 'Leader'; 
     $lang['vice_leader'] = 'Vice leader';
     $lang['treasurer'] = 'Treasurer';
+
 ?>

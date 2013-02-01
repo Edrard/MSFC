@@ -49,6 +49,10 @@
             $(".allmedalhide").hide();
             $(".expertshow").show();
         });
+        $("#show_mechanic").click(function() {
+            $(".allmedalhide").hide();
+            $(".mechanicshow").show();
+        });
     });
 </script>
 <div align="center" style="overflow-x: scroll; max-width: 1000px;">
@@ -59,31 +63,33 @@
             <input type="radio" id="show_major" name="triggermedals" /><label for="show_major"><?=$lang['major'];?></label>
             <input type="radio" id="show_epic" name="triggermedals"  /><label for="show_epic"><?=$lang['epic'];?> - 1</label>
             <input type="radio" id="show_epic2" name="triggermedals" /><label for="show_epic2"><?=$lang['epic'];?> - 2</label>
+            <br />
             <input type="radio" id="show_special" name="triggermedals" /><label for="show_special"><?=$lang['special'];?> - 1</label>
             <input type="radio" id="show_special2" name="triggermedals" /><label for="show_special2"><?=$lang['special'];?> - 2</label>
             <input type="radio" id="show_expert" name="triggermedals" /><label for="show_expert"><?=$lang['expert'];?></label>
+            <input type="radio" id="show_mechanic" name="triggermedals" /><label for="show_mechanic"><?=$lang['mechanic'];?></label>
         </div>
     </form>
 
     <br />
     <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2">
-        <thead> 
+        <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>
                 <?php foreach($res[$rand_keys]['medals'] as $tmed => $hkey){
                         foreach($hkey as $tm => $column) { ?>
-                        <th align='center' valign='top' class="{sorter: 'digit'} allmedalhide <?=$tmed;?>show" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>>
+                        <th align='center' valign='top' class="{sorter: 'digit'} bb allmedalhide <?=$tmed;?>show" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>>
                             <?php echo '<img src="'.$column['img'].'" style="width:60px;" /><br>'.$column['title']; ?>
                         </th>
                         <?php   }
                     }
                 ?>
-            </tr>  
+            </tr>
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
-                <tr> 
-                    <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
+                <tr>
+                    <td><a href="<?php echo $config['base'].$name.'/'; ?>"
                         target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['medals'] as $tmed => $tm) {
                             foreach($tm as $hkey => $result) {
@@ -102,14 +108,14 @@
                                         @$result['value'] = '0 ('.$result['max'].' <span style="color:red;">**</span>)';
                                     }
                                 }
-                                if($tmed == 'expert'){
+                                if($tmed == 'expert' or $tmed == 'mechanic'){
                                     $num_n = 0;
                                     if($result['value'] == 1){
                                         $num_n = 1;
                                         $result['value'] = '<img src="./images/cgreen.png" />';
                                     }else{
                                         $result['value'] = '';
-                                    } 
+                                    }
                                 ?>
                                 <td align='center' class="allmedalhide <?=$tmed;?>show"><span style="display: none;"><?php echo $num_n; ?></span><?php echo $result['value']; ?></td>
                                 <?php    

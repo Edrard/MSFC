@@ -358,12 +358,12 @@
         $medn[$tename.'_uk']['type'] = 'expert';
         $medn[$tename.'_germany']['type'] = 'expert';
 
-        $medn[$mename.'_usa']['type'] = 'expert';
-        $medn[$mename.'_france']['type'] = 'expert';
-        $medn[$mename.'_ussr']['type'] = 'expert';
-        $medn[$mename.'_china']['type'] = 'expert';
-        $medn[$mename.'_uk']['type'] = 'expert';
-        $medn[$mename.'_germany']['type'] = 'expert';
+        $medn[$mename.'_usa']['type'] = 'mechanic';
+        $medn[$mename.'_france']['type'] = 'mechanic';
+        $medn[$mename.'_ussr']['type'] = 'mechanic';
+        $medn[$mename.'_china']['type'] = 'mechanic';
+        $medn[$mename.'_uk']['type'] = 'mechanic';
+        $medn[$mename.'_germany']['type'] = 'mechanic';
 
         $medn['medalCarius']['type'] = 'major';
         $medn['medalHalonen']['type'] = 'epic';
@@ -371,7 +371,7 @@
         $medn['medalFadin']['type'] = 'epic';
         $medn['armorPiercer']['type'] = 'special';
         $medn['medalEkins']['type'] = 'major';
-        $medn['mousebane']['type'] = 'special';
+        $medn['mousebane']['type'] = 'special2';
         $medn['medalKay']['type'] = 'major';
         $medn['defender']['type'] = 'hero';
         $medn['medalLeClerc']['type'] = 'major';
@@ -388,7 +388,7 @@
         $medn['medalBoelter']['type'] = 'epic';
         $medn['medalBurda']['type'] = 'epic';
         $medn['scout']['type'] = 'hero';
-        $medn['beasthunter']['type'] = 'special';
+        $medn['beasthunter']['type'] = 'special2';
         $medn['kamikaze']['type'] = 'special';
         $medn['raider']['type'] = 'special';
         $medn['medalOskin']['type'] = 'epic';
@@ -400,7 +400,7 @@
         $medn['tankExpert']['type'] = 'expert';
         $medn['diehard']['type'] = 'special';
         $medn['medalKnispel']['type'] =  'major';
-        $medn['sinai']['type'] = 'special';
+        $medn['sinai']['type'] = 'special2';
 
         $medn['evileye']['type'] = 'hero';
         $medn['medalDeLanglade']['type'] = 'epic2';
@@ -416,7 +416,7 @@
         $medn['medalCrucialContribution']['type'] = 'epic';
         $medn['medalBrothersInArms']['type'] = 'epic';
         $medn['heroesOfRassenay']['type'] = 'epic2';
-        $medn['bombardier']['type'] = 'special2';
+        $medn['bombardier']['type'] = 'special';
 
         $medn['huntsman']['type'] = 'special2';
         $medn['luckyDevil']['type'] = 'special2';
