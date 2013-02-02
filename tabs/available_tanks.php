@@ -47,7 +47,7 @@ echo'  });
             <tr>
                 <th><?php echo $lang['name']; ?></th>
                 <?php foreach($topTanki as $column => $val){ ?>
-                    <th align='center' class="atanks_hide atanks_<?=$val['index'];?>" style="min-width: 30px;"><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
+                    <th align='center' class="{sorter: 'digit'} atanks_hide atanks_<?=$val['index'];?>" style="min-width: 30px;"><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
                 <?php } ?>
                 <?php foreach($avalTanks['index'] as $index){ ?>
                     <th class="atanks_hide atanks_<?=$index;?>" align='center' style="min-width: 30px;"><?=$lang['toptank_1']?></th>
@@ -60,11 +60,13 @@ echo'  });
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($topTanki as $tank => $stat){ ?>
                         <td align='center' class="atanks_hide atanks_<?=$stat['index'];?>" style='padding: 0px !important; vertical-align: middle;'>
-                        <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0) { echo '<img src="./images/yes.png">';
-                         @$countTanks[$tank] +=1; @$x[$stat['index']]++; @$y[$stat['index']]++;
-                          if(isset($blocked[$name][$tank])) {
-                            echo '<img src="./images/no2.png">';
-                          }
+                        <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0)
+                        {
+                          echo '<span style="display: none;">1</span><img src="./images/yes.png">';
+                          @$countTanks[$tank] +=1; @$x[$stat['index']]++; @$y[$stat['index']]++;
+                          if(isset($blocked[$name][$tank])) { echo '<img src="./images/no2.png">'; }
+                        }  else {
+                          echo '<span style="display: none;">0</span>';
                         } ?>
                         </td>
                         <?php } ?>
