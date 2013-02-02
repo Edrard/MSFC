@@ -18,7 +18,7 @@
 <?php
   $lang['overall_eff_table'] = '
 
-  	<table width="400" cellspacing="0" cellpadding="2" border="0">
+  	<table width="400" cellspacing="0" cellpadding="2" border="0" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
 	<tr>
 	  <td colspan="2" align="center"><strong>Table of efficiency rating values</strong></td>
 	</tr>
