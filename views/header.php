@@ -179,7 +179,30 @@
 
 
         };
+        function is_numeric(input){
+          return typeof(input)=='number';
+        };
+        function check_Width(input, element) {
+          var windowWidth = $(window).width();
+          var menuWidth =   $("td#tohide2").width();
+          var tohideWidth = input.width();
+          var resultWidth = 0;
+          var showWidth =   0;
 
+          if(is_numeric(menuWidth) && menuWidth > 250) {
+            menuWidth = 1;
+          }
+
+          if(is_numeric(windowWidth) && is_numeric(tohideWidth) && is_numeric(menuWidth)){
+            resultWidth = windowWidth - tohideWidth - menuWidth - 50;
+            if (resultWidth <= 0) {
+              showWidth = windowWidth - menuWidth - 50;
+              element.css({'overflow-x': 'scroll', 'max-width': showWidth+'px'});
+            } else {
+              element.css({'overflow-x': 'visible', 'max-width': 'auto'});
+            }
+          }
+        };
         $(function() {
             $("#menu").menu();
             $("#menu").menu( "option", "role", "menu" );

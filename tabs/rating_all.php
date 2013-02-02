@@ -15,19 +15,22 @@
     *
     */
 ?>
-<div align="center">
+<div align="center" id="rating_width">
 <script>
 $(document).ready(function() {
   $( "#triggerrating" ).buttonset();
     $(".ratingplace").hide();
+    check_Width($("table#rating_all"), $("div#rating_width"));
     $("#change_ratingplace").click(function() {
       $(".ratingvalue").hide();
       $(".ratingplace").show();
+      check_Width($("table#rating_all"), $("div#rating_width"));
       return false;
     });
     $("#change_ratingvalue").click(function() {
       $(".ratingplace").hide();
       $(".ratingvalue").show();
+      check_Width($("table#rating_all"), $("div#rating_width"));
       return false;
     });
 });

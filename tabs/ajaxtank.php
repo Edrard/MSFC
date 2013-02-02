@@ -39,6 +39,7 @@
                 url: "./ajax/tanks.php",
                 success: function(msg){
                     $("#result").html(msg).show();
+                    check_Width($("div#result"), $("div#ajax_tanks_width"));
                 }
             });
             return false;
@@ -56,11 +57,12 @@
             url: "./ajax/tanks.php",
             success: function(msg){
                 $("#result").html(msg).show();
+                check_Width($("div#result"), $("div#ajax_tanks_width"));
             }
         });
     });
 </script>
-<div align="center" style="overflow-x: scroll; max-width: 1000px;">
+<div align="center" id="ajax_tanks_width">
     <br>
     <?=$lang['alltanks_choise_tank']?>
 

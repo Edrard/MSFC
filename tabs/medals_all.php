@@ -20,42 +20,59 @@
         $(".allmedalhide").hide();
         $(".heroshow").show();
         $("#triggermedals").buttonset();
+        check_Width($("table#all_medals_stat"), $("div#medals_width"));
 
         $("#show_hero").click(function() {
             $(".allmedalhide").hide();
             $(".heroshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_major").click(function() {
             $(".allmedalhide").hide();
             $(".majorshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_epic").click(function() {
             $(".allmedalhide").hide();
             $(".epicshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_epic2").click(function() {
             $(".allmedalhide").hide();
             $(".epic2show").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_special").click(function() {
             $(".allmedalhide").hide();
             $(".specialshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_special2").click(function() {
             $(".allmedalhide").hide();
             $(".special2show").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_expert").click(function() {
             $(".allmedalhide").hide();
             $(".expertshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
         $("#show_mechanic").click(function() {
             $(".allmedalhide").hide();
             $(".mechanicshow").show();
+            check_Width($("table#all_medals_stat"), $("div#medals_width"));
+            return false;
         });
     });
 </script>
-<div align="center" style="overflow-x: scroll; max-width: 1000px;">
+<div align="center" id="medals_width">
     <?=$lang['select_medals'];?><br /><br />
     <form>
         <div id="triggermedals" align="center">

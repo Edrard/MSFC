@@ -27,6 +27,7 @@ $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("
 <script type="text/javascript">
 $(document).ready(function() {
 $('.gksubmit').button();
+check_Width($("table#blocked"), $("div#blocked_tanks_width"));
 });
 </script>
 <div class="num" align="left">
@@ -77,7 +78,7 @@ $('.gksubmit').button();
 </div>
 <? } ?>
 </div>
-   <div align="center">
+   <div align="center" id="blocked_tanks_width">
    <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
       <table id="blocked" cellspacing="1" width="100%">
       <thead>

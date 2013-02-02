@@ -57,6 +57,7 @@
                 url: "./ajax/activity.php",
                 success: function(msg){
                     $("#activity_result").html(msg).show();
+                    check_Width($("table#activity_table"), $("div#ajax_activity_width"));
                 }
             });
             return false;
@@ -79,6 +80,7 @@
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
+                check_Width($("table#activity_table"), $("div#ajax_activity_width"));
             }
         });
         $("#activity_settings_b").button({
@@ -130,7 +132,7 @@
 <? } ?>
 });
 </script>
-<div align="center" style="overflow-x: scroll; max-width: 1000px;">
+<div align="center" id="ajax_activity_width">
     <form method="post" enctype="multipart/form-data">
     <br />
     <?=$lang['activity_1'];?>
