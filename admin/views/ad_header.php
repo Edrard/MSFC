@@ -15,10 +15,28 @@
     *
     */
 ?>
-    <?php
-    include_once(ROOT_DIR.'/js/msfc.js');
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?=$lang['admin_title']; ?></title>
+    <?php if (!isset($config['theme'])) {
+        $config['theme'] = 'ui-lightness'; } ?>
+    <link rel="stylesheet" href="../theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="../theme/style.css" type="text/css" media="print, projection, screen" />
 
-    if(isset($current_user)){ ?>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="../js/jquery.tablesorter.widgets.js"></script>
+    <script type="text/javascript" src="../js/jquery.ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
+    <?php if ($config['lang'] == 'ru') { ?>
+        <script type="text/javascript" src="../js/jquery.ui.ru.js"></script>
+        <?php }; ?>
+    <script type="text/javascript" src="../js/jquery.vticker.js"></script>
+
+    <?php if(isset($current_user)){ ?>
         <script type="text/javascript" id="js">
             $(document).ready(function() 
                 {  
@@ -31,9 +49,9 @@
                     <?php } ?>
             });
         </script>
-    <?php }  ?>
+        <?php    }  ?>
 
-    <script type="text/javascript" id="js">
+    <script type="text/javascript" id="js">     
         $(function() {
             <?php if(isset($_GET['multi'])){ ?>
                 $("#iserver").prop('disabled', true);
@@ -41,6 +59,38 @@
                 $("#ccontrol").hide();
                 $("#dccontrol").hide();
                 <?php } ?>
+            $.extend($.tablesorter.themes.jui, {
+
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
+                header     : 'ui-widget-header ui-state-default', // header classes
+                footerRow  : '', 
+                footerCells: '', 
+                icons      : 'ui-icon', // icon class added to the <i> in the header 
+                sortNone   : 'ui-icon-triangle-2-n-s',
+                sortAsc    : 'ui-icon-triangle-1-n',
+                sortDesc   : 'ui-icon-triangle-1-s',
+                active     : 'ui-state-active', // applied when column is sorted
+                hover      : 'ui-state-hover',  // hover class 
+                filterRow  : '', 
+                even       : 'ui-widget-content', // odd row zebra striping
+                odd        : 'ui-priority-secondary'   // even row zebra striping
+            });
+
+            $.extend($.tablesorter.themes.bootstrap, {
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
+                header     : 'ui-widget-header ui-state-default', // header classes
+                footerRow  : '', 
+                footerCells: '', 
+                icons      : '', // icon class added to the <i> in the header
+                sortNone   : '',
+                sortAsc    : '',
+                sortDesc   : '',
+                active     : '', // applied when column is sorted
+                hover      : '',  // hover class
+                filterRow  : '', 
+                even       : 'ui-widget-content', // odd row zebra striping
+                odd        : 'ui-priority-secondary'   // even row zebra striping
+            });
         });
         function magic(elem)
         {
@@ -83,6 +133,9 @@
 
                 $("#files").tablesorter({
                     sortList: [[2, 0]],
+                    widthFixed: false,
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
+                    widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'},
                     textExtraction: function(node) {
                         return $(node).find("span.hidden").text();
@@ -90,21 +143,33 @@
                 });
                 $("#users").tablesorter({
                     sortList: [[1, 0]],
+                    widthFixed: false,
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
+                    widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'}
                 });
                 $("#multiclan_table").tablesorter({
                     sortList: [[1, 0]],
+                    widthFixed: false,
+                    headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
+                    widgets: ['uitheme', 'zebra'],
                     widgetOptions: {uitheme : 'jui'}
                 });
                 <?php if(!empty($adm_top_tanks)){ ?>
                     $("#top_tanks").tablesorter({
                         sortList:[[6,0],[3,0]],
+                        widthFixed: false,
+                        headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
+                        widgets: ['uitheme', 'zebra'],
                         widgetOptions: {uitheme : 'jui'}
                     });
                     <?php } ?>
                 <?php if(!empty($tanks_list)){ ?>
                     $("#tanks_list").tablesorter({
                         sortList: [[2, 0]],
+                        widthFixed: false,
+                        headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
+                        widgets: ['uitheme', 'zebra'],
                         widgetOptions: {uitheme : 'jui'},
                         textExtraction: function(node) {
                             return $(node).find("span.hidden").text();
@@ -113,5 +178,6 @@
                     <?php } ?>
         });
     </script>
+
 </head>
 <body>
