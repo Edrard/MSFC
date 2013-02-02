@@ -59,15 +59,8 @@
             include_once(ROOT_DIR.'/translate/'.$files);
         }
     }
+    include_once(ROOT_DIR.'/js/msfc.js');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php if (!isset($config['theme'])) {
-            $config['theme'] = 'ui-lightness'; } ?>
-        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
         <script type="text/javascript">
             var url = 'main.php<?=$sender;?>';
         </script>

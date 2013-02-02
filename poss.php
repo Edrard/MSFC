@@ -63,30 +63,12 @@
         $poss = get_clan_province($config,$config['clan']);
     }
 
-    //include_once(ROOT_DIR.'/views/header.php');
+    include_once(ROOT_DIR.'/js/msfc.js');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php if (!isset($config['theme'])) {
-            $config['theme'] = 'ui-lightness'; } ?>
-        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
-        <script type="text/javascript" src="./js/jquery.js"></script>
-        <script type="text/javascript" src="./js/jquery.metadata.js"></script>
-        <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
-        <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script>        
         <script type="text/javascript" id="js">
            $(document).ready(function()
            {
-               $("#poss").tablesorter({
-                  headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
-                  widgets: ["uitheme", "zebra"],
-                  widthFixed : false,
-                  sortList:[[1,0]],
-                  widgetOptions: {uitheme : "jui"}
-               });
+               $("#poss").tablesorter({ sortList:[[1,0]], widgetOptions: {uitheme : "jui"}});
            });
         </script>
     </head>
