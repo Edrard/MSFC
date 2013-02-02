@@ -15,9 +15,67 @@
     *
     */
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?=$lang['page_title']; ?></title>
+    <?php if (!isset($config['theme'])) {
+        $config['theme'] = 'ui-lightness'; } ?>
+    <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
+    <script type="text/javascript" src="./js/jquery.ui.js"></script>
+    <?php if ($config['lang'] == 'ru') { ?>
+        <script type="text/javascript" src="./js/jquery.ui.ru.js"></script>
+        <?php }; ?>
+    <script type="text/javascript" src="./js/jquery.vticker.js"></script>
+
     <script type="text/javascript" id="js">
+        $(function() {
+            $.extend($.tablesorter.themes.jui, {
+
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
+                header     : 'ui-widget-header ui-state-default', // header classes
+                footerRow  : '',
+                footerCells: '',
+                icons      : 'ui-icon', // icon class added to the <i> in the header
+                sortNone   : 'ui-icon-triangle-2-n-s',
+                sortAsc    : 'ui-icon-triangle-1-n',
+                sortDesc   : 'ui-icon-triangle-1-s',
+                active     : 'ui-state-active', // applied when column is sorted
+                hover      : 'ui-state-hover',  // hover class
+                filterRow  : '',
+                even       : 'ui-widget-content', // odd row zebra striping
+                odd        : 'ui-priority-secondary'   // even row zebra striping
+            });
+
+            $.extend($.tablesorter.themes.bootstrap, {
+                table      : 'ui-widget ui-widget-content table-borders', // table classes
+                header     : 'ui-widget-header ui-state-default', // header classes
+                footerRow  : '',
+                footerCells: '',
+                icons      : '', // icon class added to the <i> in the header
+                sortNone   : '',
+                sortAsc    : '',
+                sortDesc   : '',
+                active     : '', // applied when column is sorted
+                hover      : '',  // hover class
+                filterRow  : '',
+                even       : 'ui-widget-content', // odd row zebra striping
+                odd        : 'ui-priority-secondary'   // even row zebra striping
+            });
+        });
         $(document).ready(function()
             {
+                $.tablesorter.defaults.headerTemplate = '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}';
+                $.tablesorter.defaults.widgets = ['uitheme', 'zebra'];
+                $.tablesorter.defaults.widthFixed = false;
+                $.tablesorter.defaults.sortList = [[0,0]];
+
                 $("#roster").tablesorter({sortList:[[1,0]], widgetOptions: {uitheme : 'jui'}});
 
                 $("#best_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
@@ -61,12 +119,35 @@
                     width: 500,
                     show: "blind",
                     hide: "blind",
-                    modal: true,
-                    position: ['center', 'center']
+                    modal: true
                 });
                 $('#login_opener').click(function() {
                     $("#login_dialog").dialog('open');
                     return false;
+                });
+                $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
+
+                $('.bb[title]').tooltip({
+                    track: false,
+                    delay: 0,
+                    fade: 250,
+                    items: "[title]",
+                    content: function() {
+                        var element = $( this );
+                        if ( element.is( "[title]" ) ) {
+                            return element.attr( "title" );
+                        }
+                    }
+                });
+
+                $('#rotate').vTicker({
+                    speed: 500,
+                    pause: 5000,
+                    showItems: 1,
+                    animation: 'fade',
+                    mousePause: false,
+                    height: 0,
+                    direction: 'down'
                 });
         });
 
@@ -95,6 +176,8 @@
                     $("#chan").addClass("ui-icon-triangle-1-e");
                 }
             }
+
+
         };
         function is_numeric(input){
           return typeof(input)=='number';
