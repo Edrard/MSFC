@@ -32,7 +32,7 @@
     }else{
         unset($new);
         $new = $cache->get('get_last_roster_'.$config['clan'],0);
-        if($new === FALSE) { die('No cahced data'); }  
+        if($new === FALSE or empty($new)) { die('No cahced data'); }
     }
     //Starting geting data
     if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
@@ -47,7 +47,7 @@
         $get = array();
         foreach($roster as $name => $pldata){
             $tmp = $cache->get($name,$config['cache']*3600,ROOT_DIR.'/cache/players/');
-            if($tmp === FALSE){
+            if($tmp === FALSE or empty($tmp)){
                 $get[$name] = $pldata;      
             }else{
                 $res[$name] = $tmp;
@@ -93,12 +93,12 @@
     foreach($multiclan as $clan){
         if($clan['id'] != $config['clan']){
             $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
-            if($multiclan_info[$clan['id']] === FALSE) {
+            if($multiclan_info[$clan['id']] === FALSE or empty($multiclan_info[$clan['id']])) {
                 $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);    
             }
             if(empty($multiclan_info)){
                 $multiclan_info[$clan['id']]['status'] = 'error';
-                $multiclan_info[$clan['id']]['status'] = 'ERROR';
+                $multiclan_info[$clan['id']]['status_code'] = 'ERROR';
             }
             if($multiclan_info[$clan['id']]['status'] == 'ok' &&  $multiclan_info[$clan['id']]['status_code'] == 'NO_ERROR'){
                 $cache->clear('get_last_roster_'.$clan['id']);
