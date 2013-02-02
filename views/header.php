@@ -15,6 +15,9 @@
     *
     */
 ?>
+<?php
+    include_once(ROOT_DIR.'/js/msfc.js');
+?>
     <script type="text/javascript" id="js">
         $(document).ready(function()
             {
