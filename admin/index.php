@@ -123,7 +123,7 @@
                 }
             }
 
-            include_once(ROOT_DIR.'/views/header.php');
+            include_once(LOCAL_DIR.'/views/ad_header.php');
             include_once(LOCAL_DIR.'/views/ad_login.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
             break;
@@ -144,7 +144,7 @@
             //Controller
             include_once(LOCAL_DIR.'/including/ad_main.php');
             //Viewing
-            include_once(ROOT_DIR.'/views/header.php');
+            include_once(LOCAL_DIR.'/views/ad_header.php');
             include_once(LOCAL_DIR.'/views/ad_main.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
             break;
@@ -165,7 +165,7 @@
             //Controller
             include_once(LOCAL_DIR.'/including/ad_install.php');
             //Viewing
-            include_once(ROOT_DIR.'/views/header.php');
+            include_once(LOCAL_DIR.'/views/ad_header.php');
             include_once(LOCAL_DIR.'/views/ad_install.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
             break;

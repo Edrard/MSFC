@@ -184,8 +184,16 @@
                                             <td width="150"><?=$lang['admin_lang'];?></td>
                                             <td>                                                 
                                                 <select name="lang">
-                                                    <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
-                                                    <option value="en" <?php if($config['lang'] == 'en'){ echo 'selected="selected"';} ?>>English</option>
+                                                    <?php if($config['lang'] == 'ru'){?>
+                                                        <option value="ru" selected="selected">Русский</option>
+                                                        <?php }else{ ?>
+                                                        <option value="ru">Русский</option>
+                                                        <?php } ?>
+                                                    <?php if($config['lang'] == 'en'){?>
+                                                        <option value="en" selected="selected">English</option>
+                                                        <?php }else{ ?>
+                                                        <option value="en">English</option>
+                                                        <?php } ?>
                                                 </select><br><?=$lang['admin_change_lang'];?>
                                             </td>
                                         </tr>
@@ -193,9 +201,21 @@
                                             <td><?=$lang['admin_server'];?></td>
                                             <td>                                                 
                                                 <select id="iserver" name="server">
-                                                    <option value="ru" <?php if($config['server'] == 'ru'){ echo 'selected="selected"';} ?>>RU</option>
-                                                    <option value="eu" <?php if($config['server'] == 'eu'){ echo 'selected="selected"';} ?>>EU</option>
-                                                    <option value="us" <?php if($config['server'] == 'us'){ echo 'selected="selected"';} ?>>US</option>
+                                                    <?php if($config['server'] == 'ru'){?>
+                                                        <option value="ru" selected="selected">RU</option>
+                                                        <?php }else{ ?>
+                                                        <option value="ru">RU</option>
+                                                        <?php } ?>
+                                                    <?php if($config['server'] == 'eu'){?>
+                                                        <option value="eu" selected="selected">EU</option>
+                                                        <?php }else{ ?>
+                                                        <option value="eu">EU</option>
+                                                        <?php } ?>
+                                                    <?php if($config['server'] == 'us'){?>
+                                                        <option value="us" selected="selected">US</option>
+                                                        <?php }else{ ?>
+                                                        <option value="us">US</option>
+                                                        <?php } ?>
                                                 </select>
                                             </td>
                                         </tr>
@@ -211,8 +231,16 @@
                                             <td><?=$lang['admin_curl_lib'];?></td>
                                             <td>
                                                 <select name="pars">
-                                                    <option value="curl" <?php if($config['pars'] == 'curl'){ echo 'selected="selected"';} ?>>Curl</option>
-                                                    <option value="mcurl" <?php if($config['pars'] == 'mcurl'){ echo 'selected="selected"';} ?>>MCurl</option>
+                                                    <?php if($config['pars'] == 'curl'){?>
+                                                        <option value="curl" selected="selected">Curl</option>
+                                                        <?php }else{ ?>
+                                                        <option value="curl">Curl</option>
+                                                        <?php } ?>
+                                                    <?php if($config['pars'] == 'mcurl'){?>
+                                                        <option value="mcurl" selected="selected">MCurl</option>
+                                                        <?php }else{ ?>
+                                                        <option value="mcurl">MCurl</option>
+                                                        <?php } ?>
                                                 </select>
                                             </td>
                                         </tr>
@@ -257,16 +285,15 @@
                                             <td><?=$lang['admin_themes'];?></td>
                                             <td>
                                                 <?php
-                                                    if(count($dir_val)>0){
-                                                    $no_include = array('style.css', 'toolight.css', 'toodark.css');
-                                                ?>
+                                                    if (count($dir_val)>0) { ?>
                                                     <select name="theme">
                                                     <?php foreach ($dir_val as $val){
-                                                             if (in_array($val, $no_include)) {?>
-                                                          <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
-                                                    <?php }  } ?>
+                                                        if ($val<>'style.css') {?>
+
+                                                        <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
+                                                        <?php }  } ?>
                                                     </select>
-                                                <?php } ?> </td>
+                                                <?php }?> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -328,9 +355,21 @@
                                                     <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var['file']));?>" type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_name" value="<?=$tab_var['name'];?>" size="40" /><span class="hidden"><?=$tab_var['name'];?></span></td>
                                                     <td align="center">
                                                         <select name="<?=str_replace(".", "_", $tab_var['file']);?>_auth">
-                                                            <option value="all" <?php if($tab_var['auth'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
-                                                            <option value="user" <?php if($tab_var['auth'] == 'user'){ echo 'selected="selected"';} ?>>User</option>
-                                                            <option value="user" <?php if($tab_var['auth'] == 'admin'){ echo 'selected="selected"';} ?>>Admin</option>
+                                                            <?php if($tab_var['auth'] == 'all'){?>
+                                                                <option value="all" selected="selected">All</option>
+                                                                <?php }else{ ?>
+                                                                <option value="all">All</option>
+                                                                <?php } ?>
+                                                            <?php if($tab_var['auth'] == 'user'){?>
+                                                                <option value="user" selected="selected">User</option>
+                                                                <?php }else{ ?>
+                                                                <option value="user">User</option>
+                                                                <?php } ?>
+                                                            <?php if($tab_var['auth'] == 'admin'){?>
+                                                                <option value="admin" selected="selected">Admin</option>
+                                                                <?php }else{ ?>
+                                                                <option value="admin">Admin</option>
+                                                                <?php } ?>
                                                         </select> <span class="hidden"><?=$tab_var['auth'];?></span>
                                                     </td>
                                                     <td align="center">
@@ -495,9 +534,7 @@
                                 <input type="submit" value="<?=$lang['admin_multi_add_new'];?>" name="multiadd"><br />
                             </form>
                             <script>
-                                $("#multiclan").validate();
-                                if ($("#multiclan").valid()) {
-                                  $("#multiclan").submit(function(e) {
+                                $("#multiclan").validator().submit(function(e) {
                                     var form = $(this);
                                     if (!e.isDefaultPrevented()) {
 
@@ -513,8 +550,7 @@
                                         });      
                                         e.preventDefault();
                                     }
-                                  });
-                                }
+                                });  
                             </script>
                             <br><br>
                             <h3><?=$lang['admin_current_calns'];?></h3>
@@ -606,6 +642,7 @@
                                                 <td><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></td>
                                                 <td></td>
                                             </tr>
+
                                         </tbody>
                                     </table>
                                 </form>
