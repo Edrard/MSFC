@@ -48,25 +48,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php if (!isset($config['theme'])) {
                    $config['theme'] = 'ui-lightness'; } ?>
-        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jquery.vticker.js"></script>
-
-    <script>
-        $(document).ready(function()
-        {    
-            $('#rotate').vTicker({
-                speed: 500,
-                pause: 5000,
-                showItems: 1,
-                animation: 'fade',
-                mousePause: false,
-                height: 0,
-                direction: 'down'
-            });
-        });   
-    </script>
+    <script type="text/javascript" src="./js/msfc.shared.js"></script>     
 </head>
 <body>
 <div class="ui-accordion-content ui-widget-content ui-accordion-content-active">

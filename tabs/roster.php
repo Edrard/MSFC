@@ -89,7 +89,7 @@
         </table>
         <? } ?>
     <table id="roster" width="100%" cellspacing="1">
-        <thead> 
+        <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>
                 <th>ID</th> 
@@ -133,7 +133,7 @@
                     } else { $color = 'col_black';}
                 ?>
                 <tr>
-                    <td><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
+                    <td class="<?=$color?>"><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
                             target="_blank"><?=$val['account_name']; ?></a></td>
                     <td><?=$val['account_id']; ?></td>
                     <td><?=$date; ?></td>
@@ -141,7 +141,7 @@
                                        echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24));
                               } else { echo $val['created_at']; }; ?></td>
                     <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $lang[$val['role']]; ?></td>
-                    <td class="<?=$color?>">
+                    <td>
                         <?php if (is_numeric($roster_local_num)){ ?>
                                  <span class="hidden"><?php echo $roster_local_num; ?></span>
                                  <?php echo date('Y.m.d (H:i)',$roster_local_num);

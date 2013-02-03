@@ -288,7 +288,7 @@
                                                     if (count($dir_val)>0) { ?>
                                                     <select name="theme">
                                                     <?php foreach ($dir_val as $val){
-                                                        if ($val<>'style.css') {?>
+                                                        if (substr($val, -4)<>'.css') {?>
 
                                                         <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
                                                         <?php }  } ?>

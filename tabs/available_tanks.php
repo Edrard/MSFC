@@ -78,21 +78,21 @@ echo'  });
         </tbody>
      <tfoot>
       <tr>
-                <th class="ui-widget-header ui-state-default"><?=$lang['toptank_3']?>:</th>
+                <th><?=$lang['toptank_3']?>:</th>
                 <?php foreach($topTanki as $column => $val){ ?>
-                  <th class="ui-widget-header ui-state-default atanks_hide atanks_<?=$val['index'];?>" align="center"><?php echo @$countTanks[$column]; ?></th>
+                  <th class="atanks_hide atanks_<?=$val['index'];?>" align="center"><?php echo @$countTanks[$column]; ?></th>
                 <?php } ?>
                 <?php foreach($avalTanks['index'] as $index){ ?>
-                  <th class="ui-widget-header ui-state-default atanks_hide atanks_<?=$index;?>" align="center"><?php echo isset($y[$index])?$y[$index]:0; ?></th>
+                  <th class="atanks_hide atanks_<?=$index;?>" align="center"><?php echo isset($y[$index])?$y[$index]:0; ?></th>
                 <?php } ?>
       </tr>
             <tr>
-                <th class="ui-widget-header ui-state-default">&nbsp;</th>
+                <th>&nbsp;</th>
                 <?php foreach($topTanki as $column => $val){ ?>
-                  <th class="ui-widget-header ui-state-default atanks_hide atanks_<?=$val['index'];?>" align="center"><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
+                  <th class="atanks_hide atanks_<?=$val['index'];?>" align="center"><?php if($val['short'] != '') {echo $val['short'];} else {echo $column;} ?></th>
                 <?php } ?>
                 <?php foreach($avalTanks['index'] as $index){ ?>
-                  <th class="ui-widget-header ui-state-default atanks_hide atanks_<?=$index;?>" class="ui-widget-header ui-state-default" align="center"><?=$lang['toptank_1']?></th>
+                  <th class="atanks_hide atanks_<?=$index;?>" class="ui-widget-header ui-state-default" align="center"><?=$lang['toptank_1']?></th>
                 <?php } ?>
             </tr>
      </tfoot>
