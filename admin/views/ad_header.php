@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="../js/jquery.tablesorter.widgets.js"></script>
     <script type="text/javascript" src="../js/jquery.ui.js"></script>
-    <script type="text/javascript" src="../js/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
     <?php if ($config['lang'] == 'ru') { ?>
         <script type="text/javascript" src="../js/jquery.ui.ru.js"></script>
         <?php }; ?>
@@ -53,6 +53,15 @@
     <?php } ?>
 
     <script type="text/javascript" id="js">
+        function magic(elem){
+            $(".ui-menu-item").each(function(){
+                if($(this).hasClass("ui-state-active")){
+                     $(this).removeClass("ui-state-active");
+                }
+            });
+            $(elem).parent('li').addClass("ui-state-active");
+            if(elem.id == 'out'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
+        };
         $(document).ready(function() {
             <?php if(isset($_GET['multi'])){ ?>
                 $("#iserver").prop('disabled', true);
@@ -60,7 +69,6 @@
                 $("#ccontrol").hide();
                 $("#dccontrol").hide();
             <?php } ?>
-
             $("#ad_menu").menu();
             $("#adminalltabs").tabs({
                 ajaxOptions: {
@@ -76,13 +84,11 @@
                 <?php foreach($tabs_lang['en'] as $key => $val){ ?>
                     $('#<?=$key;?>php').val('<?=$val?>');
                     <?php } ?>
-                return false;
             });
             $('#loadrus').click(function(){
                 <?php foreach($tabs_lang['ru'] as $key => $val){ ?>
                     $('#<?=$key;?>php').val('<?=$val?>');
                     <?php } ?>
-                return false;
             });
 
             $("#files").tablesorter({
@@ -91,8 +97,8 @@
                     return $(node).find("span.hidden").text();
                 }
             });
-            $("#users").tablesorter({sortList: [[1, 0]]});
-            $("#multiclan_table").tablesorter({ sortList: [[1, 0]] });
+            $("#users").tablesorter();
+            $("#multiclan_table").tablesorter();
 
             <?php if(!empty($adm_top_tanks)){ ?>
                 $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]]});

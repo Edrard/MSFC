@@ -22,7 +22,6 @@
     sort($tanks_lvl);
 ?>
 <script type="text/javascript">
-
     $(document).ready(function(){
         $("#change_button_tanks").button();
         $("#change_button_tanks").click( function() {
@@ -44,22 +43,7 @@
             });
             return false;
         });
-        $.ajax({
-            cache: true,
-            type: "POST",
-            //data: 'type=all&nation=all&lvl=1',
-            data: {
-              type    :  'all',
-              nation  :  'all',
-              lvl     :  1,
-              db_pref : '<?php echo $db->prefix; ?>'
-            },
-            url: "./ajax/tanks.php",
-            success: function(msg){
-                $("#result").html(msg).show();
-                check_Width($("div#result"), $("div#ajax_tanks_width"));
-            }
-        });
+        $("#change_button_tanks").click();
     });
 </script>
 <div align="center" id="ajax_tanks_width">
@@ -82,7 +66,7 @@
     <select id="lvl">
         <option value="all"><?=$lang['alltanks_all']?></option>
         <?php foreach($tanks_lvl as $val){?>
-            <option value="<?=$val['lvl']?>"><?=$val['lvl']?></option>
+            <option value="<?=$val['lvl']?>" <?php if ($val['lvl']=='1') {echo 'selected="selected"';}; ?>><?=$val['lvl']?></option>
             <?php } ?>
     </select>
     <a href="#tabs-<?php echo $key; ?>" id="change_button_tanks"><?=$lang['select_show'];?></a>

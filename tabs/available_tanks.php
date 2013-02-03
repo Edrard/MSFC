@@ -4,13 +4,11 @@ $topTanki = get_available_tanks();
 if(isset($topTanki) and count($topTanki) > 0) {
 $avalTanks = get_available_tanks_index();
 $y = array();
+if($avalTanks['count'] > 1) {
 echo '
 <script type="text/javascript" id="js">
   $(document).ready(function()
-  {
-    $("#available_tanks").tablesorter({widgetOptions: {uitheme : \'jui\'}});
-';
-if($avalTanks['count'] > 1) {
+  {';
   echo '$("#atankstrigger").buttonset();';
   echo '$(".atanks_hide").hide();';
   echo '$(".atanks_1").show();';
@@ -25,10 +23,9 @@ if($avalTanks['count'] > 1) {
   }
 //work code
 $atank_but = $cache->get('available_tanks_'.$config['clan'],0);
-}
 echo'  });
 </script>
-';
+'; }
 ?>
 <div align="center">
 <?php if($avalTanks['count'] > 1) { ?>

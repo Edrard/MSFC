@@ -66,6 +66,7 @@
               $("#msfc7").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
               $("#msfc8").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
               $("#msfc9").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+              $("#available_tanks").tablesorter();
 
               $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
 
@@ -79,24 +80,12 @@
                   hide: "blind",
                   modal: true
               });
+
               $('#login_opener').click(function() {
                   $("#login_dialog").dialog('open');
                   return false;
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
-
-              $('.bb[title]').tooltip({
-                  track: false,
-                  delay: 0,
-                  fade: 250,
-                  items: "[title]",
-                  content: function() {
-                      var element = $( this );
-                      if ( element.is( "[title]" ) ) {
-                          return element.attr( "title" );
-                      }
-                  }
-              });
 
               $("#menu").menu();
               $("#menu").menu( "option", "role", "menu" );
@@ -111,6 +100,16 @@
               $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
               $("tr:last").css("border-bottom", "15px !important");
         });
+
+        function magic(elem){
+           $(".ui-menu-item").each(function(){
+              if($(this).hasClass("ui-state-active")){
+                 $(this).removeClass("ui-state-active");
+              }
+           });
+           $(elem).parent('li').addClass("ui-state-active");
+        };
+
         function magic2(elem)
         {
             elem = document.getElementById('tohide');
