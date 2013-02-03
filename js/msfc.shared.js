@@ -9,6 +9,33 @@ $(document).ready(function() {
       height: 0,
       direction: 'down'
   });
+
+  var temp2 = $(".ui-widget-content").css("background-color");
+  var rgbColors = new Object();
+  var exist = false;
+  if (temp2.substring(0,1) == "#") {
+      rgbColors[0] = parseInt(temp2.substring(1, 3), 16);
+      rgbColors[1] = parseInt(temp2.substring(3, 5), 16);
+      rgbColors[2] = parseInt(temp2.substring(5, 7), 16);
+      exist = true;
+  }
+  if (temp2.substring(0,1) == "r") {
+      var bodycolor = temp2.split(", ");
+      rgbColors[0] = bodycolor[0].replace("rgb(", "");
+      rgbColors[1] = bodycolor[1];
+      rgbColors[2] = bodycolor[2].replace(")","");
+      exist = true;
+  }
+  var altRow = '';
+  if (exist == true) {
+       if ((rgbColors[0] > 224)&&(rgbColors[1] > 224)&&(rgbColors[2] > 224)) {
+        altRow = "light-row";
+      }
+      if ((rgbColors[0] < 17)&&(rgbColors[1] < 17)&&(rgbColors[2] < 17)) {
+        altRow = "dark-row";
+      }
+   }
+  $.tablesorter.defaults.widgetOptions.zebra = [ '' , altRow ];
 });
 /** Общие функции и код **/
 function magic(elem)
@@ -40,7 +67,7 @@ $.extend($.tablesorter.themes.jui, {
     hover      : 'ui-state-hover',  // hover class
     filterRow  : '',
     even       : 'ui-widget-content', // even row zebra striping
-    odd        : ''   // even row zebra striping
+    odd        : 'ui-priority-secondary'   // even row zebra striping
 });
 $.extend($.tablesorter.themes.bootstrap, {
     table      : 'ui-widget ui-widget-content table-borders', // table classes
@@ -57,29 +84,3 @@ $.extend($.tablesorter.themes.bootstrap, {
     even       : 'ui-widget-content', // odd row zebra striping
     odd        : 'ui-priority-secondary'   // even row zebra striping
 });
-var temp2 = $(".ui-widget-content").css("background-color");
-var rgbColors = new Object();
-var exist = false;
-if (temp2.substring(0,1) == "#") {
-    rgbColors[0] = parseInt(temp2.substring(1, 3), 16);
-    rgbColors[1] = parseInt(temp2.substring(3, 5), 16);
-    rgbColors[2] = parseInt(temp2.substring(5, 7), 16);
-    exist = true;
-}
-if (temp2.substring(0,1) == "r") {
-    var bodycolor = temp2.split(", ");
-    rgbColors[0] = bodycolor[0].replace("rgb(", "");
-    rgbColors[1] = bodycolor[1];
-    rgbColors[2] = bodycolor[2].replace(")","");
-    exist = true;
-}
-var altRow = ''
-if (exist == true) {
-     if ((rgbColors[0] > 224)&&(rgbColors[1] > 224)&&(rgbColors[2] > 224)) {
-      altRow = "light-row";
-    }
-    if ((rgbColors[0] < 17)&&(rgbColors[1] < 17)&&(rgbColors[2] < 17)) {
-      altRow = "dark-row";
-    }
- }
-$.tablesorter.defaults.widgetOptions.zebra = [ '' , altRow ];
