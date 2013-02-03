@@ -18,137 +18,239 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <title>
+       <?php if (!isset($config["theme"])) { $config["theme"] = "ui-lightness"; };
+          if (is_file('./views/body.php')){
+              $direc = '.';
+              echo $lang["page_title"].'</title> ';
+          } elseif (is_file('../views/body.php')){
+             $direc = '..';
+             echo $lang["admin_title"].'</title>';
+          } else { $direc = ''; }
+       ?>
+
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?=$lang['page_title']; ?></title>
-    <?php if (!isset($config['theme'])) {
-        $config['theme'] = 'ui-lightness'; } ?>
-    <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-    <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
-    <script type="text/javascript" src="./js/jquery.js"></script>
-    <script type="text/javascript" src="./js/jquery.metadata.js"></script>
-    <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script> 
-    <script type="text/javascript" src="./js/jquery.ui.js"></script>
-    <?php if ($config['lang'] == 'ru') { ?>
-        <script type="text/javascript" src="./js/jquery.ui.ru.js"></script>
-        <?php }; ?>
-    <script type="text/javascript" src="./js/jquery.vticker.js"></script>
+
+    <link rel="stylesheet" href="<?=$direc; ?>/theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
+    <link rel="stylesheet" href="<?=$direc; ?>/theme/style.css" type="text/css" media="print, projection, screen" />
+
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.js"></script>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.tablesorter.widgets.js"></script>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.ui.js"></script>
+    <?php if ($config["lang"] == "ru") { ?>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.ui.ru.js"></script>
+    <?php }; ?>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.vticker.js"></script>
+    <script type="text/javascript" src="<?=$direc; ?>/js/jquery.validate.min.js"></script>
+
+    <?php  if ($direc == '..') {
+             if (isset($current_user)){ ?>
+                 <script type="text/javascript" id="js">
+                   $(document).ready(function()
+                     {
+                       <?php foreach($current_user as $val){?>
+                         $('#dialog_<?=$val['user']?>').dialog({appendTo: "#adminalltabs", autoOpen: false});
+                         $('.trigger_<?=$val['user']?>').click(function(){
+                             $('#dialog_<?=$val['user']?>').dialog("open");
+                             return false;
+                         });
+                       <?php } ?>
+                     });
+                 </script>
+                       <?php } ?>
+                 <script type="text/javascript" id="js">
+                   $(function() {
+                       <?php if(isset($_GET['multi'])){ ?>
+                           $("#iserver").prop('disabled', true);
+                           $("#iclan").prop('disabled', true);
+                           $("#ccontrol").hide();
+                           $("#dccontrol").hide();
+                           <?php } ?>
+                   });
+
+                   $(document).ready(function()
+                     {
+                       $('#loadeng').click(function(){
+                           <?php foreach($tabs_lang['en'] as $key => $val){ ?>
+                               $('#<?=$key;?>php').val('<?=$val?>');
+                               <?php } ?>
+                       });
+                       $('#loadrus').click(function(){  
+                           <?php foreach($tabs_lang['ru'] as $key => $val){ ?>
+                               $('#<?=$key;?>php').val('<?=$val?>');
+                               <?php } ?>
+                       });
+                     });
+                 </script>
+    <?php } ?>
 
     <script type="text/javascript" id="js">
         $(function() {
-            $.extend($.tablesorter.themes.jui, {
+          $.extend($.tablesorter.themes.jui, {
+            table      : "ui-widget ui-widget-content table-borders", // table classes
+            header     : "ui-widget-header ui-state-default", // header classes
+            footerRow  : "",
+            footerCells: "",
+            icons      : "ui-icon", // icon class added to the <i> in the header
+            sortNone   : "ui-icon-triangle-2-n-s",
+            sortAsc    : "ui-icon-triangle-1-n",
+            sortDesc   : "ui-icon-triangle-1-s",
+            active     : "ui-state-active", // applied when column is sorted
+            hover      : "ui-state-hover",  // hover class
+            filterRow  : "",
+            even       : "ui-widget-content", // odd row zebra striping
+            odd        : "ui-priority-secondary"   // even row zebra striping
+          });
 
-                table      : 'ui-widget ui-widget-content table-borders', // table classes
-                header     : 'ui-widget-header ui-state-default', // header classes
-                footerRow  : '',
-                footerCells: '',
-                icons      : 'ui-icon', // icon class added to the <i> in the header
-                sortNone   : 'ui-icon-triangle-2-n-s',
-                sortAsc    : 'ui-icon-triangle-1-n',
-                sortDesc   : 'ui-icon-triangle-1-s',
-                active     : 'ui-state-active', // applied when column is sorted
-                hover      : 'ui-state-hover',  // hover class
-                filterRow  : '',
-                even       : 'ui-widget-content', // odd row zebra striping
-                odd        : 'ui-priority-secondary'   // even row zebra striping
-            });
-
-            $.extend($.tablesorter.themes.bootstrap, {
-                table      : 'ui-widget ui-widget-content table-borders', // table classes
-                header     : 'ui-widget-header ui-state-default', // header classes
-                footerRow  : '',
-                footerCells: '',
-                icons      : '', // icon class added to the <i> in the header
-                sortNone   : '',
-                sortAsc    : '',
-                sortDesc   : '',
-                active     : '', // applied when column is sorted
-                hover      : '',  // hover class
-                filterRow  : '',
-                even       : 'ui-widget-content', // odd row zebra striping
-                odd        : 'ui-priority-secondary'   // even row zebra striping
-            });
+          $.extend($.tablesorter.themes.bootstrap, {
+            table      : "ui-widget ui-widget-content table-borders",
+            header     : "ui-widget-header ui-state-default",
+            footerRow  : "",
+            footerCells: "",
+            icons      : "",
+            sortNone   : "",
+            sortAsc    : "",
+            sortDesc   : "",
+            active     : "",
+            hover      : "",
+            filterRow  : "",
+            even       : "ui-widget-content",
+            odd        : "ui-priority-secondary"
+          });
         });
+
         $(document).ready(function()
-            {
-                $.tablesorter.defaults.headerTemplate = '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}';
-                $.tablesorter.defaults.widgets = ['uitheme', 'zebra'];
-                $.tablesorter.defaults.widthFixed = false;
-                $.tablesorter.defaults.sortList = [[0,0]];
+        {
+            $.tablesorter.defaults.headerTemplate = "<div style='padding: 0px; padding-right:12px;'>{content}</div>{icon}";
+            $.tablesorter.defaults.widgets = ["uitheme", "zebra"];
+            $.tablesorter.defaults.widthFixed = false;
+            $.tablesorter.defaults.sortList = [[0,0]];
 
-                $("#roster").tablesorter({sortList:[[1,0]], widgetOptions: {uitheme : 'jui'}});
+            $("#roster").tablesorter({sortList:[[1,0]], widgetOptions: {uitheme : 'jui'}});
+            $("#best_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#best_medal").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_1").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_2").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_3").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_4").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_5").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#active_medal_6").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#overall").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#battel").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_epic").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_major").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_hero").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#achiv_special").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#rating").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#rating1").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#rating_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#average_perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#blocked").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#all_tanks_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#perform_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#all_medals_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#msfc7").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#msfc8").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#msfc9").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#acc_medals").accordion({collapsible: true, active: false, autoHeight: false});
 
-                $("#best_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#best_medal").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_main").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_1").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_2").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_3").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_4").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_5").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#active_medal_6").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#poss").tablesorter({ sortList:[[1,0]], widgetOptions: {uitheme : "jui"}});
+            $("#attack").tablesorter({ sortList:[[1,0]], widgetOptions: {uitheme : 'jui'}});
+            $("#files").tablesorter({sortList: [[2, 0]], widgetOptions: {uitheme : 'jui'},
+                textExtraction: function(node) {
+                    return $(node).find("span.hidden").text();
+                }
+            });
+            $("#users").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $("#multiclan_table").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            <?php if(!empty($adm_top_tanks)){ ?>
+                     $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]], widgetOptions: {uitheme : 'jui'}});
+            <?php }
+                  if(!empty($tanks_list)){ ?>
+                      $("#tanks_list").tablesorter({sortList: [[2, 0]],widgetOptions: {uitheme : 'jui'},
+                          textExtraction: function(node) {
+                              return $(node).find("span.hidden").text();
+                          }
+                      });
+            <?php } ?>
 
-                $("#overall").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#battel").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#achiv_epic").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#achiv_major").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#achiv_hero").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#achiv_special").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-                $("#rating").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#rating1").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#rating_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#average_perform").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#blocked").tablesorter({widgetOptions: {uitheme : 'jui'}});
+            $(".bb[title]").tooltip({
+                track: false,
+                delay: 0,
+                fade: 250,
+                content: function() {
+                   var element = $( this );
+                   if ( element.is( "[title]" ) ) {
+                        return element.attr( "title" );
+                   }
+                }
+            });
 
-                $("#all_tanks_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#perform_all").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#all_medals_stat").tablesorter({widgetOptions: {uitheme : 'jui'}});
-                $("#msfc7").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
-                $("#msfc8").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
-                $("#msfc9").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
+            $("#rotate").vTicker({
+                speed: 500,
+                pause: 5000,
+                showItems: 1,
+                animation: "fade",
+                mousePause: false,
+                height: 0,
+                direction: "down"
+            });
 
-                $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
+            $("#login_dialog").dialog({
+                title: "<?php if (isset($lang['login'])) { echo $lang['login'];} else { echo 'Login:';}; ?>",
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+                width: 500,
+                show: "blind",
+                hide: "blind",
+                modal: true,
+                position: ['center', 'center']
+            });
+            $('#login_opener').click(function() {
+                $("#login_dialog").dialog('open');
+                return false;
+            });
 
-                $( "#login_dialog" ).dialog({
-                    title: "<?php echo $lang['login']; ?>",
-                    autoOpen: false,
-                    draggable: false,
-                    resizable: false,
-                    width: 500,
-                    show: "blind",
-                    hide: "blind",
-                    modal: true
-                });
-                $('#login_opener').click(function() {
-                    $("#login_dialog").dialog('open');
-                    return false;
-                });
-                $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
-
-                $('.bb[title]').tooltip({
-                    track: false,
-                    delay: 0,
-                    fade: 250,
-                    items: "[title]",
-                    content: function() {
-                        var element = $( this );
-                        if ( element.is( "[title]" ) ) {
-                            return element.attr( "title" );
-                        }
-                    }
-                });
-
-                $('#rotate').vTicker({
-                    speed: 500,
-                    pause: 5000,
-                    showItems: 1,
-                    animation: 'fade',
-                    mousePause: false,
-                    height: 0,
-                    direction: 'down'
-                });
+            var temp2 = $(".ui-widget-content").css("background-color");
+            var rgbColors = new Object();
+            var exist = false;
+            if (temp2.substring(0,1) == "#") {
+                rgbColors[0] = parseInt(temp2.substring(1, 3), 16);
+                rgbColors[1] = parseInt(temp2.substring(3, 5), 16);
+                rgbColors[2] = parseInt(temp2.substring(5, 7), 16);
+                exist = true;
+            }
+            if (temp2.substring(0,1) == "r") {
+                var bodycolor = temp2.split(", ");
+                rgbColors[0] = bodycolor[0].replace("rgb(", "");
+                rgbColors[1] = bodycolor[1];
+                rgbColors[2] = bodycolor[2].replace(")","");
+                exist = true;
+            }
+            if (exist) {
+                if ((rgbColors[0] > 240)&&(rgbColors[1] > 240)&&(rgbColors[2] > 240)) {
+                     var link = document.createElement("link");
+                     link.setAttribute("rel", "stylesheet");
+                     link.setAttribute("type", "text/css");
+                     link.setAttribute("href", "<?=$direc; ?>/theme/toolight.css");
+                     document.getElementsByTagName("head")[0].appendChild(link);
+                }
+                if ((rgbColors[0] < 17)&&(rgbColors[1] < 17)&&(rgbColors[2] < 17)) {
+                     var link = document.createElement("link");
+                     link.setAttribute("rel", "stylesheet");
+                     link.setAttribute("type", "text/css");
+                     link.setAttribute("href", "<?=$direc; ?>/theme/toodark.css");
+                     document.getElementsByTagName("head")[0].appendChild(link);
+                }
+             };
         });
 
         function magic(elem)
@@ -159,7 +261,9 @@
                 }
             });
             $(elem).parent('li').addClass("ui-state-active");
+            if(elem.id == 'out'){ window.location = "index.php?logout=true<?php if (isset($multi_get)) {echo $multi_get ;} ;?>"; }
         };
+
         function magic2(elem)
         {
             elem = document.getElementById('tohide');
@@ -176,8 +280,6 @@
                     $("#chan").addClass("ui-icon-triangle-1-e");
                 }
             }
-
-
         };
         function is_numeric(input){
           return typeof(input)=='number';
@@ -214,6 +316,16 @@
                     }
                 }, 
             });
+            $("#ad_menu").menu();
+            $("#adminalltabs").tabs({
+                ajaxOptions: {
+                    error: function( xhr, status, index, anchor ) {
+                        $( anchor.hash ).html(
+                            "<?php echo $lang['error_1'];?>");
+                    }
+                }
+            });
+            $('#adminalltabs ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
             $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
         });
     </script>
