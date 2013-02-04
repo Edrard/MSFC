@@ -65,18 +65,18 @@
             </tr>
             <tr>
                 <td valign="top" width="222px">
-                    <ul id="ad_menu">
-                        <li><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
+                    <ul id="ad_menu" class="tabsmenu ui-corner-all">
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
                         <?php if($config['cron'] == 1){ ?>
-                            <li><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
-                            <?php } ?>
-                        <li><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
-                        <li><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
-                        <li><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
-                        <li><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
-                        <li><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
-                        <li id="ccontrol"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
-                        <li style="margin-top: 100px;"><a onclick="magic(this)" id="out" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
+                            <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
+                        <?php } ?>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
+                        <li id="ccontrol" class="ui-corner-all"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
+                        <li style="margin-top: 100px;" class="ui-corner-all"><a onclick="magic(this)" id="out" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
                     </ul>
                 </td>
                 <td valign="top">

@@ -68,6 +68,11 @@ table.tablesorter tbody tr.dark-row a:link, table.tablesorter tbody tr.dark-row 
 table.tablesorter tbody tr.light-row td {
   background: #ccc;
 }
+.tabsmenu {
+  background-image: none !important;
+  background-color: inherit !important;
+  padding: 0.2em !important;
+}
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
 
