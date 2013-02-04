@@ -19,7 +19,7 @@ $.extend($.tablesorter.themes.jui, {
     hover      : 'ui-state-hover',  // hover class
     filterRow  : '',
     even       : 'ui-widget-content', // even row zebra striping
-    odd        : 'ui-priority-secondary'   // even row zebra striping
+    odd        : ''   // even row zebra striping
 });
 $.extend($.tablesorter.themes.bootstrap, {
     table      : 'ui-widget ui-widget-content ui-corner-all table-borders',
@@ -34,7 +34,7 @@ $.extend($.tablesorter.themes.bootstrap, {
     hover      : '',
     filterRow  : '',
     even       : 'ui-widget-content', // even row zebra striping
-    odd        : 'ui-priority-secondary'   // even row zebra striping
+    odd        : ''   // even row zebra striping
 });
 
 $('.bb[title]').tooltip({
@@ -80,8 +80,7 @@ $(document).ready(function() {
   if (exist == true) {
        if ((rgbColors[0] > 224)&&(rgbColors[1] > 224)&&(rgbColors[2] > 224)) {
         altRow = "light-row";
-      }
-      if ((rgbColors[0] < 17)&&(rgbColors[1] < 17)&&(rgbColors[2] < 17)) {
+      } else {
         altRow = "dark-row";
       }
    }

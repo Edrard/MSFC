@@ -59,10 +59,14 @@
 }
 /* main */
 table.tablesorter tbody tr.dark-row td {
-  background: #444444;
+  background: #444;
+  color: #ddd;
+}
+table.tablesorter tbody tr.dark-row a:link, table.tablesorter tbody tr.dark-row a:visited {
+  color: #ddd;
 }
 table.tablesorter tbody tr.light-row td {
-  background: #dddddd;
+  background: #ccc;
 }
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
