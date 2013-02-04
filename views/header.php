@@ -48,6 +48,7 @@
               $("#active_medal_4").tablesorter();
               $("#active_medal_5").tablesorter();
               $("#active_medal_6").tablesorter();
+              $("#active_medal_7").tablesorter();
               $("#overall").tablesorter();
               $("#perform").tablesorter();
               $("#battel").tablesorter();
@@ -87,7 +88,6 @@
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-              $("#menu").menu();
               $("#menu").menu( "option", "role", "menu" );
               $("#allcontainer").tabs({
                   ajaxOptions: {

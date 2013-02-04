@@ -196,13 +196,13 @@
             <div>
                 <div align="center">
                     <?php $rand_medal_progress = array_rand($medal_progress['sorted']['expert'], 1); ?>
-                    <table id="active_medal_6" cellspacing="1">
+                    <table id="active_medal_7" cellspacing="1">
                         <thead> 
                             <tr>
                                 <th><?=$lang['name'];?></th>
                                 <?php foreach(array_keys($medal_progress['sorted']['expert'][$rand_medal_progress]) as $title){?>
                                     <th class="bb" <?php echo 'title="<table width=\'100%\' border=\'0\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./images/medals/'.ucfirst($title).'.png\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$lang['medal_'.$title].'.</span><br> '.$lang['title_'.$title].'</td></tr></table>"';?>><?=$lang['medal_'.$title];?></th>
-                                    <?php } ?>
+                                 <?php } ?>
                             </tr>  
                         </thead>
                         <tbody>
