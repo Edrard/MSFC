@@ -36,33 +36,28 @@
         <?php }; ?>
     <script type="text/javascript" src="../js/jquery.vticker.js"></script>
     <script type="text/javascript" src="../js/msfc.shared.js"></script>
-
-    <?php if(isset($current_user)){ ?>
-      <script type="text/javascript">
-          $(document).ready(function()
-            {
-              <?php foreach($current_user as $val){?>
-                  $('#dialog_<?=$val['user']?>').dialog({appendTo: "#adminalltabs", autoOpen: false});
-                  $('.trigger_<?=$val['user']?>').click(function(){
-                     $('#dialog_<?=$val['user']?>').dialog("open");
-                     return false;
-                  });
-              <?php } ?>
-            });
-      </script>
-    <?php } ?>
-
     <script type="text/javascript" id="js">
-        function magic(elem){
-            $(".ui-menu-item").each(function(){
-                if($(this).hasClass("ui-state-active")){
-                     $(this).removeClass("ui-state-active");
+        $(document).ready(function() {
+            $("#files").tablesorter({
+                sortList: [[2, 0]],
+                textExtraction: function(node) {
+                    return $(node).find("span.hidden").text();
                 }
             });
-            $(elem).parent('li').addClass("ui-state-active");
-            if(elem.id == 'out'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
-        };
-        $(document).ready(function() {
+            $("#users").tablesorter();
+            $("#multiclan_table").tablesorter();
+
+            <?php if(!empty($adm_top_tanks)){ ?>
+                $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]]});
+            <?php } ?>
+            <?php if(!empty($tanks_list)){ ?>
+                $("#tanks_list").tablesorter({
+                    sortList: [[2, 0]],
+                    textExtraction: function(node) {
+                        return $(node).find("span.hidden").text();
+                    }
+                });
+            <?php } ?>
             <?php if(isset($_GET['multi'])){ ?>
                 $("#iserver").prop('disabled', true);
                 $("#iclan").prop('disabled', true);
@@ -90,29 +85,30 @@
                     $('#<?=$key;?>php').val('<?=$val?>');
                     <?php } ?>
             });
-
-            $("#files").tablesorter({
-                sortList: [[2, 0]],
-                textExtraction: function(node) {
-                    return $(node).find("span.hidden").text();
+        });
+        function magic(elem){
+            $(".ui-menu-item").each(function(){
+                if($(this).hasClass("ui-state-active")){
+                     $(this).removeClass("ui-state-active");
                 }
             });
-            $("#users").tablesorter();
-            $("#multiclan_table").tablesorter();
-
-            <?php if(!empty($adm_top_tanks)){ ?>
-                $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]]});
-            <?php } ?>
-            <?php if(!empty($tanks_list)){ ?>
-                $("#tanks_list").tablesorter({
-                    sortList: [[2, 0]],
-                    textExtraction: function(node) {
-                        return $(node).find("span.hidden").text();
-                    }
-                });
-            <?php } ?>
-        });
+            $(elem).parent('li').addClass("ui-state-active");
+            if(elem.id == 'out'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
+        };        
     </script>
-
+    <?php if(isset($current_user)){ ?>
+      <script type="text/javascript">
+          $(document).ready(function()
+            {
+              <?php foreach($current_user as $val){?>
+                  $('#dialog_<?=$val['user']?>').dialog({appendTo: "#adminalltabs", autoOpen: false});
+                  $('.trigger_<?=$val['user']?>').click(function(){
+                     $('#dialog_<?=$val['user']?>').dialog("open");
+                     return false;
+                  });
+              <?php } ?>
+            });
+      </script>
+    <?php } ?>
 </head>
 <body>
