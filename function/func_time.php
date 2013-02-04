@@ -144,15 +144,28 @@
     }
     function best_player_progress_main($data){
         $max = array();
+        $position = array('gr_p','wb_p','eb_p','win_p','gpl_p','cpt_p','dmg_p','dpt_p','frg_p','spt_p','exp_p');
         foreach($data as $name => $vals){
             foreach($vals as $key => $val){
                 if(!isset($max[$key]['value'])){
-                    $max[$key]['value'] = $val;
-                    $max[$key]['name'] = $name;
-                }else{
-                    if($max[$key]['value'] < $val){
+                    if(!in_array($key,$position)){
                         $max[$key]['value'] = $val;
-                        $max[$key]['name'] = $name;   
+                        $max[$key]['name'] = $name;
+                    }else{
+                        $max[$key]['value'] = -1 * $val;
+                        $max[$key]['name'] = $name;    
+                    }
+                }else{
+                    if(!in_array($key,$position)){
+                        if($max[$key]['value'] < $val){
+                            $max[$key]['value'] = $val;
+                            $max[$key]['name'] = $name;   
+                        }
+                    }else{
+                        if($max[$key]['value'] < -1*$val){
+                            $max[$key]['value'] = -1*$val;
+                            $max[$key]['name'] = $name;   
+                        }
                     }
                 }    
             }

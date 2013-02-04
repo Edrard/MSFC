@@ -24,7 +24,7 @@
                     <td align="center" style="font-size: 15px;font-weight: bold;"><?=$lang['players_best_medals'];?></td>
                 </tr>
                 <tr>
-                    <td valign="top" width="50%">
+                    <td valign="top" width="50%" align="center">
                         <?php if(time_summer($best_main_progress,'value') != 0){ ?>
                             <table id="best_main" cellspacing="1">
                                 <thead> 
@@ -49,7 +49,7 @@
                             </table>
                             <?php } ?>
                     </td>
-                    <td valign="top" width="50%">
+                    <td valign="top" width="50%" align="center">
                         <?php if(time_summer($best_medal_progress,'value') != 0){ ?>
                             <table id="best_medal" cellspacing="1">
                                 <thead> 

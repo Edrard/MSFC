@@ -44,7 +44,7 @@
             return false;
         });
         $("#change_button_tanks").click();
-    });
+    });   
 </script>
 <div align="center" id="ajax_tanks_width">
     <br>

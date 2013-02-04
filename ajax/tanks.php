@@ -78,7 +78,7 @@
     $(document).ready(function() {
         $("#tankslist").tablesorter();
     });
-</script>
+</script>   
 <table id="tankslist" width="100%" cellspacing="1">
     <thead>
         <tr>
