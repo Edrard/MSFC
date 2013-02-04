@@ -102,7 +102,6 @@
                   }
               });
               $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
-              $("tr:last").css("border-bottom", "15px !important");
         });
 
         function magic(elem){
