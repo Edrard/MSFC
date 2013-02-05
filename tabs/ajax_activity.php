@@ -52,14 +52,15 @@
                   a_cat_2 : ($("#a_cat_2").is(":checked") ? 1:0),
                   a_cat_3 : ($("#a_cat_3").is(":checked") ? 1:0),
                   a_cat_4 : ($("#a_cat_4").is(":checked") ? 1:0),
-                  db_pref : '<?php echo $db->prefix; ?>'
+                  db_pref : '<?php echo $db->prefix; ?>',
+                  key     : '<?=$key;?>'
                 },
                 url: "./ajax/activity.php",
                 success: function(msg){
                     $("#activity_result").html(msg).show();
                 },
                 complete: function() {
-                  check_Width($("table#activity_table"), $("div#tabs-<?=$key;?>"));
+                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;
@@ -76,14 +77,15 @@
               a_cat_2 :  1,
               a_cat_3 :  1,
               a_cat_4 :  1,
-              db_pref : '<?php echo $db->prefix; ?>'
+              db_pref : '<?php echo $db->prefix; ?>',
+              key     : '<?=$key;?>'
             },
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
                 },
                 complete: function() {
-                  check_Width($("table#activity_table"), $("div#tabs-<?=$key;?>"));
+                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
         });
         $("#activity_settings_b").button({
@@ -97,8 +99,10 @@
           return false;
         });
         $("#activity_settings_m").hide();
+        /***** Check witdh code *****/
         $('#id-<?=$key;?>').click(function() {
            $("#activity_table").trigger('applyWidgets');
+           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
            return false;
         });
 

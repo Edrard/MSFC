@@ -4,29 +4,27 @@ $topTanki = get_available_tanks();
 if(isset($topTanki) and count($topTanki) > 0) {
 $avalTanks = get_available_tanks_index();
 $y = array();
-if($avalTanks['count'] > 1) {
-echo '
+if($avalTanks['count'] > 1) { ?>
+
 <script type="text/javascript" id="js">
   $(document).ready(function()
-  {';
-  echo '$("#atankstrigger").buttonset();';
-  echo '$(".atanks_hide").hide();';
-  echo '$(".atanks_1").show();';
-  foreach($avalTanks['index'] as $index) {
-    //1
-    echo '
-        $("#show_atanks_'.$index.'").click(function() {
-            $(".atanks_hide").hide();
-            $(".atanks_'.$index.'").show();
-        });
-    ';
-  }
-//work code
-$atank_but = $cache->get('available_tanks_'.$config['clan'],0);
-echo'  });
+  {
+      $("#atankstrigger").buttonset();
+      $(".atanks_hide").hide();
+      $(".atanks_1").show();
+      <?php foreach($avalTanks['index'] as $index) {
+        echo "
+            $('#show_atanks_$index').click(function() {
+                $('.atanks_hide').hide();
+                $('.atanks_$index').show();
+                check_Width($('table.table-id-$key'), $('div#tabs-$key'));
+            });
+        ";
+      } ?>
+  <?php $atank_but = $cache->get('available_tanks_'.$config['clan'],0); ?>
+  });
 </script>
-'; }
-?>
+<?php } ?>
 <div align="center">
 <?php if($avalTanks['count'] > 1) { ?>
 <form>
@@ -39,7 +37,16 @@ echo'  });
     </div>
 </form>
 <?php } ?>
-    <table id="available_tanks" width="100%" cellspacing="1">
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#id-<?=$key;?>').click(function() {
+               check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+               return false;
+            });
+        });
+    </script>
+    <table id="available_tanks" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th>

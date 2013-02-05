@@ -15,23 +15,26 @@
     *
     */
 ?>
-<div align="center" id="rating_width">
+<div align="center">
 <script>
 $(document).ready(function() {
   $( "#triggerrating" ).buttonset();
     $(".ratingplace").hide();
-    check_Width($("table#rating_all"), $("div#rating_width"));
     $("#change_ratingplace").click(function() {
       $(".ratingvalue").hide();
       $(".ratingplace").show();
-      check_Width($("table#rating_all"), $("div#rating_width"));
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_ratingvalue").click(function() {
       $(".ratingplace").hide();
       $(".ratingvalue").show();
-      check_Width($("table#rating_all"), $("div#rating_width"));
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
+    });
+    $('#id-<?=$key;?>').click(function() {
+       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+       return false;
     });
 });
 </script>
@@ -42,7 +45,7 @@ $(document).ready(function() {
     </div>
 </form>
 
-    <table id="rating_all" cellspacing="1" style="width: 100%;">
+    <table id="rating_all" cellspacing="1" style="width: 100%;" class="table-id-<?=$key;?>">
         <thead> 
             <tr>
                 <th><?=$lang['name']; ?></th>

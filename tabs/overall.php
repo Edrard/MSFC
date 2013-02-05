@@ -15,9 +15,18 @@
     *
     */
 ?>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#id-<?=$key;?>').click(function() {
+           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+           return false;
+        });
+    });
+</script>
 <div align="center">
-    <table id="overall" width="100%" cellspacing="1">
-        <thead> 
+    <table id="overall" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
+        <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>

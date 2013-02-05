@@ -188,7 +188,7 @@
         $("#activity_table").tablesorter();
     });
 </script>
-<table id="activity_table" cellspacing="1" width="100%">
+<table id="activity_table" cellspacing="1" width="100%" class="table-id-<?=$_POST['key'];?>">
     <thead>
         <tr>
             <th><?=$lang['name']; ?></th>

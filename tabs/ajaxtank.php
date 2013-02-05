@@ -32,14 +32,15 @@
                   type    :  $('#type').val(),
                   nation  :  $('#nation').val(),
                   lvl     :  $('#lvl').val(),
-                  db_pref : '<?php echo $db->prefix; ?>'
+                  db_pref : '<?php echo $db->prefix; ?>',
+                  key     : '<?=$key;?>'
                 },
                 url: "./ajax/tanks.php",
                 success: function(msg){
                     $("#result").html(msg).show();
                 },
                 complete: function() {
-                  check_Width($("table#tankslist"), $("div#tabs-<?=$key;?>"));
+                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;
@@ -47,6 +48,7 @@
         $("#change_button_tanks").click();
         $('#id-<?=$key;?>').click(function() {
            $("#tankslist").trigger('applyWidgets');
+           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
            return false;
         });
     });   

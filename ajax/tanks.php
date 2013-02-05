@@ -78,7 +78,7 @@
         $("#tankslist").tablesorter();
     });
 </script>   
-<table id="tankslist" width="100%" cellspacing="1">
+<table id="tankslist" width="100%" cellspacing="1" class="table-id-<?=$_POST['key'];?>">
     <thead>
         <tr>
             <th><?=$lang['name']; ?></th>

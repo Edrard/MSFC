@@ -88,7 +88,16 @@
             </tbody>
         </table>
         <? } ?>
-    <table id="roster" width="100%" cellspacing="1">
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#id-<?=$key;?>').click(function() {
+               check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+               return false;
+            });
+        });
+    </script>
+    <table id="roster" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>

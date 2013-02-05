@@ -15,8 +15,17 @@
     *
     */
 ?>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('#id-<?=$key;?>').click(function() {
+           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+           return false;
+        });
+    });
+</script>
 <div align="center">
-    <table id="battel" width="100%" cellspacing="1" cellpadding="2">
+    <table id="battel" width="100%" cellspacing="1" cellpadding="2" class="table-id-<?=$key;?>">
         <thead> 
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
@@ -37,4 +46,4 @@
                 <?php } ?>
         </tbody>  
     </table>
-        </div>
+</div>

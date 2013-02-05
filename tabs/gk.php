@@ -25,10 +25,9 @@ $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("
 ?>
 
 <script type="text/javascript">
-$(document).ready(function() {
-$('.gksubmit').button();
-check_Width($("table#blocked"), $("div#blocked_tanks_width"));
-});
+    $(document).ready(function() {
+        $('.gksubmit').button();
+    });
 </script>
 <div class="num" align="left">
 <? if($logged >= $config['a_rights']) { ?>
@@ -41,10 +40,10 @@ check_Width($("table#blocked"), $("div#blocked_tanks_width"));
 <? if(isset($gk_fresult['error']) and !is_null($gk_fresult['error'])) { echo $gk_fresult['error']; } ?>
 <? if(isset($gk_fresult['team']) and !is_null($gk_fresult['team'])) { ?>
 <script type="text/javascript" id="js">
-        $(document).ready(function(){
-            $("#gk_destroyed").tablesorter();
-            $('.gkcheckbox').addClass('ui-checkbox');
-        });
+    $(document).ready(function(){
+        $("#gk_destroyed").tablesorter();
+        $('.gkcheckbox').addClass('ui-checkbox');
+    });
 </script>
 <div align="center">
     <form action="./main.php#tabs-<?php echo $key; ?>" method="post">
@@ -72,9 +71,18 @@ check_Width($("table#blocked"), $("div#blocked_tanks_width"));
 </div>
 <? } ?>
 </div>
-   <div align="center" id="blocked_tanks_width">
+<div align="center">
    <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
-      <table id="blocked" cellspacing="1" width="100%">
+      <script type="text/javascript">
+          $(document).ready(function()
+          {
+              $('#id-<?=$key;?>').click(function() {
+                 check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+                 return false;
+              });
+          });
+      </script>
+      <table id="blocked" cellspacing="1" width="100%" class="table-id-<?=$key;?>">
       <thead>
          <tr>
             <th><?php echo $lang['name'];?></th>
@@ -109,8 +117,8 @@ check_Width($("table#blocked"), $("div#blocked_tanks_width"));
       </tbody>
       </table>
       <? } else {
-                    echo $lang['gk_error_9'];
-                } ?>
+            echo $lang['gk_error_9'];
+         } ?>
  </div>
 
 
