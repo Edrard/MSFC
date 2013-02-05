@@ -43,12 +43,6 @@
               $("#best_medal").tablesorter();
               $("#active_main").tablesorter();
               $("#active_medal_1").tablesorter();
-              $("#active_medal_2").tablesorter();
-              $("#active_medal_3").tablesorter();
-              $("#active_medal_4").tablesorter();
-              $("#active_medal_5").tablesorter();
-              $("#active_medal_6").tablesorter();
-              $("#active_medal_7").tablesorter();
               $("#overall").tablesorter();
               $("#perform").tablesorter();
               $("#battel").tablesorter();
@@ -68,8 +62,6 @@
               $("#msfc8").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
               $("#msfc9").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
               $("#available_tanks").tablesorter();
-
-              $( "#acc_medals" ).accordion({collapsible: true, active: false, autoHeight: false});
 
               $( "#login_dialog" ).dialog({
                   title: "<?php echo $lang['login']; ?>",

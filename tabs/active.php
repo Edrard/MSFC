@@ -15,15 +15,19 @@
     *
     */
 ?>
-<?php 
+<?php
 if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ 
     $rand_main_progress = array_rand($main_progress, 1); 
     $slice = array_slice($main_progress[$rand_main_progress], 0, 16); 
 
 ?>
-
-<div align="center">
-    <table id="active_main" cellspacing="1">
+<script type="text/javascript">
+   $(document).ready(function(){
+      check_Width($("table#active_main"), $("div#active_main_width"));
+   });
+</script>
+<div align="center" id="active_main_width">
+    <table id="active_main" cellspacing="1" class="ui-widget-content">
         <thead> 
             <tr>
                 <th><?=$lang['name'];?></th>

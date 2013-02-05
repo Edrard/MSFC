@@ -46,7 +46,7 @@ if($avalTanks['count'] > 1) { ?>
             });
         });
     </script>
-    <table id="available_tanks" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
+    <table id="available_tanks" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th>

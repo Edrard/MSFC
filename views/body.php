@@ -56,7 +56,7 @@
             ?>
         </div>
         <?php } ?>
-    <table style="width: 100%;" cellpadding="4" cellspacing="0">
+    <table style="width: 100%;" cellpadding="4" cellspacing="0" class="ui-widget-content">
         <tbody>
             <tr style="height: 100px;" valign="center">
                 <td id="pane" width="16px" class="ui-state-default" onclick="magic2(this)" rowspan="2" style="background-image: none;">

@@ -43,7 +43,7 @@
         </div>
         <?php } ?>
 
-    <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0">
+    <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0" class="ui-widget-content">
         <tbody>
             <?php
                 if(isset($message['text']) && isset($message['color'])){ ?>
@@ -178,7 +178,7 @@
                     <div id="tabs-1">
                         <div align="center">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-1" method="post">
-                                <table width="98%" border="0" cellpadding="8">
+                                <table width="98%" style="border-width: 0; " cellpadding="8" class="ui-widget-content">
                                     <tbody>
                                         <tr>
                                             <td width="250"><?=$lang['admin_lang'];?></td>
@@ -382,7 +382,7 @@
                             <h3><?=$lang['admin_new_user_title']?></h3>
                             <br>  
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
-                                <table border="0" cellspacing="1" cellpadding="1">
+                                <table style="border-width: 0; " cellspacing="1" cellpadding="1" class="ui-widget-content">
                                     <tbody>
                                         <tr>
                                             <td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" /></td>
@@ -424,7 +424,7 @@
                                 <div id="dialog_<?=$val['user']?>">
                                     <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
                                         <div align="center"><h3><?=$lang['admin_new_user_edit'];?></h3></div>
-                                        <table border="0" cellspacing="6" cellpadding="2">
+                                        <table style="border-width: 0; " cellspacing="6" cellpadding="2" class="ui-widget-content">
                                             <tbody>
                                                 <tr><td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" value="<?=$val['user']?>" /></td></tr>
                                                 <tr><td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td></tr>
@@ -473,7 +473,7 @@
                             <h3><?=$lang['admin_add_clan'];?></h3>
                             <br>
                             <form id="multiclan" action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
-                                <table width="300" cellspacing="1">
+                                <table width="300" cellspacing="1" class="ui-widget-content">
                                     <tr>
                                         <td align="right"><?=$lang['admin_multi_id'];?>:</td><td><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
                                     </tr><tr> 
@@ -578,7 +578,7 @@
                         <div id="tabs-9">
                             <div>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
-                                    <table width="98%" border="0" cellpadding="8">
+                                    <table width="98%" style="border-width: 0; " cellpadding="8" class="ui-widget-content">
                                         <tbody>
                                             <tr>
                                                 <td width="150"><?=$lang['admin_cron_auth'];?></td>

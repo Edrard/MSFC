@@ -373,4 +373,22 @@
     $lang['leader'] = 'Командир';
     $lang['vice_leader'] = 'Заместитель командира';
     $lang['treasurer'] = 'Казначей';
+
+    $lang['err_med1'] = 'Полученные медали принадлежат ушедшим игрокам';
+    $lang['err_med2'] = 'За указанный период наград нет';
+
+    $lang['greeting_top1'] = 'Топ 5 по эффективности';
+    $lang['greeting_top2'] = 'Топ 5 по урону';
+    $lang['greeting_top3'] = 'Топ 5 по засвету';
+    $lang['greeting_top4'] = 'Топ 5 по захвату';
+    $lang['greeting_top5'] = 'Топ 5 по защите';
+    $lang['greeting_h1'] = 'Общие показатели клана';
+    $lang['greeting_h2'] = 'Боевые показатели клана';
+    $lang['greeting_h3'] = 'Боевой опыт клана';
+    $lang['greeting_sub1'] = 'Сутки';
+    $lang['greeting_sub2'] = 'Общие';
+    $lang['averag_hit_ratio'] = 'Средний % попадания';
+    $lang['averag_surv'] = 'Выживаемость в битвах';
+    $lang['dead_heat'] = 'Ничьи';
+    $lang['no_new'] = 'Новая техника отсутствует';
 ?>

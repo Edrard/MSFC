@@ -68,4 +68,17 @@
            </script>
 <?      }
     }
+    global $oldmodule;
+    $sql = "SHOW TABLES;";
+    //echo $sql;
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $list_tables = $q->fetchAll(PDO :: FETCH_ASSOC);
+        $oldmodule = false;
+        foreach ($list_tables as $val) {
+           foreach ($val as $tablename) {
+              if ($tablename == 'col_players') {$oldmodule = true;}
+           }
+        }
+    }
 ?>

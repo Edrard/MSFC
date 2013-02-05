@@ -22,12 +22,12 @@
         exit;
     }
 
-    $dbhost ='localhost';
+    $dbhost ='mysql.hostinger.ru';
     // username and password to log onto db SERVER
-    $dbuser ='root';
-    $dbpass  ='';
+    $dbuser ='u343566427_shw';
+    $dbpass  ='cat$5181';
     // name of database
-    $dbname='';
+    $dbname='u343566427_stat';
     //en - Prefix must be min 1 symbol, max 5 symbols, with _ at the end. Only a-z, A-Z and numbers allowed. For example: $dbprefix = 'msfc_';
     //ru - Префикс должен быть не менее 1 и не более 5 символов, в конце префикса должен быть символ _. Разрешены только английские буквы и цифры.
     //Для примера: $dbprefix = 'msfc_';

@@ -97,28 +97,25 @@
     </head>
     <body onload="location.href = url;" style="overflow:hidden;overflow-y:hidden">
         <div id="main" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
-            <table style="width: 100%; height:100%;" cellpadding="4" cellspacing="0">
-                <?php if($config['lang'] == 'ru'){ ?>
-                    <tr style="vertical-align: bottom;">
-                        <td align="center">
-                            <?php
-                                $multi_get = '';    
-                                if(isset($_GET['multi'])){
-                                    $multi_get = '?multi='.$_GET['multi'];   
-                                }
-                            ?> 
-                            <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
-                        </td>
-                    </tr>
-                    <?php } ?>
-                <tr style="vertical-align: top;">
-                    <td align="center">
-
-                        <div class="ui-state-highlight ui-corner-all">
-                            <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
-                        </div>
-                    </td>
-                </tr>
+            <table style="width: 100%; height:100%;" cellpadding="4" cellspacing="0" class="ui-widget-content">
+               <tr style="vertical-align: bottom;">
+                  <td align="center" style="height: 50%; width:500px;">
+                     <?php if($config['lang'] == 'ru'){
+                              $multi_get = '';
+                              if(isset($_GET['multi'])){
+                                $multi_get = '?multi='.$_GET['multi'];
+                              }?>
+                     <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
+                     <?php } ?>
+                  </td>
+               </tr>
+               <tr style="vertical-align: top;">
+                  <td align="center">
+                     <div class="ui-state-highlight ui-corner-all">
+                        <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
+                     </div>
+                  </td>
+               </tr>
             </table>
         </div>
     </body>

@@ -77,15 +77,16 @@
         <script type="text/javascript" src="./js/jquery.metadata.js"></script>
         <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
         <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script>
+        <script type="text/javascript" src="./js/jquery.ui.js"></script>
+        <script type="text/javascript" src="./js/jquery.vticker.js"></script>
+        <script type="text/javascript" src="./js/msfc.shared.js"></script>
         <script type="text/javascript" id="js">
            $(document).ready(function()
            {
-               $("#attack").tablesorter({
-                  headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
-                  widgets: ["uitheme", "zebra"],
-                  widthFixed : false,
-                  sortList:[[1,0]],
-                  widgetOptions: {uitheme : "jui"}
+               $("#attack").tablesorter({sortList:[[1,0]]});
+               $('#id-<?=$key;?>').click(function() {
+                  $("#attack").trigger('applyWidgets');
+                  return false;
                });
            });
         </script>

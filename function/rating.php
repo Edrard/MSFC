@@ -23,10 +23,10 @@
         foreach($array as $name => $stat){
             //$rating[$name]['mid'] = middel_tank_lvl($stat['tank']);
             if($stat['overall'][$lang['games_p']] != 0 ){
-                $rat['mdmg'][$name] = $rating[$name]['mdmg'] = round($stat['perform'][$lang['damage']]/$stat['overall'][$lang['games_p']]);
-                $rat['mspo'][$name] = $rating[$name]['mspo'] = round($stat['perform'][$lang['spotted']]/$stat['overall'][$lang['games_p']],3);
-                $rat['mcap'][$name] = $rating[$name]['mcap'] = round($stat['perform'][$lang['capture']]/$stat['overall'][$lang['games_p']],3);
-                $rat['mdef'][$name] = $rating[$name]['mdef'] = round($stat['perform'][$lang['defend']]/$stat['overall'][$lang['games_p']],3);
+                $rat['mdmg'][$name] = $rating[$name]['mdmg'] = number_format(round($stat['perform'][$lang['damage']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
+                $rat['mspo'][$name] = $rating[$name]['mspo'] = number_format(round($stat['perform'][$lang['spotted']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
+                $rat['mcap'][$name] = $rating[$name]['mcap'] = number_format(round($stat['perform'][$lang['capture']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
+                $rat['mdef'][$name] = $rating[$name]['mdef'] = number_format(round($stat['perform'][$lang['defend']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
 
 
                 if($rating[$name]['mdmg'] >= $max['mdmg']){

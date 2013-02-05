@@ -25,7 +25,7 @@
     });
 </script>
 <div align="center">
-    <table id="battel" width="100%" cellspacing="1" cellpadding="2" class="table-id-<?=$key;?>">
+    <table id="battel" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
         <thead> 
             <tr>
                 <th><?php echo $lang['name']; ?></th> 

@@ -367,4 +367,21 @@
     $lang['vice_leader'] = 'Vice leader';
     $lang['treasurer'] = 'Treasurer';
 
+    $lang['err_med1'] = 'Received medals belong to the players who left the clan';
+    $lang['err_med2'] = 'No earned medals';
+
+    $lang['greeting_top1'] = 'Top 5 efficiency rating';
+    $lang['greeting_top2'] = 'Top 5 damage';
+    $lang['greeting_top3'] = 'Top 5 spotted';
+    $lang['greeting_top4'] = 'Top 5 capture';
+    $lang['greeting_top5'] = 'Top 5 defend';
+    $lang['greeting_h1'] = 'Clan overall rate';
+    $lang['greeting_h2'] = 'Clan battle performance';
+    $lang['greeting_h3'] = 'Clan experience';
+    $lang['greeting_sub1'] = '24h';
+    $lang['greeting_sub2'] = 'All';
+    $lang['averag_hit_ratio'] = 'Average hit, %';
+    $lang['averag_surv'] = 'Average survive, %';
+    $lang['dead_heat'] = 'Dead heat';
+    $lang['no_new'] = 'No new tanks';
 ?>

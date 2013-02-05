@@ -25,7 +25,7 @@
             }
         ?>
         <form action="<?=$_SERVER['PHP_SELF'];?>?auth<?=$multi_get?>" method="post">
-            <table width="300px" border="0" cellspacing="4" cellpadding="0">
+            <table width="300px" border="0" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>
                     <td colspan="2" align="center">
                         <br>      
