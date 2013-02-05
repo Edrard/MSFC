@@ -138,7 +138,8 @@
           var resultWidth = 0;
           var showWidth =   0;
 
-          if(is_numeric(menuWidth) && menuWidth > 250) {
+          elem = document.getElementById('tohide');
+          if(elem.style.display == 'none') {
             menuWidth = 1;
           }
 
