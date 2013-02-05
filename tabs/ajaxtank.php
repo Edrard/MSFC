@@ -44,6 +44,10 @@
             return false;
         });
         $("#change_button_tanks").click();
+        $('#id-<?=$key;?>').click(function() {
+           $("#tankslist").trigger('applyWidgets');
+           return false;
+        });
     });   
 </script>
 <div align="center" id="ajax_tanks_width">

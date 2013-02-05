@@ -95,10 +95,6 @@
                           $( anchor.hash ).html(
                               "<?php echo $lang['error_1'];?>");
                       }
-                  },
-                  activate: function( event, ui ) {
-                    ui.newPanel.find("#activity_table").trigger('applyWidgets');
-                    ui.newPanel.find("#tankslist").trigger('applyWidgets');
                   }
               });
               $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});

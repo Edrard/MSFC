@@ -127,7 +127,7 @@
                             foreach($tabs as $key => $val){
                                 foreach(array_keys($val) as $link){
                                     if(is_numeric($key)){ ?>
-                                    <li class="ui-corner-all"><a <?php if($i==0) echo 'id="id-0"'; ?> onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
+                                    <li class="ui-corner-all"><a id="id-<?=$key;?>" onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
                                     <?php }else{  ?>
                                     <li class="ui-corner-all"><a onclick="magic(this)" href="<?php echo $key; if(isset($_GET['multi'])){if(substr_count($key, '?') > 0){echo '&multi='.$_GET['multi'];}else{echo '?multi='.$_GET['multi'];}}?>"><?=$link; ?></a></li>
                                     <?php  }

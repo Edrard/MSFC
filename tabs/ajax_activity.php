@@ -94,6 +94,10 @@
           return false;
         });
         $("#activity_settings_m").hide();
+        $('#id-<?=$key;?>').click(function() {
+           $("#activity_table").trigger('applyWidgets');
+           return false;
+        });
 
 <?php if($logged > 1) { ?>
 
