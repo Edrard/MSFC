@@ -72,7 +72,7 @@
     include_once(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
     include_once(ROOT_DIR.'/function/cache.php');
 
-    $myFile = "cron.log";
+    $myFile = ROOT_DIR."/cron.log";
     $log = 0;
     $date = date('Y-m-d H:i');
     if($fh = fopen($myFile, 'a')){
