@@ -38,7 +38,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-              $("#roster").tablesorter({sortList:[[1,0]]});
+              $("#roster").tablesorter({sortList:[[4,0],[3,1],[0,0]]});
               $("#best_main").tablesorter();
               $("#best_medal").tablesorter();
               $("#active_main").tablesorter();
