@@ -181,7 +181,7 @@
                                 <table width="98%" border="0" cellpadding="8">
                                     <tbody>
                                         <tr>
-                                            <td width="150"><?=$lang['admin_lang'];?></td>
+                                            <td width="250"><?=$lang['admin_lang'];?></td>
                                             <td>                                                 
                                                 <select name="lang">
                                                     <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
@@ -252,6 +252,13 @@
                                         <tr>
                                             <td><?=$lang['admin_multiget'];?></td>
                                             <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><?=$lang['admin_allow_user_upload'];?></td>
+                                            <td><select name="a_rights">
+                                                    <option value="2" <?if($config['a_rights']==2){echo'selected="selected"';}?>><?=$lang['no'];?></option>
+                                                    <option value="1" <?if($config['a_rights']==1){echo'selected="selected"';}?>><?=$lang['yes'];?></option>
+                                                </select></td>
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_themes'];?></td>

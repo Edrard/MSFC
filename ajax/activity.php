@@ -182,7 +182,6 @@
     unset($t,$cache_activity);
 ?>
 <?php if($empty != 0 or ($a_all == 1)) { ?>
-<script type="text/javascript" src="../js/msfc.shared.js"></script>
 <script type="text/javascript">
     $(document).ready(function()
     {

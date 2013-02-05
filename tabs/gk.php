@@ -31,7 +31,7 @@ check_Width($("table#blocked"), $("div#blocked_tanks_width"));
 });
 </script>
 <div class="num" align="left">
-<? if($logged > 1) { ?>
+<? if($logged >= $config['a_rights']) { ?>
 <form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
 <input type="file" name="filename">
 <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
@@ -42,13 +42,7 @@ check_Width($("table#blocked"), $("div#blocked_tanks_width"));
 <? if(isset($gk_fresult['team']) and !is_null($gk_fresult['team'])) { ?>
 <script type="text/javascript" id="js">
         $(document).ready(function(){
-            $("#gk_destroyed").tablesorter({
-               headerTemplate : "<div style=\'padding: 0px; padding-right:12px;\'>{content}</div>{icon}",
-               widgets: ["uitheme", "zebra"],
-               widthFixed : false,
-               sortList:[[0,0]],
-               widgetOptions: {uitheme : "jui"}
-            });
+            $("#gk_destroyed").tablesorter();
             $('.gkcheckbox').addClass('ui-checkbox');
         });
 </script>

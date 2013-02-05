@@ -99,7 +99,7 @@
            return false;
         });
 
-<?php if($logged > 1) { ?>
+<?php if($logged >= $config['a_rights']) { ?>
 
         $("#activity_add_replay").button({
             icons: {
@@ -144,7 +144,7 @@
     <?=$lang['activity_2'];?>
     <input type="text" id="a_to" name="a_to" value="" />
     <button id="activity_settings_b">Settings</button>
-    <?php if($logged > 1) { ?>
+    <?php if($logged >= $config['a_rights']) { ?>
     <button id="activity_upload_b">Upload</button>
     <?php } ?>
     <a href="#tabs-<?php echo $key; ?>" id="a_show_activity"><?=$lang['select_show'];?></a>
@@ -160,7 +160,7 @@
     <input type="checkbox" name="a_total" id="a_total" style="margin:0px; padding:0px;" /> - <?=$lang['activity_5'];?><br />
     </div>
     </form>
-    <? if($logged > 1) { ?>
+    <? if($logged >= $config['a_rights']) { ?>
     <br />
     <div align="left" id="activity_upload_form_main">
     <form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">

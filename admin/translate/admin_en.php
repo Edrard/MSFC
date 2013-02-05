@@ -139,5 +139,8 @@
     
     $lang['current_cron'] = 'Current cron log';
     $lang['recreat_cron'] = 'Recreat cron log file';
-    
+
+    $lang['yes'] = 'Yes';
+    $lang['no'] = 'No';
+    $lang['admin_allow_user_upload'] = 'Allow to the group "User" upload replays';
 ?>

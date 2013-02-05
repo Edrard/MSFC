@@ -138,4 +138,8 @@
     
     $lang['current_cron'] = 'Текущий лог крона';
     $lang['recreat_cron'] = 'Пересоздать крон лог файл';
+
+    $lang['yes'] = 'Да';
+    $lang['no'] = 'Нет';
+    $lang['admin_allow_user_upload'] = 'Разрешить группе "User" загружать реплеи';
 ?>

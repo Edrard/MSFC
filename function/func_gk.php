@@ -64,7 +64,7 @@
         $team_id = null;
         $battle_time = null;
 
-        if($file['filename']['size'] > (1024*3*1024)) { $file_error .= $lang['gk_error_1']; }
+        if($file['filename']['size'] > (1024*6*1024)) { $file_error .= $lang['gk_error_1']; }
 
         if(is_uploaded_file($file['filename']['tmp_name']) and $file['filename']['error'] == 0 and !isset ($file_error)) {
             $lines = file($_FILES["filename"]["tmp_name"]);

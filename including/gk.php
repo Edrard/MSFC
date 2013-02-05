@@ -76,13 +76,13 @@ $gk_block['AT-SPG']['3'] = 4;
 $gk_block['AT-SPG']['2'] = 1;
 $gk_block['AT-SPG']['1'] = 0;
 
-if(isset($_POST['gkreplay']) and isset($_FILES['filename']['name']) and ($logged == 2)) {
+if(isset($_POST['gkreplay']) and isset($_FILES['filename']['name']) and ($logged >= $config['a_rights'])) {
   $gk_time = gk_tanks($gk_block,$db);
   $gk_fresult = gk_parse_file($_FILES,array_keys($res),$gk_time,$lang,$db);
   unset($gk_time);
 }
 
-if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($logged == 2)){
+if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($logged >= $config['a_rights'])){
 
   $res_check = array_keys($res);
   $gk_time = gk_tanks($gk_block,$db);
@@ -111,7 +111,7 @@ unset($gk_result5);
 /********** End **********/
 
 /********** Parse activity replay **********/
-if(isset($_POST['activityreplay']) and isset($_FILES) and ($logged == 2)) {
+if(isset($_POST['activityreplay']) and isset($_FILES) and ($logged >= $config['a_rights'])) {
 
 $activity_error = '';
 
@@ -124,7 +124,7 @@ $activity_error = '';
   $file_error = null;
   $battle_time = null;
 
-  if($a_file['size'] > (1024*3*1024)) { $file_error .= $lang['gk_error_1']; }
+  if($a_file['size'] > (1024*6*1024)) { $file_error .= $lang['gk_error_1']; }
 
   if(is_uploaded_file($a_file['tmp_name']) and $a_file['error'] == 0 and !isset ($file_error)) {
       $lines = file($a_file["tmp_name"]);
