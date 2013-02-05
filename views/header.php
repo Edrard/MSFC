@@ -88,7 +88,7 @@
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-              $("#menu").menu( "option", "role", "menu" );
+              $("#menu").menu();
               $("#allcontainer").tabs({
                   ajaxOptions: {
                       error: function( xhr, status, index, anchor ) {
