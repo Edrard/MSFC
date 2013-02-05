@@ -28,7 +28,6 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                //data: 'type='+ $('#type').val()+'&nation='+$('#nation').val()+'&lvl='+$('#lvl').val(),
                 data: {
                   type    :  $('#type').val(),
                   nation  :  $('#nation').val(),
@@ -38,7 +37,9 @@
                 url: "./ajax/tanks.php",
                 success: function(msg){
                     $("#result").html(msg).show();
-                    check_Width($("div#result"), $("div#ajax_tanks_width"));
+                },
+                complete: function() {
+                  check_Width($("table#tankslist"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;

@@ -73,7 +73,6 @@
 
     //print_r($res);
 ?>
-<script type="text/javascript" src="../js/msfc.shared.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#tankslist").tablesorter();

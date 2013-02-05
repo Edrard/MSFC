@@ -57,7 +57,9 @@
                 url: "./ajax/activity.php",
                 success: function(msg){
                     $("#activity_result").html(msg).show();
-                    check_Width($("table#activity_table"), $("div#ajax_activity_width"));
+                },
+                complete: function() {
+                  check_Width($("table#activity_table"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;
@@ -65,7 +67,6 @@
         $.ajax({
             cache: true,
             type: "POST",
-            //data: 'a_from='+ $('#a_from').val()+'&a_to='+$('#a_to').val()+'&a_all=1&a_cat_1=1&a_cat_2=1&a_cat_3=1&a_cat_4=1',
             data: {
               a_from  :  $('#a_from').val(),
               a_to    :  $('#a_to').val(),
@@ -80,8 +81,10 @@
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
-                check_Width($("table#activity_table"), $("div#ajax_activity_width"));
-            }
+                },
+                complete: function() {
+                  check_Width($("table#activity_table"), $("div#tabs-<?=$key;?>"));
+                }
         });
         $("#activity_settings_b").button({
             icons: {
