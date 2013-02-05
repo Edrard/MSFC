@@ -636,9 +636,9 @@
     {
         global $db;
         if($dbprefix == FALSE){
-            $sql = "SELECT * FROM multiclan;";
+            $sql = "SELECT * FROM multiclan ORDER BY sort ASC;";
         }else{
-            $sql = "SELECT * FROM multiclan WHERE prefix = '".$dbprefix."';";    
+            $sql = "SELECT * FROM multiclan WHERE prefix = '".$dbprefix."' ORDER BY sort ASC;";
         }
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
