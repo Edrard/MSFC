@@ -72,6 +72,7 @@ table.tablesorter tbody tr.light-row td {
   background-image: none !important;
   background-color: inherit !important;
   padding: 0.2em !important;
+  width: 200px !important;
 }
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
