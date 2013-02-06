@@ -49,7 +49,7 @@
                 <input type="radio" id="show_average_progress" name="trigger_progress" /><label for="show_average_progress"><?=$lang['activity_average_progress'];?></label>
             </div>
         </form>                                   
-        <table id="active_main" cellspacing="1" class="table-id-<?=$key;?>, ui-widget-content">
+        <table id="active_main" cellspacing="1" class="table-id-<?=$key;?> ui-widget-content">
             <thead> 
                 <tr>
                     <th><?=$lang['name'];?></th>
