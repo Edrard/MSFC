@@ -204,7 +204,12 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('autoclean', '0'),
 ('cron_auth', '0'),
 ('cron_multi', '0'),
-('a_rights', '2');
+('a_rights', '2'),
+('we_loosed', '172800'),
+('new_players', '172800'),
+('main_progress', '172800'),
+('medal_progress', '172800'),
+('new_tanks', '172800');
 
 -- --------------------------------------------------------
 

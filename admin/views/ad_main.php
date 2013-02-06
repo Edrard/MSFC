@@ -69,7 +69,7 @@
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
                         <?php if($config['cron'] == 1){ ?>
                             <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
-                        <?php } ?>
+                            <?php } ?>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
@@ -157,7 +157,7 @@
                                     <select name="adm_top_tanks_type">
                                         <? foreach($lang_s['class'] as $name => $val) { ?>
                                             <option value="<?=$name?>"><?=$val?></option>
-                                        <? } ?>
+                                            <? } ?>
                                     </select>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
                                     <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
@@ -165,14 +165,14 @@
                                 </form>
                                 <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                             <?php if($adm_avalTanks['count'] > 1) { ?>
-                            <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                              <?php foreach($adm_avalTanks['index'] as $index){ ?>
-                                 <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
-                              <?php } ?>
-                            <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
-                            </form>
-                            <?php } ?>
+                                <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                                    <?php foreach($adm_avalTanks['index'] as $index){ ?>
+                                        <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
+                                        <?php } ?>
+                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
+                                </form>
+                                <?php } ?>
                         </div>
                     </div>
                     <div id="tabs-1">
@@ -266,11 +266,11 @@
                                                 <?php
                                                     if (count($dir_val)>0) { ?>
                                                     <select name="theme">
-                                                    <?php foreach ($dir_val as $val){
-                                                        if (substr($val, -4)<>'.css') {?>
+                                                        <?php foreach ($dir_val as $val){
+                                                            if (substr($val, -4)<>'.css') {?>
 
-                                                        <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
-                                                        <?php }  } ?>
+                                                            <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
+                                                            <?php }  } ?>
                                                     </select>
                                                 <?php }?> </td>
                                         </tr>
@@ -503,23 +503,23 @@
                             <script>
                                 $("#multiclan").validate();
                                 if ($("#multiclan").valid()) {
-                                  $("#multiclan").submit(function(e) {
-                                    var form = $(this);
-                                    if (!e.isDefaultPrevented()) {
+                                    $("#multiclan").submit(function(e) {
+                                        var form = $(this);
+                                        if (!e.isDefaultPrevented()) {
 
-                                        // submit with AJAX
-                                        $.getJSON("../ajax/mc_valid.php?" + form.serialize(), function(json) {
-                                            // everything is ok. (server returned true)
-                                            if (json["id"] === "true")  {
-                                                document.forms["multiclan"].submit();
-                                            } else {     
+                                            // submit with AJAX
+                                            $.getJSON("../ajax/mc_valid.php?" + form.serialize(), function(json) {
+                                                // everything is ok. (server returned true)
+                                                if (json["id"] === "true")  {
+                                                    document.forms["multiclan"].submit();
+                                                } else {     
 
-                                                form.data("validator").invalidate(json);    
-                                            }
-                                        });      
-                                        e.preventDefault();
-                                    }
-                                  });
+                                                    form.data("validator").invalidate(json);    
+                                                }
+                                            });      
+                                            e.preventDefault();
+                                        }
+                                    });
                                 }
                             </script>
                             <br><br>
@@ -605,8 +605,31 @@
                                                 <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
                                             </tr>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
+                                                <td colspan="2"><b><?=$lang['admin_cron_period']?></b></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_we_loosed'];?></td>
+                                                <td><input type="text" name="we_loosed" value="<?=$config['we_loosed']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_new_players'];?></td>
+                                                <td><input type="text" name="new_players" value="<?=$config['new_players']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_main_progress'];?></td>
+                                                <td><input type="text" name="main_progress" value="<?=$config['main_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_medal_progress'];?></td>
+                                                <td><input type="text" name="medal_progress" value="<?=$config['medal_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?=$lang['admin_cron_new_tanks'];?></td>
+                                                <td><input type="text" name="new_tanks" value="<?=$config['new_tanks']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><br></td>
+                                                <td><br></td>
                                             </tr>
                                             <tr>
                                                 <td><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></td>

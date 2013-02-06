@@ -136,11 +136,20 @@
     $lang['admin_cron_cache'] = 'Using the cache';
     $lang['admin_min'] = 'min';
     $lang['admin_hour'] = 'hour';
-    
+    $lang['admin_sec'] = 'sec';
+
     $lang['current_cron'] = 'Current cron log';
     $lang['recreat_cron'] = 'Recreat cron log file';
 
     $lang['yes'] = 'Yes';
     $lang['no'] = 'No';
     $lang['admin_allow_user_upload'] = 'Allow to the group "User" upload replays';
+
+    $lang['admin_cron_we_loosed'] = 'Losed players';
+    $lang['admin_cron_new_players'] = 'New players';
+    $lang['admin_cron_main_progress'] = 'Main progress'; 
+    $lang['admin_cron_medal_progress'] = 'Medal progress';
+    $lang['admin_cron_new_tanks'] = 'New tanks';
+    
+    $lang['admin_cron_period'] = 'Periods used for data output';
 ?>

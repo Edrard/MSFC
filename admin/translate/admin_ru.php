@@ -135,11 +135,20 @@
     $lang['admin_cron_cache'] = 'Использование кеша';
     $lang['admin_min'] = 'мин.';
     $lang['admin_hour'] = 'час.';
-    
+    $lang['admin_sec'] = 'сек.';
+
     $lang['current_cron'] = 'Текущий лог крона';
     $lang['recreat_cron'] = 'Пересоздать крон лог файл';
 
     $lang['yes'] = 'Да';
     $lang['no'] = 'Нет';
     $lang['admin_allow_user_upload'] = 'Разрешить группе "User" загружать реплеи';
+
+    $lang['admin_cron_we_loosed'] = 'Ушедшие игроки';
+    $lang['admin_cron_new_players'] = 'Новые игроки';
+    $lang['admin_cron_main_progress'] = 'Прогресс'; 
+    $lang['admin_cron_medal_progress'] = 'Новые награды';
+    $lang['admin_cron_new_tanks'] = 'Новые танки';
+    
+    $lang['admin_cron_period'] = 'Периоды используемые при выводе данных';
 ?>
