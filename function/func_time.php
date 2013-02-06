@@ -505,4 +505,28 @@
         }
         return $sum;
     }
+    function medals_resort($medal_progress,$roster_id) {
+        $new['list'] = array();
+        $new['data'] = array();
+        foreach($medal_progress['sorted'] as $type => $player){
+            foreach($player as $id => $medals){
+                if(isset($roster_id[$id])){
+                    foreach($medals as $med_name => $val){
+                        if($val != 0){
+                            $new['data'][(str_replace(range(0,9),'',$type))][$id][$med_name] = $val;
+                            if(!isset($new['list'][(str_replace(range(0,9),'',$type))][$med_name])){
+                                $new['list'][(str_replace(range(0,9),'',$type))][$med_name] = TRUE;
+                            }
+                            if(isset($new['id'][$id])){
+                                $new['id'][$id] += $val;
+                            }else{
+                                $new['id'][$id] = $val;    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $new;
+    }
 ?>

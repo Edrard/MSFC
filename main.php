@@ -95,12 +95,14 @@
         $rand_keys = array_rand($res, 1);
         $eff_rating = eff_rating($res,$lang);
         if($config['cron'] == 1 && $col_check > 2){
+            $medal_progress = medal_progress((now() - $config['medal_progress']),now());
+            $medal_resort = medals_resort($medal_progress,$roster_id);
+            $best_medal_progress = best_medal_progress($medal_progress['unsort']);
+            unset($medal_progress);
             $we_loosed = went_players($roster,(now(1) - $config['we_loosed']),now());
             $new_players = new_players($roster,(now() - $config['new_players']),now());
             $main_progress = player_progress_main((now() - $config['main_progress']),now());
             $best_main_progress = best_player_progress_main($main_progress['main']);
-            $medal_progress = medal_progress((now() - $config['medal_progress']),now());
-            $best_medal_progress = best_medal_progress($medal_progress['unsort']);
             $new_tanks = new_tanks($roster,$col_tables,(now() - $config['new_tanks']),now());
         }
         include_once(ROOT_DIR.'/views/body.php');
