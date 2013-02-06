@@ -29,4 +29,7 @@
     $lang['a_cat_2'] = 'Глобальная карта';
     $lang['a_cat_3'] = 'Ротные бои';
     $lang['a_cat_4'] = 'Тренировки';
+
+    $lang['activity_main_progress'] = 'Основные изменения';
+    $lang['activity_average_progress'] = 'Усредненный прогресс и значение за период';
 ?>

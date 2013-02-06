@@ -83,7 +83,7 @@
 
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $result = $q->fetchAll();
+            $result = $q->fetchAll(PDO::FETCH_ASSOC);
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
@@ -95,14 +95,14 @@
             $sql = "SELECT * FROM `col_players` WHERE up = '".$first."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
-                $dfirst = $q->fetchAll();
+                $dfirst = $q->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             $sql = "SELECT * FROM `col_players` WHERE up = '".$last."';";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
-                $dlast = $q->fetchAll();
+                $dlast = $q->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
@@ -129,14 +129,33 @@
                         $s['lose'] = 0;
                         $s['alive'] = 0;
                     }
-                    $diff[$vals['name']]['winp'] = round($f['win'] - $s['win'],4);
-                    $diff[$vals['name']]['losep'] = round($f['lose'] - $s['lose'],4);
-                    $diff[$vals['name']]['alivep'] = round($f['alive'] - $s['alive'],4);
+                    $diff['main'][$vals['name']]['winp'] = round($f['win'] - $s['win'],4);
+                    $diff['main'][$vals['name']]['losep'] = round($f['lose'] - $s['lose'],4);
+                    $diff['main'][$vals['name']]['alivep'] = round($f['alive'] - $s['alive'],4);       
                     foreach($vals as $key => $val){
                         if(!is_numeric($key) && $key != 'account_id' && $key != 'name' && $key != 'role' && $key != 'server' && $key != 'reg' && $key != 'local' && $key != 'member_since' && $key != 'up'){
-                            $diff[$vals['name']][$key] = $val - $dfirst_new[$vals['name']][$key];    
+                            $diff['main'][$vals['name']][$key] = $val - $dfirst_new[$vals['name']][$key];    
                         }
                     }
+                    if(($vals['total'] - $dfirst_new[$vals['name']]['total']) != 0){
+                        $diff['average'][$vals['name']]['winp'] =  round(($vals['win'] - $dfirst_new[$vals['name']]['win'])*100/(($vals['total'] - $dfirst_new[$vals['name']]['total'])),2);
+                        $diff['average'][$vals['name']]['losep'] =  round(($vals['lose'] - $dfirst_new[$vals['name']]['lose'])*100/(($vals['total'] - $dfirst_new[$vals['name']]['total'])),2);
+                        $diff['average'][$vals['name']]['alivep'] =  round(($vals['alive'] - $dfirst_new[$vals['name']]['alive'])*100/(($vals['total'] - $dfirst_new[$vals['name']]['total'])),2);
+                    }else{
+                        $diff['average'][$vals['name']]['winp'] =  0;
+                        $diff['average'][$vals['name']]['losep'] =  0;
+                        $diff['average'][$vals['name']]['alivep'] =  0;    
+                    }   
+                    foreach($vals as $key => $val){
+                        if($key != 'win' && $key != 'lose' && $key != 'alive' && $key != 'max_exp' && $key != 'averag_exp' && $key != 'accure' && $key != 'total' && $key != 'account_id' && $key != 'name' && $key != 'role' && $key != 'server' && $key != 'reg' && $key != 'local' && $key != 'member_since' && $key != 'up'){
+                            if(($vals['total'] - $dfirst_new[$vals['name']]['total']) != 0){
+                                $diff['average'][$vals['name']][$key] = round(($val - $dfirst_new[$vals['name']][$key])/($vals['total'] - $dfirst_new[$vals['name']]['total']),1); 
+                            }else{
+                                $diff['average'][$vals['name']][$key] = 0;
+                            }  
+                        }
+                    }
+
                 }
             }
         }

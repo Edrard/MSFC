@@ -15,7 +15,7 @@
     *
     */
 ?>
-<?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ ?>
+<?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ ?>
     <div align="center">
     <table cellspacing="2" cellpadding="8" width="100%" class="ui-widget-content" style="border-width: 0; ">
             <tbody>

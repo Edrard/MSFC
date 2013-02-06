@@ -22,7 +22,7 @@
    });
 </script>
 
-<?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){  ?>
+<?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){  ?>
     <div  id="active_medal_width" align="center">
          <?php $mg = array();
                $acc_wm = array();

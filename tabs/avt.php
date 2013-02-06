@@ -131,9 +131,9 @@
 
 <?php
 $rowss=2;
-if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ 
+if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ 
   $h24total = $h24win = $h24lose = $h24alive = $h24spot = $h24des = $h24dmg = $h24cap = $h24def = $h24exp = 0;
-  foreach($main_progress as $name => $vals){
+  foreach($main_progress['main'] as $name => $vals){
     $h24total += $vals['total'];
     $h24win   += $vals['win'];
     $h24lose  += $vals['lose'];
@@ -374,7 +374,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){
    </tbody>
  </table>
 
-    <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress) > 0){ ?>
+    <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ ?>
         <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; " class="ui-widget-content">
             <tbody>
                 <tr>
