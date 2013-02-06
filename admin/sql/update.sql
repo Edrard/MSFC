@@ -2,28 +2,28 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-ALTER TABLE  col_medals RENAME msfc_col_medals ;
-ALTER TABLE  col_players RENAME msfc_col_players ;
-ALTER TABLE  col_rating_tank_china RENAME msfc_col_rating_tank_china ;
-ALTER TABLE  col_rating_tank_france RENAME msfc_col_rating_tank_france ;
-ALTER TABLE  col_rating_tank_germany RENAME msfc_col_rating_tank_germany ;
-ALTER TABLE  col_rating_tank_uk RENAME msfc_col_rating_tank_uk ;
-ALTER TABLE  col_rating_tank_usa RENAME msfc_col_rating_tank_usa ;
+ALTER TABLE  col_medals RENAME `col_medals`;
+ALTER TABLE  col_players RENAME `col_players` ;
+ALTER TABLE  col_rating_tank_china RENAME `col_rating_tank_china` ;
+ALTER TABLE  col_rating_tank_france RENAME `col_rating_tank_france` ;
+ALTER TABLE  col_rating_tank_germany RENAME `col_rating_tank_germany` ;
+ALTER TABLE  col_rating_tank_uk RENAME `col_rating_tank_uk` ;
+ALTER TABLE  col_rating_tank_usa RENAME `col_rating_tank_usa` ;
 
-ALTER TABLE  col_rating_tank_ussr RENAME msfc_col_rating_tank_ussr;
-ALTER TABLE  col_tank_china RENAME msfc_col_tank_china;
-ALTER TABLE  col_tank_france RENAME msfc_col_tank_france;
-ALTER TABLE  col_tank_germany RENAME msfc_col_tank_germany;
-ALTER TABLE  col_tank_uk RENAME msfc_col_tank_uk;
-ALTER TABLE  col_tank_usa RENAME msfc_col_tank_usa;
-ALTER TABLE  col_tank_ussr RENAME msfc_col_tank_ussr;
-ALTER TABLE  config RENAME msfc_config;
-ALTER TABLE  gk RENAME msfc_gk;
-ALTER TABLE  medals RENAME  msfc_medals;
-ALTER TABLE  tabs RENAME  msfc_tabs;
-ALTER TABLE  tanks RENAME  msfc_tanks;
-ALTER TABLE  top_tanks RENAME  msfc_top_tanks;
-ALTER TABLE  users RENAME  msfc_users;
+ALTER TABLE  col_rating_tank_ussr RENAME `col_rating_tank_ussr`;
+ALTER TABLE  col_tank_china RENAME `col_tank_china`;
+ALTER TABLE  col_tank_france RENAME `col_tank_france`;
+ALTER TABLE  col_tank_germany RENAME `col_tank_germany`;
+ALTER TABLE  col_tank_uk RENAME `col_tank_uk`;
+ALTER TABLE  col_tank_usa RENAME `col_tank_usa`;
+ALTER TABLE  col_tank_ussr RENAME `col_tank_ussr`;
+ALTER TABLE  config RENAME `config`;
+ALTER TABLE  gk RENAME `gk`;
+ALTER TABLE  medals RENAME  `medals`;
+ALTER TABLE  tabs RENAME  `tabs`;
+ALTER TABLE  tanks RENAME  `tanks`;
+ALTER TABLE  top_tanks RENAME  `top_tanks`;
+ALTER TABLE  users RENAME  `users`;
 
 INSERT INTO `config` (`name`, `value`) VALUES
 ('theme', 'ui-lightness'),
