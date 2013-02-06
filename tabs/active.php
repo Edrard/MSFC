@@ -22,12 +22,6 @@
     ?>
     <script type="text/javascript">
         $(document).ready(function(){
-
-            $('#id-<?=$key;?>').click(function() {
-               check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-               return false;
-            });
-
             $(".all_progress_hide").hide();
             $(".main_progress").show();
             $("#trigger_progress").buttonset();

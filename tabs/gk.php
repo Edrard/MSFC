@@ -73,15 +73,6 @@ $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("
 </div>
 <div align="center">
    <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
-      <script type="text/javascript">
-          $(document).ready(function()
-          {
-              $('#id-<?=$key;?>').click(function() {
-                 check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-                 return false;
-              });
-          });
-      </script>
       <table id="blocked" cellspacing="1" width="100%" class="table-id-<?=$key;?>">
       <thead>
          <tr>

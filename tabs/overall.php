@@ -32,10 +32,6 @@ $(document).ready(function() {
       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
-    $('#id-<?=$key;?>').click(function() {
-       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-       return false;
-    });
 });
 </script>
 <form>

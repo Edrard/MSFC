@@ -83,9 +83,6 @@
             url: "./ajax/activity.php",
             success: function(msg){
                 $("#activity_result").html(msg).show();
-                },
-                complete: function() {
-                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
         });
         $("#activity_settings_b").button({
@@ -99,10 +96,8 @@
           return false;
         });
         $("#activity_settings_m").hide();
-        /***** Check witdh code *****/
         $('#id-<?=$key;?>').click(function() {
            $("#activity_table").trigger('applyWidgets');
-           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
            return false;
         });
 

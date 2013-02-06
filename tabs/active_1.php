@@ -15,16 +15,6 @@
     *
     */
 ?>
-
-<script type="text/javascript" id="js">
-    $(document).ready(function() {
-        $('#id-<?=$key;?>').click(function() {
-           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-           return false;
-        });
-    });
-</script>
-
 <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){  ?>
     <div  id="active_medal_width" align="center">
         <?php if(!empty($medal_resort['list'])){ ?>

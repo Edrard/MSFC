@@ -48,7 +48,6 @@
         $("#change_button_tanks").click();
         $('#id-<?=$key;?>').click(function() {
            $("#tankslist").trigger('applyWidgets');
-           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
            return false;
         });
     });   

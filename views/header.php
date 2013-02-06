@@ -90,6 +90,25 @@
                   }
               });
               $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
+
+              if (typeof window.currentTabID === "undefined") {
+                 window.currentTabID = getTabID();
+                 check_Width($("table.table-id-"+window.currentTabID), $("div#tabs-"+window.currentTabID));
+              }
+              if (typeof window.MenuStatus === "undefined") {
+                 window.MenuStatus = 'visible';
+              }
+              <?php
+                foreach($tabs as $key => $val) {
+                  if(is_numeric($key)) {
+                    echo "
+                      $('#id-$key').click(function() {
+                         check_Width($('table.table-id-$key'), $('div#tabs-$key'));
+                      });
+                    ";
+                  }
+                }
+              ?>
         });
 
         function magic(elem){
@@ -99,6 +118,7 @@
               }
            });
            $(elem).parent('li').addClass("ui-state-active");
+           window.currentTabID = getTabID();
         };
 
         function magic2(elem)
@@ -110,15 +130,18 @@
                     $("#tohide2").fadeIn("fast");
                     $("#chan").removeClass("ui-icon-triangle-1-e");
                     $("#chan").addClass("ui-icon-triangle-1-w");
+                    window.MenuStatus = 'visible';
                 } else {
                     $("#tohide").fadeOut("fast");
                     $("#tohide2").fadeOut("fast");
                     $("#chan").removeClass("ui-icon-triangle-1-w");
                     $("#chan").addClass("ui-icon-triangle-1-e");
+                    window.MenuStatus = 'hidden';
                 }
             }
-
-
+            if(is_numeric(window.currentTabID)) {
+               check_Width($("table.table-id-"+window.currentTabID), $("div#tabs-"+window.currentTabID));
+            }
         };
         function is_numeric(input){
           return typeof(input)=='number';
@@ -130,8 +153,7 @@
           var resultWidth = 0;
           var showWidth =   0;
 
-          elem = document.getElementById('tohide');
-          if(elem.style.display == 'none') {
+          if(window.MenuStatus == 'hidden') {
             menuWidth = 1;
           }
 
@@ -145,6 +167,14 @@
             }
           }
         };
+        function getTabID() {
+          var id = $("#menu .ui-state-active").val();
+          if(is_numeric(id) && (id > 0)) {
+            return id;
+          } else {
+            return 'ajax';
+          }
+        }
     </script>
 </head>
 <body>

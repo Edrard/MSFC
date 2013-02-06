@@ -37,15 +37,6 @@ if($avalTanks['count'] > 1) { ?>
     </div>
 </form>
 <?php } ?>
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $('#id-<?=$key;?>').click(function() {
-               check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-               return false;
-            });
-        });
-    </script>
     <table id="available_tanks" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
         <thead>
             <tr>

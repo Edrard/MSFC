@@ -19,21 +19,18 @@
 <script>
 $(document).ready(function() {
     $( "#triggerperform" ).buttonset();
-
     $(".averageshow").hide();
     $("#change_button_averageshow").click(function() {
       $(".fullshow").hide();
       $(".averageshow").show();
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_button_fullshow").click(function() {
       $(".averageshow").hide();
       $(".fullshow").show();
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
-    });
-    $('#id-<?=$key;?>').click(function() {
-       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-       return false;
     });
 });
 </script>
