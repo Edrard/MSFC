@@ -18,14 +18,17 @@
 
 <script type="text/javascript" id="js">
     $(document).ready(function() {
-        check_Width($("table#active_medal_1"), $("div#active_medal_width"));
+        $('#id-<?=$key;?>').click(function() {
+           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+           return false;
+        });
     });
 </script>
 
 <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){  ?>
     <div  id="active_medal_width" align="center">
         <?php if(!empty($medal_resort['list'])){ ?>
-            <table id="active_medal_1" width="100%" cellspacing="1">
+            <table id="active_medal_1" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
                 <thead>
                     <tr>
                         <th><?=$lang['name'];?></th>

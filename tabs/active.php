@@ -23,7 +23,10 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            check_Width($("table#active_main"), $("div#active_main_width"));
+            $('#id-<?=$key;?>').click(function() {
+               check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+               return false;
+            });
 
             $(".all_progress_hide").hide();
             $(".main_progress").show();
@@ -31,26 +34,26 @@
             $("#show_main_progress").click(function() {
                 $(".all_progress_hide").hide();
                 $(".main_progress").show();
-                check_Width($("table.table-id-<?=$key;?>"), $("div#active_main_width"));
+                check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 return false;
             });
             $("#show_average_progress").click(function() {
                 $(".all_progress_hide").hide();
                 $(".average_progress").show();
-                check_Width($("table.table-id-<?=$key;?>"), $("div#active_main_width"));
+                check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 return false;
             });
         });
     </script>
-    <div align="center" id="active_main_width">
+    <div align="center">
         <form>
             <div id="trigger_progress" align="center">
                 <input type="radio" id="show_main_progress" name="trigger_progress" checked="checked" /><label for="show_main_progress"><?=$lang['activity_main_progress'];?></label>
                 <input type="radio" id="show_average_progress" name="trigger_progress" /><label for="show_average_progress"><?=$lang['activity_average_progress'];?></label>
             </div>
-        </form>                                   
+        </form>
         <table id="active_main" cellspacing="1" class="table-id-<?=$key;?> ui-widget-content">
-            <thead> 
+            <thead>
                 <tr>
                     <th><?=$lang['name'];?></th>
                     <?php foreach(array_keys($slice) as $title){?>
