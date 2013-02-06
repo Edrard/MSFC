@@ -29,6 +29,7 @@
                 $rat['mdef'][$name] = $rating[$name]['mdef'] = number_format(round($stat['perform'][$lang['defend']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
 
 
+
                 if($rating[$name]['mdmg'] >= $max['mdmg']){
                     $max['mdmg'] = $rating[$name]['mdmg'];  
                 }
@@ -150,7 +151,7 @@
                 if(count($effect) > 0){
                     $feff[$name] = 0;
                     if($effect['lvl'] != 0){
-                        $feff[$name] = round($effect['dem']*(10/$effect['lvl'])*(0.15+2*$effect['lvl']/100) + $effect['des']*(0.35-2*$effect['lvl']/100)*1000 + $effect['spo']*0.2*1000 + $effect['cap']*0.15*1000 + $effect['def']*0.15*1000,2);
+                        $feff[$name] = number_format(($effect['dem']*(10/$effect['lvl'])*(0.15+2*$effect['lvl']/100) + $effect['des']*(0.35-2*$effect['lvl']/100)*1000 + $effect['spo']*0.2*1000 + $effect['cap']*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
                     }
                 }
             }else{

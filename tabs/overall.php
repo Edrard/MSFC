@@ -15,24 +15,49 @@
     *
     */
 ?>
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $('#id-<?=$key;?>').click(function() {
-           check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
-           return false;
-        });
+<script>
+$(document).ready(function() {
+    $( "#triggeroverall" ).buttonset();
+    $(".overall_average").hide();
+    $(".overall_value").show();
+    $("#change_overall_value").click(function() {
+      $(".overall_average").hide();
+      $(".overall_value").show();
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+      return false;
     });
+    $("#change_overall_average").click(function() {
+      $(".overall_value").hide();
+      $(".overall_average").show();
+      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+      return false;
+    });
+    $('#id-<?=$key;?>').click(function() {
+       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
+       return false;
+    });
+});
 </script>
+<form>
+    <div id="triggeroverall" align="center">
+        <input type="radio" id="change_overall_value" name="triggeroverall" checked="checked" /><label for="change_overall_value"><?=$lang['overall_value'];?></label>
+        <input type="radio" id="change_overall_average" name="triggeroverall" /><label for="change_overall_average"><?=$lang['overall_average'];?></label>
+    </div>
+</form>
 <div align="center">
-    <table id="overall" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
+    <table id="overall" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
-                    <th class="{sorter: 'digit'}"><?php echo $column; ?></th>
+                    <th class="{sorter: 'digit'} <? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?php echo $column; ?></th>
+                <?php } ?>
+                <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
+                    <?php if($lang['games_p'] != $column) { ?>
+                    <th class="{sorter: 'digit'} overall_average sorter-percent"><?php echo $column; ?></th>
                     <?php } ?>
-                <th><?php echo $lang['eff_ret']; ?></th>
+                <?php } ?>
+                <th class="overall_value overall_average"><?php echo $lang['eff_ret']; ?></th>
             </tr>  
         </thead>
         <tbody>
@@ -62,10 +87,15 @@
                 <tr> 
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
                             target="_blank"><?php echo $name; ?></a></td>
-                    <?php foreach($val['overall'] as $result){ ?>
-                        <td><?php echo $result; ?></td>                             
+                    <?php foreach($val['overall'] as $column => $result){ ?>
+                        <td class="<? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?php echo $result; ?></td>
+                    <?php } ?>
+                    <?php foreach($val['overall'] as $column => $result){ ?>
+                        <?php if($lang['games_p'] != $column) { ?>
+                        <td class="overall_average"><?php echo number_format($result/$val['overall'][$lang['games_p']]*100,2); ?>%</td>
                         <?php } ?>
-                    <td><?php if(is_numeric($eff_rating[$name])) { echo '<font color="'.$color.'">'.$eff_rating[$name].'</font>'; } else { echo '<font color="red">0</font>';} ?></td>
+                    <?php } ?>
+                    <td class="overall_value overall_average"><?php if(is_numeric($eff_rating[$name])) { echo '<font color="'.$color.'">'.$eff_rating[$name].'</font>'; } else { echo '<font color="red">0</font>';} ?></td>
                 </tr>
                 <?php } ?>
         </tbody>  
