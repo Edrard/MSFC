@@ -65,33 +65,12 @@
 
     //include_once(ROOT_DIR.'/views/header.php');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php if (!isset($config['theme'])) {
-            $config['theme'] = 'ui-lightness'; } ?>
-        <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
-        <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
-        <script type="text/javascript" src="./js/jquery.js"></script>
-        <script type="text/javascript" src="./js/jquery.metadata.js"></script>
-        <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
-        <script type="text/javascript" src="./js/jquery.tablesorter.widgets.js"></script>
-        <script type="text/javascript" src="./js/jquery.ui.js"></script>
-        <script type="text/javascript" src="./js/jquery.vticker.js"></script>
-        <script type="text/javascript" src="./js/msfc.shared.js"></script>
-        <script type="text/javascript" id="js">
-           $(document).ready(function()
-           {
-               $("#poss").tablesorter({sortList:[[1,0]]});
-               $('#id-<?=$key;?>').click(function() {
-                  $("#poss").trigger('applyWidgets');
-                  return false;
-               });
-           });
-        </script>
-    </head>
-    <body>
+<script type="text/javascript" id="js">
+   $(document).ready(function()
+   {
+       $("#poss").tablesorter({sortList:[[1,0]]});
+   });
+</script>
 <div align="center">
     <table id="poss" cellspacing="1" cellpadding="2" width="100%">
         <thead> 
@@ -143,6 +122,4 @@
              <p><?=$lang['total_gold'].': <span style="color: #ba904d;">'.$total.'</span>'; ?> <img src="./images/currency-gold.png"></p>
     <?php    };
           }; ?>
-                </div>
-                    </body>
-</html>
+</div>
