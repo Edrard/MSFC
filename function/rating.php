@@ -151,7 +151,7 @@
                 if(count($effect) > 0){
                     $feff[$name] = 0;
                     if($effect['lvl'] != 0){
-                        $feff[$name] = number_format(($effect['dem']*(10/($fmid + 2))*(0.21+3*$fmid/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
+                        $feff[$name] = number_format(($effect['dem']*(10/($effect['lvl'] + 2))*(0.21+3*$effect['lvl']/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
                     }                                 
                 }                         
             }else{
