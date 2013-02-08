@@ -85,7 +85,7 @@
             <?php if (isset($battel['request_data'])){
                     foreach ($battel['request_data']['items'] as $val){
                         if (strlen($val['time']) > 1){
-                            $date = date('H:i',($val['time'] + $config['time']*60*60));
+                            $date = date('H:i',$val['time']);
                         } else {
                             $date = '--:--';
                         }

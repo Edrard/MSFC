@@ -16,12 +16,7 @@
     */
 ?>
 <?
-if(isset($_GET['checkdate'])) {
-echo $lang['gk_info_7'].date('d.m.Y H:i:s', time());
-echo $lang['gk_info_8'].date('d.m.Y H:i:s', time()+$config['time']*60*60);
-echo '<br />';
-}
-$cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
+$cur_time = time();
 ?>
 
 <script type="text/javascript">
@@ -94,7 +89,7 @@ $cur_time = mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("
                         $gk_hours = floor(($blocked[$name][$column]-$cur_time-($gk_days*24*60*60))/(60*60));
                         $gk_min = floor(($blocked[$name][$column]-$cur_time-($gk_days*24*60*60)-($gk_hours*60*60))/(60));
                         $gk_title = $lang['gk_info_2'];
-                        $gk_title .= ' '.date('d.m.Y H:i:s', ($blocked[$name][$column]+$config['time']*60*60)).'<br /> ';
+                        $gk_title .= ' '.date('d.m.Y H:i:s', ($blocked[$name][$column])).'<br /> ';
                         $gk_title .= $lang['gk_info_3'];
                         $gk_title .= $lang['gk_info_4'].$gk_days.'<br /> ';
                         $gk_title .= $lang['gk_info_5'].$gk_hours.'<br /> ';
