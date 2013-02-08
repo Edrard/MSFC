@@ -217,8 +217,20 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><?=$lang['admin_offset'];?></td>
-                                            <td><input type="text" name="time" value="<?=$config['time']; ?>" size="2" /> <?=$lang['admin_hour'];?></td>
+                                            <td><?=$lang['timezone'];?></td>
+                                            <td>
+                                                <select name="time">
+                                                <?php foreach($lang_tz['timezones_list'] as $offset => $region) { ?>
+                                                  <option value="<?=$offset;?>" <?php if($config['time']==$offset){ echo 'selected="selected"';}?>><?=$region;?></option>
+                                                <?php } ?>
+                                                </select>
+                                                <br />
+                                                <?php
+                                                   $tz_current = new DateTime(NULL, new DateTimeZone(date_default_timezone_get()));
+                                                   $american_pm = $tz_current->format('H') > 12 ? ' ('. $tz_current->format('g:i a'). ')' : '';
+                                                   echo $lang['cur_timezone'].$tz_current->format('d.m.Y H:i:s').$american_pm;
+                                                ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><?=$lang['admin_cron'];?></td>
