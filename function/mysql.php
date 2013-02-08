@@ -56,7 +56,7 @@
                 } else {
                     $this->prefix = 'msfc_';
                 }
-
+                echo $this->prefix; die;
                 $this->pattern = '/([`\'"])(col_medals|col_players|col_rating_tank[\w%]*|col_tank[\w%]*|config|tabs|top_tanks|tanks|users|gk)([`\'"])/';
                 $this->replacement = '$1'.$this->prefix.'$2$3';
 
@@ -108,6 +108,7 @@
                 if(preg_match('/^\d/', $_POST['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_POST['prefix'])) <=5){
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_POST['prefix']))){
                         $_POST['prefix'] = strtolower($_POST['prefix']);
+                        
                         if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'])){
                             $dbprefix = $_POST['prefix'];
                         }else{
@@ -118,7 +119,7 @@
                 }
             }
         }
-    }
+    }                 
     //print_r($_POST);  die;
     if(isset($_GET['multi'])){
         $dbprefix = $_GET['multi'].'_';
