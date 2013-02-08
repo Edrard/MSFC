@@ -56,7 +56,6 @@
                 } else {
                     $this->prefix = 'msfc_';
                 }
-                echo $this->prefix; die;
                 $this->pattern = '/([`\'"])(col_medals|col_players|col_rating_tank[\w%]*|col_tank[\w%]*|config|tabs|top_tanks|tanks|users|gk)([`\'"])/';
                 $this->replacement = '$1'.$this->prefix.'$2$3';
 
