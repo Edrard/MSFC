@@ -162,8 +162,12 @@
             if (resultWidth <= 0) {
               showWidth = windowWidth - menuWidth - 50;
               element.css({'overflow-x': 'scroll', 'max-width': showWidth+'px'});
+              $('#table_resized').remove();
+              element.before('<div id="table_resized" class="ui-state-highlight ui-corner-all" style="text-align:center;" align="center"><?=$lang["table_resized"];?></div>');
+
             } else {
               element.css({'overflow-x': 'visible', 'max-width': 'auto'});
+              $('#table_resized').remove();
             }
           }
         };

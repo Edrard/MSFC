@@ -384,4 +384,6 @@
     $lang['averag_surv'] = 'Average survive, %';
     $lang['dead_heat'] = 'Dead heat';
     $lang['no_new'] = 'No new tanks';
+
+    $lang['table_resized'] = 'The table is too wide, and displayed partially. To see hidden part of table, use scroll at the bottom of table.';
 ?>

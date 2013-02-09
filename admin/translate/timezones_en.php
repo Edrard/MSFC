@@ -58,5 +58,5 @@ $lang_tz['timezones_list'] = array(
       '14'	=> '[UTC + 14] Line Island Time',
 );
 $lang['timezone'] = 'Time zone: ';
-$lang['cur_timezone'] = 'Current server time: ';
+$lang['cur_timezone'] = 'Current module time: ';
 ?>

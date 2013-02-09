@@ -57,5 +57,5 @@ $lang_tz['timezones_list'] = array(
         '14'	=> '[UTC + 14] Остров Лайн',
 );
 $lang['timezone'] = 'Часовой пояс: ';
-$lang['cur_timezone'] = 'Текущее серверное время: ';
+$lang['cur_timezone'] = 'Текущее время модуля: ';
 ?>
