@@ -16,7 +16,7 @@
     */
 ?>
 <?php
-    error_reporting(E_ALL);
+    error_reporting(E_ALL & ~E_STRICT);
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
         define('LOCAL_DIR', dirname(__FILE__));

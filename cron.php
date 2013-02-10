@@ -17,7 +17,7 @@
 ?>
 <?php
     header("Content-type: text/html; charset=utf-8");
-    error_reporting(E_ALL);
+    error_reporting(E_ALL & ~E_STRICT);
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
         define('ROOT_DIR', dirname(__FILE__));
