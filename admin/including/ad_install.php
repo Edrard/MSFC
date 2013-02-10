@@ -18,7 +18,7 @@
 <?php
     if (isset($_POST['recdb'])){
 
-        //recreat_db();
+        recreat_db();
         insert_file(LOCAL_DIR.'/sql/clan.sql');
 
         if (isset($_POST['clan'])){

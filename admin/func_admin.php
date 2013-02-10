@@ -531,31 +531,41 @@
     {
         global $db,$config;
 
-        $sql = "SELECT `prefix` FROM `multiclan`;";
+        $sql = "SHOW TABLES LIKE 'multiclan';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
+            $multi_exist = $q->fetchColumn();
         }else{
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        foreach($all_prefix as $t) {
 
-            $sql = "show tables like '".$t['prefix']."%'";
+        if($multi_exist == 'multiclan') {
+
+            $sql = "SELECT `prefix` FROM `multiclan`;";
             $q = $db->prepare($sql);
             if ($q->execute() == TRUE) {
-                $tables = $q->fetchAll();
+                $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
             }else{
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
-            foreach($tables as $tab){
-                $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
-                //echo $sql;
+            foreach($all_prefix as $t) {
+
+                $sql = "show tables like '".$t['prefix']."%';";
                 $q = $db->prepare($sql);
-                if ($q->execute() != TRUE) {
+                if ($q->execute() == TRUE) {
+                    $tables = $q->fetchAll();
+                }else{
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
+                foreach($tables as $tab){
+                    $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
+                    //echo $sql;
+                    $q = $db->prepare($sql);
+                    if ($q->execute() != TRUE) {
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                    }
+                }
             }
-
         }
 
         $sql = "DROP TABLE IF EXISTS multiclan;";
