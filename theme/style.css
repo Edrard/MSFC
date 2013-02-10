@@ -74,6 +74,15 @@ table.tablesorter tbody tr.light-row td {
   padding: 0.2em !important;
   width: 200px !important;
 }
+label.error {
+  color: red;
+  float: left;
+  padding-left: 0.5em;
+  vertical-align: top;
+  position: absolute;
+  display: inline;
+  overflow: visible;
+}
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
 

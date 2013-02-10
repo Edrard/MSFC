@@ -515,23 +515,23 @@
                             <script>
                                 $("#multiclan").validate();
                                 if ($("#multiclan").valid()) {
-                                    $("#multiclan").submit(function(e) {
-                                        var form = $(this);
-                                        if (!e.isDefaultPrevented()) {
-
-                                            // submit with AJAX
-                                            $.getJSON("../ajax/mc_valid.php?" + form.serialize(), function(json) {
-                                                // everything is ok. (server returned true)
-                                                if (json["id"] === "true")  {
-                                                    document.forms["multiclan"].submit();
-                                                } else {     
-
-                                                    form.data("validator").invalidate(json);    
-                                                }
-                                            });      
-                                            e.preventDefault();
-                                        }
-                                    });
+                                  $("#multiclan").submit(function(e) {
+                                    var form = $(this);
+                                    if (!e.isDefaultPrevented()) {
+                                        $("label.error").remove();
+                                        // submit with AJAX
+                                        $.getJSON("../ajax/mc_valid.php?" + form.serialize(), function(json) {
+                                            // everything is ok. (server returned true)
+                                            if (json["id"] === "true")  {
+                                                document.forms["multiclan"].submit();
+                                            } else {
+                                                form.data("validator").showErrors(json);
+                                                $("label.error").css("display","inline");
+                                            }
+                                        });
+                                        e.preventDefault();
+                                    }
+                                  });
                                 }
                             </script>
                             <br><br>

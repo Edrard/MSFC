@@ -54,6 +54,9 @@
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_GET['prefix']))){
 
                         $_GET['prefix'] = strtolower($_GET['prefix']);
+                        if (preg_match("/_/", $_GET['prefix'])) {
+                          $message['prefix'] = $lang['error_multi_4'];
+                        }
                         if(!preg_match("/[a-zA-Z0-9]{1,5}_/i", $_GET['prefix'])){
                             $_GET['prefix'] = $_GET['prefix'].'_';
                         }
