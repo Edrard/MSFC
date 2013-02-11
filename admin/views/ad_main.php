@@ -527,6 +527,7 @@
                                             } else {
                                                 form.data("validator").showErrors(json);
                                                 $("label.error").css("display","inline");
+                                                $("label.error").addClass("ui-state-error ui-corner-all");
                                             }
                                         });
                                         e.preventDefault();
