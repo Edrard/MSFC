@@ -161,7 +161,9 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
               die(show_message($q->errorInfo(),__line__,__file__,$tsql));
           }
        }
-    unset($params, $configg, $medss );
+    unset($params, $configg, $medss, $tabss, $temps);
+    $cache->clear_all(array(), ROOT_DIR.'/cache/');
+
    }
 ?>
    <div align="center" class="ui-state-highlight ui-widget-content">

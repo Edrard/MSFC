@@ -1,22 +1,3 @@
-<script type="text/javascript" id="js">
-  $(document).ready(function()
-    {
-      $("#avt1").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}},sortList:[[2,1]], widgetOptions: {uitheme : 'bootstrap'}});
-       <? for ($i=2; $i<=6; $i++) {?>
-       $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[1,0]], widgetOptions: {uitheme : 'bootstrap'}});
-       <? }?>
-       <? for ($i=7; $i<=9; $i++) {?>
-       $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
-       <? }?>
-      $('#id-<?=$key;?>').click(function() {
-       <? for ($i=0; $i<=9; $i++) {?>
-         $("#avt<?=$i;?>").trigger('applyWidgets');
-       <? }?>
-         return false;
-      });
-    });
-</script>
-
 <div align="center">
  <?php $avt_memb = $new['data']['members_count'];
        $avt = rating($res, $lang);
@@ -43,7 +24,7 @@
 
 ?>
 
-<table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; " class="ui-widget-content">
+<table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
    <tbody>
     <tr>
       <td align="center">
@@ -375,10 +356,10 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
  </table>
 
     <?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ ?>
-        <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; " class="ui-widget-content">
+        <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
             <tbody>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" width="33%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt7">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['loosed_today'];?></th>
@@ -401,7 +382,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                             </tbody>
                         </table>
                     </td>
-                    <td valign="top">
+                    <td valign="top" width="33%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt8" style="position: relative;">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['new_tanks'];?></th>
@@ -419,16 +400,17 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                       foreach($new_tanks as $val){
                                         if(isset($roster_id[$val['account_id']]['account_id'])){ ?>
                                         <tr style="height:31px;">
-                                            <td width="30%" align="left"><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>"
+                                            <td align="left"><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>"
                                                     target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
-                                            <td width="30%" align="right">
+                                            <td align="right">
                                               <?=$val['tank']; ?>
-                                            <td width="40%" align="right">
+                                            </td>
+                                            <td width="135px" align="right">
                                               <?php
                                               foreach ($tanks_list as $tanks_list_key => $wall)
                                                  if ($wall['title'] == $val['title']) {
-                                                    print_R('<img style="right: 50px; " src="http://'.$config['gm_url'].'/static/3.6.0.1/common/img/nation/'.$wall['nation'].'.png" />');
-                                                    print_R('<img style="right: 0px; position: absolute;" src="http://'.$config['gm_url'].$wall['link'].'" />');};
+                                                    print_R('<img src="http://'.$config['gm_url'].'/static/3.6.0.1/common/img/nation/'.$wall['nation'].'.png" />');
+                                                    print_R('<img style="right: -50px; position: absolute;" src="http://'.$config['gm_url'].$wall['link'].'" />');};
                                               ?>
                                             </td>
                                         </tr>
@@ -441,7 +423,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                             </tbody>
                         </table>
                     </td>
-                    <td valign="top">
+                    <td valign="top" width="33%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt9">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['new_players'];?></th>
