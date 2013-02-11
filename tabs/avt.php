@@ -47,7 +47,7 @@
    <tbody>
     <tr>
       <td align="center">
-        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt2">
+        <table cellspacing="2" cellpadding="0" width="100%" id="avt2">
          <thead style="font-weight: bold;">
             <th align="center" colspan="2"><?=$lang['greeting_top1']; ?></th>
          </thead>
@@ -65,7 +65,7 @@
         </table>
     </td>
     <td align="center">
-        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt3">
+        <table cellspacing="2" cellpadding="0" width="100%" id="avt3">
          <thead style="font-weight: bold;">
             <th align="center" colspan="2"><?=$lang['greeting_top2']; ?></th>
          </thead>
@@ -80,7 +80,7 @@
         </table>
     </td>
     <td align="center">
-        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt4">
+        <table cellspacing="2" cellpadding="0" width="100%" id="avt4">
          <thead style="font-weight: bold;">
             <th align="center" colspan="2"><?=$lang['greeting_top3']; ?></th>
          </thead>
@@ -95,7 +95,7 @@
         </table>
     </td>
     <td align="center">
-        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt5">
+        <table cellspacing="2" cellpadding="0" width="100%" id="avt5">
          <thead style="font-weight: bold;">
             <th align="center" colspan="2"><?=$lang['greeting_top4']; ?></th>
          </thead>
@@ -110,7 +110,7 @@
         </table>
     </td>
     <td align="center">
-        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt6">
+        <table cellspacing="2" cellpadding="0" width="100%" id="avt6">
          <thead style="font-weight: bold;">
             <th align="center" colspan="2"><?=$lang['greeting_top5']; ?></th>
          </thead>
@@ -379,7 +379,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
             <tbody>
                 <tr>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt7">
+                        <table cellspacing="2" cellpadding="0" width="100%" id="avt7">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['loosed_today'];?></th>
                             </thead>
@@ -402,7 +402,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                         </table>
                     </td>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt8" style="position: relative;">
+                        <table cellspacing="2" cellpadding="0" width="100%" id="avt8" style="position: relative;">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['new_tanks'];?></th>
                             </thead>
@@ -442,7 +442,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                         </table>
                     </td>
                     <td valign="top">
-                        <table cellspacing="2" cellpadding="0" border="0" width="100%" id="avt9">
+                        <table cellspacing="2" cellpadding="0" width="100%" id="avt9">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['new_players'];?></th>
                             </thead>

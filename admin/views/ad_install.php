@@ -23,7 +23,7 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
     <div style="height: 25%; "></div>
     <div class="adinsider">
         <form action="./index.php" method="post">
-            <table width="300px" border="0" cellspacing="4" cellpadding="0" class="ui-widget-content">
+            <table width="300px" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>
                     <td colspan="2" align="center">
                         <h3><?=$lang['admin_db_creat'];?></h3>
