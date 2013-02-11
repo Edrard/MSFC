@@ -126,12 +126,6 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
        if ($q->execute() <> TRUE) {
            die(show_message($q->errorInfo(),__line__,__file__,$tsql));
        }
-       //time update
-       $sql = "UPDATE `config` SET `value`='none' WHERE `name` = 'time';";
-       $q = $db->prepare($tsql);
-       if ($q->execute() <> TRUE) {
-           die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-       }
        //some movements for avt tab
        $avtexist = false;
        $sql = 'SELECT id, file FROM `tabs` ORDER BY ID';
