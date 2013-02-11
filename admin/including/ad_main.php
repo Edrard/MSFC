@@ -49,6 +49,16 @@
     }
     if (isset($_POST['consub']) || isset($_POST['consub_2'])){
         insert_config($_POST);
+        if(isset($_POST['consub'])) {
+          if (!headers_sent()) {
+              header ( 'Location: index.php?page=main#tabs-1' );
+              exit;
+          } else { ?>
+          <script type="text/javascript">
+              location.replace("index.php?page=main#tabs-1");
+          </script>
+          <?      }
+        }
     } 
     if (isset($_POST['mcsort'])){
         edit_multi_clan($_POST);
