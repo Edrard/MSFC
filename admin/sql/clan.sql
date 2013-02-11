@@ -196,7 +196,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('cache', '12'),
 ('theme', 'ui-lightness'),
 ('pars', 'curl'),
-('time', 'none'),
+('time', '2'),
 ('cron', '1'),
 ('news', '1'),
 ('cron_time', '23'),
