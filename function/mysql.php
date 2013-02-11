@@ -119,10 +119,6 @@
             }
         }
     }                 
-    //print_r($_POST);  die;
-    if(isset($_GET['multi'])){
-        $dbprefix = $_GET['multi'].'_';
-    }
 
     try {
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
@@ -135,30 +131,21 @@
     $db->query ( 'SET character_set_results = '.$sqlchar );
     $db->query ( 'SET SESSION wait_timeout = 60;');
 
-    if (!function_exists('read_multiclan_main')) {
-        function read_multiclan_main($dbprefix)
-        {
-            global $db;
+    if(isset($_GET['multi']) and preg_match("/[a-zA-Z0-9]{1,5}/i", $_GET['multi']) and (strlen($_GET['multi'])<=5)) {
 
-            if(!$dbprefix){
-                $dbprefix = 'msfc';
-            }
-            $sql = "SELECT COUNT(*) FROM multiclan WHERE main = '1' AND prefix = '".$dbprefix."';";
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $multi = $q->fetchAll();
-            }else{
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-            if($multi[0][0] != 1){
-                $insert = "prefix = '".$dbprefix."'";
-                $sql = "UPDATE multiclan SET ".$insert." WHERE main = '1';";
-                //echo $sql;
-                $q = $db->prepare($sql);
-                $q->execute();
-            }
+        $tmp_prefix = $_GET['multi'].'_';
+
+        $sql = "SELECT COUNT(id) FROM multiclan WHERE prefix = '".$tmp_prefix."';";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $multi = $q->fetchColumn();
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        if($multi == 1){
+          $db->change_prefix($tmp_prefix);
+        } else {
+          unset($_GET['multi']);
         }
     }
-    /* Проверяем совпадает ли данные в конфиге и в мультиклане для основного клана */
-    //read_multiclan_main($dbprefix);
 ?>
