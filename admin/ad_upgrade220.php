@@ -70,94 +70,92 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                 if ($val[0]== $val2) unset($int11[$key]);
               }
               foreach ($alter as $key2 => $val22) {
-                if ($val[0]== $alter[$key2]) {
-                    $alter2[$key2] = $alter[$key2];
+                if ($val[0]== $val22) {
+                    $alter2[$key2] = $val22;
                     unset($alter[$key2]);
                 }
               }
            }
            if (!empty($alter2)) {
-             //update fields from medals mod
-             $tsql = "ALTER TABLE `col_medals` ";
-             foreach ($alter2 as $key2 => $val2) {
-                if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
-                $tsql .= "CHANGE `".$val2."` "."`".$tinyint1[$key2]."` TINYINT(1) NOT NULL";
-                unset($tinyint1[$key2]);
-             }
-             $tsql .= ";";
-             $q = $db->prepare($tsql);
-             if ($q->execute() <> TRUE) {
-                 die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-             }
+                //update fields from medals mod
+                $tsql = "ALTER TABLE `col_medals` ";
+                foreach ($alter2 as $key2 => $val2) {
+                   if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
+                   $tsql .= "CHANGE `".$val2."` `".$tinyint1[$key2]."` TINYINT(1) NOT NULL";
+                   unset($tinyint1[$key2]);
+                }
+                $tsql .= ";";
+                $q = $db->prepare($tsql);
+                if ($q->execute() <> TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$tsql));
+                }
            }
            if (!empty($int11)) {
-             //add new fields int (11)
-             $tsql = "ALTER TABLE `col_medals` ";
-             foreach ($int11 as $key11 => $val11) {
-                if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
-                $tsql .= "ADD `".$val11."` ". "INT(11) NOT NULL";
-             }
-             $tsql .= ";";
-             $q = $db->prepare($tsql);
-             if ($q->execute() <> TRUE) {
-                 die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-             }
+               //add new fields int (11)
+               $tsql = "ALTER TABLE `col_medals` ";
+               foreach ($int11 as $key11 => $val11) {
+                  if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
+                  $tsql .= "ADD `".$val11."` INT(11) NOT NULL";
+               }
+               $tsql .= ";";
+               $q = $db->prepare($tsql);
+               if ($q->execute() <> TRUE) {
+                   die(show_message($q->errorInfo(),__line__,__file__,$tsql));
+               }
            }
            if (!empty($tinyint1)) {
-             //add new fields tinyint (1)
-             $tsql = "ALTER TABLE `col_medals` ";
-             foreach ($tinyint1 as $key1 => $val1) {
-                if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
-                $tsql .= "ADD `".$val1."` ". "TINYINT(1) NOT NULL";
-             }
-             $tsql .= ";";
-             print_R($tsql);
-             $q = $db->prepare($tsql);
-             if ($q->execute() <> TRUE) {
-                 die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-             }
+                //add new fields tinyint (1)
+                $tsql = "ALTER TABLE `col_medals` ";
+                foreach ($tinyint1 as $key1 => $val1) {
+                   if ($tsql[strlen($tsql)-1] <> ' ') $tsql .= ', ';
+                   $tsql .= "ADD `".$val1."` TINYINT(1) NOT NULL";
+                }
+                $tsql .= ";";
+                $q = $db->prepare($tsql);
+                if ($q->execute() <> TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$tsql));
+                }
            }
-       } else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
-       // redirecting available tanks to new tab
-       $sql = "UPDATE `tabs` SET `file`='available_tanks.php' WHERE `file`='aval_top_tank.php';";
-       $q = $db->prepare($tsql);
-       if ($q->execute() <> TRUE) {
-           die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-       }
-       //some movements for avt tab
-       $avtexist = false;
-       $sql = 'SELECT id, file FROM `tabs` ORDER BY ID';
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $temps = $q->fetchAll(PDO :: FETCH_ASSOC);
-           foreach ($temps as $val) {
-               $tabss[$val['id']] = $val['file'];
-               if ($val['file'] == 'avt.php') { $avtexist = true;} ;
+           // redirecting available tanks to new tab
+           $tsql = "UPDATE `tabs` SET `file`='available_tanks.php' WHERE `file`='aval_top_tank.php';";
+           $q = $db->prepare($tsql);
+           if ($q->execute() <> TRUE) {
+               die(show_message($q->errorInfo(),__line__,__file__,$tsql));
            }
-       } else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
-       if (!($avtexist)) {
-          $i = 1; $sql = '';
-          if (isset($tabss[$i])) { $tempfile = $tabss[$i]} ;
-          for ($i = 1; $i <= 999; $i++) {
-              if (!isset($tabss[$i])) {
-                 $sql = "UPDATE `tabs` SET `id`='".$i."' WHERE `file`='".$tabss[$i]."';";
-                 break;
-              }
-          }
-          $sql .= "INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
-                   (1, 'Приветственное', 'avt.php', 0, 1, 'all');";
-          $q = $db->prepare($sql);
-          if ($q->execute() <> TRUE) {
+           //some movements for avt tab
+           $avtexist = false;
+           $tsql = 'SELECT id, file FROM `tabs` ORDER BY ID';
+           $q = $db->prepare($tsql);
+           if ($q->execute() == TRUE) {
+               $temps = $q->fetchAll(PDO :: FETCH_ASSOC);
+               foreach ($temps as $val) {
+                   $tabss[$val['id']] = $val['file'];
+                   if ($val['file'] == 'avt.php') { $avtexist = true;} ;
+               }
+           } else {
               die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-          }
+           }
+           if (!($avtexist)) {
+              $i = 1; $sql = '';
+              if (isset($tabss[$i])) { $tempfile = $tabss[$i];} ;
+              for ($i = 1; $i <= 999; $i++) {
+                  if (!isset($tabss[$i])) {
+                       $tsql = "UPDATE `tabs` SET `id`='".$i."' WHERE `file`='".$tabss[$i]."';";
+                       break;
+                  }
+              }
+              $tsql .= "INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
+                       (1, 'Приветственное', 'avt.php', 0, 1, 'all');";
+              $q = $db->prepare($tsql);
+              if ($q->execute() <> TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$tsql));
+              }
+           }
+           unset($params, $configg, $medss, $tabss, $temps);
+           $cache->clear_all(array(), ROOT_DIR.'/cache/');
+       } else {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
        }
-    unset($params, $configg, $medss, $tabss, $temps);
-    $cache->clear_all(array(), ROOT_DIR.'/cache/');
-
    }
 ?>
    <div align="center" class="ui-state-highlight ui-widget-content">
@@ -168,8 +166,8 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
         header ( 'Location: '.ROOT_DIR.'index.php');
         exit;
    } else { print_R('<script type="text/javascript">
-        location.replace("Location: '.ROOT_DIR.'index.php");
+        location.replace("./index.php");
         </script>');
    }
-   ?>
+?>
 </div>

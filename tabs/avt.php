@@ -405,7 +405,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                             <td align="right">
                                               <?=$val['tank']; ?>
                                             </td>
-                                            <td width="135px" align="right">
+                                            <td width="130px" align="right">
                                               <?php
                                               foreach ($tanks_list as $tanks_list_key => $wall)
                                                  if ($wall['title'] == $val['title']) {
