@@ -192,7 +192,7 @@
         return $max;
 
     }
-    function medal_progress($start = 0,$end = -1){
+    function medal_progress($start = 0,$end = -1,$roster_id = null){
 
         global $db;
         $diff['unsort'] = array();
@@ -231,7 +231,7 @@
                 $dfirst_new[$val['account_id']] = $val;
             }
             foreach($dlast as $vals){
-                if(isset($dfirst_new[$vals['account_id']])){
+                if(isset($dfirst_new[$vals['account_id']]) && isset($roster_id[$vals['account_id']])){
                     foreach($vals as $key => $val){
                         if(!is_numeric($key) && $key != 'account_id' && $key != 'up' && $key != 'maxDiehardSeries' && $key != 'maxInvincibleSeries' && $key != 'maxKillingSeries' && $key != 'maxPiercingSeries' && $key != 'maxSniperSeries' && $key != 'medalWittmann' ){
                             $diff['unsort'][$vals['account_id']][$key] = $val - $dfirst_new[$vals['account_id']][$key];    

@@ -95,7 +95,7 @@
         $rand_keys = array_rand($res, 1);
         $eff_rating = eff_rating($res,$lang);
         if($config['cron'] == 1 && $col_check > 2){
-            $medal_progress = medal_progress((now() - $config['medal_progress']),now());
+            $medal_progress = medal_progress((now() - $config['medal_progress']),now(),$roster_id);
             $medal_resort = medals_resort($medal_progress,$roster_id);
             $best_medal_progress = best_medal_progress($medal_progress['unsort']);
             unset($medal_progress);
