@@ -71,7 +71,7 @@
         }
         return $come;
     }                                                    
-    function player_progress_main($start = 0,$end = -1){
+    function player_progress_main($roster = null, $start = 0,$end = -1){
 
         global $db;
         $diff = array();
@@ -107,7 +107,9 @@
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             foreach($dfirst as $val){
+              if(isset($roster[$val['name']])) {
                 $dfirst_new[$val['name']] = $val;
+              }
             }
             foreach($dlast as $vals){
                 if(isset($dfirst_new[$vals['name']])){
@@ -192,7 +194,7 @@
         return $max;
 
     }
-    function medal_progress($start = 0,$end = -1){
+    function medal_progress($roster_id = null, $start = 0,$end = -1){
 
         global $db;
         $diff['unsort'] = array();
@@ -228,7 +230,9 @@
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             foreach($dfirst as $val){
+              if(isset($roster_id[$val['account_id']])) {
                 $dfirst_new[$val['account_id']] = $val;
+              }
             }
             foreach($dlast as $vals){
                 if(isset($dfirst_new[$vals['account_id']])){
