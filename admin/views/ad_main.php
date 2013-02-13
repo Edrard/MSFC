@@ -176,7 +176,7 @@
                         </div>
                     </div>
                     <div id="tabs-1">
-                        <div align="center">
+                        <div align="left">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-1" method="post">
                                 <table width="98%" style="border-width: 0; " cellpadding="8" class="ui-widget-content">
                                     <tbody>
