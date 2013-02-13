@@ -102,7 +102,11 @@
             $we_loosed = went_players($roster,(now(1) - $config['we_loosed']),now());
             $new_players = new_players($roster,(now() - $config['new_players']),now());
             $main_progress = player_progress_main($roster,(now() - $config['main_progress']),now());
-            $best_main_progress = best_player_progress_main($main_progress['main']);
+            if (isset($main_progress['main'])) {
+                $best_main_progress = best_player_progress_main($main_progress['main']);
+            } else {
+                $best_main_progress = array();
+            }
             $new_tanks = new_tanks($roster,$col_tables,(now() - $config['new_tanks']),now());
         }
         include_once(ROOT_DIR.'/views/body.php');

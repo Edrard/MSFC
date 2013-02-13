@@ -191,9 +191,9 @@
     $lang['medal_mechanicEngineers_china'] = 'Technical Engineer, China';
     $lang['medal_mechanicEngineers_uk'] = 'Technical Engineer, UK';
     $lang['medal_mechanicEngineers_germany'] = 'Technical Engineer, Germany';
+    $lang['medal_mechanicEngineer'] = 'Senior Technical Engineer';
 
     $lang['medal_sinai'] = 'The Lion of Sinai';
-
     $lang['medal_evileye'] = 'Patrol Duty';
     $lang['medal_medalDeLanglade'] = 'de Langlade\'s Medal';
     $lang['medal_medalTamadaYoshio'] = 'Tamada Yoshio Medal';
@@ -281,9 +281,9 @@
     $lang['title_mechanicEngineers_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanicEngineers_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanicEngineers_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineer'] = 'Research all vehicles in all tech trees. In the event that new vehicles are added to any tech tree, the award becomes void.';
 
     $lang['title_sinai'] = 'The Lion of Sinai - Destroy at least 100 tanks of the IS series, and vehicles based on their chassis: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Object 704, or Object 261';
-
     $lang['title_evileye'] = 'Awarded to the player who helps the team damage at least six enemy vehicles by highlighting them. The tanks must be highlighted only by you when they take damage.';
     $lang['title_medalDeLanglade'] = 'Awarded to the player who destroys four or more enemy vehicles that were in the process of capturing the player\'s base. On 13 September 1944, Colonel Paul Girot de Langlade\'s Groupement Tactique Langlade (G.T.L), outnumbered by over two to one, attacked a German 112th Panzer Regiment occupying the French village of Dompaire. In the ensuing battle de Langlade\'s 16 M4A2 tanks and 4 M10 tank destroyers, with support from French artillery and American fighter-bombers, destroyed 69 of 90 PzKpfw V Panther and PzKpfw IV tanks.';
     $lang['title_medalTamadaYoshio'] = 'Awarded to a player who destroys at least three Self-Propelled Guns while driving a light tank, and survives the battle. The targets must be at least two tiers higher than the player\'s tank. Tamada Yoshio commanded the Japanese 4th Tank Regiment (Type 95 Ha-Gō light tanks) in an attack that overran and destroyed twelve Russian artillery guns during the Second Sino-Japanese War in July 1939.';

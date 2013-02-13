@@ -16,7 +16,7 @@
     */
 ?>
 <?php
-    if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ 
+    if($config['cron'] == 1 && $col_check > 2 && isset($main_progress['main'])){
         $rand_main_progress = array_rand($main_progress['main'], 1); 
         $slice = array_slice($main_progress['main'][$rand_main_progress], 0, 16); 
     ?>

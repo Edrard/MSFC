@@ -37,18 +37,6 @@ $.extend($.tablesorter.themes.bootstrap, {
     odd        : ''   // even row zebra striping
 });
 
-$('.bb[title]').tooltip({
-    track: false,
-    delay: 0,
-    fade: 250,
-    items: "[title]",
-    content: function() {
-        var element = $( this );
-        if ( element.is( "[title]" ) ) {
-             return element.attr( "title" );
-        }
-    }
-});
 /** Код выполняемый после загрузки страницы **/
 $(document).ready(function() {
   $('#rotate').vTicker({

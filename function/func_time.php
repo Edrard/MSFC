@@ -72,7 +72,6 @@
         return $come;
     }                                                    
     function player_progress_main($roster = null, $start = 0,$end = -1){
-
         global $db;
         $diff = array();
         if($end == -1){
@@ -166,33 +165,34 @@
     function best_player_progress_main($data){
         $max = array();
         $position = array('gr_p','wb_p','eb_p','win_p','gpl_p','cpt_p','dmg_p','dpt_p','frg_p','spt_p','exp_p');
-        foreach($data as $name => $vals){
-            foreach($vals as $key => $val){
-                if(!isset($max[$key]['value'])){
-                    if(!in_array($key,$position)){
-                        $max[$key]['value'] = $val;
-                        $max[$key]['name'] = $name;
-                    }else{
-                        $max[$key]['value'] = -1 * $val;
-                        $max[$key]['name'] = $name;    
-                    }
-                }else{
-                    if(!in_array($key,$position)){
-                        if($max[$key]['value'] < $val){
+        if (!empty($data)) {
+            foreach($data as $name => $vals){
+                foreach($vals as $key => $val){
+                    if(!isset($max[$key]['value'])){
+                        if(!in_array($key,$position)){
                             $max[$key]['value'] = $val;
-                            $max[$key]['name'] = $name;   
+                            $max[$key]['name'] = $name;
+                        }else{
+                            $max[$key]['value'] = -1 * $val;
+                            $max[$key]['name'] = $name;    
                         }
                     }else{
-                        if($max[$key]['value'] < -1*$val){
-                            $max[$key]['value'] = -1*$val;
-                            $max[$key]['name'] = $name;   
+                        if(!in_array($key,$position)){
+                            if($max[$key]['value'] < $val){
+                                $max[$key]['value'] = $val;
+                                $max[$key]['name'] = $name;   
+                            }
+                        }else{
+                            if($max[$key]['value'] < -1*$val){
+                                $max[$key]['value'] = -1*$val;
+                                $max[$key]['name'] = $name;   
+                            }
                         }
-                    }
-                }    
+                    }    
+                }
             }
         }
         return $max;
-
     }
     function medal_progress($roster_id = null, $start = 0,$end = -1){
 
@@ -305,8 +305,6 @@
             $medn['sturdy']['type'] = 'special2';
             $medn['pattonValley']['type'] = 'special2';
 
-            $medn['mechanicEngineer']['type'] = '';
-
             $medn[$tename.'_usa']['type'] = 'expert';
             $medn[$tename.'_france']['type'] = 'expert';
             $medn[$tename.'_ussr']['type'] = 'expert';
@@ -320,6 +318,7 @@
             $medn[$mename.'_china']['type'] = 'mechanic';
             $medn[$mename.'_uk']['type'] = 'mechanic';
             $medn[$mename.'_germany']['type'] = 'mechanic';
+            $medn['mechanicEngineer']['type'] = 'mechanic';
 
             foreach($diff['unsort'] as $id => $vals){
                 foreach($vals as $key => $val){
@@ -512,19 +511,21 @@
     function medals_resort($medal_progress,$roster_id) {
         $new['list'] = array();
         $new['data'] = array();
-        foreach($medal_progress['sorted'] as $type => $player){
-            foreach($player as $id => $medals){
-                if(isset($roster_id[$id])){
-                    foreach($medals as $med_name => $val){
-                        if($val != 0){
-                            $new['data'][(str_replace(range(0,9),'',$type))][$id][$med_name] = $val;
-                            if(!isset($new['list'][(str_replace(range(0,9),'',$type))][$med_name])){
-                                $new['list'][(str_replace(range(0,9),'',$type))][$med_name] = TRUE;
-                            }
-                            if(isset($new['id'][$id])){
-                                $new['id'][$id] += $val;
-                            }else{
-                                $new['id'][$id] = $val;    
+        if (!empty($medal_progress['sorted'])) {
+            foreach($medal_progress['sorted'] as $type => $player){
+                foreach($player as $id => $medals){
+                    if(isset($roster_id[$id])){
+                        foreach($medals as $med_name => $val){
+                            if($val != 0){
+                                $new['data'][(str_replace(range(0,9),'',$type))][$id][$med_name] = $val;
+                                if(!isset($new['list'][(str_replace(range(0,9),'',$type))][$med_name])){
+                                    $new['list'][(str_replace(range(0,9),'',$type))][$med_name] = TRUE;
+                                }
+                                if(isset($new['id'][$id])){
+                                    $new['id'][$id] += $val;
+                                }else{
+                                    $new['id'][$id] = $val;    
+                                }
                             }
                         }
                     }
