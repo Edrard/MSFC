@@ -77,18 +77,7 @@
                   hide: "blind",
                   modal: true
               });
-              $('.bb[title]').tooltip({
-                  track: false,
-                  delay: 0,
-                  fade: 250,
-                  items: "[title]",
-                  content: function() {
-                      var element = $( this );
-                      if ( element.is( "[title]" ) ) {
-                           return element.attr( "title" );
-                      }
-                  }
-              });
+
               $('#login_opener').click(function() {
                   $("#login_dialog").dialog('open');
                   return false;
