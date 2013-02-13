@@ -191,6 +191,7 @@
     $lang['medal_mechanicEngineers_china'] = 'Technical Engineer, China';
     $lang['medal_mechanicEngineers_uk'] = 'Technical Engineer, UK';
     $lang['medal_mechanicEngineers_germany'] = 'Technical Engineer, Germany';
+    $lang['medal_mechanicEngineer'] = 'Senior Technical Engineer';
 
     $lang['medal_sinai'] = 'The Lion of Sinai';
 
@@ -281,6 +282,7 @@
     $lang['title_mechanicEngineers_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanicEngineers_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanicEngineers_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanicEngineer'] = 'Research all vehicles in all tech trees. In the event that new vehicles are added to any tech tree, the award becomes void.';
 
     $lang['title_sinai'] = 'The Lion of Sinai - Destroy at least 100 tanks of the IS series, and vehicles based on their chassis: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Object 704, or Object 261';
 

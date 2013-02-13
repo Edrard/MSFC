@@ -307,8 +307,6 @@
             $medn['sturdy']['type'] = 'special2';
             $medn['pattonValley']['type'] = 'special2';
 
-            $medn['mechanicEngineer']['type'] = '';
-
             $medn[$tename.'_usa']['type'] = 'expert';
             $medn[$tename.'_france']['type'] = 'expert';
             $medn[$tename.'_ussr']['type'] = 'expert';
@@ -322,6 +320,7 @@
             $medn[$mename.'_china']['type'] = 'mechanic';
             $medn[$mename.'_uk']['type'] = 'mechanic';
             $medn[$mename.'_germany']['type'] = 'mechanic';
+            $medn['mechanicEngineer']['type'] = 'mechanic';
 
             foreach($diff['unsort'] as $id => $vals){
                 foreach($vals as $key => $val){

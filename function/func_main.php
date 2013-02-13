@@ -350,6 +350,7 @@
         $medn['ironMan']['img'] = 'images/medals/IronMan.png';
         $medn['sturdy']['img'] = 'images/medals/Sturdy.png';
         $medn['pattonValley']['img'] = 'images/medals/PattonValley.png';
+        $medn['mechanicEngineer']['img'] = 'images/medals/MechanicEngineer.png';
 
         $medn[$tename.'_usa']['type'] = 'expert';
         $medn[$tename.'_france']['type'] = 'expert';
@@ -364,6 +365,7 @@
         $medn[$mename.'_china']['type'] = 'mechanic';
         $medn[$mename.'_uk']['type'] = 'mechanic';
         $medn[$mename.'_germany']['type'] = 'mechanic';
+        $medn['mechanicEngineer']['type'] = 'mechanic';
 
         $medn['medalCarius']['type'] = 'major';
         $medn['medalHalonen']['type'] = 'epic';
