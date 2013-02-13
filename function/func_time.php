@@ -75,6 +75,7 @@
 
         global $db;
         $diff = array();
+        $diff['main'] = array();
         if($end == -1){
             $end = now();
         }
@@ -199,6 +200,7 @@
         global $db;
         $diff['unsort'] = array();
         $diff['sort'] = array();
+        $diff['sorted'] = array();
         if($end == -1){
             $end = now();
         }   
