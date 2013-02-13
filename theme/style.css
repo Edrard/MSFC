@@ -87,6 +87,7 @@ label.error {
 }
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
+image { border:0px; } 
 
 div { padding: 2px; }
 table .tablesorter { margin: 20px 0 0 0; }
