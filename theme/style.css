@@ -99,3 +99,4 @@ table .tablesorter { margin: 20px 0 0 0; }
 .ui-tabs .ui-tabs-nav, .ui-widget-overlay {padding: 0;!important; }
 .ui-tabs .ui-tabs-nav li a { float: none !important; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active { text-align:right; }
+.ui-tooltip { max-width: 400px;  !important; }
