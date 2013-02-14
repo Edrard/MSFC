@@ -24,9 +24,8 @@
 
         if($end == -1){
             $end = now();  
-        }else{
-            $roster = array_resort(get_last_roster($end),'name');
         }
+        
         $sql = "SELECT name,account_id,role,member_since,up FROM `col_players` WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
         ///echo $sql;
         $q = $db->prepare($sql);
