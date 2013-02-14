@@ -108,7 +108,7 @@
         $dbprefix = 'msfc_';
     }
     if($log == 1){
-        fwrite($fh, $date."Current db prefix: ".$dbprefix."\n");    
+        fwrite($fh, $date.": Current db prefix: ".$dbprefix."\n");
     }
     //Authentication
     if($config['cron_auth'] == 1){
