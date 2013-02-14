@@ -1,0 +1,2 @@
+INSERT INTO `config` (`name`, `value`) VALUES ('we_loosed', '172800'), ('new_players', '172800'), ('main_progress', '172800'), ('medal_progress', '172800'), ('new_tanks', '172800'), ('a_rights', '2');
+DELETE FROM `tabs` WHERE file = 'aval_top_tank.php' LIMIT 1;
