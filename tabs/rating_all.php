@@ -57,7 +57,13 @@ $(document).ready(function() {
                 <tr>
                         <td><a href="<?=$config['base'].$name.'/'; ?>" target="_blank"><?=$name; ?></a></td>
                     <?php foreach($val['rating'] as $result){ ?>
-                        <td class="ratingplace"><?=$result['place']; ?></td>
+                        <td class="ratingplace">
+                           <?php if ($result['place']<>'') {
+                                     print_R($result['place']);
+                                 }   else {
+                                     echo '-';
+                                 }?>
+                        </td>
                         <td class="ratingvalue"><?=$result['value']; ?></td>
                     <?php } ?>
                 </tr>
