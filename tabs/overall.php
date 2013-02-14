@@ -88,7 +88,12 @@ $(document).ready(function() {
                     <?php } ?>
                     <?php foreach($val['overall'] as $column => $result){ ?>
                         <?php if($lang['games_p'] != $column) { ?>
-                        <td class="overall_average"><?php echo number_format($result/$val['overall'][$lang['games_p']]*100,2); ?>%</td>
+                        <td class="overall_average"><?php
+                          if ($val['overall'][$lang['games_p']]<> 0) {
+                              print_R(number_format($result/$val['overall'][$lang['games_p']]*100,2));
+                          }   else {
+                              echo '0';
+                          }; ?>%</td>
                         <?php } ?>
                     <?php } ?>
                     <td class="overall_value overall_average"><?php if(is_numeric($eff_rating[$name])) { echo '<font color="'.$color.'">'.$eff_rating[$name].'</font>'; } else { echo '<font color="red">0</font>';} ?></td>
