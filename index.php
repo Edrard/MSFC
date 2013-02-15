@@ -23,8 +23,12 @@
     }
     //Multiget check
     $sender = '';
+    $senderLoad = '';
     if(isset($_GET['multi']) && !isset($_GET['page'])){
-        $sender = '?multi='.$_GET['multi'];
+      $sender = '?multi='.$_GET['multi'];
+      $senderLoad = '&from_index=1';
+    } else {
+      $senderLoad = '?from_index=1';
     }
 
     //Checker
@@ -77,6 +81,7 @@
         <script type="text/javascript" src="./js/msfc.shared.js"></script>
         <script type="text/javascript">
             var url = 'main.php<?=$sender;?>';
+            var urlLoad = 'main.php<?=$sender;?><?=$senderLoad;?>';
         </script>
         <script language="JavaScript" type="text/javascript">
             function reFresh() {
@@ -121,10 +126,10 @@
     </body>
     <script>
         if(document.layers) {
-            document.write('<Layer src="' + url + '" visibility="hide"></Layer>');
+            document.write('<Layer src="' + urlLoad + '" visibility="hide"></Layer>');
         }
         else if(document.all || document.getElementById) {
-            document.write('<iframe src="' + url + '" style="visibility:hidden;"></iframe>');
+            document.write('<iframe src="' + urlLoad + '" style="visibility:hidden;"></iframe>');
         }
         else {
             location.href = url;
