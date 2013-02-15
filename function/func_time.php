@@ -25,12 +25,12 @@
         if($end == -1){
             $end = now();  
         }
-        
-        $sql = "SELECT name,account_id,role,member_since,up FROM `col_players` WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up DESC;";
+
+        $sql = "SELECT name,account_id,role,member_since,up FROM `col_players` WHERE up <= '".$end."' AND up >= '".$start."' ORDER BY up ASC;";
         ///echo $sql;
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $result = $q->fetchAll();
+            $result = $q->fetchAll(PDO::FETCH_ASSOC);
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
@@ -53,7 +53,7 @@
         $sql = "SELECT name,account_id,role,member_since FROM `col_players` WHERE member_since <= '".$end."' AND member_since >= '".$start."' ORDER BY member_since DESC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
-            $result = $q->fetchAll();
+            $result = $q->fetchAll(PDO::FETCH_ASSOC);
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }

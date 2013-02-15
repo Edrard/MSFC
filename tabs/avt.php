@@ -371,7 +371,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                             <td width="34%" align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>" 
                                                     target="_blank"><?=$val['name'];?></a></td>
                                             <td width="33%" align="center"><?=$lang[$val['role']];?></td>
-                                            <td width="33%" align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)); ?> <?=$lang['days']?></td>
+                                            <td width="33%" align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)); ?> <?=$lang['days']?></td>
                                         </tr>
                                         <?php }
                                           }else{ ?>
