@@ -37,27 +37,29 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-
               $("#roster").tablesorter({sortList:[[4,0],[3,1],[0,0]]});
-              $("#best_main").tablesorter();
-              $("#best_medal").tablesorter();
-              $("#active_main").tablesorter();
-              $("#active_medal_1").tablesorter();
-              $("#overall").tablesorter();
-              $("#perform").tablesorter();
-              $("#battel").tablesorter();
-              $("#achiv_epic").tablesorter();
-              $("#achiv_major").tablesorter();
-              $("#achiv_hero").tablesorter();
-              $("#achiv_special").tablesorter();
-              $("#rating").tablesorter();
-              $("#rating1").tablesorter();
-              $("#rating_all").tablesorter();
-              $("#average_perform").tablesorter();
-              $("#blocked").tablesorter();
-              $("#all_tanks_stat").tablesorter();
-              $("#perform_all").tablesorter();
-              $("#all_medals_stat").tablesorter();
+
+              $("#best_main")
+              .add("#best_medal")
+              .add("#active_main")
+              .add("#active_medal_1")
+              .add("#overall")
+              .add("#perform")
+              .add("#battel")
+              .add("#achiv_epic")
+              .add("#achiv_major")
+              .add("#achiv_hero")
+              .add("#achiv_special")
+              .add("#rating")
+              .add("#rating1")
+              .add("#rating_all")
+              .add("#average_perform")
+              .add("#blocked")
+              .add("#all_tanks_stat")
+              .add("#perform_all")
+              .add("#all_medals_stat")
+              .add("#available_tanks").tablesorter();
+
               $("#avt1").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}},sortList:[[2,1]], widgetOptions: {uitheme : 'bootstrap'}});
               <? for ($i=2; $i<=6; $i++) {?>
               $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[1,0]], widgetOptions: {uitheme : 'bootstrap'}});
@@ -65,7 +67,6 @@
                  for ($i=7; $i<=9; $i++) {?>
               $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
               <? }?>
-              $("#available_tanks").tablesorter();
 
               $( "#login_dialog" ).dialog({
                   title: "<?php echo $lang['login']; ?>",
@@ -77,7 +78,6 @@
                   hide: "blind",
                   modal: true
               });
-
               $('#login_opener').click(function() {
                   $("#login_dialog").dialog('open');
                   return false;
