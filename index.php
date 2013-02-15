@@ -24,7 +24,7 @@
     //Multiget check
     $sender = '';
     if(isset($_GET['multi']) && !isset($_GET['page'])){
-        $sender = '?from_index=1&multi='.$_GET['multi'];
+        $sender = '?multi='.$_GET['multi'];
     }
 
     //Checker
