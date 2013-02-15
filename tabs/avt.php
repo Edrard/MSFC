@@ -359,30 +359,31 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
         <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
             <tbody>
                 <tr>
-                    <td valign="top" width="33%">
+                    <td valign="top" width="30%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt7">
                             <thead style="font-weight: bold;">
-                               <th colspan="3" align="center"><?=$lang['loosed_today'];?></th>
+                               <th colspan="4" align="center"><?=$lang['loosed_today'];?></th>
                             </thead>
                             <tbody>
                                 <?php if (count($we_loosed) > 0){
                                          foreach($we_loosed as $val){ ?>
                                         <tr>
-                                            <td width="34%" align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>" 
+                                            <td align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
-                                            <td width="33%" align="center"><?=$lang[$val['role']];?></td>
-                                            <td width="33%" align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'],date(' (d.m.Y)',$val['up']);?></td>
+                                            <td align="center"><?=$lang[$val['role']];?></td>
+                                            <td align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
+                                            <td align="center"><?php echo date('d.m.Y',$val['up']);?></td>
                                         </tr>
                                         <?php }
                                           }else{ ?>
                                     <tr>
-                                        <td align="center"><?=$lang['noone'];?></td>
+                                        <td colspan="4" align="center"><?=$lang['noone'];?></td>
                                     </tr>
                                     <?php } ?>
                             </tbody>
                         </table>
                     </td>
-                    <td valign="top" width="33%">
+                    <td valign="top">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt8" style="position: relative;">
                             <thead style="font-weight: bold;">
                                <th colspan="3" align="center"><?=$lang['new_tanks'];?></th>
@@ -416,31 +417,32 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                         </tr>
                                         <?php }
                                           }}else{ ?>
-                                    <tr colspan="3">
-                                        <td align="center"><?=$lang['no_new']; ?></td>
+                                    <tr>
+                                        <td colspan="3" align="center"><?=$lang['no_new']; ?></td>
                                     </tr>
                                     <?php } ?>
                             </tbody>
                         </table>
                     </td>
-                    <td valign="top" width="33%">
+                    <td valign="top" width="30%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt9">
                             <thead style="font-weight: bold;">
-                               <th colspan="3" align="center"><?=$lang['new_players'];?></th>
+                               <th colspan="4" align="center"><?=$lang['new_players'];?></th>
                             </thead>
                             <tbody> 
                                 <?php if (count($new_players) > 0){
                                          foreach($new_players as $name => $val){ ?>
                                         <tr>
-                                            <td width="34%" align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>" 
+                                            <td align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
-                                            <td width="33%" align="center"><?=$lang[$val['role']];?></td>
-                                            <td width="33%" align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'],date(' (d.m.Y)',$val['member_since'])?></td>
+                                            <td align="center"><?=$lang[$val['role']];?></td>
+                                            <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
+                                            <td align="center"><?php echo date('d.m.Y',$val['member_since']);?></td>
                                         </tr>
                                         <?php }
                                           }else{ ?>
                                     <tr>
-                                        <td align="center"><?=$lang['noone'];?></td>
+                                        <td colspan="4" align="center"><?=$lang['noone'];?></td>
                                     </tr>
                                     <?php } ?>
                             </tbody>
