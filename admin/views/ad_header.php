@@ -94,7 +94,10 @@
             });
             $(elem).parent('li').addClass("ui-state-active");
             if(elem.id == 'out'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
-        };        
+        };
+        function magic3(){
+          $(".admin_cdhide").toggle();
+        };
     </script>
     <?php if(isset($current_user)){ ?>
       <script type="text/javascript">
@@ -107,6 +110,9 @@
                      return false;
                   });
               <?php } ?>
+        <?php if($config['cron'] == '0'){ ?>
+          $(".admin_cdhide").hide();
+        <?php } ?>
             });
       </script>
     <?php } ?>

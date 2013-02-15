@@ -67,9 +67,7 @@
                 <td valign="top" width="222px">
                     <ul id="ad_menu" class="tabsmenu ui-corner-all">
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
-                        <?php if($config['cron'] == 1){ ?>
-                            <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
-                            <?php } ?>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
@@ -178,10 +176,10 @@
                     <div id="tabs-1">
                         <div align="left">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-1" method="post">
-                                <table width="98%" style="border-width: 0; " cellpadding="8" class="ui-widget-content">
+                                <table width="98%" style="border-width: 0; " cellpadding="6" class="ui-widget-content">
                                     <tbody>
                                         <tr>
-                                            <td width="250"><?=$lang['admin_lang'];?></td>
+                                            <td width="300"><?=$lang['admin_lang'];?></td>
                                             <td>                                                 
                                                 <select name="lang">
                                                     <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
@@ -217,6 +215,10 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td><?=$lang['admin_multiget'];?></td>
+                                            <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
+                                        </tr>
+                                        <tr>
                                             <td><?=$lang['timezone'];?></td>
                                             <td>
                                                 <select name="time">
@@ -232,22 +234,6 @@
                                                 ?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><?=$lang['admin_cron'];?></td>
-                                            <?php 
-                                                if($config['cron'] == '1'){
-                                                    $cron = 'checked="yes"';
-                                                }else{
-                                                    $cron = '';
-                                                }
-                                            ?>
-
-                                            <td><input <?=$cron?> type="checkbox" name="cron" value="1" size="2" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td><?=$lang['admin_cron_time'];?></td>
-                                            <td><input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /> <?=$lang['admin_hour'];?><br><?=$lang['admin_cron_time_warning'];?></td>
-                                        </tr>
                                         <?php if($config['lang'] == 'ru'){?>
                                             <tr>
                                                 <td><?=$lang['admin_news'];?></td>
@@ -261,10 +247,6 @@
                                                 <td><input <?=$news?> type="checkbox" name="news" value="1" size="2" /></td>
                                             </tr>
                                             <?php } ?>
-                                        <tr>
-                                            <td><?=$lang['admin_multiget'];?></td>
-                                            <td><input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" /></td>
-                                        </tr>
                                         <tr>
                                             <td><?=$lang['admin_allow_user_upload'];?></td>
                                             <td><select name="a_rights">
@@ -383,8 +365,8 @@
                                                 <?php } ?>
                                         </tbody>
                                     </table>
-                                    <input type="submit" value="<?=$lang['admin_submit'];?>" name="tabsub" />
-                                </form> 
+                                    <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="tabsub" /></p>
+                                </form>
                                 <span style="color:red;"><?=$lang['admin_tab_delete_n'];?></span>
                             </div>
                         </div>
@@ -587,85 +569,94 @@
                             </form> <br><br>
                         </div>
                     </div>
-                    <?php if($config['cron'] == 1){ ?>
-                        <div id="tabs-9">
-                            <div>
-                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
-                                    <table width="98%" style="border-width: 0; " cellpadding="8" class="ui-widget-content">
-                                        <tbody>
-                                            <tr>
-                                                <td width="150"><?=$lang['admin_cron_auth'];?></td>
-                                                <?php 
-                                                    if($config['cron_auth'] == '1'){
-                                                        $cron_auth = 'checked="yes"';
-                                                    }else{
-                                                        $cron_auth = '';
-                                                    }
-                                                ?>
-
-                                                <td><input <?=$cron_auth?> type="checkbox" name="cron_auth" value="1" size="2" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_multi'];?></td>
-                                                <?php 
-                                                    if($config['cron_multi'] == '1'){
-                                                        $cron_multi = 'checked="yes"';
-                                                    }else{
-                                                        $cron_multi = '';
-                                                    }
-                                                ?>
-
-                                                <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><b><?=$lang['admin_cron_period']?></b></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_we_loosed'];?></td>
-                                                <td><input type="text" name="we_loosed" value="<?=$config['we_loosed']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_new_players'];?></td>
-                                                <td><input type="text" name="new_players" value="<?=$config['new_players']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_main_progress'];?></td>
-                                                <td><input type="text" name="main_progress" value="<?=$config['main_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_medal_progress'];?></td>
-                                                <td><input type="text" name="medal_progress" value="<?=$config['medal_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
-                                            </tr>
-                                            <tr>
-                                                <td><?=$lang['admin_cron_new_tanks'];?></td>
-                                                <td><input type="text" name="new_tanks" value="<?=$config['new_tanks']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
-                                            </tr>
-                                            <tr>
-                                                <td><br></td>
-                                                <td><br></td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </form>
-                                <br><br>
-                                <h3><?=$lang['current_cron'];?></h3>
-                                <?php if(file_exists(ROOT_DIR.'/cron.log') || is_readable(ROOT_DIR.'/cron.log')){ ?>
-                                    <textarea rows="10" cols="85" name="text">
-                                        <?=file_get_contents(ROOT_DIR.'/cron.log'); ?>
-                                    </textarea>
-                                    <?php } ?>
-                                <br><br>
-                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
-                                    <h3><?=$lang['recreat_cron'];?></h3>
-                                    <input type="submit" value="<?=$lang['recreat_cron'];?>" name="cron_recreat" />
-                                </form>
-                            </div>
+                    <div id="tabs-9">
+                        <div>
+                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
+                                <table width="98%" style="border-width: 0; " cellpadding="6" class="ui-widget-content">
+                                    <tbody>
+                                        <tr>
+                                            <td width="300"><?=$lang['admin_cron'];?></td>
+                                            <?php
+                                                if($config['cron'] == '1'){
+                                                    $cron = 'checked="yes"';
+                                                }else{
+                                                    $cron = '';
+                                                }
+                                            ?>
+                                            <td><input <?=$cron; ?> type="checkbox" name="cron" value="1" size="2" onclick="magic3()"/></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_time'];?></td>
+                                            <td><input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /> <?=$lang['admin_hour'];?>
+                                            <div class="ui-state-highlight ui-corner-all" style="display:inline-block; width:75%;" align="center"><?=$lang['admin_cron_time_warning'];?></div></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_auth'];?></td>
+                                            <?php
+                                                if($config['cron_auth'] == '1'){
+                                                    $cron_auth = 'checked="yes"';
+                                                }else{
+                                                    $cron_auth = '';
+                                                }
+                                            ?>
+                                            <td><input <?=$cron_auth?> type="checkbox" name="cron_auth" value="1" size="2" /></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_multi'];?></td>
+                                            <?php
+                                                if($config['cron_multi'] == '1'){
+                                                    $cron_multi = 'checked="yes"';
+                                                }else{
+                                                    $cron_multi = '';
+                                                }
+                                            ?>
+                                            <td><input <?=$cron_multi?> type="checkbox" name="cron_multi" value="1" size="2" /></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><br></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td colspan="2"><b><?=$lang['admin_cron_period']?></b></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_we_loosed'];?></td>
+                                            <td><input type="text" name="we_loosed" value="<?=$config['we_loosed']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_new_players'];?></td>
+                                            <td><input type="text" name="new_players" value="<?=$config['new_players']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_main_progress'];?></td>
+                                            <td><input type="text" name="main_progress" value="<?=$config['main_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_medal_progress'];?></td>
+                                            <td><input type="text" name="medal_progress" value="<?=$config['medal_progress']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                        </tr>
+                                        <tr class="admin_cdhide">
+                                            <td><?=$lang['admin_cron_new_tanks'];?></td>
+                                            <td><input type="text" name="new_tanks" value="<?=$config['new_tanks']; ?>" size="10" /> <?=$lang['admin_sec'];?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></p>
+                            </form>
+                            <br>
+                            <h3 class="admin_cdhide"><?=$lang['current_cron'];?></h3>
+                            <?php if(file_exists(ROOT_DIR.'/cron.log') || is_readable(ROOT_DIR.'/cron.log')){ ?>
+                                <textarea class="admin_cdhide" rows="10" cols="85" name="text">
+                                    <?=file_get_contents(ROOT_DIR.'/cron.log'); ?>
+                                </textarea>
+                                <?php } ?>
+                            <br><br>
+                            <form class="admin_cdhide" action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
+                                <h3><?=$lang['recreat_cron'];?></h3>
+                                <input type="submit" value="<?=$lang['recreat_cron'];?>" name="cron_recreat" />
+                            </form>
                         </div>
-                        <?php } ?>
+                    </div>
                 </td>
             </tr>
             <?php if($ver['value'] != VER){ ?>
@@ -676,7 +667,7 @@
                         </div>
                     </td>
                 </tr>
-                <?php } ?>
+            <?php } ?>
         </tbody>
     </table>
 </div>

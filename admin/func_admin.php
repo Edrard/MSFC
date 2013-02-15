@@ -71,14 +71,14 @@
         global $db;
 
         if(isset($config['consub'])){
-            if(!isset($config['cron'])){
-                $config['cron'] = 0;
-            }
             if(!isset($config['news'])){
                 $config['news'] = 0;
             }
         }
         if(isset($config['consub_2'])){
+            if(!isset($config['cron'])){
+                $config['cron'] = 0;
+            }
             if(!isset($config['cron_multi'])){
                 $config['cron_multi'] = 0;
             }
