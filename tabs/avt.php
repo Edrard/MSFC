@@ -6,7 +6,7 @@
        $darkred = '<span style="color:DarkRed;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/down.png">&nbsp;';
 
    foreach($res as $name => $val){
-    $avt_eff[round($eff_rating[$name],2)] = $name;
+    $avt_eff[round($eff_rating[$name],2)*100] = $name;
     $avt_games[] = $val['overall'][$lang['total']];
     $avt_win[] = $val['overall'][$lang['victories']];
     $avt_lose[] = $val['overall'][$lang['defeats']];
