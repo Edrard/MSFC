@@ -289,6 +289,7 @@
         private function MasterLogin($u,$user) {
 
             global $db,$dbprefix;
+            if(!isset($dbprefix)) { $dbprefix = 'msfc_'; }
 
             $sql = sprintf("SELECT * FROM ".$dbprefix."users WHERE %s = '%s'", $u, $user );
             $q = $db->prepare($sql);
