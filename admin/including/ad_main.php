@@ -216,7 +216,14 @@
     }
     if (isset($_GET['removetoptank'])){
         delete_top_tank($_GET['tank']);
-        // header ( 'Location: index.php?page=main#tabs-10' );
+        if (!headers_sent()) {
+            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-6' );
+            exit;
+        } else { ?>
+        <script type="text/javascript">
+            location.replace("index.php?page=main<?=$multi_get;?>#tabs-6");
+        </script>
+        <?      }
     }
 
     //Clear cache
