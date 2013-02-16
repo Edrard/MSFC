@@ -79,11 +79,11 @@
             $message['color'] = 'red';    
         }else{
             if (!headers_sent()) {
-                header ( 'Location: index.php?page=main'.$multi_get.'#tabs-2' );
+                header ( 'Location: index.php?page=main'.$multi_get.'#tabs-3' );
                 exit;
             } else { ?>
             <script type="text/javascript">
-                location.replace("index.php?page=main<?=$multi_get;?>#tabs-2");
+                location.replace("index.php?page=main<?=$multi_get;?>#tabs-3");
             </script>
             <?      }
         }
