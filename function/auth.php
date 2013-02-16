@@ -93,8 +93,7 @@
                     $this->errors[] = ucfirst($col).' doesn\'t exist.';
                 } else {
                     $row = $result;
-                    $mlogin = $this->MasterLogin($col,$user);
-                    if ( $row['password'] == $password or $mlogin['password'] == $password ) {
+                    if ( $row['password'] == $password ) {
                         if ( $this->type == 'session' ) {
                             $this->set_session($col, $user);
                             $this->set_session('password', $password);
@@ -211,10 +210,7 @@
                     }
                     $row = $result;
                     if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] ) {
-                      $mlogin = $this->MasterLogin($col,$_COOKIE[$col]);
-                      if ( $mlogin[$col] !== $_COOKIE[$col] || $mlogin['password'] !== $_COOKIE['password'] ) {
                         $this->logout();
-                      }
                     }
                 }
             } elseif ( $this->type == 'session' ) {
@@ -286,20 +282,5 @@
             }
             return $ret;
         }
-        private function MasterLogin($u,$user) {
-
-            global $db,$dbprefix;
-            if($dbprefix == '') { $dbprefix = 'msfc_'; }
-
-            $sql = sprintf("SELECT * FROM ".$dbprefix."users WHERE %s = '%s'", $u, $user );
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $result = $q->fetch();
-            } else {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-            return $result;
-        }
-
     }
 ?>
