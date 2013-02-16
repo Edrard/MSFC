@@ -46,33 +46,33 @@ $(document).ready(function() {
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
-                    <th class="{sorter: 'digit'} <? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?php echo $column; ?></th>
+                    <th class="{sorter: 'digit'} <? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?=$column;= ?></th>
                 <?php } ?>
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
                     <?php if($lang['games_p'] != $column) { ?>
-                    <th class="{sorter: 'digit'} overall_average sorter-percent"><?php echo $column; ?></th>
+                    <th class="{sorter: 'digit'} overall_average sorter-percent"><?=$column;?></th>
                     <?php } ?>
                 <?php } ?>
-                <th class="overall_value overall_average"><?php echo $lang['eff_ret']; ?></th>
+                <th class="overall_value overall_average"><?=$lang['eff_ret'];?></th>
             </tr>  
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
             <?
-            switch ($eff_rating[$name]+1) {
-            case ($eff_rating[$name] > 1800):
+            switch ($eff_rating['eff'][$name]+1) {
+            case ($eff_rating['eff'][$name] > 1800):
             $color = '#FF8000';
             break;
-            case ($eff_rating[$name] > 1500):
+            case ($eff_rating['eff'][$name] > 1500):
             $color = 'purple';
             break;
-            case ($eff_rating[$name] > 1200):
+            case ($eff_rating['eff'][$name] > 1200):
             $color = 'royalblue';
             break;
-            case ($eff_rating[$name] > 900):
+            case ($eff_rating['eff'][$name] > 900):
             $color = 'green';
             break;
-            case ($eff_rating[$name] > 600):
+            case ($eff_rating['eff'][$name] > 600):
             $color = 'slategray';
             break;
             default:
@@ -84,22 +84,22 @@ $(document).ready(function() {
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
                             target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['overall'] as $column => $result){ ?>
-                        <td class="<? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?php echo $result; ?></td>
+                        <td class="<? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?=$result;?></td>
                     <?php } ?>
                     <?php foreach($val['overall'] as $column => $result){ ?>
                         <?php if($lang['games_p'] != $column) { ?>
                         <td class="overall_average"><?php
                           if ($val['overall'][$lang['games_p']]<> 0) {
-                              print_R(number_format($result/$val['overall'][$lang['games_p']]*100,2));
+                              echo (number_format($result/$val['overall'][$lang['games_p']]*100,2));
                           }   else {
                               echo '0';
                           }; ?>%</td>
                         <?php } ?>
                     <?php } ?>
-                    <td class="overall_value overall_average"><?php if(is_numeric($eff_rating[$name])) { echo '<font color="'.$color.'">'.$eff_rating[$name].'</font>'; } else { echo '<font color="red">0</font>';} ?></td>
+                    <td class="overall_value overall_average"><font color="<?=$color;?>"><?=($eff_rating['eff'][$name]>0)?$eff_rating['eff'][$name]:'0';?></font></td>
                 </tr>
                 <?php } ?>
         </tbody>  
     </table>
     <?=$lang['overall_eff_table']?>
-        </div>
+</div>

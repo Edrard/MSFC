@@ -6,7 +6,7 @@
        $darkred = '<span style="color:DarkRed;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/down.png">&nbsp;';
 
    foreach($res as $name => $val){
-    $avt_eff[round($eff_rating[$name],2)*100] = $name;
+    $avt_eff[$eff_rating['eff'][$name]] = $name;
     $avt_games[] = $val['overall'][$lang['total']];
     $avt_win[] = $val['overall'][$lang['victories']];
     $avt_lose[] = $val['overall'][$lang['defeats']];
@@ -21,7 +21,8 @@
     $avt_max[] = $val['exp'][$lang['exp_max']];
  };
  krsort($avt_eff);
-
+ $avt_eff = array_slice($avt_eff, 0, 5, true);
+ unset($avt);
 ?>
 
 <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
@@ -33,15 +34,12 @@
             <th align="center" colspan="2"><?=$lang['greeting_top1']; ?></th>
          </thead>
          <tbody>
-          <?php
-          $five = 1;
-          foreach($avt_eff as $name => $val){ ?>
+          <?php foreach($avt_eff as $name => $val){ ?>
             <tr>
               <td><?=$val; ?></td>
-              <td style="font-weight:bold;"><?=number_format($eff_rating[$val], 2, '.', '');?></td>
+              <td style="font-weight:bold;"><?=$eff_rating['eff'][$val];?></td>
             </tr>
-           <?php $five++;
-                 if($five>5) break;} ?>
+           <?php } ?>
          </tbody>
         </table>
     </td>
@@ -282,7 +280,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td align="left"><?=$lang['dead_heat']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           print_R((($h24total-$h24win)-$h24lose).' (');
+           echo(($h24total-$h24win)-$h24lose),' (';
            if(($h24total<>0) && ($avt_games<>0)){
              if (round((($h24total-$h24win)-$h24lose)/$h24total*100,2) >= round(((array_sum($avt_games)-array_sum($avt_win))-array_sum($avt_lose))/array_sum($avt_games)*100,2)) {                 echo $darkgreen;
                  } else {
@@ -410,8 +408,8 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                               <?php
                                               foreach ($tanks_list as $tanks_list_key => $wall)
                                                  if ($wall['title'] == $val['title']) {
-                                                    print_R('<img src="http://'.$config['gm_url'].'/static/3.6.0.1/common/img/nation/'.$wall['nation'].'.png" />');
-                                                    print_R('<img style="right: -50px; position: absolute;" src="http://'.$config['gm_url'].$wall['link'].'" />');};
+                                                    echo '<img src="http://',$config['gm_url'],'/static/3.6.0.1/common/img/nation/',$wall['nation'],'.png" />';
+                                                    echo '<img style="right: -50px; position: absolute;" src="http://',$config['gm_url'],$wall['link'],'" />';};
                                               ?>
                                             </td>
                                         </tr>

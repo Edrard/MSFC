@@ -23,10 +23,10 @@
         foreach($array as $name => $stat){
             //$rating[$name]['mid'] = middel_tank_lvl($stat['tank']);
             if($stat['overall'][$lang['games_p']] != 0 ){
-                $rat['mdmg'][$name] = $rating[$name]['mdmg'] = number_format(round($stat['perform'][$lang['damage']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
-                $rat['mspo'][$name] = $rating[$name]['mspo'] = number_format(round($stat['perform'][$lang['spotted']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
-                $rat['mcap'][$name] = $rating[$name]['mcap'] = number_format(round($stat['perform'][$lang['capture']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
-                $rat['mdef'][$name] = $rating[$name]['mdef'] = number_format(round($stat['perform'][$lang['defend']]/$stat['overall'][$lang['games_p']],3), 3, '.', '');
+                $rat['mdmg'][$name] = $rating[$name]['mdmg'] = number_format($stat['perform'][$lang['damage']]/$stat['overall'][$lang['games_p']], 2, '.', '');
+                $rat['mspo'][$name] = $rating[$name]['mspo'] = number_format($stat['perform'][$lang['spotted']]/$stat['overall'][$lang['games_p']], 2, '.', '');
+                $rat['mcap'][$name] = $rating[$name]['mcap'] = number_format($stat['perform'][$lang['capture']]/$stat['overall'][$lang['games_p']], 2, '.', '');
+                $rat['mdef'][$name] = $rating[$name]['mdef'] = number_format($stat['perform'][$lang['defend']]/$stat['overall'][$lang['games_p']], 2, '.', '');
 
 
 
@@ -130,32 +130,35 @@
     function eff_rating($res,$lang)
     {
         foreach($res as $name => $per_stat){
-            if(isset($per_stat['overall'][$lang['games_p']])){
-                if($per_stat['overall'][$lang['games_p']] != 0){
-                    $effect['des'] = ($per_stat['perform'][$lang['destroyed']]/$per_stat['overall'][$lang['games_p']]);
-                    $effect['dem'] = ($per_stat['perform'][$lang['damage']]/$per_stat['overall'][$lang['games_p']]);
-                    $effect['spo'] = ($per_stat['perform'][$lang['spotted']]/$per_stat['overall'][$lang['games_p']]);
-                    $effect['def'] = ($per_stat['perform'][$lang['defend']]/$per_stat['overall'][$lang['games_p']]);
-                    $effect['cap'] = ($per_stat['perform'][$lang['capture']]/$per_stat['overall'][$lang['games_p']]);
-                }else{
-                    $effect['des'] = 0;
-                    $effect['dem'] = 0;
-                    $effect['spo'] = 0;
-                    $effect['def'] = 0;
-                    $effect['cap'] = 0;
-                }
+            if(isset($per_stat['overall'][$lang['games_p']]) and $per_stat['overall'][$lang['games_p']] != 0 ){
+
+                $effect['des'] = ($per_stat['perform'][$lang['destroyed']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['dem'] = ($per_stat['perform'][$lang['damage']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['spo'] = ($per_stat['perform'][$lang['spotted']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['def'] = ($per_stat['perform'][$lang['defend']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['cap'] = ($per_stat['perform'][$lang['capture']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['win'] = ($per_stat['overall'][$lang['victories']]/$per_stat['overall'][$lang['games_p']]);
+                $effect['b']   =  $per_stat['overall'][$lang['games_p']];
+                $effect['Hp']  =  $per_stat['exp'][$lang['total_exp']]/$per_stat['overall'][$lang['games_p']];
+
                 $effect['lvl'] = 0;
                 if(isset($per_stat['tank'])){
                     $effect['lvl'] = middel_tank_lvl($per_stat['tank']);
                 }
                 if(count($effect) > 0){
                     $feff[$name] = 0;
+                    if($effect['lvl'] < 6) { $min6 = $effect['lvl']; } else { $min6 = 6; }
+                    if($effect['def'] < 2.2) { $min2 = $effect['def']; } else { $min2 = 2.2; }
                     if($effect['lvl'] != 0){
-                        $feff[$name] = number_format(($effect['dem']*(10/($effect['lvl'] + 2))*(0.23+2*$effect['lvl']/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
+                        $feff['eff'][$name] = number_format(($effect['dem']*(10/($effect['lvl'] + 2))*(0.23+2*$effect['lvl']/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
+                        $feff['wn6'][$name] = number_format(((1240-1040/pow($min6,0.164))*$effect['dem']+$effect['dem']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spo']*125+$min2*100 +((185/(0.17+exp(($effect['win']*100-35)*-0.134)))-500)*0.45 +(6-$min6)*-60),2, '.', '');
+                        $feff['brone'][$name] = round((log($effect['b'])/10)*(($effect['Hp']*1)+($effect['dem']*($effect['win']*2+$effect['des']*0.9+$effect['spo']*0.5+$effect['def']*0.5+$effect['cap']*0.5))),0);
                     }                                 
                 }                         
             }else{
-                $feff[$name] = 0;
+                $feff['eff'][$name] = 0;
+                $feff['wn6'][$name] = 0;
+                $feff['brone'][$name] = 0;
             }
         }
         return $feff;   
