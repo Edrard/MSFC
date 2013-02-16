@@ -49,7 +49,7 @@
                     }
                 ?>                                                             
                 <a style="margin: 0 5px;" id="<?=$val['prefix'].'1';?>" href="./index.php<?=$multi_get?>">
-                    <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                    <img height="24" border="0" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
                 </a>
                 <?php
                 }
@@ -67,7 +67,7 @@
                 <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
                 <td align="center">
                     <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
-                    height="64px" width="64px" border="0"; title='<?= $new["data"]["description_html"];?>'/> <br>
+                    height="64px" width="64px" border="0" title='<?= $new["data"]["description_html"];?>'/> <br>
                     <?php print_R('<font color="'.$new['data']['color'].'">');
                         print_R('<br>'.$new['data']['name'].'</font>') ?>
                 </td>
