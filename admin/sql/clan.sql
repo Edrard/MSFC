@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `user`, `password`, `email`, `group`) VALUES
+INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`) VALUES
 (1, 'admin', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'admin@local.com', 'admin'),
 (2, 'user', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'user@local.com', 'user');
 

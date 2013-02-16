@@ -575,6 +575,13 @@
         }else{
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
+        $sql = "DROP TABLE IF EXISTS `users`;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
     }
     function insert_multicaln($id_clan,$server,$dbprefix)
     {

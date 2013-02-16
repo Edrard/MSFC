@@ -56,7 +56,7 @@
                 } else {
                     $this->prefix = 'msfc_';
                 }
-                $this->pattern = '/([`\'"])(col_medals|col_players|col_rating_tank[\w%]*|col_tank[\w%]*|config|tabs|top_tanks|tanks|users|gk)([`\'"])/';
+                $this->pattern = '/([`\'"])(col_medals|col_players|col_rating_tank[\w%]*|col_tank[\w%]*|config|tabs|top_tanks|tanks|gk)([`\'"])/';
                 $this->replacement = '$1'.$this->prefix.'$2$3';
 
                 parent::__construct($dsn, $user, $password, $driver_options);
@@ -66,6 +66,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::prepare($statement, $driver_options);
             }
@@ -73,6 +74,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 $args = func_get_args();
 
@@ -86,6 +88,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::exec($statement);
             }
