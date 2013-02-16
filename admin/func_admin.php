@@ -115,7 +115,8 @@
         }
         if($status_user == 0){
             $post['password'] = $auth->encrypt($post['password']);
-            $post['email'] = $post['user'].'@local.com'; 
+            $post['email'] = $post['user'].'@local.com';
+            if($auth->rights != 'all') { $post['prefix'] = $db->prefix; }  
             $sql = "INSERT INTO `users` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
 
             $q = $db->prepare($sql);
@@ -145,7 +146,8 @@
             }else{
                 unset($post['password']);
             }
-            $post['email'] = $post['user'].'@local.com'; 
+            $post['email'] = $post['user'].'@local.com';
+            if($auth->rights != 'all') { $post['prefix'] = $db->prefix; }
             $nm = 0;
             $insert = '';
             foreach($post as $column => $val){
@@ -485,8 +487,10 @@
     }
     function read_users()
     {
-        global $db;
-        $sql = "SELECT * FROM `users` ORDER BY id ASC;";
+        global $db,$auth;
+        $where = '';
+        if($auth->rights != 'all') { $where = 'WHERE prefix = "'.$db->prefix.'" '; }
+        $sql = "SELECT * FROM `users` $where ORDER BY id ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             return $q->fetchAll();
