@@ -22,28 +22,28 @@
     if (isset($_POST['ajaxcre'])){
         if(creat_ajax_tab($_POST) == TRUE){
             $message['text'] = $_POST['file'].' '.$lang['admin_ajax_new_error'];
-            $message['color'] = 'red';    
+            $message['color'] = 'red';
         }
     }
     if (isset($_GET['del'])){
         delete_tab($_GET);
         if (!headers_sent()) {
-            header ( 'Location: index.php?page=main#tabs-2' );
+            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-2' );
             exit;
         } else { ?>
         <script type="text/javascript">
-            location.replace("index.php?page=main#tabs-2");
+            location.replace("index.php?page=main<?=$multi_get;?>#tabs-2");
         </script>
         <?      }
     }
     if (isset($_GET['removeclan'])){
         delete_multi($_GET);
         if (!headers_sent()) {
-            header ( 'Location: index.php?page=main#tabs-8' );
+            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-8' );
             exit;
         } else { ?>
         <script type="text/javascript">
-            location.replace("index.php?page=main#tabs-8");
+            location.replace("index.php?page=main<?=$multi_get;?>#tabs-8");
         </script>
         <?      }
     }
@@ -51,11 +51,11 @@
         insert_config($_POST);
         if(isset($_POST['consub'])) {
           if (!headers_sent()) {
-              header ( 'Location: index.php?page=main#tabs-1' );
+              header ( 'Location: index.php?page=main'.$multi_get.'#tabs-1' );
               exit;
           } else { ?>
           <script type="text/javascript">
-              location.replace("index.php?page=main#tabs-1");
+              location.replace("index.php?page=main<?=$multi_get;?>#tabs-1");
           </script>
           <?      }
         }
@@ -79,11 +79,11 @@
             $message['color'] = 'red';    
         }else{
             if (!headers_sent()) {
-                header ( 'Location: index.php?page=main#tabs-2' );
+                header ( 'Location: index.php?page=main'.$multi_get.'#tabs-2' );
                 exit;
             } else { ?>
             <script type="text/javascript">
-                location.replace("index.php?page=main#tabs-2");
+                location.replace("index.php?page=main<?=$multi_get;?>#tabs-2");
             </script>
             <?      }
         }
