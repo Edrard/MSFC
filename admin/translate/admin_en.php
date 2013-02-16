@@ -152,4 +152,5 @@
     $lang['admin_cron_new_tanks'] = 'New tanks';
     
     $lang['admin_cron_period'] = 'Periods used for data output';
+    $lang['admin_user_access'] = 'Access';
 ?>

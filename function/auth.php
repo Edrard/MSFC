@@ -93,7 +93,8 @@
                     $this->errors[] = ucfirst($col).' doesn\'t exist.';
                 } else {
                     $row = $result;
-                    if ( $row['password'] == $password ) {
+                    if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
+                    if ( $row['password'] == $password && $row['prefix'] == $db->prefix ) {
                         if ( $this->type == 'session' ) {
                             $this->set_session($col, $user);
                             $this->set_session('password', $password);
@@ -115,7 +116,11 @@
                           </script>');
                         }
                     } else {
-                        $this->errors[] = 'Incorrect password';
+                        if($row['prefix'] != $db->prefix) {
+                          $this->errors[] = 'Insufficient permissions';
+                        } else {
+                          $this->errors[] = 'Incorrect password';
+                        }
                     }
                 }
 
@@ -209,7 +214,8 @@
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
                     $row = $result;
-                    if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] ) {
+                    if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
+                    if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] || $row['prefix'] != $db->prefix ) {
                         $this->logout();
                     }
                 }

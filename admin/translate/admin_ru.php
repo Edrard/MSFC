@@ -151,4 +151,5 @@
     $lang['admin_cron_new_tanks'] = 'Новые танки';
     
     $lang['admin_cron_period'] = 'Периоды используемые при выводе данных';
+    $lang['admin_user_access'] = 'Доступ';
 ?>

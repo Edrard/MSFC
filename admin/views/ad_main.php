@@ -388,7 +388,18 @@
                                                     <option value="admin">Admin</option>
                                                     <option value="user">User</option>
                                                 </select></td>
-                                        </tr><tr>
+                                        </tr>
+                                        <?php if(count($multiclan) > 1) { ?>
+                                        <tr><td><?=$lang['admin_user_access'];?>:</td> <td>
+                                            <select name="prefix">
+                                                <option value="all">All</option>
+                                                <? foreach($multiclan as $mclan) { ?>
+                                                <option value="<?=$mclan['prefix'];?>"><?=$multiclan_info[$mclan['id']]['data']['abbreviation'];?></option>
+                                                <? } ?>
+                                            </select>
+                                        </td></tr>
+                                        <?php } ?>
+                                        <tr>
                                             <td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser"></td>
                                         </tr>
                                     </tbody>
@@ -399,6 +410,7 @@
                                     <tr>
                                         <th align="center"><?=$lang['admin_user_name'];?></th>
                                         <th align="center"><?=$lang['admin_user_group'];?></th>
+                                        <th align="center"><?=$lang['admin_user_access'];?></th>
                                         <th align="center"><?=$lang['admin_user_edit'];?></th>
                                         <th align="center"><?=$lang['admin_user_del'];?></th>
                                     </tr>
@@ -408,6 +420,7 @@
                                         <tr>
                                             <td align="center"><?=$val['user'];?></td>
                                             <td align="center"><?=$val['group'];?></td>
+                                            <td align="center"><?=$val['prefix'];?></td>
                                             <td align="center"><a href="#" class="trigger_<?=$val['user']?>"><?=$lang['admin_user_edit'];?></a></td>
                                             <td align="center"><a href="./index.php?userdel=1&id=<?=$val['id'];?>&page=main#tabs-3" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$val['user'];?>?')"><img src="../images/cred.png" /></a></td>
                                         </tr>
@@ -427,6 +440,16 @@
                                                         <option value="admin" <?php if($val['group'] == 'admin'){?> selected="selected" <?php }; ?>>Admin</option>
                                                         <option value="user"  <?php if($val['group'] == 'user') {?> selected="selected" <?php }; ?>>User</option>
                                                     </select></td></tr>
+                                                <?php if(count($multiclan) > 1) { ?>
+                                                <tr><td><?=$lang['admin_user_access'];?>:</td> <td>
+                                                    <select name="prefix">
+                                                        <option value="all" <?php if($val['prefix'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
+                                                        <? foreach($multiclan as $mclan) { ?>
+                                                        <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data']['abbreviation'];?></option>
+                                                        <? } ?>
+                                                    </select>
+                                                </td></tr>
+                                                <?php } ?>
                                                 <tr><td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_submit'];?>" name="edituser"></td></tr>
                                             </tbody>
                                         </table>
