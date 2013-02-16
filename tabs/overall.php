@@ -46,7 +46,7 @@ $(document).ready(function() {
             <tr>
                 <th><?php echo $lang['name']; ?></th> 
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
-                    <th class="{sorter: 'digit'} <? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?=$column;= ?></th>
+                    <th class="{sorter: 'digit'} <? if($lang['games_p'] != $column) {echo'overall_value';} ?>"><?=$column;?></th>
                 <?php } ?>
                 <?php foreach(array_keys($res[$rand_keys]['overall']) as $column){ ?>
                     <?php if($lang['games_p'] != $column) { ?>

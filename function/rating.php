@@ -151,14 +151,18 @@
                     if($effect['def'] < 2.2) { $min2 = $effect['def']; } else { $min2 = 2.2; }
                     if($effect['lvl'] != 0){
                         $feff['eff'][$name] = number_format(($effect['dem']*(10/($effect['lvl'] + 2))*(0.23+2*$effect['lvl']/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
-                        $feff['wn6'][$name] = number_format(((1240-1040/pow($min6,0.164))*$effect['dem']+$effect['dem']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spo']*125+$min2*100 +((185/(0.17+exp(($effect['win']*100-35)*-0.134)))-500)*0.45 +(6-$min6)*-60),2, '.', '');
+                        $feff['wn6'][$name] = number_format(((1240-1040/(pow($min6,0.164)))*$effect['des']+$effect['dem']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spo']*125+$min2*100+((185/(0.17+exp((($effect['win']*100)-35)*-0.134)))-500)*0.45+(6-$min6)*-60),2, '.', '');
                         $feff['brone'][$name] = round((log($effect['b'])/10)*(($effect['Hp']*1)+($effect['dem']*($effect['win']*2+$effect['des']*0.9+$effect['spo']*0.5+$effect['def']*0.5+$effect['cap']*0.5))),0);
-                    }                                 
-                }                         
+                        $feff['xwm_eff'][$name] = round(max(min(6.17*pow(10,-9)*pow($feff['eff'][$name],3) - 1.975*pow(10,-5)*pow($feff['eff'][$name],2) + 0.08125*$feff['eff'][$name] - 31.04 , 100) , 0),0);
+                        $feff['xwm_wn6'][$name] = round(max(min(4.116*pow(10,-9)*pow($feff['wn6'][$name],3) - 8.189*pow(10,-6)*pow($feff['wn6'][$name],2) + 0.048*$feff['wn6'][$name] - 3.146 , 100) , 0),0);
+                    }
+                }
             }else{
                 $feff['eff'][$name] = 0;
                 $feff['wn6'][$name] = 0;
                 $feff['brone'][$name] = 0;
+                $feff['xwm_eff'][$name] = 0;
+                $feff['xwm_wn6'][$name] = 0;
             }
         }
         return $feff;   
