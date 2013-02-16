@@ -23,7 +23,8 @@ ALTER TABLE  medals RENAME  `medals`;
 ALTER TABLE  tabs RENAME  `tabs`;
 ALTER TABLE  tanks RENAME  `tanks`;
 ALTER TABLE  top_tanks RENAME  `top_tanks`;
-ALTER TABLE  users RENAME  `users`;
+ALTER TABLE  users RENAME msfcmt_users;
+ALTER TABLE  msfcmt_users ADD `prefix` VARCHAR(6) NOT NULL DEFAULT 'all' COMMENT 'all - login to all multiclans';
 
 INSERT INTO `config` (`name`, `value`) VALUES
 ('theme', 'ui-lightness'),
