@@ -67,7 +67,7 @@
                 <td valign="top" width="222px">
                     <ul id="ad_menu" class="tabsmenu ui-corner-all">
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-1"><?=$lang['admin_tab_opt'];?></a></li>
-                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
@@ -138,7 +138,7 @@
                                                     <td align="center"><div class="hidden"><?=$val['index']?></div>
                                                         <select name="Array[<?=$val['title']?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
                                                     </td>
-                                                    <td align="center"><a href="./index.php?removetoptank=1&tank=<?=$val['title']?>&page=main#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$adm_tname;?>?')"><img src="../images/cred.png" /></a></td>
+                                                    <td align="center"><a href="./index.php?removetoptank=1&tank=<?=$val['title']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$adm_tname;?>?')"><img src="../images/cred.png" /></a></td>
                                                 </tr>
                                                 <? } ?>
                                         </tbody>
