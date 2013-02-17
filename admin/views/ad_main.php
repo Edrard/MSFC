@@ -184,7 +184,7 @@
                                                 <select name="lang">
                                                     <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
                                                     <option value="en" <?php if($config['lang'] == 'en'){ echo 'selected="selected"';} ?>>English</option>
-                                                </select><br><?=$lang['admin_change_lang'];?>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
