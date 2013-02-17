@@ -124,6 +124,10 @@
     $lang['mcap'] = 'Average captured';
     $lang['mdef'] = 'Average defense';
     $lang['eff_ret'] = 'Efficiency rating';
+    $lang['wn6_ret'] = 'WN6 rating';
+    $lang['brone_ret'] = 'Armor site rating';
+    $lang['xvm_eff_ret'] = 'XVM Efficiency rating';
+    $lang['xvm_wn6_ret'] = 'XVM WN6 rating';
     $lang['average_perform_title'] = 'Average perform';
     $lang['gk_blocked'] = 'Blocked vehicles';
 

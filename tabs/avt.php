@@ -6,7 +6,7 @@
        $darkred = '<span style="color:DarkRed;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/down.png">&nbsp;';
 
    foreach($res as $name => $val){
-    $avt_eff[$eff_rating['eff'][$name]] = $name;
+    $avt_eff[$eff_rating[$name]['eff']] = $name;
     $avt_games[] = $val['overall'][$lang['total']];
     $avt_win[] = $val['overall'][$lang['victories']];
     $avt_lose[] = $val['overall'][$lang['defeats']];
@@ -37,7 +37,7 @@
           <?php foreach($avt_eff as $name => $val){ ?>
             <tr>
               <td><?=$val; ?></td>
-              <td style="font-weight:bold;"><?=$eff_rating['eff'][$val];?></td>
+              <td style="font-weight:bold;"><?=$eff_rating[$val]['eff'];?></td>
             </tr>
            <?php } ?>
          </tbody>

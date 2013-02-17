@@ -54,25 +54,26 @@ $(document).ready(function() {
                     <?php } ?>
                 <?php } ?>
                 <th class="overall_value overall_average"><?=$lang['eff_ret'];?></th>
-            </tr>  
+                <th class="overall_value overall_average"><?=$lang['wn6_ret'];?></th>
+            </tr>
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
             <?
-            switch ($eff_rating['eff'][$name]+1) {
-            case ($eff_rating['eff'][$name] > 1800):
+            switch ($eff_rating[$name]['eff']+1) {
+            case ($eff_rating[$name]['eff'] > 1725):
             $color = '#FF8000';
             break;
-            case ($eff_rating['eff'][$name] > 1500):
+            case ($eff_rating[$name]['eff'] > 1465):
             $color = 'purple';
             break;
-            case ($eff_rating['eff'][$name] > 1200):
+            case ($eff_rating[$name]['eff'] > 1150):
             $color = 'royalblue';
             break;
-            case ($eff_rating['eff'][$name] > 900):
+            case ($eff_rating[$name]['eff'] > 870):
             $color = 'green';
             break;
-            case ($eff_rating['eff'][$name] > 600):
+            case ($eff_rating[$name]['eff'] > 645):
             $color = 'slategray';
             break;
             default:
@@ -80,7 +81,29 @@ $(document).ready(function() {
             break;
             }
             ?>
-                <tr> 
+            <?
+            switch ($eff_rating[$name]['wn6']+1) {
+            case ($eff_rating[$name]['wn6'] > 1880):
+            $color_wn6 = '#FF8000';
+            break;
+            case ($eff_rating[$name]['wn6'] > 1585):
+            $color_wn6 = 'purple';
+            break;
+            case ($eff_rating[$name]['wn6'] > 1195):
+            $color_wn6 = 'royalblue';
+            break;
+            case ($eff_rating[$name]['wn6'] > 800):
+            $color_wn6 = 'green';
+            break;
+            case ($eff_rating[$name]['wn6'] > 435):
+            $color_wn6 = 'slategray';
+            break;
+            default:
+            $color_wn6 = 'red';
+            break;
+            }
+            ?>
+                <tr>
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
                             target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['overall'] as $column => $result){ ?>
@@ -96,10 +119,16 @@ $(document).ready(function() {
                           }; ?>%</td>
                         <?php } ?>
                     <?php } ?>
-                    <td class="overall_value overall_average"><font color="<?=$color;?>"><?=($eff_rating['eff'][$name]>0)?$eff_rating['eff'][$name]:'0';?></font></td>
+                    <td class="overall_value overall_average"><font color="<?=$color;?>"><?=($eff_rating[$name]['eff']>0)?$eff_rating[$name]['eff']:'0';?></font></td>
+                    <td class="overall_value overall_average"><font color="<?=$color_wn6;?>"><?=($eff_rating[$name]['wn6']>0)?$eff_rating[$name]['wn6']:'0';?></font></td>
                 </tr>
                 <?php } ?>
         </tbody>  
     </table>
-    <?=$lang['overall_eff_table']?>
+    <table border="0" cellpadding="0" cellpadding="0" width="100%">
+    <tr>
+    <td align="right" valign="top"><?=$lang['overall_eff_table']?></td>
+    <td align="left" valign="top"><?=$lang['overall_wn6_table']?></td>
+    </tr>
+    </table>
 </div>

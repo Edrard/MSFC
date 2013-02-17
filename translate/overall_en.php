@@ -23,33 +23,67 @@
       <td colspan="2" align="center"><strong>Table of efficiency rating values</strong></td>
     </tr>
     <tr>
-      <td align="center">less than 600</td>
-      <td align="center"> <font color="red">Bad players</font> (~10%)</td>
+      <td align="center">less than 645</td>
+      <td align="center"> <font color="red">Bad players</font> (~20%)</td>
     </tr>
 
     <tr>
-      <td align="center">600 - 900</td>
-      <td align="center"><font color="slategray">Players below average</font> (~48%)</td>
+      <td align="center">645 - 870</td>
+      <td align="center"><font color="slategray">Players below average</font> (~40%)</td>
     </tr>
     <tr>
-      <td align="center">900-1200</td>
-      <td align="center"><font color="green">Average players</font> (~32%)</td>
+      <td align="center">870-1150</td>
+      <td align="center"><font color="green">Average players</font> (~30%)</td>
 
     </tr>
     <tr>
-      <td align="center">1200-1500</td>
-      <td align="center"><font color="royalblue">Good players</font> (~8%)</td>
+      <td align="center">1150-1465</td>
+      <td align="center"><font color="royalblue">Good players</font> (~9%)</td>
     </tr>
     <tr>
-      <td align="center">1500-1800</td>
+      <td align="center">1465-1725</td>
 
-      <td align="center"><font color="purple">Great players</font> (~1,9%)</td>
+      <td align="center"><font color="purple">Great players</font> (~0,9%)</td>
     </tr>
                     <tr>
-      <td align="center">more 1800</td>
+      <td align="center">more 1725</td>
       <td align="center"><font color="#FF8000">Unicums</font> (~0,1%)</td>
     </tr>
     </table>';
   $lang['overall_average'] = 'Percentage values';
   $lang['overall_value'] = 'Total values';
+  $lang['overall_wn6_table'] = '
+
+    <table width="400" cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
+    <tr>
+      <td colspan="2" align="center"><strong>Table of WN6 rating values</strong></td>
+    </tr>
+    <tr>
+      <td align="center">less than 435</td>
+      <td align="center"> <font color="red">Bad players</font> (~20%)</td>
+    </tr>
+
+    <tr>
+      <td align="center">435 - 800</td>
+      <td align="center"><font color="slategray">Players below average</font> (~40%)</td>
+    </tr>
+    <tr>
+      <td align="center">800-1195</td>
+      <td align="center"><font color="green">Average players</font> (~30%)</td>
+
+    </tr>
+    <tr>
+      <td align="center">1195-1585</td>
+      <td align="center"><font color="royalblue">Good players</font> (~9%)</td>
+    </tr>
+    <tr>
+      <td align="center">1585-1880</td>
+
+      <td align="center"><font color="purple">Great players</font> (~0,9%)</td>
+    </tr>
+                    <tr>
+      <td align="center">more 1880</td>
+      <td align="center"><font color="#FF8000">Unicums</font> (~0,1%)</td>
+    </tr>
+    </table>';
 ?>
