@@ -16,7 +16,7 @@
     */
 ?>
 <?php
-  $lang['overall_eff_table'] = '<table width=\'400\' cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
+  $lang['overall_eff_table'] = '<table cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
 <tr>
   <td colspan=\'2\' align=\'center\'><strong>Таблица значений рейтинга эффективности</strong></td>
 </tr>
@@ -51,7 +51,7 @@
 <p>В скобках написан приблизительный <br> процент игроков с данным рейтингом</p>';
   $lang['overall_average'] = 'Процентные значения';
   $lang['overall_value'] = 'Полные значения';
-  $lang['overall_wn6_table'] = '<table width=\'400\' cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
+  $lang['overall_wn6_table'] = '<table cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
 <tr>
   <td colspan=\'2\' align=\'center\'><strong>Таблица значений WN6 рейтинга</strong></td>
 </tr>
@@ -81,6 +81,39 @@
                 <tr>
   <td align=\'center\'>больше 1880</td>
   <td align=\'center\'><font color=\'#FF8000\'>Уникумы</font> (~0,1%)</td>
+</tr>
+</table>
+<p>В скобках написан приблизительный <br> процент игроков с данным рейтингом</p>';
+  $lang['overall_brone_table'] = '<table cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
+<tr>
+  <td colspan=\'2\' align=\'center\'><strong>Таблица значений рейтинга Бронесайта</strong></td>
+</tr>
+<tr>
+  <td align=\'center\'>меньше 2080</td>
+  <td align=\'center\'> <font color=\'red\'>Оленеводы (всех классов)</font> (~45%)</td>
+</tr>
+
+<tr>
+  <td align=\'center\'>2080 - 2733</td>
+  <td align=\'center\'><font color=\'slategray\'>Танкист 3-го класса</font> (~15%)</td>
+</tr>
+<tr>
+  <td align=\'center\'>2733-3850</td>
+  <td align=\'center\'><font color=\'green\'>Танкист 2-го класса</font> (~20%)</td>
+
+</tr>
+<tr>
+  <td align=\'center\'>3850-5571</td>
+  <td align=\'center\'><font color=\'royalblue\'>Танкист 1-го класса</font> (~15%)</td>
+</tr>
+<tr>
+  <td align=\'center\'>5571-7297</td>
+
+  <td align=\'center\'><font color=\'purple\'>Мастер-танкист</font> (~4%)</td>
+</tr>
+                <tr>
+  <td align=\'center\'>больше 7297</td>
+  <td align=\'center\'><font color=\'#FF8000\'>Виртуоз</font> (~1%)</td>
 </tr>
 </table>
 <p>В скобках написан приблизительный <br> процент игроков с данным рейтингом</p>';

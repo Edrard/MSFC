@@ -17,8 +17,7 @@
 ?>
 <?php
   $lang['overall_eff_table'] = '
-
-    <table width="400" cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
+    <table cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
     <tr>
       <td colspan="2" align="center"><strong>Table of efficiency rating values</strong></td>
     </tr>
@@ -53,8 +52,7 @@
   $lang['overall_average'] = 'Percentage values';
   $lang['overall_value'] = 'Total values';
   $lang['overall_wn6_table'] = '
-
-    <table width="400" cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
+    <table cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
     <tr>
       <td colspan="2" align="center"><strong>Table of WN6 rating values</strong></td>
     </tr>
@@ -84,6 +82,39 @@
                     <tr>
       <td align="center">more 1880</td>
       <td align="center"><font color="#FF8000">Unicums</font> (~0,1%)</td>
+    </tr>
+    </table>';
+  $lang['overall_brone_table'] = '
+    <table cellspacing="0" cellpadding="2" class="ui-widget ui-widget-content" style="border-width:0px;background-image:none;">
+    <tr>
+      <td colspan="2" align="center"><strong>Table of <a href="http://armor.kiev.ua/wot/" target="_blank">Armor site</a> rating values</strong></td>
+    </tr>
+    <tr>
+      <td align="center">less than 2080</td>
+      <td align="center"> <font color="red">Bad players</font> (~45%)</td>
+    </tr>
+
+    <tr>
+      <td align="center">2080 - 2733</td>
+      <td align="center"><font color="slategray">Players below average</font> (~15%)</td>
+    </tr>
+    <tr>
+      <td align="center">2733-3850</td>
+      <td align="center"><font color="green">Average players</font> (~20%)</td>
+
+    </tr>
+    <tr>
+      <td align="center">3850-5571</td>
+      <td align="center"><font color="royalblue">Good players</font> (~15%)</td>
+    </tr>
+    <tr>
+      <td align="center">5571-7297</td>
+
+      <td align="center"><font color="purple">Great players</font> (~4%)</td>
+    </tr>
+                    <tr>
+      <td align="center">more 7297</td>
+      <td align="center"><font color="#FF8000">Unicums</font> (~1%)</td>
     </tr>
     </table>';
 ?>

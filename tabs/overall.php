@@ -55,11 +55,12 @@ $(document).ready(function() {
                 <?php } ?>
                 <th class="overall_value overall_average"><?=$lang['eff_ret'];?></th>
                 <th class="overall_value overall_average"><?=$lang['wn6_ret'];?></th>
+                <th class="overall_value overall_average"><?=$lang['brone_ret'];?></th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($res as $name => $val){ ?>
-            <?
+            <?php foreach($res as $name => $val){
+
             switch ($eff_rating[$name]['eff']+1) {
             case ($eff_rating[$name]['eff'] > 1725):
             $color = '#FF8000';
@@ -80,8 +81,6 @@ $(document).ready(function() {
             $color = 'red';
             break;
             }
-            ?>
-            <?
             switch ($eff_rating[$name]['wn6']+1) {
             case ($eff_rating[$name]['wn6'] > 1880):
             $color_wn6 = '#FF8000';
@@ -102,7 +101,28 @@ $(document).ready(function() {
             $color_wn6 = 'red';
             break;
             }
+            switch ($eff_rating[$name]['brone']+1) {
+            case ($eff_rating[$name]['brone'] > 7296.96):
+            $color_brone = '#FF8000';
+            break;
+            case ($eff_rating[$name]['brone'] > 5570.97):
+            $color_brone = 'purple';
+            break;
+            case ($eff_rating[$name]['brone'] > 3849.62):
+            $color_brone = 'royalblue';
+            break;
+            case ($eff_rating[$name]['brone'] > 2733.38):
+            $color_brone = 'green';
+            break;
+            case ($eff_rating[$name]['brone'] > 2080.77):
+            $color_brone = 'slategray';
+            break;
+            default:
+            $color_brone = 'red';
+            break;
+            }
             ?>
+
                 <tr>
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
                             target="_blank"><?php echo $name; ?></a></td>
@@ -121,14 +141,16 @@ $(document).ready(function() {
                     <?php } ?>
                     <td class="overall_value overall_average"><font color="<?=$color;?>"><?=($eff_rating[$name]['eff']>0)?$eff_rating[$name]['eff']:'0';?></font></td>
                     <td class="overall_value overall_average"><font color="<?=$color_wn6;?>"><?=($eff_rating[$name]['wn6']>0)?$eff_rating[$name]['wn6']:'0';?></font></td>
+                    <td class="overall_value overall_average"><font color="<?=$color_brone;?>"><?=($eff_rating[$name]['brone']>0)?$eff_rating[$name]['brone']:'0';?></font></td>
                 </tr>
                 <?php } ?>
         </tbody>  
     </table>
-    <table border="0" cellpadding="0" cellpadding="0" width="100%">
+    <table border="0" cellpadding="2" cellpadding="2" width="100%">
     <tr>
-    <td align="right" valign="top"><?=$lang['overall_eff_table']?></td>
-    <td align="left" valign="top"><?=$lang['overall_wn6_table']?></td>
+    <td align="center" valign="top"><?=$lang['overall_eff_table']?></td>
+    <td align="center" valign="top"><?=$lang['overall_wn6_table']?></td>
+    <td align="center" valign="top"><?=$lang['overall_brone_table']?></td>
     </tr>
     </table>
 </div>
