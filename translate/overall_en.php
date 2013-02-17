@@ -91,30 +91,30 @@
     </tr>
     <tr>
       <td align="center">less than 2080</td>
-      <td align="center"> <font color="red">Bad players</font> (~45%)</td>
+      <td align="center"> <font color="red">Noobs</font> (~45%)</td>
     </tr>
 
     <tr>
       <td align="center">2080 - 2733</td>
-      <td align="center"><font color="slategray">Players below average</font> (~15%)</td>
+      <td align="center"><font color="slategray">3rd class players</font> (~15%)</td>
     </tr>
     <tr>
       <td align="center">2733-3850</td>
-      <td align="center"><font color="green">Average players</font> (~20%)</td>
+      <td align="center"><font color="green">2nd class players</font> (~20%)</td>
 
     </tr>
     <tr>
       <td align="center">3850-5571</td>
-      <td align="center"><font color="royalblue">Good players</font> (~15%)</td>
+      <td align="center"><font color="royalblue">1st class players</font> (~15%)</td>
     </tr>
     <tr>
       <td align="center">5571-7297</td>
 
-      <td align="center"><font color="purple">Great players</font> (~4%)</td>
+      <td align="center"><font color="purple">Master class players</font> (~4%)</td>
     </tr>
                     <tr>
       <td align="center">more 7297</td>
-      <td align="center"><font color="#FF8000">Unicums</font> (~1%)</td>
+      <td align="center"><font color="#FF8000">Virtuoso</font> (~1%)</td>
     </tr>
     </table>';
 ?>
