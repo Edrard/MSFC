@@ -451,3 +451,4 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
         </table>
         <? };?>
 </div>
+<?php unset($avt_memb,$avtdmg,$darkgreen,$darkred,$avt_eff,$avt_games,$avt_win,$avt_lose,$avt_surv,$avt_seek,$avt_dest,$avt_pers,$avt_dama,$avt_capt,$avt_defe,$avt_summ,$avt_max,$rowss); ?>
