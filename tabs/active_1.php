@@ -30,7 +30,7 @@
                                 <?php  } ?>
                             <?php  } ?>
 
-                        <th align='center' class="{sorter: 'digit'} bb"><?=$lang['activity_4'];?></th>
+                        <th align='center' class="{sorter: 'digit'}"><?=$lang['activity_4'];?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,16 +40,12 @@
                                 target="_blank"><?=$roster_id[$id]['account_name']; ?></a></td>
                             <?php
                                 foreach ($medal_resort['list'] as $type => $mval){
-                                    foreach(array_keys($mval) as $medals){
-                                        if (isset ($medal_resort['data'][$type][$id][$medals])){ ?>
-                                        <td align="center"><?=$medal_resort['data'][$type][$id][$medals];?></td>
-                                        <?php }else{ ?>
-                                        <td align="center">0</td>
-                                        <?php }      
-                                    }
-                                } 
+                                    foreach(array_keys($mval) as $medals){  ?>
+                                        <td align="center"><?=(isset($medal_resort['data'][$type][$id][$medals])?$medal_resort['data'][$type][$id][$medals]:'');?></td>
+                           <?php    }
+                                }
                             ?>
-                            <td align='center' class="bb"><?=$total;?></td>
+                            <td align='center'><?=$total;?></td>
                         </tr>
                         <?php }  ?>
                 </tbody>

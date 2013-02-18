@@ -66,10 +66,10 @@
                             target="_blank"><?php echo $name; ?></a></td>
                         <?php foreach($slice as $title => $val){  ?>
                             <?php if(isset($main_progress['average'][$rand_main_progress][$title])){ ?>
-                                <td class="all_progress_hide average_progress"><?=$main_progress['average'][$name][$title];?></td>
-                                <?php } ?>
-                            <td class="all_progress_hide main_progress"><?=$val;?></td>
+                                <td class="all_progress_hide average_progress"><?=($main_progress['average'][$name][$title]!=0)?$main_progress['average'][$name][$title]:'';?></td>
                             <?php } ?>
+                            <td class="all_progress_hide main_progress"><?=($val!=0)?$val:'';?></td>
+                        <?php } ?>
                     </tr>
                     <?php } ?>
             </tbody>  
