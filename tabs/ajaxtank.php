@@ -15,12 +15,6 @@
     *
     */
 ?>
-<?php
-    $tanks_nation = tanks_nations();
-    $tanks_types = tanks_types();
-    $tanks_lvl = tanks_lvl();
-    sort($tanks_lvl);
-?>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#change_button_tanks").button();

@@ -84,3 +84,4 @@
           <span class="col_grey"><?=$lang['roster_grey']?></span><br>
           <span class="col_red"><?=$lang['roster_red']?></span><br>
           <span class="col_black"><?=$lang['roster_black']?></span>
+<? unset($date,$color,$roster_local_num,$diff_date); ?>

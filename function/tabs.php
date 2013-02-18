@@ -38,12 +38,12 @@
         if($curr_tab_val['status'] == 1){
             if($logged >= $curr_tab_val['auth']){
                 if($curr_tab_val['type'] == 0){
-                    $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = $curr_tab_val['file'];   
+                    $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = $curr_tab_val['file'];
                 }elseif($curr_tab_val['type'] == 1){
                     $tabs[$curr_tab_val['file']][$curr_tab_val['name']]  = '';    
                 }
             }else{
-                $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = array();    
+                $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = array();
             }
         }
     }
@@ -60,5 +60,6 @@
       }
     }
     //print_r($tabs);
+    unset($curr_tab_val);
 ?>
 

@@ -154,3 +154,4 @@ $(document).ready(function() {
     </tr>
     </table>
 </div>
+<? unset($color_brone,$color_wn6,$color); ?>

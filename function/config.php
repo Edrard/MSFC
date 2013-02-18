@@ -82,7 +82,6 @@
     }
     $data = array();
     $links = array();
-    $res_tmp = array();
     $result = array();
     $res = array();
 

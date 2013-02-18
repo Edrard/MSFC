@@ -53,6 +53,7 @@
                 $res[$name] = $tmp;
             }
         }
+        unset($pldata,$tmp);
         if (!empty($get))  
         {  
             //Trying to lock DB
