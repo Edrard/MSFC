@@ -147,7 +147,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
   </thead>
   <tbody>
     <tr>
-     <td align="left"><?=$lang['roster']; ?>:</td>
+     <td align="left"><span class="hidden">1</span><?=$lang['roster']; ?>:</td>
      <td colspan="<?=($rowss-1); ?>" align="center"><strong><?=$avt_memb ?></strong></td>
      <td align="left"><?=$lang['spo']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
@@ -174,7 +174,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
     </tr>
 
     <tr>
-     <td align="left"><?=$lang['games_p']; ?>:</td>
+     <td align="left"><span class="hidden">2</span><?=$lang['games_p']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?=$h24total;?></td>
      <? } ?>
@@ -216,18 +216,18 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
     </tr>
 
     <tr>
-     <td align="left"><?=$lang['victories']; ?>:</td>
+     <td align="left"><span class="hidden">3</span><?=$lang['victories']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
            echo $h24win.' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24win/$h24total,2) >= round(array_sum($avt_win)/array_sum($avt_games),2)) {
+             if (round($h24win/$h24total*100,2) >= round(array_sum($avt_win)/array_sum($avt_games)*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
                  };
-             echo round($h24win/$h24total,2).'%';?>
-             </span>
+             echo round($h24win/$h24total*100,2);?>
+             %</span>
          <?php } else {
                  echo "0";
                }; ?>)</td>
@@ -240,18 +240,18 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
     </tr>
 
     <tr>
-     <td align="left"><?=$lang['defeats']; ?>:</td>
+     <td align="left"><span class="hidden">4</span><?=$lang['defeats']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
            echo $h24lose.' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24lose/$h24total,2) >= round(array_sum($avt_lose)/array_sum($avt_games),2)) {
+             if (round($h24lose/$h24total*100,2) >= round(array_sum($avt_lose)/array_sum($avt_games)*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
                  };
-             echo round($h24lose/$h24total,2);  ?>
-                 %</span>
+             echo round($h24lose/$h24total*100,2);?>
+             %</span>
          <?php } else {
                  echo "0";
                }; ?>)</td>
@@ -262,13 +262,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td><?php
            echo $h24dmg.' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24dmg/$h24total,2) >= round(array_sum($avt_lose)/array_sum($avt_games),2)) {
+             if (round($h24dmg/$h24total,2) >= round(array_sum($avt_dama)/array_sum($avt_games),2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
                  };
              echo round($h24dmg/$h24total,2);  ?>
-                 </span>
+             </span>
          <?php } else {
                  echo "0";
                }; ?>)</td>
@@ -277,7 +277,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td colspan="<?=$rowss; ?>"></td>
     </tr>
     <tr>
-     <td align="left"><?=$lang['dead_heat']; ?>:</td>
+     <td align="left"><span class="hidden">5</span><?=$lang['dead_heat']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
            echo(($h24total-$h24win)-$h24lose),' (';
@@ -287,7 +287,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo $darkred;
                  };
              echo round((($h24total-$h24win)-$h24lose)/$h24total*100,2); ?>
-                 %</span>
+             %</span>
          <?php } else {
                  echo "0";
                }; ?>)</td>
@@ -314,18 +314,18 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
     </tr>
 
     <tr>
-     <td align="left"><?=$lang['averag_surv']; ?>:</td>
+     <td align="left"><span class="hidden">6</span><?=$lang['averag_surv']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
            echo $h24alive.' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24alive/$h24total,2) >= round(array_sum($avt_surv)/array_sum($avt_games),2)) {
+             if (round($h24alive/$h24total*100,2) >= round(array_sum($avt_surv)/array_sum($avt_games)*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
                  };
-             echo round($h24alive/$h24total,2);  ?>
-                 %</span>
+             echo round($h24alive/$h24total*100,2);  ?>
+             %</span>
          <?php } else {
                  echo "0";
                }; ?>)</td>
