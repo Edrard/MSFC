@@ -86,6 +86,11 @@
         $logged = 2;
     }
 
+    $multi_url = '';
+    if(isset($_GET['multi'])){
+        $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
+    }
+
     include_once(ROOT_DIR.'/function/tabs.php');
     include_once(ROOT_DIR.'/including/show.php');
     include_once(ROOT_DIR.'/including/gk.php');
@@ -99,7 +104,7 @@
         $tanks_nation = tanks_nations();
         $tanks_types = tanks_types();
         $tanks_lvl = tanks_lvl();
-        sort($tanks_lvl);        
+        sort($tanks_lvl);
         if($config['cron'] == 1 && $col_check > 2){
             $medal_progress = medal_progress($roster_id,(now() - $config['medal_progress']),now());
             $medal_resort = medals_resort($medal_progress,$roster_id);

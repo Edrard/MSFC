@@ -165,7 +165,7 @@
     <? if($logged >= $config['a_rights']) { ?>
     <br />
     <div align="left" id="activity_upload_form_main">
-    <form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
+    <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
     <span id="activity_upload_form">
     <input type="file" name="filename1"><select name="cat1">
       <option value="cat_1" selected="selected"><?=$lang['a_cat_1'];?></option>

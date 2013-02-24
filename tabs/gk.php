@@ -26,7 +26,7 @@ $cur_time = time();
 </script>
 <div class="num" align="left">
 <? if($logged >= $config['a_rights']) { ?>
-<form action="./main.php#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
+<form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
 <input type="file" name="filename">
 <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
 </form>
@@ -41,7 +41,7 @@ $cur_time = time();
     });
 </script>
 <div align="center">
-    <form action="./main.php#tabs-<?php echo $key; ?>" method="post">
+    <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post">
        <input type="hidden" value="<?=$gk_fresult['time'];?>" name="Array[time]">
         <table id="gk_destroyed" cellspacing="1">
             <thead>
