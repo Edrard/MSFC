@@ -142,22 +142,22 @@
                 $new['status_code'] = 'ERROR';
             }
             if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-                unset($new);
-                $new = $cache->get('get_last_roster_'.$config['clan'],0);
-                if($new === FALSE) { 
-                    if($log == 1){
-                        fwrite($fh, $date.": No cahced data\n");    
-                    }
-                    die('No cahced data'); 
-                }
-                if($log == 1){
-                    fwrite($fh, $date.": Used cached roster\n");    
-                }  
-            }else{
                 $cache->clear('get_last_roster_'.$config['clan'], $new);
                 $cache->set('get_last_roster_'.$config['clan'], $new);
                 if($log == 1){
-                    fwrite($fh, $date.": Used roster from WG\n");    
+                    fwrite($fh, $date.": Used roster from WG\n");
+                }
+            }else{
+                unset($new);
+                $new = $cache->get('get_last_roster_'.$config['clan'],0);
+                if($new === FALSE) {
+                    if($log == 1){
+                        fwrite($fh, $date.": No cahced data\n");
+                    }
+                    die('No cahced data');
+                }
+                if($log == 1){
+                    fwrite($fh, $date.": Used cached roster\n");
                 }
             }
             //Sorting roster
