@@ -270,7 +270,7 @@
             } 
         }else{
             if($log == 1){
-                fwrite($fh, $date.": No data for player with ID ".$roster['account_id']."\n");    
+                fwrite($fh, $date.": No data for player with ID ".$roster['account_id']." ({$data['error']})\n");    
             }
         }
     }

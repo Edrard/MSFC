@@ -157,7 +157,7 @@
                     die('No cahced data');
                 }
                 if($log == 1){
-                    fwrite($fh, $date.": Used cached roster\n");
+                    fwrite($fh, $date.": Used cached roster ({$new['error']})\n");
                 }
             }
             //Sorting roster
