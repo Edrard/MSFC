@@ -111,7 +111,7 @@
 
                                         echo $percent.'% ('.$val['tank'][$lvl][$type][$column]['total'].'/'.$val['tank'][$lvl][$type][$column]['win'].')';
                                     }else{
-                                        echo '0% (0/0)';
+                                        echo '';
                                     }
 
                                 ?>

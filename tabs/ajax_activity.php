@@ -108,21 +108,24 @@
             primary: "ui-icon-plus"
             },
             text: false
-        });
+        }).css({'width': '25px', 'height': '25px', 'position': 'absolute', 'margin-left': '5px'});
         var id = 2;
         var form = '';
+        var cat_val = '';
         $("#activity_add_replay").click( function() {
           //1
-          $("#activity_upload_form").append('<br /><input type="file" name="filename'+id+'">');
-          form = form + '<select name="cat'+id+'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-          form = form + '<option value="cat_1" selected="selected"><?=$lang["a_cat_1"];?></option>';
-          form = form + '<option value="cat_2"><?=$lang["a_cat_2"];?></option>';
-          form = form + '<option value="cat_3"><?=$lang["a_cat_3"];?></option>';
-          form = form + '<option value="cat_4"><?=$lang["a_cat_4"];?></option>';
+          cat_val = $('#cat'+(id-1)).val();
+          form = '<br /><input type="file" name="filename'+id+'">&nbsp;';
+          form = form + '<select name="cat'+id+'" id="cat'+id+'">';
+          form = form + '<option value="cat_1" '+((cat_val == 'cat_1')?'selected="selected"':'')+'><?=$lang["a_cat_1"];?></option>';
+          form = form + '<option value="cat_2" '+((cat_val == 'cat_2')?'selected="selected"':'')+'><?=$lang["a_cat_2"];?></option>';
+          form = form + '<option value="cat_3" '+((cat_val == 'cat_3')?'selected="selected"':'')+'><?=$lang["a_cat_3"];?></option>';
+          form = form + '<option value="cat_4" '+((cat_val == 'cat_4')?'selected="selected"':'')+'><?=$lang["a_cat_4"];?></option>';
           form = form + '</select>';
           $("#activity_upload_form").append(form);
           id = id + 1;
           form = '';
+          cat_val = '';
           return false;
         });
         $("#activity_upload_b").button({
@@ -167,7 +170,8 @@
     <div align="left" id="activity_upload_form_main">
     <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
     <span id="activity_upload_form">
-    <input type="file" name="filename1"><select name="cat1">
+    <input type="file" name="filename1">
+    <select name="cat1" id="cat1">
       <option value="cat_1" selected="selected"><?=$lang['a_cat_1'];?></option>
       <option value="cat_2"><?=$lang['a_cat_2'];?></option>
       <option value="cat_3"><?=$lang['a_cat_3'];?></option>
@@ -176,7 +180,7 @@
     </span>
     <button id="activity_add_replay">Add replay</button>
     <br />
-    <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="activityreplay">
+    <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="activityreplay" style="margin-top:5px;">
     </form>
     </div>
     <?php } ?>
