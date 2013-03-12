@@ -21,6 +21,9 @@
         //header ("Location: /index.php");
         exit;
     }
+    if(file_exists(ROOT_DIR.'/function/mysql.config.php') and is_readable(ROOT_DIR.'/function/mysql.config.php')) {
+      include_once(ROOT_DIR.'/function/mysql.config.php');
+    } else {
 
     $dbhost ='localhost';
     // username and password to log onto db SERVER
@@ -34,6 +37,7 @@
     $dbprefix = '';
     $sqlchar = 'utf8';
 
+    }
     //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
     if (!class_exists('MyPDO')) {
         class MyPDO extends PDO
