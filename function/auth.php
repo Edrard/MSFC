@@ -148,7 +148,7 @@
         // Name validation
         private function name($name) {
             $min = $this->minval - 2;
-            if ( !preg_match("#^[a-z][\da-z_]{".$min.",".$this->maxval."}[a-z\d]\$#i", $name) ) {
+            if ( !preg_match("#^[\da-z_]{".$min.",".$this->maxval."}\$#i", $name) ) {
                 return false;
             } else {
                 return true;
