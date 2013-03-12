@@ -40,7 +40,7 @@
         private $connection;
         private $errors = array();
         var $minval = 2;
-        var $maxval = 22;
+        var $maxval = 12;
         var $minpass = 0;
         var $salt = '#@()DIJK#)(F#&*()DS#@JKS)@(I()#@DU)*(&@#)(#U)J';
         var $emailAuth = false;
@@ -148,7 +148,7 @@
         // Name validation
         private function name($name) {
             $min = $this->minval - 2;
-            if ( !preg_match("#^[\da-z_]{".$min.",".$this->maxval."}\$#i", $name) ) {
+            if ( !preg_match("#^[\d\w_]{".$min.",".$this->maxval."}\$#i", $name) ) {
                 return false;
             } else {
                 return true;
