@@ -147,14 +147,18 @@
                 }
                 if(count($effect) > 0){
                     $feff[$name] = array();
+                    if($effect['lvl'] != 0){
                     if($effect['lvl'] < 6) { $min6 = $effect['lvl']; } else { $min6 = 6; }
                     if($effect['def'] < 2.2) { $min2 = $effect['def']; } else { $min2 = 2.2; }
-                    if($effect['lvl'] != 0){
+                    if($effect['lvl'] < 3) { $min3 = $effect['lvl']; } else { $min3 = 3; }
+                    if($effect['lvl'] < 5) { $min5 = $effect['lvl']; } else { $min5 = 5; }
+
                         $feff[$name]['eff'] = number_format(($effect['dem']*(10/($effect['lvl'] + 2))*(0.23+2*$effect['lvl']/100) + $effect['des']*0.25*1000 + $effect['spo']*0.15*1000 + log($effect['cap']+1,1.732)*0.15*1000 + $effect['def']*0.15*1000),2, '.', '');
                         $feff[$name]['wn6'] = number_format(((1240-1040/(pow($min6,0.164)))*$effect['des']+$effect['dem']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spo']*125+$min2*100+((185/(0.17+exp((($effect['win']*100)-35)*-0.134)))-500)*0.45+(6-$min6)*-60),2, '.', '');
                         $feff[$name]['brone'] = round((log($effect['b'])/10)*(($effect['Hp']*1)+($effect['dem']*($effect['win']*2+$effect['des']*0.9+$effect['spo']*0.5+$effect['def']*0.5+$effect['cap']*0.5))),0);
                         $feff[$name]['xvm_eff'] = ($feff[$name]['eff']<440) ? 0 : round(max(min($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*(0.00000000000000004787*$feff[$name]['eff'] - 0.00000000000035544) + 0.00000000102606) - 0.0000014665) + 0.0010827) - 0.3133) + 20.49, 100), 0),0);
                         $feff[$name]['xvm_wn6'] = ($feff[$name]['wn6']>2140) ? 100 : round(max(min($feff[$name]['wn6']*($feff[$name]['wn6']*($feff[$name]['wn6']*( -0.00000000001334*$feff[$name]['wn6'] + 0.00000005673) - 0.00007575) + 0.08392) - 9.362, 100), 0),0);
+                        $feff[$name]['wn7'] = number_format(((1240-1040/(pow($min6,0.164)))*$effect['des']+$effect['dem']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spo']*125*$min3/3+$min2*100+((185/(0.17+exp((($effect['win']*100)-35)*-0.134)))-500)*0.45-(((5 - $min5)*125)/(1 + exp(($effect['lvl']-pow($per_stat['overall'][$lang['games_p']]/220,(3/$effect['lvl'])))*1.5)))),2, '.', '');
                   }
                 }
             }else{
@@ -163,6 +167,7 @@
                 $feff[$name]['brone'] = 0;
                 $feff[$name]['xvm_eff'] = 0;
                 $feff[$name]['xvm_wn6'] = 0;
+                $feff[$name]['wn7'] = 0;
             }
         }
         return $feff;   
