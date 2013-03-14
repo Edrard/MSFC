@@ -22,6 +22,7 @@
     $lang['admin_tab_user'] = 'Users Control';
     $lang['admin_tab_tanks'] = 'Tanks list';
     $lang['admin_db'] = 'Database';
+    $lang['admin_module'] = 'Back to module';
     $lang['admin_logout'] = 'Logout';
     $lang['admin_server'] = 'Server';
     $lang['admin_clan_id'] = 'Clan ID';
@@ -31,9 +32,7 @@
     $lang['admin_tabs_align'] = 'Tabs align';
     $lang['admin_curl_lib'] = 'Curl library';
     $lang['admin_offset'] = 'Time Offset';
-    $lang['admin_ver'] = 'Vertical';
-    $lang['admin_hor'] = 'Horizont';
-    $lang['admin_cron'] = 'Сollect statistics of players in time';
+    $lang['admin_cron'] = 'Collect statistics of players in time';
     $lang['admin_cron_time'] = 'The minimum period of data collection';
     $lang['admin_cron_time_warning'] = 'Warning!!! Do not change this this time';
     $lang['admin_multiget'] = 'Number of players simultaneously loaded';
@@ -79,11 +78,11 @@
     $lang['admin_new_user_edit'] = 'Edit user';
 
     $lang['admin_db_recreat'] = 'Recreate database';
-    $lang['admin_db_warning'] = '<span style="color:red;">Warning!!! All data will be deleted</span>';
+    $lang['admin_db_warning'] = '<div class="ui-state-error ui-corner-all" align="center">Warning!!! All data will be deleted</div>';
     $lang['admin_db_but'] = 'Recreate';
 
     $lang['admin_db_up'] = 'Upgrade database';
-    $lang['admin_db_up_warning'] = '<span style="color:red;">Warning!!! Use it only for upgrading database</span>';
+    $lang['admin_db_up_warning'] = '<div class="ui-state-error ui-corner-all" align="center">Warning!!! Use it only for upgrading database</div>';
     $lang['admin_db_up_but'] = 'Upgrade';
     $lang['admin_clean_cache'] = 'Clean cache';
 
@@ -92,7 +91,7 @@
     $lang['admin_db_update_msg'] = 'Data was added to base';
 
     $lang['admin_db_creat'] = 'Install database';
-    $lang['admin_db_cwarning'] = '<span style="color:red;">Warning!!! All data will be deleted</span>';
+    $lang['admin_db_cwarning'] = '<div class="ui-state-error ui-corner-all" align="center">Warning!!! All data will be deleted</div>';
     $lang['admin_db_cbut'] = 'Install';
     $lang['admin_dir_cache'] = 'Check cache folder, its must be writeble';
     $lang['admin_dir_sql'] = 'Check admin/sql folder, its must be writeble';
@@ -153,4 +152,5 @@
     
     $lang['admin_cron_period'] = 'Periods used for data output';
     $lang['admin_user_access'] = 'Access';
+    $lang['admin_cancel'] = 'Cancel';
 ?>

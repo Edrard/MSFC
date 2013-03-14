@@ -22,6 +22,7 @@
     $lang['admin_tab_user'] = 'Управление пользователями';
     $lang['admin_tab_tanks'] = 'Список танков';
     $lang['admin_db'] = 'База данных';
+    $lang['admin_module'] = 'К модулю статистики';
     $lang['admin_logout'] = 'Выйти';
     $lang['admin_server'] = 'Сервер';
     $lang['admin_clan_id'] = 'Номер клана';
@@ -31,8 +32,6 @@
     $lang['admin_tabs_align'] = 'Направление закладок';
     $lang['admin_curl_lib'] = 'Curl библиотека';
     $lang['admin_offset'] = 'Корректировка времени';
-    $lang['admin_ver'] = 'Вертикально';
-    $lang['admin_hor'] = 'Горизонтально';
     $lang['admin_cron'] = 'Собирать статистику игроков во времени';
     $lang['admin_cron_time'] = 'Минимальный период сбора данных'; 
     $lang['admin_cron_time_warning'] = 'Предупреждение!!! Не меняйте это значение';
@@ -79,11 +78,11 @@
     $lang['admin_new_user_edit'] = 'Редактировать пользователя';
 
     $lang['admin_db_recreat'] = 'Пересоздать базу';
-    $lang['admin_db_warning'] = '<span style="color:red;">Предупреждение!!! Все данные будут удалены</span>';
+    $lang['admin_db_warning'] = '<div class="ui-state-error ui-corner-all" align="center">Предупреждение!!! Все данные будут удалены</div>';
     $lang['admin_db_but'] = 'Пересоздать';
 
     $lang['admin_db_up'] = 'Апгрейд базы';
-    $lang['admin_db_up_warning'] = '<span style="color:red;">Предупреждение!!! Используйте только при переходе на новую версию</span>';
+    $lang['admin_db_up_warning'] = '<div class="ui-state-error ui-corner-all" align="center">Предупреждение!!! Используйте только при переходе на новую версию</div>';
     $lang['admin_db_up_but'] = 'Апгрейд';
     $lang['admin_clean_cache'] = 'Очистить кеш';
 
@@ -92,7 +91,7 @@
     $lang['admin_db_update_msg'] = 'Данные успешно внесены в базу';
 
     $lang['admin_db_creat'] = 'Установить базу';
-    $lang['admin_db_cwarning'] = '<span style="color:red;">Предупреждение!!! Все данные будут удалены</span>';
+    $lang['admin_db_cwarning'] = '<div class="ui-state-error ui-corner-all" align="center">Предупреждение!!! Все данные будут удалены</div>';
     $lang['admin_db_cbut'] = 'Установить';
     $lang['admin_dir_cache'] = 'Проверьте папку cache, сейчас нет прав на запись';
     $lang['admin_dir_sql'] = 'Проверьте папку admin/sql, сейчас нет прав на запись';
@@ -152,4 +151,5 @@
     
     $lang['admin_cron_period'] = 'Периоды используемые при выводе данных';
     $lang['admin_user_access'] = 'Доступ';
+    $lang['admin_cancel'] = 'Отмена';
 ?>

@@ -74,14 +74,16 @@
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
                         <li id="ccontrol" class="ui-corner-all"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
-                        <li style="margin-top: 100px;" class="ui-corner-all"><a onclick="magic(this)" id="out" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
+                        <li style="margin-top: 100px;" class="ui-corner-all"><a onclick="magic(this)" id="out" href="#tabs-10"><?=$lang['admin_module'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" id="out2" href="#tabs-5"><?=$lang['admin_logout'];?></a></li>
                     </ul>
                 </td>
                 <td valign="top">
                     <div id="tabs-7">
-                        <div align="center">
+                        <div align="center" class="ui-corner-all ui-widget-content">
                             <?php if (!empty($tanks_list)){?>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
+                                  <h3><?=$lang['admin_tab_tanks'];?></h3>
                                     <table id="tanks_list" width="100%" cellspacing="1">
                                         <thead>
                                             <tr>
@@ -106,13 +108,39 @@
                                     </table>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
                                 </form>
-                                <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                                <?php } else { echo '<div class="ui-state-error ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
                         </div>
                     </div>
                     <div id="tabs-6">
                         <div align="center">
+                          <div class="ui-corner-all ui-widget-content">
+                            <div class="ui-state-highlight ui-corner-all" align="center"><?=$lang['adm_tank_top_add6'];?></div>
+                            <div class="ui-state-highlight ui-corner-all" align="center"><?=$lang['adm_tank_top_add5'];?></div>
+                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                              <h3><?=$lang['adm_tank_top_add'];?></h3>
+                              <select name="adm_top_tanks_action">
+                                <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option>
+                                <option value="delete"><?=$lang['adm_tank_top_add2'];?></option>
+                              </select>
+                              <?=$lang['adm_tank_top_add3'];?>
+                                <select name="adm_top_tanks_lvl">
+                                  <? for($i = 10; $i >= 1; $i--){?>
+                                    <option value="<?=$i?>"><?=$i?></option>
+                                  <? } ?>
+                                </select>
+                              <?=$lang['adm_tank_top_add4'];?>
+                                <select name="adm_top_tanks_type">
+                                  <? foreach($lang_s['class'] as $name => $val) { ?>
+                                     <option value="<?=$name?>"><?=$val?></option>
+                                  <? } ?>
+                                </select>
+                              <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
+                            </form>
+                          </div><br clear=all>
+                          <div class="ui-corner-all ui-widget-content">
                             <?php if (!empty($adm_top_tanks)){?>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                                  <h3><?=$lang['admin_tab_tanks'];?></h3>
                                     <table id="top_tanks" width="100%" cellspacing="1">
                                         <thead>
                                             <tr>
@@ -145,24 +173,10 @@
                                     </table>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
                                 </form>
-                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                                    <h3><?=$lang['adm_tank_top_add'];?></h3>
-                                    <select name="adm_top_tanks_action">
-                                        <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option><option value="delete"><?=$lang['adm_tank_top_add2'];?></option></select>
-                                    <?=$lang['adm_tank_top_add3'];?>
-                                    <select name="adm_top_tanks_lvl"><? for($i = 10; $i >= 1; $i--){?><option value="<?=$i?>"><?=$i?></option><?}?></select>
-                                    <?=$lang['adm_tank_top_add4'];?>
-                                    <select name="adm_top_tanks_type">
-                                        <? foreach($lang_s['class'] as $name => $val) { ?>
-                                            <option value="<?=$name?>"><?=$val?></option>
-                                            <? } ?>
-                                    </select>
-                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
-                                    <span style="color:red;"><?=$lang['adm_tank_top_add6'];?></span><br>
-                                    <span style="color:red;"><?=$lang['adm_tank_top_add5'];?></span>
-                                </form>
-                                <?php } else { echo '<div class="ui-state-highlight ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                            <?php } else { echo '<div class="ui-state-error ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                          </div>
                             <?php if($adm_avalTanks['count'] > 1) { ?>
+                              <div class="ui-corner-all ui-widget-content">
                                 <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
                                     <?php foreach($adm_avalTanks['index'] as $index){ ?>
@@ -170,13 +184,14 @@
                                         <?php } ?>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
                                 </form>
-                                <?php } ?>
+                              </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div id="tabs-1">
-                        <div align="left">
+                        <div align="left" class="ui-corner-all ui-widget-content">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-1" method="post">
-                                <table width="98%" style="border-width: 0; " cellpadding="6" class="ui-widget-content">
+                                <table width="98%" cellpadding="6" >
                                     <tbody>
                                         <tr>
                                             <td width="300"><?=$lang['admin_lang'];?></td>
@@ -275,108 +290,112 @@
                         </div>
                     </div>
                     <div id="tabs-2">
-                        <div align="center">
-                            <h3><?=$lang['admin_file_upload_new_tab'];?></h3>
-                            <br>
-                            <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
-                                <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-                                <?=$lang['admin_file_upload'];?>: <input name="uploadedfile" type="file" /><br />
-                                <br>
-                                <input type="submit" value="<?=$lang['admin_file_upload_butt'];?>" name="fileup" />
-                            </form><br>
-                            <div>
-                                <h3><?=$lang['admin_file_creat_new_tab'];?></h3>
-                                <div>
-                                    <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="post">
-                                        <?=$lang['admin_ajax_new_file'];?>: <input type="text" size="20" name="file" /> <input type="submit" value="<?=$lang['admin_creat'];?>" name="ajaxcre">
-                                    </form>
-                                </div>
-                            </div><br>
-                            <div>
-                                <h3><?=$lang['admin_file_edit_new_tab'];?></h3>
-                            </div><br>
-                            <div >
-                                <div>
-                                    <div style="float:left;"><button id="loadeng">Load english names</button></div>
-                                    <div style="float:right;"><button id="loadrus">Загрузить русские имена</button></div>
-                                </div><br>
-                                <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
-                                    <table id="files" width="100%" cellspacing="1">
-                                        <thead>
-                                            <tr>
-                                                <th><?=$lang['admin_tab_base'];?></th>
-                                                <th><?=$lang['admin_tab_file'];?></th>
-                                                <th class="{sorter: 'digit'}"><?=$lang['admin_tab_id'];?></th>
-                                                <th><?=$lang['admin_tab_name'];?></th>
-                                                <th><?=$lang['admin_tab_auth'];?></th>
-                                                <th><?=$lang['admin_tab_type'];?></th>
-                                                <th align="center"><?=$lang['admin_tab_del'];?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach($current_tab as $tab_var){ ?>
-                                                <tr>
-                                                    <?php
-                                                        $tab_check = '';
-                                                        if($tab_var['status'] == '1'){
-                                                            $tab_check = 'checked="checked"';
-                                                        }
-                                                    ?> 
-                                                    <td align="center"><input type="checkbox" name="<?=str_replace(".", "_", $tab_var['file']);?>_status" value="accept" <?=$tab_check;?> /><span class="hidden"><?=$tab_check;?></span></td>
-                                                    <td align="center"><?=$tab_var['file'];?><input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_file" value="<?=$tab_var['file'];?>"><span class="hidden"><?=$tab_var['file'];?></span></td>
-                                                    <td align="center"><input type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_id" value="<?=$tab_var['id'];?>" size="5" /><span class="hidden"><?=$tab_var['id'];?></span></td>
-                                                    <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var['file']));?>" type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_name" value="<?=$tab_var['name'];?>" size="40" /><span class="hidden"><?=$tab_var['name'];?></span></td>
-                                                    <td align="center">
-                                                        <select name="<?=str_replace(".", "_", $tab_var['file']);?>_auth">
-                                                            <option value="all" <?php if($tab_var['auth'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
-                                                            <option value="user" <?php if($tab_var['auth'] == 'user'){ echo 'selected="selected"';} ?>>User</option>
-                                                            <option value="admin" <?php if($tab_var['auth'] == 'admin'){ echo 'selected="selected"';} ?>>Admin</option>
-                                                        </select> <span class="hidden"><?=$tab_var['auth'];?></span>
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php if($tab_var['type'] == '0'){?>
-                                                            Normal<input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_type" value="0">
-                                                            <?php }else{ ?>
-                                                            Ajax<input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_type" value="1">
-                                                            <?php } ?>
-                                                        <span class="hidden"><?=$tab_var['type'];?></span>
-                                                    </td>
-                                                    <td align="center"><a href="./index.php?del=1&id=<?=$tab_var['id'];?>&type=<?=$tab_var['type'];?>&page=main#tabs-2" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$tab_var['name'];?>?')"><img src="../images/cred.png" /></a></td>
-                                                </tr>
-                                                <?php } ?>
-                                            <?php foreach($tabs_check as $tab_var => $value){ ?>
-                                                <?php if($value == 0){ ?>
-                                                    <tr>
-                                                        <td align="center"><input type="checkbox" name="<?=str_replace(".", "_", $tab_var);?>_status" value="accept" /><span class="hidden"><?=$tab_var;?></span></td>
-                                                        <td align="center"><?=$tab_var;?><input type="hidden" name="<?=str_replace(".", "_", $tab_var);?>_file" value="<?=$tab_var;?>"><span class="hidden"><?=$tab_var;?></span></td>
-                                                        <td align="center"><input type="text" name="<?=str_replace(".", "_", $tab_var);?>_id"  size="5" /><span class="hidden"><?=$tab_var;?></span></td>
-                                                        <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var));?>" type="text" name="<?=str_replace(".", "_", $tab_var);?>_name" size="40" /><span class="hidden"><?=$tab_var;?></span></td>
-                                                        <td align="center">
-                                                            <select name="<?=str_replace(".", "_", $tab_var);?>_auth">
-                                                                <option value="all">All</option>
-                                                                <option value="user">User</option>
-                                                                <option value="admin">Admin</option>
-                                                            </select><span class="hidden"><?=$tab_var;?></span>
-                                                        </td>
-                                                        <td align="center">Normal<input type="hidden" name="<?=str_replace(".", "_", $tab_var);?>_type" value="0"><span class="hidden">0</span></td>
-                                                        <td align="center"><a href="./index.php?del=2&file=<?=str_replace("/", "", str_replace(".", "", $tab_var));?>&page=main#tabs-2" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$tab_var;?>?')"><img src="../images/cred.png" /></a></td>
-                                                    </tr>
-                                                    <?php } ?>
-                                                <?php } ?>
-                                        </tbody>
-                                    </table>
-                                    <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="tabsub" /></p>
-                                </form>
-                                <span style="color:red;"><?=$lang['admin_tab_delete_n'];?></span>
-                            </div>
+                      <div align="center">
+                        <div style="float:left;width:49%;" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_file_upload_new_tab'];?></h3>
+                          <br>
+                          <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+                            <?=$lang['admin_file_upload'];?>: <input name="uploadedfile" type="file" /><br /><br />
+                            <input type="submit" value="<?=$lang['admin_file_upload_butt'];?>" name="fileup" />
+                          </form>
                         </div>
+                        <div style="float:right;width:49%;" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_file_creat_new_tab'];?></h3>
+                          <br>
+                          <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="post">
+                            <?=$lang['admin_ajax_new_file'];?>: <input type="text" size="20" name="file" /><br /><br />
+                            <input type="submit" value="<?=$lang['admin_creat'];?>" name="ajaxcre">
+                          </form>
+                        </div>
+                      </div><br clear=all>
+                      <div align="center" class="ui-corner-all ui-widget-content">
+                        <h3><?=$lang['admin_file_edit_new_tab'];?></h3>
+                        <div>
+                          <button style="float:left;" id="loadeng">Load english names</button>
+                          <button style="float:right;" id="loadrus">Загрузить русские имена</button>
+                        </div><br clear=all>
+                          <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
+                            <table id="files" width="100%" cellspacing="1">
+                              <thead>
+                                <tr>
+                                  <th><?=$lang['admin_tab_base'];?></th>
+                                  <th><?=$lang['admin_tab_file'];?></th>
+                                  <th class="{sorter: 'digit'}"><?=$lang['admin_tab_id'];?></th>
+                                  <th><?=$lang['admin_tab_name'];?></th>
+                                  <th><?=$lang['admin_tab_auth'];?></th>
+                                  <th><?=$lang['admin_tab_type'];?></th>
+                                  <th align="center"><?=$lang['admin_tab_del'];?></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php foreach($current_tab as $tab_var){ ?>
+                                  <tr>
+                                    <?php
+                                      $tab_check = '';
+                                      if ($tab_var['status'] == '1') $tab_check = 'checked="checked"';
+                                    ?>
+                                    <td align="center"><input type="checkbox" name="<?=str_replace(".", "_", $tab_var['file']);?>_status" value="accept" <?=$tab_check;?> /><span class="hidden"><?=$tab_check;?></span></td>
+                                    <td align="center"><?=$tab_var['file'];?><input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_file" value="<?=$tab_var['file'];?>"><span class="hidden"><?=$tab_var['file'];?></span></td>
+                                    <td align="center"><input type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_id" value="<?=$tab_var['id'];?>" size="5" /><span class="hidden"><?=$tab_var['id'];?></span></td>
+                                    <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var['file']));?>" type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_name" value="<?=$tab_var['name'];?>" size="40" /><span class="hidden"><?=$tab_var['name'];?></span></td>
+                                    <td align="center">
+                                      <select name="<?=str_replace(".", "_", $tab_var['file']);?>_auth">
+                                        <option value="all" <?php if($tab_var['auth'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
+                                        <option value="user" <?php if($tab_var['auth'] == 'user'){ echo 'selected="selected"';} ?>>User</option>
+                                        <option value="admin" <?php if($tab_var['auth'] == 'admin'){ echo 'selected="selected"';} ?>>Admin</option>
+                                      </select>
+                                      <span class="hidden"><?=$tab_var['auth'];?></span>
+                                    </td>
+                                    <td align="center">
+                                      <?php if ($tab_var['type'] == '0'){?>
+                                        Normal<input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_type" value="0">
+                                      <?php }   else{ ?>
+                                       Ajax<input type="hidden" name="<?=str_replace(".", "_", $tab_var['file']);?>_type" value="1">
+                                      <?php } ?>
+                                      <span class="hidden"><?=$tab_var['type'];?></span>
+                                    </td>
+                                    <td align="center"><a href="./index.php?del=1&id=<?=$tab_var['id'];?>&type=<?=$tab_var['type'];?>&page=main#tabs-2" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$tab_var['name'];?>?')"><img src="../images/cred.png" /></a></td>
+                                  </tr>
+                                <?php }
+                                      foreach($tabs_check as $tab_var => $value){
+                                        if ($value == 0){ ?>
+                                          <tr>
+                                            <td align="center"><input type="checkbox" name="<?=str_replace(".", "_", $tab_var);?>_status" value="accept" /><span class="hidden"><?=$tab_var;?></span></td>
+                                            <td align="center"><?=$tab_var;?><input type="hidden" name="<?=str_replace(".", "_", $tab_var);?>_file" value="<?=$tab_var;?>"><span class="hidden"><?=$tab_var;?></span></td>
+                                            <td align="center"><input type="text" name="<?=str_replace(".", "_", $tab_var);?>_id"  size="5" /><span class="hidden"><?=$tab_var;?></span></td>
+                                            <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var));?>" type="text" name="<?=str_replace(".", "_", $tab_var);?>_name" size="40" /><span class="hidden"><?=$tab_var;?></span></td>
+                                            <td align="center">
+                                              <select name="<?=str_replace(".", "_", $tab_var);?>_auth">
+                                                <option value="all">All</option>
+                                                <option value="user">User</option>
+                                                <option value="admin">Admin</option>
+                                              </select>
+                                              <span class="hidden"><?=$tab_var;?></span>
+                                            </td>
+                                            <td align="center">Normal<input type="hidden" name="<?=str_replace(".", "_", $tab_var);?>_type" value="0"><span class="hidden">0</span></td>
+                                            <td align="center"><a href="./index.php?del=2&file=<?=str_replace("/", "", str_replace(".", "", $tab_var));?>&page=main#tabs-2" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$tab_var;?>?')"><img src="../images/cred.png" /></a></td>
+                                          </tr>
+                                        <?php }
+                                      } ?>
+                              </tbody>
+                            </table>
+                            <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="tabsub" /></p>
+                          </form>
+                          <div class="ui-state-error ui-corner-all"><?=$lang['admin_tab_delete_n'];?></div>
+                        </div>
+                      </div>
                     </div>
                     <div id="tabs-3">
                         <div align="center">
+                          <div align="center" id="add_user_button">
+                            <button style="float:left;" onclick="$('#add_user_button').hide();$('#add_user').show();"><?=$lang['admin_new_user_title']?></button>
+                          </div><br clear=all>
+                          <div style="width:100%; display: none;" id="add_user" class="ui-corner-all ui-widget-content">
                             <h3><?=$lang['admin_new_user_title']?></h3>
-                            <br>  
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
-                                <table style="border-width: 0; " cellspacing="1" cellpadding="1" class="ui-widget-content">
+                            <br>
+                              <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
+                                <table cellspacing="1" cellpadding="1">
                                     <tbody>
                                         <tr>
                                             <td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" /></td>
@@ -400,11 +419,15 @@
                                         </td></tr>
                                         <?php } ?>
                                         <tr>
-                                            <td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser"></td>
+                                            <td align="center" colspan="2">
+                                              <input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser">
+                                              <input type="reset" onclick="$('#add_user_button').show();$('#add_user').hide();" value="<?=$lang['admin_cancel']?>">
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </form><br>
+                              </form>
+                          </div><br>
                             <table id="users" width="100%" cellspacing="1">
                                 <thead>
                                     <tr>
@@ -460,62 +483,81 @@
                         </div>
                     </div>
                     <div id="tabs-4">
-                        <div align="center">
-                            <h3><?=$lang['admin_db_recreat'];?></h3>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
-                                <input type="submit" value="<?=$lang['admin_db_but'];?>" name="recdb"><br />
-                                <?=$lang['admin_db_warning'];?>
-                            </form> <br><br>
-                            <h3><?=$lang['admin_clear_cache'];?></h3>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
-                                <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearcache"><br />
-                            </form> <br><br>
-                            <h3><?=$lang['admin_clear_a_cache'];?></h3>
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
-                                <?=$lang['admin_clear_a_cache_form'];?><br />
-                                <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearacache"><br />
-                            </form> <br><br>                
-                            <h3><?=$lang['admin_db_up'];?></h3>
-                            <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="POST">
-                                <input type="hidden" name="MAX_FILE_SIZE" value="200000" />
-                                <?=$lang['admin_file_upload'];?>: <input name="uploadedfile" type="file" /><br />
-                                <br>
-                                <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="newup" /><br />
-                                <?=$lang['admin_db_up_warning'];?>
-                            </form><br>
+                      <div align="center">
+                        <div align="center" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_db_recreat'];?></h3>
+                          <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                              <input type="submit" value="<?=$lang['admin_db_but'];?>" name="recdb"><br />
+                              <?=$lang['admin_db_warning'];?>
+                          </form>
+                        </div><br><br>
+                        <div align="center" class="ui-corner-all ui-widget-content" style="float:left;width:49%;height:150px;">
+                          <h3><?=$lang['admin_clear_cache'];?></h3> <br />
+                          <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                              <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearcache">
+                          </form>
                         </div>
+                        <div align="center" class="ui-corner-all ui-widget-content" style="float:right;width:49%;height:150px;">
+                          <h3><?=$lang['admin_clear_a_cache'];?></h3>
+                          <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                              <?=$lang['admin_clear_a_cache_form'];?><br />
+                              <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearacache">
+                          </form>
+                        </div><br clear=all><br><br>
+                        <div align="center" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_db_up'];?></h3>
+                          <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="POST">
+                              <input type="hidden" name="MAX_FILE_SIZE" value="200000" />
+                              <?=$lang['admin_file_upload'];?>: <input name="uploadedfile" type="file" /><br />
+                              <br>
+                              <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="newup" /><br />
+                              <?=$lang['admin_db_up_warning'];?>
+                          </form>
+                        </div>
+                      </div>
                     </div>
                     <div id="tabs-8">
-                        <div align="center" id="dccontrol">
-                            <h3><?=$lang['admin_add_clan'];?></h3>
-                            <br>
+                      <div align="center" id="dccontrol">
+                        <div align="center" id="add_clan_button">
+                          <button style="float:left;" onclick="$('#add_clan_button').hide();$('#add_clan').show();"><?=$lang['admin_add_clan']?></button>
+                        </div><br clear=all>
+                        <div style="width:100%; display: none;" id="add_clan" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_add_clan'];?></h3>
+                          <br>
                             <form id="multiclan" action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
-                                <table width="300" cellspacing="1" class="ui-widget-content">
-                                    <tr>
-                                        <td align="right"><?=$lang['admin_multi_id'];?>:</td><td><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
-                                    </tr><tr> 
-                                        <td align="right"><?=$lang['admin_server'];?></td>
-                                        <td>                                                 
-                                            <select name="server">
-                                                <?php if(!isset($_POST['server'])){ ?>
-                                                    <option value="ru">RU</option>
-                                                    <option value="eu">EU</option>
-                                                    <option value="us">US</option> 
-                                                    <?php }else{ ?>
-                                                    <option value="ru" <?=($_POST['server'] == 'ru' ? 'selected="selected"' : '') ?>>RU</option>
-                                                    <option value="eu" <?=($_POST['server'] == 'eu' ? 'selected="selected"' : '') ?>>EU</option>
-                                                    <option value="us" <?=($_POST['server'] == 'us' ? 'selected="selected"' : '') ?>>US</option>
-                                                    <?php } ?>                    
-                                            </select>
-                                        </td>
-                                    </tr><tr> 
-                                        <td align="right"><?=$lang['admin_multi_prefix'];?>:</td><td><input type="text" value="<?=(isset($_POST['prefix']) ? $_POST['prefix'] : '') ?>" name="prefix" size="20"></td>
-                                    </tr><tr>
-                                        <td align="right"><?=$lang['admin_multi_index'];?>:</td><td><input type="text" value="<?=(isset($_POST['sort']) ? $_POST['sort'] : '') ?>" name="sort" size="3"></td>
-                                    </tr>
-                                </table><br />
-                                <input type="hidden" value="1" name="multiadd">
-                                <input type="submit" value="<?=$lang['admin_multi_add_new'];?>" name="multiadd"><br />
+                              <table width="400" cellspacing="1">
+                                <tr>
+                                  <td align="right"><?=$lang['admin_multi_id'];?>:</td>
+                                  <td><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
+                                </tr>
+                                <tr>
+                                  <td align="right"><?=$lang['admin_server'];?></td>
+                                  <td>
+                                    <select name="server">
+                                      <?php if(!isset($_POST['server'])){ ?>
+                                        <option value="ru">RU</option>
+                                        <option value="eu">EU</option>
+                                        <option value="us">US</option>
+                                      <?php } else { ?>
+                                        <option value="ru" <?=($_POST['server'] == 'ru' ? 'selected="selected"' : '') ?>>RU</option>
+                                        <option value="eu" <?=($_POST['server'] == 'eu' ? 'selected="selected"' : '') ?>>EU</option>
+                                        <option value="us" <?=($_POST['server'] == 'us' ? 'selected="selected"' : '') ?>>US</option>
+                                      <?php } ?>
+                                    </select>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td align="right"><?=$lang['admin_multi_prefix'];?>:</td>
+                                  <td><input type="text" value="<?=(isset($_POST['prefix']) ? $_POST['prefix'] : '') ?>" name="prefix" size="20"></td>
+                                </tr>
+                                <tr>
+                                  <td align="right"><?=$lang['admin_multi_index'];?>:</td>
+                                  <td><input type="text" value="<?=(isset($_POST['sort']) ? $_POST['sort'] : '') ?>" name="sort" size="3"></td>
+                                </tr>
+                              </table><br />
+                              <input type="hidden" value="1" name="multiadd">
+                              <input type="submit" value="<?=$lang['admin_multi_add_new'];?>" name="multiadd">
+                              <input type="reset" onclick="$('#add_clan_button').show();$('#add_clan').hide();" value="<?=$lang['admin_cancel']?>">
                             </form>
                             <script>
                                 $("#multiclan").validate();
@@ -540,62 +582,64 @@
                                   });
                                 }
                             </script>
-                            <br><br>
+                          </div><br clear=all><br>
+                          <div class="ui-corner-all ui-widget-content">
                             <h3><?=$lang['admin_current_calns'];?></h3>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
-                                <table id="multiclan_table" width="100%" cellspacing="1">
-                                    <thead>
-                                        <tr>
-                                            <th align="center"><?=$lang['admin_multi_index'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_link'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_server'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_id'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_teg'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_mem_count'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_prefix'];?></th>
-                                            <th align="center"><?=$lang['admin_multi_main'];?></th>
-                                            <th align="center"><?=$lang['admin_user_del'];?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <? foreach($multiclan as $mclan) { ?>
-                                            <tr>
-                                                <td align="center"><div class="hidden"><?=$mclan['sort']?></div><input type="text" value="<?=$mclan['sort']?>" name="Array[<?=$mclan['id']?>][order]" style="width: 30px;"></td>
-                                                <?php if($mclan['main'] == 0){?>
-                                                    <td align="center"><a target="_blank" href="../index.php?multi=<?=str_replace('_','',$mclan['prefix'])?>"><?=$lang['admin_multi_link']?></a></td>
-                                                    <?php }else{ ?>
-                                                    <td align="center"><a target="_blank" href="../index.php" ><?=$lang['admin_multi_link']?></a></td>
-                                                    <?php } ?>
-                                                <td align="center"><?=$mclan['server']?></td>
-                                                <td align="center"><?=$mclan['id']?></td>
-                                                <td align="center"><?=$multiclan_info[$mclan['id']]['data']['abbreviation']?></td>
-                                                <td align="center"><?=$multiclan_info[$mclan['id']]['data']['members_count']?></td>
-                                                <td align="center"><?=$mclan['prefix']?></td>
-                                                <?php
-                                                    $cmsg_status = '';
-                                                    if($mclan['main'] == 1){
-                                                        $cmsg_status = $lang['admin_multi_main_msg'];   
-                                                    }
-                                                ?>
-
-                                                <td align="center"><?=$cmsg_status?></td>
-                                                <?php if($mclan['main'] == 0){?>
-                                                    <td align="center"><a href="./index.php?removeclan=1&clan=<?=$mclan['id']?>&page=main#tabs-8" onclick="return confirm('<?=$lang['admin_confirm_delete'];?>?')"><img src="../images/cred.png" /></a></td>
-                                                    <?php }else{?>
-                                                    <td align="center"></td>
-                                                    <?php } ?>
-                                            </tr>
-                                            <? } ?>
-                                    </tbody>
-                                </table><br>
-                                <input type="submit" value="<?=$lang['admin_submit'];?>" name="mcsort"><br />
-                            </form> <br><br>
-                        </div>
+                              <table id="multiclan_table" width="100%" cellspacing="1">
+                                  <thead>
+                                      <tr>
+                                          <th align="center"><?=$lang['admin_multi_index'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_link'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_server'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_id'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_teg'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_mem_count'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_prefix'];?></th>
+                                          <th align="center"><?=$lang['admin_multi_main'];?></th>
+                                          <th align="center"><?=$lang['admin_user_del'];?></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <? foreach($multiclan as $mclan) { ?>
+                                          <tr>
+                                              <td align="center"><div class="hidden"><?=$mclan['sort']?></div><input type="text" value="<?=$mclan['sort']?>" name="Array[<?=$mclan['id']?>][order]" style="width: 30px;"></td>
+                                              <?php if($mclan['main'] == 0){?>
+                                                  <td align="center"><a target="_blank" href="../index.php?multi=<?=str_replace('_','',$mclan['prefix'])?>"><?=$lang['admin_multi_link']?></a></td>
+                                                  <?php }else{ ?>
+                                                  <td align="center"><a target="_blank" href="../index.php" ><?=$lang['admin_multi_link']?></a></td>
+                                                  <?php } ?>
+                                              <td align="center"><?=$mclan['server']?></td>
+                                              <td align="center"><?=$mclan['id']?></td>
+                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data']['abbreviation']?></td>
+                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data']['members_count']?></td>
+                                              <td align="center"><?=$mclan['prefix']?></td>
+                                              <?php
+                                                  $cmsg_status = '';
+                                                  if($mclan['main'] == 1){
+                                                      $cmsg_status = $lang['admin_multi_main_msg'];
+                                                  }
+                                              ?>
+                    
+                                             <td align="center"><?=$cmsg_status?></td>
+                                              <?php if($mclan['main'] == 0){?>
+                                                  <td align="center"><a href="./index.php?removeclan=1&clan=<?=$mclan['id']?>&page=main#tabs-8" onclick="return confirm('<?=$lang['admin_confirm_delete'];?>?')"><img src="../images/cred.png" /></a></td>
+                                                  <?php }else{?>
+                                                  <td align="center"></td>
+                                                  <?php } ?>
+                                          </tr>
+                                          <? } ?>
+                                  </tbody>
+                              </table><br>
+                              <input type="submit" value="<?=$lang['admin_submit'];?>" name="mcsort"><br />
+                            </form>
+                          </div>
+                      </div>
                     </div>
                     <div id="tabs-9">
-                        <div>
+                        <div class="ui-corner-all ui-widget-content">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-9" method="post">
-                                <table width="98%" style="border-width: 0; " cellpadding="6" class="ui-widget-content">
+                                <table width="98%" cellpadding="6">
                                     <tbody>
                                         <tr>
                                             <td width="300"><?=$lang['admin_cron'];?></td>

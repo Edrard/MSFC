@@ -53,6 +53,10 @@
             <?php if(!empty($tanks_list)){ ?>
                 $("#tanks_list").tablesorter({
                     sortList: [[2, 0]],
+                    widgets : ['uitheme', 'zebra', 'filter'],
+                    widgetOptions : {
+                    filter_cssFilter : 'ui-datepicker-row-break'
+                    },
                     textExtraction: function(node) {
                         return $(node).find("span.hidden").text();
                     }
@@ -93,7 +97,8 @@
                 }
             });
             $(elem).parent('li').addClass("ui-state-active");
-            if(elem.id == 'out'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
+            if(elem.id == 'out'){ window.location = "../index.php"; }
+            if(elem.id == 'out2'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
         };
         function magic3(){
           $(".admin_cdhide").toggle();

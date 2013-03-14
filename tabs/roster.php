@@ -21,7 +21,7 @@
             <tr>
                 <th><?=$lang['name']; ?></th>
                 <th>ID</th> 
-                <th><?=$lang['in_clan']; ?></th>
+                <th class="{sorter: 'shortDate'}"><?=$lang['in_clan']; ?></th>
                 <th><?=$lang['day_clan']; ?></th>
                 <th><?=$lang['role']; ?></th>
                 <th><?=$lang['dateof']; ?></th>
