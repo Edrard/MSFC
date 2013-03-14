@@ -31,10 +31,7 @@
 
     //MYSQL
     include_once(ROOT_DIR.'/function/mysql.php');
-    //Connecting to MySQL
 
-    //HTML Dom
-    include_once(ROOT_DIR.'/function/html_dom.php');
     //Multiget CURL
     include_once(ROOT_DIR.'/function/curl.php');
     include_once(ROOT_DIR.'/function/mcurl.php');
@@ -43,7 +40,6 @@
     include_once(ROOT_DIR.'/function/rating.php');
     include_once(ROOT_DIR.'/function/func.php');
     include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/oldfunc.php');
     include_once(ROOT_DIR.'/function/func_get.php');
     include_once(ROOT_DIR.'/function/func_gk.php');
 
