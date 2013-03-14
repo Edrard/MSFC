@@ -50,7 +50,7 @@
     if($_GET['multiadd'] == 1){
         if($_GET['id'] && $_GET['prefix'] && $_GET['sort']){
             if(is_numeric($_GET['id'])){
-                if(preg_match('/^\d/', $_GET['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_GET['prefix'])) <=10){
+                if(preg_match('/^\d/', $_GET['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_GET['prefix'])) <=5){
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_GET['prefix']))){
 
                         $_GET['prefix'] = strtolower($_GET['prefix']);

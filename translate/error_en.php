@@ -21,7 +21,7 @@
 
     $lang['error_multi_1'] = "Please fill in all input fields";
     $lang['error_multi_2'] = "Clan ID must be numeric";
-    $lang['error_multi_3'] = "The prefix must not start with a number and be greater than 10 characters";
+    $lang['error_multi_3'] = "The prefix must not start with a number and be greater than 5 characters";
     $lang['error_multi_4'] = "In the prefix, you can use only letters or numbers";
     $lang['error_multi_6'] = "The clan with such ID already exists";
     $lang['error_multi_5'] = "Invalid ID Clan";
