@@ -38,7 +38,7 @@
     include_once(ROOT_DIR.'/function/func_get.php');
     include_once(ROOT_DIR.'/function/func_main.php');
     include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');                      
+    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
@@ -50,7 +50,7 @@
     if($_GET['multiadd'] == 1){
         if($_GET['id'] && $_GET['prefix'] && $_GET['sort']){
             if(is_numeric($_GET['id'])){
-                if(preg_match('/^\d/', $_GET['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_GET['prefix'])) <=5){
+                if(preg_match('/^\d/', $_GET['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_GET['prefix'])) <=10){
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_GET['prefix']))){
 
                         $_GET['prefix'] = strtolower($_GET['prefix']);
@@ -76,7 +76,7 @@
                         }else{
                             die(show_message($q->errorInfo(),__line__,__file__,$sql));
                         }
-                        $roster = get_api_roster($_GET['id'],$config);    
+                        $roster = get_api_roster($_GET['id'],$config);
                         //print_r($roster);
                         if($roster['status'] == 'ok' && $roster['status_code'] == 'NO_ERROR'){
                             if($status_clan == 0 ){

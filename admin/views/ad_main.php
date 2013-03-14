@@ -209,6 +209,8 @@
                                                     <option value="ru" <?php if($config['server'] == 'ru'){ echo 'selected="selected"';} ?>>RU</option>
                                                     <option value="eu" <?php if($config['server'] == 'eu'){ echo 'selected="selected"';} ?>>EU</option>
                                                     <option value="us" <?php if($config['server'] == 'us'){ echo 'selected="selected"';} ?>>US</option>
+                                                    <option value="sa" <?php if($config['server'] == 'sa'){ echo 'selected="selected"';} ?>>SA</option>
+                                                    <option value="kr" <?php if($config['server'] == 'kr'){ echo 'selected="selected"';} ?>>KR</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -538,10 +540,14 @@
                                         <option value="ru">RU</option>
                                         <option value="eu">EU</option>
                                         <option value="us">US</option>
+                                        <option value="sa">SA</option>
+                                        <option value="kr">KR</option>
                                       <?php } else { ?>
                                         <option value="ru" <?=($_POST['server'] == 'ru' ? 'selected="selected"' : '') ?>>RU</option>
                                         <option value="eu" <?=($_POST['server'] == 'eu' ? 'selected="selected"' : '') ?>>EU</option>
                                         <option value="us" <?=($_POST['server'] == 'us' ? 'selected="selected"' : '') ?>>US</option>
+                                        <option value="sa" <?=($_POST['server'] == 'sa' ? 'selected="selected"' : '') ?>>SA</option>
+                                        <option value="kr" <?=($_POST['server'] == 'kr' ? 'selected="selected"' : '') ?>>KR</option>
                                       <?php } ?>
                                     </select>
                                   </td>

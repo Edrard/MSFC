@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `col_players` (
 --
 
 CREATE TABLE IF NOT EXISTS `multiclan` (
-  `id` int(25) NOT NULL,
+  `id` bigint(225) NOT NULL,
   `prefix` varchar(64) NOT NULL,
   `sort` int(9) NOT NULL,
   `main` int(1) NOT NULL DEFAULT '0',
