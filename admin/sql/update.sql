@@ -3,13 +3,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 ALTER TABLE  col_medals RENAME `col_medals`;
-ALTER TABLE  col_players RENAME `col_players` ;
-ALTER TABLE  col_rating_tank_china RENAME `col_rating_tank_china` ;
-ALTER TABLE  col_rating_tank_france RENAME `col_rating_tank_france` ;
-ALTER TABLE  col_rating_tank_germany RENAME `col_rating_tank_germany` ;
-ALTER TABLE  col_rating_tank_uk RENAME `col_rating_tank_uk` ;
-ALTER TABLE  col_rating_tank_usa RENAME `col_rating_tank_usa` ;
-
+ALTER TABLE  col_players RENAME `col_players`;
+ALTER TABLE  col_rating_tank_china RENAME `col_rating_tank_china`;
+ALTER TABLE  col_rating_tank_france RENAME `col_rating_tank_france`;
+ALTER TABLE  col_rating_tank_germany RENAME `col_rating_tank_germany`;
+ALTER TABLE  col_rating_tank_uk RENAME `col_rating_tank_uk`;
+ALTER TABLE  col_rating_tank_usa RENAME `col_rating_tank_usa`;
 ALTER TABLE  col_rating_tank_ussr RENAME `col_rating_tank_ussr`;
 ALTER TABLE  col_tank_china RENAME `col_tank_china`;
 ALTER TABLE  col_tank_france RENAME `col_tank_france`;
@@ -19,10 +18,9 @@ ALTER TABLE  col_tank_usa RENAME `col_tank_usa`;
 ALTER TABLE  col_tank_ussr RENAME `col_tank_ussr`;
 ALTER TABLE  config RENAME `config`;
 ALTER TABLE  gk RENAME `gk`;
-ALTER TABLE  medals RENAME  `medals`;
-ALTER TABLE  tabs RENAME  `tabs`;
-ALTER TABLE  tanks RENAME  `tanks`;
-ALTER TABLE  top_tanks RENAME  `top_tanks`;
+ALTER TABLE  tabs RENAME `tabs`;
+ALTER TABLE  tanks RENAME `tanks`;
+ALTER TABLE  top_tanks RENAME `top_tanks`;
 ALTER TABLE  users RENAME msfcmt_users;
 ALTER TABLE  msfcmt_users ADD `prefix` VARCHAR(6) NOT NULL DEFAULT 'all' COMMENT 'all - login to all multiclans';
 
