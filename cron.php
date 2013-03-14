@@ -162,7 +162,7 @@
             }
             //Sorting roster
             $roster = roster_sort($new['data']['members']);
-            $now = now();
+            $now = mktime(date("H"), 0, 0, date("m")  , date("d"), date("Y"));
             //Starting geting data
             if(count($new['data']['members']) > 0){
                 

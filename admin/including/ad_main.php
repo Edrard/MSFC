@@ -257,8 +257,8 @@
             $index_list[$index] = $index;
           }
         }
-        $cache->clear('available_tanks_'.$config['clan']);
-        $cache->set('available_tanks_'.$config['clan'],$index_list);
+        $cache->clear('available_tanks_'.$config['clan'], ROOT_DIR.'/cache/other/');
+        $cache->set('available_tanks_'.$config['clan'],$index_list, ROOT_DIR.'/cache/other/');
         unset($index_list);
     }
     //Get top tanks for Tab

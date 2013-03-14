@@ -119,6 +119,10 @@
             mkdir(ROOT_DIR.'/cache/activity/',0777);
             chmod(ROOT_DIR.'/cache/activity/', 0777);
         }
+        if(!is_dir(ROOT_DIR.'/cache/other/')){
+            mkdir(ROOT_DIR.'/cache/other/',0777);
+            chmod(ROOT_DIR.'/cache/other/', 0777);
+        }
     }
 
     /* Попытка создать cron.log */
@@ -147,7 +151,7 @@
     $lang['a_chmod_off'] = 'Directory <b>cache/activity</b> doesn\'t exist, or no permission to write. <br /> Директория <b>cache_activity</b> не существует, или невозможна запись.';
     $lang['b_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
     $lang['c_chmod_off'] = 'Directory <b>/admin/sql</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/admin/sql</b> не существует, или невозможна запись.';
-
+    $lang['d_chmod_off'] = 'Directory <b>/cache/other/</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/other/</b> не существует, или невозможна запись.';
 
     if ( !extension_loaded('pdo') ) {
         show_message($lang['pdo_off']);
@@ -173,7 +177,9 @@
     if(!file_exists(ROOT_DIR.'/cache/players/') || !is_writable(ROOT_DIR.'/cache/players/')){
         show_message($lang['b_chmod_off']);
     }
-
+    if(!file_exists(ROOT_DIR.'/cache/other/') || !is_writable(ROOT_DIR.'/cache/other/')){
+        show_message($lang['d_chmod_off']);
+    }
 
     define("VER",'2.2.0');
 ?>
