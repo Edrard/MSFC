@@ -128,4 +128,25 @@
 
         }
     }
+
+    function get_api_tanks($config)
+    {
+        $url = 'http://api.'.$config['gm_url']."/encyclopedia/vehicles/api/1.0/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats" ;
+        $ch = curl_init();
+        $timeout = 10;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $data = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch) ;
+        $header = curl_getinfo($ch);
+        curl_close($ch);
+        if($err == 0){
+            return json_decode(trim($data), true);
+        }else{
+            return array();
+        }
+
+    }
 ?>

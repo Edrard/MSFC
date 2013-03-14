@@ -230,6 +230,7 @@
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['link'] = $stat_config['td'].$veh['image_url'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['lvl'] = $veh['level'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['type'] = $veh['localized_name'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['name'] = $veh['name'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['total'] = $veh['battle_count'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['win'] = $veh['win_count'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['nation'] = $veh['nation'];

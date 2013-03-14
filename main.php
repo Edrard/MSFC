@@ -99,12 +99,6 @@
     } else {
     include_once(ROOT_DIR.'/views/header.php');
     if(count($new) > 0 ){
-        $rand_keys = array_rand($res, 1);
-        $eff_rating = eff_rating($res,$lang);
-        $tanks_nation = tanks_nations();
-        $tanks_types = tanks_types();
-        $tanks_lvl = tanks_lvl();
-        sort($tanks_lvl);
         if($config['cron'] == 1 && $col_check > 2){
             $medal_progress = medal_progress($roster_id,(now() - $config['medal_progress']),now());
             $medal_resort = medals_resort($medal_progress,$roster_id);
