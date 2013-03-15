@@ -106,10 +106,10 @@
     $lang['tank_list_link'] = 'Ссылка';
 
     $lang['admin_clear_cache'] = 'Удалить кэшированные данные';
-    $lang['admin_clear_cache_but'] = 'Очистить кэш';
-
-    $lang['admin_clear_a_cache'] = 'Удалить кэшированные данные о активности';
+    $lang['admin_clear_cache_plbut'] = 'Очистить кэш игроков';
+    $lang['admin_clear_cache_actbut'] = 'Очистить кэш активности';
     $lang['admin_clear_a_cache_form'] = 'Удалить кэшированные данные о активности, кроме последних <input type="text" size="1" name="clear_a_cache_date" value="7" /> дней.';
+
     $lang['admin_themes'] = 'Тема:';
 
     $lang['admin_cln_control'] = 'Управление кланами';
@@ -128,6 +128,7 @@
     $lang['admin_multi_add_new'] = 'Добавить';
     $lang['admin_multi_link'] = 'Ссылка';
     $lang['admin_no_tanks'] = 'Нет информации о танках в БД модуля';
+    $lang['admin_no_toptanks'] = 'Нет информации о топтанках в БД модуля';
     $lang['admin_cron_control'] = 'Сбор данных во времени';
     $lang['admin_cron_auth'] = 'Аутентификация';
     $lang['admin_cron_multi'] = 'Мультиклан';
@@ -151,5 +152,5 @@
     
     $lang['admin_cron_period'] = 'Периоды используемые при выводе данных';
     $lang['admin_user_access'] = 'Доступ';
-    $lang['admin_cancel'] = 'Отмена';
+    $lang['admin_load_tabs_names'] = 'Выберите язык для названий вкладок:';
 ?>

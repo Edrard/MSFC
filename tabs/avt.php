@@ -280,7 +280,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td align="left"><span class="hidden">5</span><?=$lang['dead_heat']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo(($h24total-$h24win)-$h24lose),' (';
+           echo(($h24total-$h24win)-$h24lose).' (';
            if(($h24total<>0) && ($avt_games<>0)){
              if (round((($h24total-$h24win)-$h24lose)/$h24total*100,2) >= round(((array_sum($avt_games)-array_sum($avt_win))-array_sum($avt_lose))/array_sum($avt_games)*100,2)) {                 echo $darkgreen;
                  } else {
@@ -360,7 +360,9 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                     <td valign="top" width="30%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt7">
                             <thead style="font-weight: bold;">
-                               <th colspan="4" align="center"><?=$lang['loosed_today'];?></th>
+                               <tr>
+                                 <th colspan="4" align="center"><?=$lang['loosed_today'];?></th>
+                               </tr>
                             </thead>
                             <tbody>
                                 <?php if (count($we_loosed) > 0){
@@ -368,9 +370,9 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                         <tr>
                                             <td align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
-                                            <td align="center"><?=$lang[$val['role']];?></td>
+                                            <td align="center"><?=$val['role'];?></td>
                                             <td align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
-                                            <td align="center"><?php echo date('d.m.Y',$val['up']);?></td>
+                                            <td align="center"><span class="hidden"><?=$val['up'];?></span><?php echo date('d.m.Y',$val['up']);?></td>
                                         </tr>
                                         <?php }
                                           }else{ ?>
@@ -425,7 +427,9 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                     <td valign="top" width="30%">
                         <table cellspacing="2" cellpadding="0" width="100%" id="avt9">
                             <thead style="font-weight: bold;">
+                              <tr>
                                <th colspan="4" align="center"><?=$lang['new_players'];?></th>
+                              </tr>
                             </thead>
                             <tbody> 
                                 <?php if (count($new_players) > 0){

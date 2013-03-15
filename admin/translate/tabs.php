@@ -16,6 +16,10 @@
     */
 ?>
 <?php
+    $lang['en'] = 'English';
+    $lang['pl'] = 'Polski';
+    $lang['ru'] = 'Русский';
+
     $tabs_lang['ru']['active'] =  'Активность общая';
     $tabs_lang['ru']['active_1'] =  'Активность награды';
     $tabs_lang['ru']['ajax_activity'] =  'Активность игроков';
@@ -25,7 +29,7 @@
     $tabs_lang['ru']['ajaxtank'] = 'Техника';
     $tabs_lang['ru']['available_tanks'] =  'Наличие танков';
     $tabs_lang['ru']['avt'] = 'Приветственное';
-    $tabs_lang['ru']['battel'] =  'Боевой опыт'; 
+    $tabs_lang['ru']['battel'] =  'Боевой опыт';
     $tabs_lang['ru']['best'] =  'Лучшие результаты';
     $tabs_lang['ru']['gk'] =  'Блокированная техника';
     $tabs_lang['ru']['medals_all'] =  'Награды';
@@ -47,7 +51,6 @@
     $tabs_lang['en']['ajax_player'] = 'Players detail';
     $tabs_lang['en']['ajaxstat'] = 'Tanks detail';
     $tabs_lang['en']['ajaxtank'] =  'Vehicles';
-
     $tabs_lang['en']['available_tanks'] =  'Presented tanks';
     $tabs_lang['en']['avt'] = 'Greeting';
     $tabs_lang['en']['battel'] =  'Battle Experience';  
@@ -61,8 +64,30 @@
     $tabs_lang['en']['roster'] =  'Staff'; 
     $tabs_lang['en']['topteh'] =  'Top Vehicles';
 
-
     $tabs_lang['en']['poss'] =  'Clan possession'; 
     $tabs_lang['en']['attack'] =  'Planning attacks';  
 
+//PL
+    $tabs_lang['pl']['active'] =  'Aktywność ogólna';
+    $tabs_lang['pl']['active_1'] =  'Aktywność nagrody';
+    $tabs_lang['pl']['ajax_activity'] =  'Aktywność graczy';
+    $tabs_lang['pl']['ajax_general_activity'] = 'Ogólna w ciągu okresu';
+    $tabs_lang['pl']['ajax_player'] = 'Dynamika gracza';
+    $tabs_lang['pl']['ajaxstat'] = 'Czołgowe punkty';
+    $tabs_lang['pl']['ajaxtank'] = 'Technika';
+    $tabs_lang['pl']['available_tanks'] =  'Obecność czołgów';
+    $tabs_lang['pl']['avt'] = 'Powitalne';
+    $tabs_lang['pl']['battel'] =  'Doświadczenie bojowe'; 
+    $tabs_lang['pl']['best'] =  'Dobre wyniki';
+    $tabs_lang['pl']['gk'] =  'Blokowana technika';
+    $tabs_lang['pl']['medals_all'] =  'Nagrody';
+    $tabs_lang['pl']['overall'] =  'Ogólne wyniki';
+    $tabs_lang['pl']['perform_all'] =  'Bojowa wydajność';  
+    $tabs_lang['pl']['player'] =  'Nie wykorzystać';
+    $tabs_lang['pl']['rating_all'] =  'Ranking';
+    $tabs_lang['pl']['roster'] =  'Skład';
+    $tabs_lang['pl']['topteh'] =  'Top-technika';
+
+    $tabs_lang['pl']['poss'] =  'Własność klanu'; 
+    $tabs_lang['pl']['attack'] =  'Zaplanowane ataki'; 
 ?>

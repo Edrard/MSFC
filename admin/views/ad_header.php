@@ -79,16 +79,14 @@
             });
             $('#adminalltabs ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
 
-            $('#loadeng').click(function(){
-                <?php foreach($tabs_lang['en'] as $key => $val){ ?>
-                    $('#<?=$key;?>php').val('<?=$val?>');
-                    <?php } ?>
-            });
-            $('#loadrus').click(function(){
-                <?php foreach($tabs_lang['ru'] as $key => $val){ ?>
-                    $('#<?=$key;?>php').val('<?=$val?>');
-                    <?php } ?>
-            });
+            <?php $tablangs= array ('en', 'pl', 'ru');
+                  foreach ($tablangs as $val ) { ?>
+                     $('#load<?=$val; ?>').click(function(){
+                        <?php foreach($tabs_lang[$val] as $key => $val2){ ?>
+                           $('#<?=$key; ?>php').val('<?=$val2; ?>');
+                        <?php };?>
+                     });
+                  <?php };?>
         });
         function magic(elem){
             $(".ui-menu-item").each(function(){

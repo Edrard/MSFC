@@ -114,8 +114,6 @@
                     <div id="tabs-6">
                         <div align="center">
                           <div class="ui-corner-all ui-widget-content">
-                            <div class="ui-state-highlight ui-corner-all" align="center"><?=$lang['adm_tank_top_add6'];?></div>
-                            <div class="ui-state-highlight ui-corner-all" align="center"><?=$lang['adm_tank_top_add5'];?></div>
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
                               <h3><?=$lang['adm_tank_top_add'];?></h3>
                               <select name="adm_top_tanks_action">
@@ -137,6 +135,17 @@
                               <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
                             </form>
                           </div><br clear=all>
+                            <?php if($adm_avalTanks['count'] > 1) { ?>
+                              <div class="ui-corner-all ui-widget-content">
+                                <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
+                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                                    <?php foreach($adm_avalTanks['index'] as $index){ ?>
+                                        <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
+                                        <?php } ?>
+                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
+                                </form>
+                              </div><br clear=all>
+                            <?php } ?>
                           <div class="ui-corner-all ui-widget-content">
                             <?php if (!empty($adm_top_tanks)){?>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
@@ -173,19 +182,14 @@
                                     </table>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
                                 </form>
-                            <?php } else { echo '<div class="ui-state-error ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
+                            <?php } else {
+                                  echo '<div class="ui-state-error ui-corner-all" align="center">';
+                                  if (empty($tanks_list)) {
+                                      echo $lang['admin_no_tanks'].'</div>';
+                                  } else {
+                                      echo $lang['admin_no_toptanks'].'</div>';
+                                  } }; ?>
                           </div>
-                            <?php if($adm_avalTanks['count'] > 1) { ?>
-                              <div class="ui-corner-all ui-widget-content">
-                                <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
-                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                                    <?php foreach($adm_avalTanks['index'] as $index){ ?>
-                                        <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
-                                        <?php } ?>
-                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
-                                </form>
-                              </div>
-                            <?php } ?>
                         </div>
                     </div>
                     <div id="tabs-1">
@@ -198,6 +202,7 @@
                                             <td>                                                 
                                                 <select name="lang">
                                                     <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
+                                                    <option value="pl" <?php if($config['lang'] == 'pl'){ echo 'selected="selected"';} ?>>Polski</option>
                                                     <option value="en" <?php if($config['lang'] == 'en'){ echo 'selected="selected"';} ?>>English</option>
                                                 </select>
                                             </td>
@@ -313,9 +318,12 @@
                       </div><br clear=all>
                       <div align="center" class="ui-corner-all ui-widget-content">
                         <h3><?=$lang['admin_file_edit_new_tab'];?></h3>
-                        <div>
-                          <button style="float:left;" id="loadeng">Load english names</button>
-                          <button style="float:right;" id="loadrus">Загрузить русские имена</button>
+
+                        <div align="center">
+                          <div style="float:left;"><?=$lang['admin_load_tabs_names']; ?></div>
+                          <?php foreach ($tablangs as $val) { ?>
+                             <button style="float:left;" id="load<?=$val; ?>"><?=$lang[$val]; ?></button>
+                          <? }?>
                         </div><br clear=all>
                           <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
                             <table id="files" width="100%" cellspacing="1">
@@ -390,10 +398,7 @@
                     </div>
                     <div id="tabs-3">
                         <div align="center">
-                          <div align="center" id="add_user_button">
-                            <button style="float:left;" onclick="$('#add_user_button').hide();$('#add_user').show();"><?=$lang['admin_new_user_title']?></button>
-                          </div><br clear=all>
-                          <div style="width:100%; display: none;" id="add_user" class="ui-corner-all ui-widget-content">
+                          <div class="ui-corner-all ui-widget-content">
                             <h3><?=$lang['admin_new_user_title']?></h3>
                             <br>
                               <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-3" method="post">
@@ -404,8 +409,8 @@
                                         </tr><tr>
                                             <td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td>
                                         </tr><tr>
-                                            <td><?=$lang['admin_new_user_group'];?>:</td> <td>
-                                                <select name="group">
+                                            <td><?=$lang['admin_new_user_group'];?>:</td>
+                                            <td><select name="group">
                                                     <option value="admin">Admin</option>
                                                     <option value="user">User</option>
                                                 </select></td>
@@ -420,12 +425,8 @@
                                             </select>
                                         </td></tr>
                                         <?php } ?>
-                                        <tr>
-                                            <td align="center" colspan="2">
-                                              <input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser">
-                                              <input type="reset" onclick="$('#add_user_button').show();$('#add_user').hide();" value="<?=$lang['admin_cancel']?>">
-                                            </td>
-                                        </tr>
+                                        <tr><td align="center" colspan="2"><br><input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser"><br>
+                                        </td></tr>
                                     </tbody>
                                 </table>
                               </form>
@@ -493,19 +494,16 @@
                               <?=$lang['admin_db_warning'];?>
                           </form>
                         </div><br><br>
-                        <div align="center" class="ui-corner-all ui-widget-content" style="float:left;width:49%;height:150px;">
+                        <div align="center" class="ui-corner-all ui-widget-content">
                           <h3><?=$lang['admin_clear_cache'];?></h3> <br />
                           <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
-                              <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearcache">
-                          </form>
-                        </div>
-                        <div align="center" class="ui-corner-all ui-widget-content" style="float:right;width:49%;height:150px;">
-                          <h3><?=$lang['admin_clear_a_cache'];?></h3>
+                              <input type="submit" value="<?=$lang['admin_clear_cache_plbut'];?>" name="admclearcache">
+                          </form><br />
                           <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
                               <?=$lang['admin_clear_a_cache_form'];?><br />
-                              <input type="submit" value="<?=$lang['admin_clear_cache_but'];?>" name="admclearacache">
+                              <input type="submit" value="<?=$lang['admin_clear_cache_actbut'];?>" name="admclearacache">
                           </form>
-                        </div><br clear=all><br><br>
+                        </div>
                         <div align="center" class="ui-corner-all ui-widget-content">
                           <h3><?=$lang['admin_db_up'];?></h3>
                           <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="POST">
@@ -520,10 +518,7 @@
                     </div>
                     <div id="tabs-8">
                       <div align="center" id="dccontrol">
-                        <div align="center" id="add_clan_button">
-                          <button style="float:left;" onclick="$('#add_clan_button').hide();$('#add_clan').show();"><?=$lang['admin_add_clan']?></button>
-                        </div><br clear=all>
-                        <div style="width:100%; display: none;" id="add_clan" class="ui-corner-all ui-widget-content">
+                        <div style="width:100%;" class="ui-corner-all ui-widget-content">
                           <h3><?=$lang['admin_add_clan'];?></h3>
                           <br>
                             <form id="multiclan" action="<?=$_SERVER['REQUEST_URI']?>#tabs-8" method="post">
@@ -563,7 +558,6 @@
                               </table><br />
                               <input type="hidden" value="1" name="multiadd">
                               <input type="submit" value="<?=$lang['admin_multi_add_new'];?>" name="multiadd">
-                              <input type="reset" onclick="$('#add_clan_button').show();$('#add_clan').hide();" value="<?=$lang['admin_cancel']?>">
                             </form>
                             <script>
                                 $("#multiclan").validate();

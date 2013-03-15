@@ -35,7 +35,5 @@
     $lang['adm_tank_top_add2'] = 'Delete';
     $lang['adm_tank_top_add3'] = 'with these settings: Level';
     $lang['adm_tank_top_add4'] = ', Type';
-    $lang['adm_tank_top_add5'] = 'If selected tanks already in table, only missing tanks will be added (if any)';
-    $lang['adm_tank_top_add6'] = 'Before adding vehicles, be sure to run the module, to collecte data of the players';
     $lang['adm_tank_top_index_add'] = 'Change displayed "Index" names';
 ?>

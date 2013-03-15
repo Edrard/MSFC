@@ -106,10 +106,10 @@
     $lang['tank_list_link'] = 'Link';
 
     $lang['admin_clear_cache'] = 'Clear cached data';
-    $lang['admin_clear_cache_but'] = 'Delete cache';
-
-    $lang['admin_clear_a_cache'] = 'Clear cached activity data';
+    $lang['admin_clear_cache_plbut'] = 'Clear player\'s cache';
+    $lang['admin_clear_cache_actbut'] = 'Clear activity cache';
     $lang['admin_clear_a_cache_form'] = 'Delete activity cache, except last <input type="text" size="1" name="clear_a_cache_date" value="7" /> days.';
+
     $lang['admin_themes'] = 'Theme:';
 
     $lang['admin_cln_control'] = 'Clans Control';
@@ -128,6 +128,7 @@
     $lang['admin_multi_add_new'] = 'Add';
     $lang['admin_multi_link'] = 'Link';
     $lang['admin_no_tanks'] = 'No data about tanks in DB';
+    $lang['admin_no_toptanks'] = 'No data about toptanks in DB';
 
     $lang['admin_cron_control'] = 'Data collection in time';
     $lang['admin_cron_auth'] = 'Authentication';
@@ -152,5 +153,5 @@
     
     $lang['admin_cron_period'] = 'Periods used for data output';
     $lang['admin_user_access'] = 'Access';
-    $lang['admin_cancel'] = 'Cancel';
+    $lang['admin_load_tabs_names'] = 'Choose tab names language:';
 ?>
