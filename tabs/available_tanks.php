@@ -21,7 +21,7 @@ if($avalTanks['count'] > 1) { ?>
             });
         ";
       } ?>
-  <?php $atank_but = $cache->get('available_tanks_'.$config['clan'],0); ?>
+  <?php $atank_but = $cache->get('available_tanks_'.$config['clan'],0, ROOT_DIR.'/cache/other/'); ?>
   });
 </script>
 <?php } ?>

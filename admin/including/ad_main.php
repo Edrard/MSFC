@@ -265,7 +265,7 @@
     $adm_top_tanks = get_top_tanks_list();
     $adm_avalTanks = get_available_tanks_index();
     if($adm_avalTanks['count'] > 1) {
-      $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0);
+      $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
     }
     $tanks_list = get_tanks_list();
 ?>
