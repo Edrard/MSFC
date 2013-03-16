@@ -56,7 +56,7 @@
         }
         $get = array();
         foreach($roster as $name => $pldata){
-            $tmp = $cache->get($name,$config['cache']*3600,ROOT_DIR.'/cache/players/');
+            $tmp = $cache->get($name,$config['cache']*3600+1,ROOT_DIR.'/cache/players/');
             if($tmp === FALSE or empty($tmp)){
                 $get[$name] = $pldata;
             }else{
