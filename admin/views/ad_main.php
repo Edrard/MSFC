@@ -395,7 +395,6 @@
                           <div class="ui-state-error ui-corner-all"><?=$lang['admin_tab_delete_n'];?></div>
                         </div>
                       </div>
-                    </div>
                     <div id="tabs-3">
                         <div align="center">
                           <div class="ui-corner-all ui-widget-content">
