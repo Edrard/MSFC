@@ -50,9 +50,6 @@
             <?php if(!empty($adm_top_tanks)){ ?>
                 $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]]});
             <?php } ?>
-            <?php if(!empty($tanks_presets)){ ?>
-                $("#top_tanks_presets").tablesorter({ sortList:[[3,0],[2,1]]});
-            <?php } ?>
             <?php if(!empty($tanks_list)){ ?>
                 $("#tanks_list").tablesorter({
                     sortList: [[2, 0]],

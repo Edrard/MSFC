@@ -625,7 +625,7 @@
       global $db;
 
       $presets = array();
-      $sql = 'select * from `top_tanks_presets`;';
+      $sql = 'SELECT `type`, `lvl`, `show`, `index` FROM `top_tanks` GROUP BY `type`, `lvl`, `show`, `index` ORDER BY `show` DESC, `index` ASC;';
       $q = $db->prepare($sql);
       if ($q->execute() == TRUE) {
           $presets = $q->fetchAll(PDO :: FETCH_ASSOC);

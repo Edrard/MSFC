@@ -261,22 +261,6 @@
         $cache->set('available_tanks_'.$config['clan'],$index_list, ROOT_DIR.'/cache/other/');
         unset($index_list);
     }
-    //Remove top tanks preset
-    if (isset($_GET['removetoptankpreset'])){
-        remove_tanks_presets($_GET['id']);
-        if (!headers_sent()) {
-            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-6' );
-            exit;
-        } else { ?>
-        <script type="text/javascript">
-            location.replace("index.php?page=main<?=$multi_get;?>#tabs-6");
-        </script>
-        <?      }
-    }
-    //add top tanks preset
-    if(isset($_POST['toptanksaddpreset'])) {
-        add_tanks_presets($_POST);
-    }
     //Get top tanks for Tab
     $adm_top_tanks = get_top_tanks_list();
     $adm_avalTanks = get_available_tanks_index();
@@ -284,5 +268,4 @@
       $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
     }
     $tanks_list = get_tanks_list();
-    $tanks_presets = get_tanks_presets();
 ?>
