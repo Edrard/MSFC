@@ -36,4 +36,8 @@
     $lang['adm_tank_top_add3'] = 'with these settings: Level';
     $lang['adm_tank_top_add4'] = ', Type';
     $lang['adm_tank_top_index_add'] = 'Change displayed "Index" names';
+    $lang['adm_tank_top_presets'] = 'Presets to automatically add tanks*';
+    $lang['adm_tank_top_presets_title'] = 'Presets applies only to new tanks. Tanks, which is already in the database, will not be added automatically.';
+    $lang['adm_tank_top_no_presets'] = 'No presets';
+    $lang['adm_tank_top_add_presets'] = 'Add preset:';
 ?>

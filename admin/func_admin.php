@@ -116,7 +116,7 @@
         if($status_user == 0){
             $post['password'] = $auth->encrypt($post['password']);
             $post['email'] = $post['user'].'@local.com';
-            if($auth->rights != 'all') { $post['prefix'] = $db->prefix; }  
+            if($auth->rights != 'all') { $post['prefix'] = $db->prefix; }
             $sql = "INSERT INTO `users` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
 
             $q = $db->prepare($sql);
@@ -720,5 +720,39 @@
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-    }     
+    }
+    function get_tanks_presets() {
+      global $db;
+
+      $presets = array();
+      $sql = 'select * from `top_tanks_presets`;';
+      $q = $db->prepare($sql);
+      if ($q->execute() == TRUE) {
+          $presets = $q->fetchAll(PDO :: FETCH_ASSOC);
+      } else {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      return $presets;
+    }
+    function remove_tanks_presets($id) {
+      global $db;
+
+      $sql = 'DELETE FROM `top_tanks_presets` WHERE id = "'.$id.'";';
+      $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+    }
+    function add_tanks_presets($array) {
+      global $db;
+
+      if(!isset($array['adm_top_tanks_show'])) { $array['adm_top_tanks_show'] = 0;} else { $array['adm_top_tanks_show'] = 1;}
+      $sql = 'INSERT INTO `top_tanks_presets` (`lvl` , `type` , `show` , `index`) VALUES
+      ("'.$array['adm_top_tanks_lvl'].'", "'.$array['adm_top_tanks_type'].'", "'.$array['adm_top_tanks_show'].'", "'.$array['adm_top_tanks_index'].'");';
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+  }
 ?>

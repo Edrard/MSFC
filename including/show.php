@@ -40,7 +40,7 @@
         $roster = roster_sort($new['data']['members']);
         $roster_id = roster_resort_id($roster);
         // get list of all tanks in game from api
-        $tanks = $cache->get('tanks_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
+        /*$tanks = $cache->get('tanks_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
         if(empty($tanks)){
             $tanks = get_api_tanks($config);
             if($tanks['status'] == 'ok' &&  $tanks['status_code'] == 'NO_ERROR'){
@@ -48,7 +48,7 @@
                 $cache->set('tanks_'.$config['clan'], $tanks['data']['items'],ROOT_DIR.'/cache/other/');
                 $tanks = $tanks['data']['items'];
             }
-        }
+        } */
 
         //Check if DB updating now
         while(lock_check() !== TRUE){

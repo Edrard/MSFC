@@ -333,6 +333,31 @@ INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`) VALUES
 (1, 'admin', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'admin@local.com', 'admin'),
 (2, 'user', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'user@local.com', 'user');
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `top_tanks_presets`
+--
+
+CREATE TABLE IF NOT EXISTS `top_tanks_presets` (
+  `id` TINYINT(3) NOT NULL AUTO_INCREMENT,
+  `lvl` tinyint(3) unsigned NOT NULL,
+  `type` varchar(15) NOT NULL,
+  `show` tinyint(1) NOT NULL DEFAULT '0',
+  `index` tinyint(10) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `top_tanks_presets`
+--
+
+INSERT INTO `top_tanks_presets` (`lvl` , `type` , `show` , `index`) VALUES
+('10', 'heavyTank', '1', '1' ),
+('10', 'mediumTank', '0', '2'),
+('10', 'AT-SPG', '0', '3'),
+('8', 'SPG', '0', '4');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

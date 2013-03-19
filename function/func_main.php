@@ -86,6 +86,7 @@
                         unset($q);
                         $id = $db->lastInsertId(); //шикарная функция на самом деле, возвращает значение автоинкремент поля из последнего запроса
                         $current[$id] = $val['name'].'_'.$val['nation']; //добавляем танк
+                        add_tanks_preset($tank); //проверяем необходимо ли добавлять пересет для таба наличия техники
 
                         if(!in_array($val['nation'],$col_tank)) {
                             $sql .= "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
@@ -619,6 +620,29 @@
         $top_tanks['count'] = $count;
 
         return $top_tanks;
+    }
+    function add_tanks_preset($tank) {
+      global $db;
+
+      $presets = array();
+      $sql = 'select * from `top_tanks_presets`;';
+      $q = $db->prepare($sql);
+      if ($q->execute() == TRUE) {
+          $presets = $q->fetchAll(PDO :: FETCH_ASSOC);
+      } else {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      foreach($presets as $val) {
+        if($val['lvl'] == $tank['lvl'] and $val['type'] == $tank['type']) {
+            $sql = 'INSERT IGNORE INTO `top_tanks` (`title`, `lvl`, `type`, `index`, `show`) VALUES ';
+            $sql .= "('{$tank['title']}', '{$tank['lvl']}', '{$tank['type']}', '{$val['index']}', '{$val['show']}');";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            break;
+        }
+      }
     }
     /**** end ****/
     function roster_num($var)

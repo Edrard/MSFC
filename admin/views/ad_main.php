@@ -31,11 +31,11 @@
                             <?php } ?>
                     });
                 </script>
-                <?php $multi_get = '';
+                <?php $multi_clan_prefix = '';
                     if($val['main'] == 0){
-                        $multi_get = '&multi='.str_replace('_','',$val['prefix']);
+                        $multi_clan_prefix = '&multi='.str_replace('_','',$val['prefix']);
                 } ?>
-                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_get?>">
+                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_clan_prefix;?>">
                     <img height="24" src="http://<?=$config['gm_url'].$multiclan_info[$val['id']]['data']['emblems']['bw_tank']?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
                 </a>
                 <?php
@@ -113,28 +113,6 @@
                     </div>
                     <div id="tabs-6">
                         <div align="center">
-                          <div class="ui-corner-all ui-widget-content">
-                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
-                              <h3><?=$lang['adm_tank_top_add'];?></h3>
-                              <select name="adm_top_tanks_action">
-                                <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option>
-                                <option value="delete"><?=$lang['adm_tank_top_add2'];?></option>
-                              </select>
-                              <?=$lang['adm_tank_top_add3'];?>
-                                <select name="adm_top_tanks_lvl">
-                                  <? for($i = 10; $i >= 1; $i--){?>
-                                    <option value="<?=$i?>"><?=$i?></option>
-                                  <? } ?>
-                                </select>
-                              <?=$lang['adm_tank_top_add4'];?>
-                                <select name="adm_top_tanks_type">
-                                  <? foreach($lang_s['class'] as $name => $val) { ?>
-                                     <option value="<?=$name?>"><?=$val?></option>
-                                  <? } ?>
-                                </select>
-                              <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
-                            </form>
-                          </div><br clear=all>
                             <?php if($adm_avalTanks['count'] > 1) { ?>
                               <div class="ui-corner-all ui-widget-content">
                                 <br /><h3><?=$lang['adm_tank_top_index_add'];?></h3>
@@ -190,6 +168,80 @@
                                       echo $lang['admin_no_toptanks'].'</div>';
                                   } }; ?>
                           </div>
+                          <div class="ui-corner-all ui-widget-content">
+                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                              <h3><?=$lang['adm_tank_top_add'];?></h3>
+                              <select name="adm_top_tanks_action">
+                                <option value="add" selected><?=$lang['adm_tank_top_add1'];?></option>
+                                <option value="delete"><?=$lang['adm_tank_top_add2'];?></option>
+                              </select>
+                              <?=$lang['adm_tank_top_add3'];?>
+                                <select name="adm_top_tanks_lvl">
+                                  <? for($i = 10; $i >= 1; $i--){?>
+                                    <option value="<?=$i?>"><?=$i?></option>
+                                  <? } ?>
+                                </select>
+                              <?=$lang['adm_tank_top_add4'];?>
+                                <select name="adm_top_tanks_type">
+                                  <? foreach($lang_s['class'] as $name => $val) { ?>
+                                     <option value="<?=$name?>"><?=$val?></option>
+                                  <? } ?>
+                                </select>
+                              <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
+                            </form>
+                          </div><br clear=all>
+                          <div class="ui-corner-all ui-widget-content">
+                            <h3><span title="<?=$lang['adm_tank_top_presets_title'];?>" style="border-bottom: 1px dashed #666666; cursor: pointer;" class="bb"><?=$lang['adm_tank_top_presets'];?></span></h3>
+                            <?php if(!empty($tanks_presets)) { ?>
+                                <table id="top_tanks_presets" width="100%" cellspacing="1">
+                                    <thead>
+                                        <tr>
+                                            <th align="center"><?=$lang['admin_tab_top_class'];?></th>
+                                            <th align="center"><?=$lang['admin_tab_top_lvl'];?></th>
+                                            <th align="center" class="{sorter: false}"><?=$lang['admin_tab_top_show'];?></th>
+                                            <th align="center"><?=$lang['admin_tab_top_index'];?></th>
+                                            <th align="center"><?=$lang['admin_tab_del'];?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <? foreach($tanks_presets as $val) { ?>
+                                            <tr>
+                                                <td align="center"><?=$lang_s['class'][$val['type']];?></td>
+                                                <td align="center"><?=$val['lvl'];?></td>
+                                                <td align="center"><?=($val['show']==1)?'<img src="../images/yes.png" />':'<img src="../images/no2.png" />';?></td>
+                                                <td align="center"><?=$val['index'];?></td>
+                                                <td align="center"><a href="./index.php?removetoptankpreset=1&id=<?=$val['id']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'];?>?')"><img src="../images/cred.png" /></a></td>
+                                            </tr>
+                                        <? } ?>
+                                    </tbody>
+                                </table>
+                            <?php } else { ?>
+                              <div class="ui-state-highlight ui-corner-all"><?=$lang['adm_tank_top_no_presets'];?></div>
+                            <?php } ?>
+                            <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
+                              <h3><?=$lang['adm_tank_top_add_presets'];?></h3>
+                              <?=$lang['admin_tab_top_lvl'];?>:&nbsp;
+                                <select name="adm_top_tanks_lvl">
+                                  <? for($i = 10; $i >= 1; $i--){?>
+                                    <option value="<?=$i?>"><?=$i?></option>
+                                  <? } ?>
+                                </select>
+                              <?=$lang['admin_tab_top_class'];?>:&nbsp;
+                                <select name="adm_top_tanks_type">
+                                  <? foreach($lang_s['class'] as $name => $val) { ?>
+                                     <option value="<?=$name?>"><?=$val?></option>
+                                  <? } ?>
+                                </select>
+                              <?=$lang['admin_tab_top_index'];?>:&nbsp;
+                                <select name="adm_top_tanks_index">
+                                  <? for($i = 1; $i <= 10; $i++){?>
+                                    <option value="<?=$i?>"><?=$i?></option>
+                                  <? } ?>
+                                </select>
+                              <?=$lang['admin_tab_top_show'];?>:&nbsp;<input type="checkbox" name="adm_top_tanks_show">
+                              <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksaddpreset"></p>
+                            </form>
+                          </div><br clear=all>
                         </div>
                     </div>
                     <div id="tabs-1">
