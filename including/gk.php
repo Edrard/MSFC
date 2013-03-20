@@ -96,18 +96,6 @@ if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($auth->replays)){
   unset($res_check);
   unset($gk_time);
 }
-
-gk_clean_db($db);
-
-$gk_result5 = gk_get_all($db);
-foreach($gk_result5 as $value) {
- $blocked[$value['name']][$value['tank']] = $value['time'];
- if(!in_array($value['tank'], $gk_blocked_tanks)) {
-    $gk_blocked_tanks[] = $value['tank'];
- }
-}
-unset($gk_result5);
-
 /********** End **********/
 
 /********** Parse activity replay **********/
@@ -194,4 +182,14 @@ $activity_error = '';
 }
 /********** End of parsing activity replay **********/
 }
+gk_clean_db($db);
+
+$gk_result5 = gk_get_all($db);
+foreach($gk_result5 as $value) {
+ $blocked[$value['name']][$value['tank']] = $value['time'];
+ if(!in_array($value['tank'], $gk_blocked_tanks)) {
+    $gk_blocked_tanks[] = $value['tank'];
+ }
+}
+unset($gk_result5);
 ?>
