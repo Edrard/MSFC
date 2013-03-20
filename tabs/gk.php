@@ -25,7 +25,7 @@ $cur_time = time();
     });
 </script>
 <div class="num" align="left">
-<? if($logged >= $config['a_rights']) { ?>
+<? if($auth->replays) { ?>
 <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
 <input type="file" name="filename">
 <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">

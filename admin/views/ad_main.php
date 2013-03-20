@@ -235,14 +235,7 @@
                                                 ?>
                                                 <td><input <?=$news?> type="checkbox" name="news" value="1" size="2" /></td>
                                             </tr>
-                                            <?php } ?>
-                                        <tr>
-                                            <td><?=$lang['admin_allow_user_upload'];?></td>
-                                            <td><select name="a_rights">
-                                                    <option value="2" <?if($config['a_rights']==2){echo'selected="selected"';}?>><?=$lang['no'];?></option>
-                                                    <option value="1" <?if($config['a_rights']==1){echo'selected="selected"';}?>><?=$lang['yes'];?></option>
-                                                </select></td>
-                                        </tr>
+                                        <?php } ?>
                                         <tr>
                                             <td><?=$lang['admin_themes'];?></td>
                                             <td>
@@ -371,18 +364,18 @@
                                 <table cellspacing="1" cellpadding="1">
                                     <tbody>
                                         <tr>
-                                            <td><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" /></td>
+                                            <td align="right"><?=$lang['admin_new_user_name'];?>:</td><td><input type="text" size="20" name="user" /></td>
                                         </tr><tr>
-                                            <td><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td>
+                                            <td align="right"><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td>
                                         </tr><tr>
-                                            <td><?=$lang['admin_new_user_group'];?>:</td>
+                                            <td align="right"><?=$lang['admin_new_user_group'];?>:</td>
                                             <td><select name="group">
                                                     <option value="admin">Admin</option>
                                                     <option value="user">User</option>
                                                 </select></td>
                                         </tr>
                                         <?php if(count($multiclan) > 1) { ?>
-                                        <tr><td><?=$lang['admin_user_access'];?>:</td> <td>
+                                        <tr><td align="right"><?=$lang['admin_user_access'];?>:</td> <td>
                                             <select name="prefix">
                                                 <option value="all">All</option>
                                                 <? foreach($multiclan as $mclan) { ?>
@@ -391,6 +384,15 @@
                                             </select>
                                         </td></tr>
                                         <?php } ?>
+                                        <tr>
+                                         <td align="right"><?=$lang['admin_user_upload_replays'];?>:</td>
+                                         <td>
+                                            <select name="replays">
+                                                <option value="1" selected="selected"><?=$lang['yes'];?></option>
+                                                <option value="0"><?=$lang['no'];?></option>
+                                            </select>
+                                         </td>
+                                        </tr>
                                         <tr><td align="center" colspan="2"><br><input type="submit" value="<?=$lang['admin_creat'];?>" name="newuser"><br>
                                         </td></tr>
                                     </tbody>
@@ -403,6 +405,7 @@
                                         <th align="center"><?=$lang['admin_user_name'];?></th>
                                         <th align="center"><?=$lang['admin_user_group'];?></th>
                                         <th align="center"><?=$lang['admin_user_access'];?></th>
+                                        <th align="center"><?=$lang['admin_user_upload_replays'];?></th>
                                         <th align="center"><?=$lang['admin_user_edit'];?></th>
                                         <th align="center"><?=$lang['admin_user_del'];?></th>
                                     </tr>
@@ -413,6 +416,7 @@
                                             <td align="center"><?=$val['user'];?></td>
                                             <td align="center"><?=$val['group'];?></td>
                                             <td align="center"><?=$val['prefix'];?></td>
+                                            <td align="center"><img src="../images/<?=($val['replays'])?'yes':'no2';?>.png"></td>
                                             <td align="center"><a href="#" class="trigger_<?=$val['user']?>"><?=$lang['admin_user_edit'];?></a></td>
                                             <td align="center"><a href="./index.php?userdel=1&id=<?=$val['id'];?>&page=main#tabs-3" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$val['user'];?>?')"><img src="../images/cred.png" /></a></td>
                                         </tr>
@@ -442,6 +446,15 @@
                                                     </select>
                                                 </td></tr>
                                                 <?php } ?>
+                                                <tr>
+                                                 <td align="right"><?=$lang['admin_user_upload_replays'];?>:</td>
+                                                 <td>
+                                                    <select name="replays">
+                                                        <option value="1" <?=($val['replays'])?'selected="selected"':'';?>><?=$lang['yes'];?></option>
+                                                        <option value="0" <?=(!$val['replays'])?'selected="selected"':'';?>><?=$lang['no'];?></option>
+                                                    </select>
+                                                 </td>
+                                                </tr>
                                                 <tr><td align="center" colspan="2"><input type="submit" value="<?=$lang['admin_submit'];?>" name="edituser"></td></tr>
                                             </tbody>
                                         </table>

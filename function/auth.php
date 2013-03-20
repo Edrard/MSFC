@@ -45,6 +45,7 @@
         var $salt = '#@()DIJK#)(F#&*()DS#@JKS)@(I()#@DU)*(&@#)(#U)J';
         var $emailAuth = false;
         var $rights = '';
+        var $replays = 0;
 
         function __construct() {
             if ( $this->type == 'session' ) {
@@ -95,6 +96,7 @@
                 } else {
                     $row = $result;
                     $this->rights = $row['prefix'];
+                    $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
                     if ( $row['password'] == $password && $row['prefix'] == $db->prefix ) {
                         if ( $this->type == 'session' ) {
@@ -119,6 +121,7 @@
                         }
                     } else {
                         $this->rights = '';
+                        $this->replays = 0;
                         if($row['prefix'] != $db->prefix) {
                           $this->errors[] = 'Insufficient permissions';
                         } else {
@@ -218,9 +221,11 @@
                     }
                     $row = $result;
                     $this->rights = $row['prefix'];
+                    $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
                     if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] || $row['prefix'] != $db->prefix ) {
                         $this->rights = '';
+                        $this->replays = 0;
                         $this->logout();
                     }
                 }

@@ -76,13 +76,13 @@ $gk_block['AT-SPG']['3'] = 4;
 $gk_block['AT-SPG']['2'] = 1;
 $gk_block['AT-SPG']['1'] = 0;
 
-if(isset($_POST['gkreplay']) and isset($_FILES['filename']['name']) and ($logged >= $config['a_rights'])) {
+if(isset($_POST['gkreplay']) and isset($_FILES['filename']['name']) and ($auth->replays)) {
   $gk_time = gk_tanks($gk_block,$db);
   $gk_fresult = gk_parse_file($_FILES,array_keys($res),$gk_time,$lang,$db);
   unset($gk_time);
 }
 
-if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($logged >= $config['a_rights'])){
+if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($auth->replays)){
 
   $res_check = array_keys($res);
   $gk_time = gk_tanks($gk_block,$db);
@@ -111,7 +111,7 @@ unset($gk_result5);
 /********** End **********/
 
 /********** Parse activity replay **********/
-if(isset($_POST['activityreplay']) and isset($_FILES) and ($logged >= $config['a_rights'])) {
+if(isset($_POST['activityreplay']) and isset($_FILES) and ($auth->replays)) {
 
 $activity_error = '';
 

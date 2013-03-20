@@ -127,8 +127,8 @@
     $lang['admin_multi_main_msg'] = 'Podstawowy';
     $lang['admin_multi_add_new'] = 'DodaÄ‡';
     $lang['admin_multi_link'] = 'Link';
-    $lang['admin_no_tanks'] = 'Brak danych na temat zbiornikíª•í¿· DB';
-    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiornikíª•í¿· DB';
+    $lang['admin_no_tanks'] = 'Brak danych na temat zbiornik DB';
+    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiornik DB';
 
     $lang['admin_cron_control'] = 'Zbieranie danych w czasie';
     $lang['admin_cron_auth'] = 'Uwierzytelnianie';
@@ -156,4 +156,5 @@
     $lang['admin_load_tabs_names'] = 'Wybierz zakladke nazwy jezyk';
 
     $lang['admin_tanks_db_up'] = 'Update information about tanks in database';
+    $lang['admin_user_upload_replays'] = 'Upload replays';
 ?>

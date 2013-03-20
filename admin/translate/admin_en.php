@@ -155,5 +155,6 @@
     $lang['admin_user_access'] = 'Access';
     $lang['admin_load_tabs_names'] = 'Choose tab names language:';
 
-    $lang['admin_tanks_db_up'] = 'Update information about tanks in database'; 
+    $lang['admin_tanks_db_up'] = 'Update information about tanks in database';
+    $lang['admin_user_upload_replays'] = 'Upload replays';
 ?>

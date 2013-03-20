@@ -322,6 +322,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(200) NOT NULL,
   `group` varchar(25) NOT NULL COMMENT 'user, admin',
   `prefix` VARCHAR(6) NOT NULL DEFAULT 'all' COMMENT 'all - login to all multiclans',
+  `replays` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '1 - allowed, 0 - not allowed',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=3 ;
 
@@ -329,9 +330,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`) VALUES
-(1, 'admin', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'admin@local.com', 'admin'),
-(2, 'user', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'user@local.com', 'user');
+INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`, `replays`) VALUES
+(1, 'admin', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'admin@local.com', 'admin', '1'),
+(2, 'user', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'user@local.com', 'user', '0');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
