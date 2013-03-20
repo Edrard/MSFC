@@ -100,3 +100,34 @@ table .tablesorter { margin: 20px 0 0 0; }
 .ui-tabs .ui-tabs-nav li a { float: none !important; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active { text-align:right; }
 .ui-tooltip { max-width: 400px;  !important; }
+
+.div4settings{
+  padding: 0px;
+  margin: 0px;
+  margin-right: 10px;
+  white-space:nowrap;
+}
+.settingsLine {
+  border-bottom: 1px dashed grey;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  vertical-align: middle;
+}
+.settingsLine:last-child {
+  border-bottom: 0px;
+}
+.settingsLine div {
+  display: inline-block; *display:inline;
+  padding: 0px;
+  margin: 0px;
+  vertical-align: top;
+  white-space:nowrap;
+}
+.settingsLine div:first-child {
+  width: 300px;
+}
+.settingsLine div:last-child {
+  min-width: 600px;
+}
