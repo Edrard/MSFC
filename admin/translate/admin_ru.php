@@ -153,4 +153,6 @@
     $lang['admin_cron_period'] = 'Периоды используемые при выводе данных';
     $lang['admin_user_access'] = 'Доступ';
     $lang['admin_load_tabs_names'] = 'Выберите язык для названий вкладок:';
+
+    $lang['admin_tanks_db_up'] = 'Обновить информацию о технике';
 ?>

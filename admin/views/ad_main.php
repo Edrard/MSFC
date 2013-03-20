@@ -71,7 +71,6 @@
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
-                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_tanks'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
                         <li id="ccontrol" class="ui-corner-all"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
                         <li style="margin-top: 100px;" class="ui-corner-all"><a onclick="magic(this)" id="out" href="#tabs-10"><?=$lang['admin_module'];?></a></li>
@@ -79,38 +78,6 @@
                     </ul>
                 </td>
                 <td valign="top">
-                    <div id="tabs-7">
-                        <div align="center" class="ui-corner-all ui-widget-content">
-                            <?php if (!empty($tanks_list)){?>
-                                <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
-                                  <h3><?=$lang['admin_tab_tanks'];?></h3>
-                                    <table id="tanks_list" width="100%" cellspacing="1">
-                                        <thead>
-                                            <tr>
-                                                <th align="center"><?=$lang['tank_list_title'];?></th>
-                                                <th align="center"><?=$lang['tank_list_nation'];?></th>
-                                                <th align="center"><?=$lang['tank_list_lvl'];?></th>
-                                                <th align="center"><?=$lang['tank_list_type'];?></th>
-                                                <th align="center"><?=$lang['tank_list_link'];?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach($tanks_list as $val) { ?>
-                                                <tr>
-                                                    <td align="center"><span class="hidden"><?=$val['tank'];?></span><?=$val['tank']?></td>
-                                                    <td align="center"><span class="hidden"><?=$val['nation'];?></span><input type="text" size="10" value="<?=$val['nation']?>" name="Array[<?=$val['id']?>][nation]"></td>
-                                                    <td align="center"><span class="hidden"><?=$val['lvl'];?></span><input type="text" size="2" value="<?=$val['lvl']?>" name="Array[<?=$val['id']?>][lvl]"></td>
-                                                    <td align="center"><span class="hidden"><?=$val['type'];?></span><input type="text" size="12" value="<?=$val['type']?>" name="Array[<?=$val['id']?>][type]"></td>
-                                                    <td align="center"><span class="hidden"><?=$val['link'];?></span><input type="text" size="82" value="<?=$val['link']?>" name="Array[<?=$val['id']?>][link]"></td>
-                                                </tr>
-                                                <?php } ?>
-                                        </tbody>
-                                    </table>
-                                    <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="tanklist"></p>
-                                </form>
-                                <?php } else { echo '<div class="ui-state-error ui-corner-all" align="center">'.$lang['admin_no_tanks'].'</div>'; }; ?>
-                        </div>
-                    </div>
                     <div id="tabs-6">
                         <div align="center">
                             <?php if($adm_avalTanks['count'] > 1) { ?>
@@ -492,7 +459,7 @@
                               <input type="submit" value="<?=$lang['admin_db_but'];?>" name="recdb"><br />
                               <?=$lang['admin_db_warning'];?>
                           </form>
-                        </div><br><br>
+                        </div><br>
                         <div align="center" class="ui-corner-all ui-widget-content">
                           <h3><?=$lang['admin_clear_cache'];?></h3> <br />
                           <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
@@ -502,7 +469,7 @@
                               <?=$lang['admin_clear_a_cache_form'];?><br />
                               <input type="submit" value="<?=$lang['admin_clear_cache_actbut'];?>" name="admclearacache">
                           </form>
-                        </div>
+                        </div><br>
                         <div align="center" class="ui-corner-all ui-widget-content">
                           <h3><?=$lang['admin_db_up'];?></h3>
                           <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="POST">
@@ -511,6 +478,12 @@
                               <br>
                               <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="newup" /><br />
                               <?=$lang['admin_db_up_warning'];?>
+                          </form>
+                        </div><br />
+                        <div align="center" class="ui-corner-all ui-widget-content">
+                          <h3><?=$lang['admin_tanks_db_up'];?></h3>
+                          <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                              <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="update_tanks_db"><br />
                           </form>
                         </div>
                       </div>

@@ -114,7 +114,10 @@
         }
     } 
 
-
+    //Update information about tanks in db
+    if(isset($_POST['update_tanks_db'])) {
+        update_tanks_db();
+    }
 
     //DB
     if (isset($_POST['recdb'])){
@@ -200,9 +203,6 @@
     if(isset($_POST['toptanksupd'])) {
         update_top_tanks($_POST['Array']);
     }
-    if(isset($_POST['tanklist']) && isset($_POST['Array'])){ 
-        update_tanks_list($_POST['Array']);
-    }
     if(isset($_POST['toptanksadd'])) {
 
         if($_POST['adm_top_tanks_action'] == 'add'){
@@ -225,7 +225,6 @@
         </script>
         <?      }
     }
-
     //Clear cache
     if (isset($_POST['admclearcache'])){
         $cache->clear_all(array(), ROOT_DIR.'/cache/');
@@ -267,5 +266,4 @@
     if($adm_avalTanks['count'] > 1) {
       $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
     }
-    $tanks_list = get_tanks_list();
 ?>

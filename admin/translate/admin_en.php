@@ -154,4 +154,6 @@
     $lang['admin_cron_period'] = 'Periods used for data output';
     $lang['admin_user_access'] = 'Access';
     $lang['admin_load_tabs_names'] = 'Choose tab names language:';
+
+    $lang['admin_tanks_db_up'] = 'Update information about tanks in database'; 
 ?>

@@ -22,7 +22,7 @@
     $lang['admin_tab_user'] = 'Kierowanie uÅ¼ytkownikami';
     $lang['admin_tab_tanks'] = 'Lista czoÅ‚gÃ³w';
     $lang['admin_db'] = 'Baza danych';
-    $lang['admin_module'] = 'Powrót do modulu';
+    $lang['admin_module'] = 'Powríª‰í¿¤o modulu';
     $lang['admin_logout'] = 'Wyloguj';
     $lang['admin_server'] = 'Serwer';
     $lang['admin_clan_id'] = 'Numer klanu';
@@ -127,8 +127,8 @@
     $lang['admin_multi_main_msg'] = 'Podstawowy';
     $lang['admin_multi_add_new'] = 'DodaÄ‡';
     $lang['admin_multi_link'] = 'Link';
-    $lang['admin_no_tanks'] = 'Brak danych na temat zbiorników w DB';
-    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiorników w DB';
+    $lang['admin_no_tanks'] = 'Brak danych na temat zbiornikíª•í¿· DB';
+    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiornikíª•í¿· DB';
 
     $lang['admin_cron_control'] = 'Zbieranie danych w czasie';
     $lang['admin_cron_auth'] = 'Uwierzytelnianie';
@@ -153,5 +153,7 @@
     
     $lang['admin_cron_period'] = 'Okresy przemieniany przy wyprowadzeniu danych';
     $lang['admin_user_access'] = 'DostÄ™p';
-    $lang['admin_load_tabs_names'] = 'Wybierz zakladke nazwy jezyków:';
+    $lang['admin_load_tabs_names'] = 'Wybierz zakladke nazwy jezyk';
+
+    $lang['admin_tanks_db_up'] = 'Update information about tanks in database';
 ?>

@@ -16,37 +16,6 @@
     */
 ?>
 <?php
-    function get_tanks_list() {
-        global $db;
-        $sql = "SELECT * FROM `tanks`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            return $q->fetchAll();
-        } else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-    }
-    function update_tanks_list($array){
-        global $db;
-        foreach($array as $key => $val){
-            $nm = 0;
-            $insert = '';
-            foreach($val as $column => $val){
-                if($nm == 0){
-                    $insert .= "`".$column."` = '".$val."'";  
-                    $nm++;  
-                }else{
-                    $insert .= ', `'.$column."` = '".$val."'";
-                }    
-            }
-
-            $sql = "UPDATE `tanks` SET ".$insert." WHERE id = '".$key."';";
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }    
-        }
-    }
     function base_dir($local = null)
     {
         if($local == null){
@@ -720,5 +689,54 @@
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
+    }
+    function update_tanks_db() {
+      global $db,$cache,$config;
+
+      $new = $cache->get('get_last_roster_'.$config['clan'],0);
+      if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){ //begin 1
+        foreach($new['data']['members'] as $val){
+           $tmp = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players/');
+           if($tmp != FALSE or !empty($tmp)){
+               $res[$val['account_name']] = $tmp;
+           }
+        }
+
+        $tanks_sorted = array();
+        $tanks_list = array();
+
+        foreach($res as $val) {
+          if(isset($val['tank']) and !empty($val['tank']) and is_array($val['tank'])) {
+            foreach($val['tank'] as $lvl => $types){
+              foreach($types as $type => $tanks){
+                foreach($tanks as $tank){
+                  if(!in_array($tank['name'],$tanks_list)){
+                      $tanks_list[] = $tank['name'];
+                      $tanks_sorted[$tank['name']]['lvl'] = $tank['lvl'];
+                      $tanks_sorted[$tank['name']]['type'] = $tank['type'];
+                      $tanks_sorted[$tank['name']]['class'] = $tank['class'];
+                      $tanks_sorted[$tank['name']]['nation'] = $tank['nation'];
+                      $tanks_sorted[$tank['name']]['link'] = preg_replace('/http:\/\/worldoftanks.[a-z]*/', '', $tank['link']);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        foreach($tanks_sorted as $name => $val) {
+            $sql = "UPDATE `tanks` SET
+                `tank` = '{$val['type']}',
+                `nation` = '{$val['nation']}',
+                `lvl` = '{$val['lvl']}',
+                `type` = '{$val['class']}',
+                `link` = '{$val['link']}'
+            WHERE title = '$name';" ;
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+        }
+      } // end1
     }
 ?>
