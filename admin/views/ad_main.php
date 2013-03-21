@@ -365,13 +365,14 @@
                                             <td align="right"><?=$lang['admin_new_user_pass'];?>:</td> <td><input type="password" size="20" name="password" /></td>
                                         </tr><tr>
                                             <td align="right"><?=$lang['admin_new_user_group'];?>:</td>
-                                            <td><select name="group">
+                                            <td align="left"><select name="group">
                                                     <option value="admin">Admin</option>
                                                     <option value="user">User</option>
                                                 </select></td>
                                         </tr>
                                         <?php if(count($multiclan) > 1) { ?>
-                                        <tr><td align="right"><?=$lang['admin_user_access'];?>:</td> <td>
+                                        <tr><td align="right"><?=$lang['admin_user_access'];?>:</td>
+                                            <td align="left">
                                             <select name="prefix">
                                                 <option value="all">All</option>
                                                 <? foreach($multiclan as $mclan) { ?>
@@ -382,7 +383,7 @@
                                         <?php } ?>
                                         <tr>
                                          <td align="right"><?=$lang['admin_user_upload_replays'];?>:</td>
-                                         <td>
+                                         <td align="left">
                                             <select name="replays">
                                                 <option value="1" selected="selected"><?=$lang['yes'];?></option>
                                                 <option value="0"><?=$lang['no'];?></option>
@@ -519,11 +520,11 @@
                               <table width="400" cellspacing="1">
                                 <tr>
                                   <td align="right"><?=$lang['admin_multi_id'];?>:</td>
-                                  <td><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
+                                  <td align="left"><input type="text" value="<?=(isset($_POST['id']) ? $_POST['id'] : '') ?>" name="id" size="12"></td>
                                 </tr>
                                 <tr>
                                   <td align="right"><?=$lang['admin_server'];?></td>
-                                  <td>
+                                  <td align="left">
                                     <select name="server">
                                       <?php if(!isset($_POST['server'])){ ?>
                                         <option value="ru">RU</option>
@@ -543,11 +544,11 @@
                                 </tr>
                                 <tr>
                                   <td align="right"><?=$lang['admin_multi_prefix'];?>:</td>
-                                  <td><input type="text" value="<?=(isset($_POST['prefix']) ? $_POST['prefix'] : '') ?>" name="prefix" size="20"></td>
+                                  <td align="left"><input type="text" value="<?=(isset($_POST['prefix']) ? $_POST['prefix'] : '') ?>" name="prefix" size="20"></td>
                                 </tr>
                                 <tr>
                                   <td align="right"><?=$lang['admin_multi_index'];?>:</td>
-                                  <td><input type="text" value="<?=(isset($_POST['sort']) ? $_POST['sort'] : '') ?>" name="sort" size="3"></td>
+                                  <td align="left"><input type="text" value="<?=(isset($_POST['sort']) ? $_POST['sort'] : '') ?>" name="sort" size="3"></td>
                                 </tr>
                               </table><br />
                               <input type="hidden" value="1" name="multiadd">

@@ -127,6 +127,7 @@ table .tablesorter { margin: 20px 0 0 0; }
 }
 .settingsLine div:first-child {
   width: 300px;
+  white-space: pre-line; 
 }
 .settingsLine div:last-child {
   min-width: 600px;
