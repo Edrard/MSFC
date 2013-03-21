@@ -246,6 +246,14 @@
         $cache_activity->clear_all($exclude_list);
         unset($exclude_list,$cache_activity,$left_days);
     }
+    //Clean DB from left players
+    if (isset($_POST['clean_db_left_players'])){
+      clean_db_left_players();
+    }
+    //Clean DB from old cache data
+    if (isset($_POST['clean_db_old_cron'])){
+      clean_db_old_cron($_POST['clear_old_cron_date']);
+    }
     //Save available tanks index's
     if (isset($_POST['available_tanks_add_index'])){
         $index_list = array();

@@ -157,4 +157,7 @@
 
     $lang['admin_tanks_db_up'] = 'Update information about tanks in database';
     $lang['admin_user_upload_replays'] = 'Upload replays';
+    $lang['clear_old_cron_date'] = 'Delete Cron data older than <input type="text" size="1" name="clear_old_cron_date" value="30" /> days.';
+    $lang['admin_clean_db_left_players'] = 'Clean DB from players, who left clan';
+    $lang['admin_clean_db_old_cron'] = 'Clean DB from old Cron data';
 ?>

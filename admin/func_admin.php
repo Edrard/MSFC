@@ -739,4 +739,59 @@
         }
       } // end1
     }
+    function clean_db_left_players() {
+      global $db,$cache,$config;
+
+      $new = $cache->get('get_last_roster_'.$config['clan'],0);
+      if($new === FALSE or empty($new['data']['members'])) { return; }
+
+      $roster_id = array_keys(roster_resort_id($new['data']['members']));
+
+      if(count($roster_id)>0) {
+          $sql = 'SHOW TABLES LIKE "'.$db->prefix.'col%";';
+          $q = $db->prepare($sql);
+          if ($q->execute() == TRUE) {
+              $tmp = $q->fetchAll(PDO::FETCH_COLUMN,0);
+          } else {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+
+          if(count($tmp)>0) {
+              $roster_id_tmp = implode(',',array_keys($roster_id));
+
+              foreach($tmp as $val) {
+                $sql = 'DELETE FROM '.$val.' WHERE account_id NOT IN('.$roster_id_tmp.');';
+                $q = $db->prepare($sql);
+                if ($q->execute() != TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                }
+                //echo $sql,'<br />';
+              }
+          }
+      }
+    }
+    function clean_db_old_cron($date) {
+      global $db;
+
+      if(!is_numeric($date)) { $date = 30; }
+      $del = now()-$date*24*60*60;
+
+      $sql = 'SHOW TABLES LIKE "'.$db->prefix.'col%";';
+      $q = $db->prepare($sql);
+      if ($q->execute() == TRUE) {
+          $tmp = $q->fetchAll(PDO::FETCH_COLUMN,0);
+      } else {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      if(count($tmp)>0) {
+        foreach($tmp as $val) {
+          $sql = 'DELETE FROM '.$val.' WHERE up < "'.$del.'";';
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+        }
+      }
+    }
 ?>

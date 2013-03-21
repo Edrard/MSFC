@@ -509,6 +509,23 @@
                               </form>
                            </div>
                         </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_clean_db_left_players'];?></div>
+                           <div>
+                              <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                                  <input type="submit" value="<?=$lang['admin_tab_del'];?>" name="clean_db_left_players">
+                              </form>
+                           </div>
+                        </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_clean_db_old_cron'];?></div>
+                           <div>
+                              <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                                  <?=$lang['clear_old_cron_date'];?>
+                                  <input type="submit" value="<?=$lang['admin_tab_del'];?>" name="clean_db_old_cron">
+                              </form>
+                           </div>
+                        </div>
                       </div>
                     </div>
                     <div id="tabs-8">

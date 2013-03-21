@@ -156,4 +156,7 @@
 
     $lang['admin_tanks_db_up'] = 'Обновить информацию о технике';
     $lang['admin_user_upload_replays'] = 'Загрузка реплеев';
+    $lang['clear_old_cron_date'] = 'Удалить Крон данные старше <input type="text" size="1" name="clear_old_cron_date" value="30" /> дней.';
+    $lang['admin_clean_db_left_players'] = 'Очистить БД от ушедших игроков';
+    $lang['admin_clean_db_old_cron'] = 'Очистить БД от старых Крон данных';
 ?>
