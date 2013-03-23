@@ -22,12 +22,22 @@ $cur_time = time();
 <script type="text/javascript">
     $(document).ready(function() {
         $('.gksubmit').button();
+        $('#province_show').addClass('gk-icon gk-'+$('#select_province').val());
+        $('#select_province').change(function() {
+          $('#province_show').removeClass('gk-normal gk-start gk-gold gk-def').addClass('gk-'+$('#select_province').val());
+        });
     });
 </script>
 <div class="num" align="left">
 <? if($auth->replays) { ?>
 <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
-<input type="file" name="filename">
+<input type="file" name="filename"><span id="province_show"></span>
+<select name="province_type" required id="select_province">
+<option value="def" selected="selected"><?=$lang['gk_def'];?></option>
+<option value="normal"><?=$lang['gk_normal'];?></option>
+<option value="start"><?=$lang['gk_start'];?></option>
+<option value="gold"><?=$lang['gk_gold'];?></option>
+</select>
 <input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
 </form>
 <br />
@@ -43,6 +53,7 @@ $cur_time = time();
 <div align="center">
     <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post">
        <input type="hidden" value="<?=$gk_fresult['time'];?>" name="Array[time]">
+       <input type="hidden" value="<?=$gk_fresult['reduce'];?>" name="Array[reduce]">
         <table id="gk_destroyed" cellspacing="1">
             <thead>
                 <tr>
@@ -61,6 +72,12 @@ $cur_time = time();
                     <? } ?>
             </tbody>
         </table>
+        <p><?=$lang['gk_win_or_lose'];?>
+        <select name="Array[win_or_lose]">
+           <option value="win"><?=$lang['yes'];?></option>
+           <option value="lose"><?=$lang['no'];?></option>
+        </select>
+        </p>
         <p><input type="submit" value="<?=$lang['gk_info_9'];?>" name="gkdestroyed" class="gksubmit"></p>
     </form>
 </div>
@@ -94,7 +111,7 @@ $cur_time = time();
                         $gk_title .= $lang['gk_info_4'].$gk_days.'<br /> ';
                         $gk_title .= $lang['gk_info_5'].$gk_hours.'<br /> ';
                         $gk_title .= $lang['gk_info_6'].$gk_min;
-                        echo '<img src="./images/no2.png" class="bb" title="'.$gk_title.'">';
+                        echo '<span class="hidden">'.$blocked[$name][$column].'</span>','<img src="./images/no2.png" class="bb" title="'.$gk_title.'">';
                      } ?>
                   </td>
                <?php }?>

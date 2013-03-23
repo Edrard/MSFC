@@ -78,7 +78,7 @@ $gk_block['AT-SPG']['1'] = 0;
 
 if(isset($_POST['gkreplay']) and isset($_FILES['filename']['name']) and ($auth->replays)) {
   $gk_time = gk_tanks($gk_block,$db);
-  $gk_fresult = gk_parse_file($_FILES,array_keys($res),$gk_time,$lang,$db);
+  $gk_fresult = gk_parse_file($_FILES,array_keys($res),$gk_time,$lang,$db,$_POST['province_type']);
   unset($gk_time);
 }
 
@@ -87,9 +87,28 @@ if(isset($_POST['gkdestroyed']) && isset($_POST['Array']) && ($auth->replays)){
   $res_check = array_keys($res);
   $gk_time = gk_tanks($gk_block,$db);
 
+  if($_POST['Array']['win_or_lose'] == 'win') {
+      switch ($_POST['Array']['reduce']) {
+          case 'normal':
+              $reduce = 2;
+              break;
+          case 'start':
+              $reduce = 5;
+              break;
+          case 'gold':
+              $reduce = 10;
+              break;
+          case 'def':
+              $reduce = 1;
+              break;
+      }
+    } else {
+      $reduce = 1;
+    }
+
   foreach($_POST['Array']['result'] as $val) {
     if(isset($val['killed']) and in_array($val['name'], $res_check)) {
-        $eb = $_POST['Array']['time'] + (($gk_time[$val['vehicleType']])*60*60);
+        $eb = $_POST['Array']['time'] + (($gk_time[$val['vehicleType']])/$reduce*60*60);
         gk_insert_tanks($val,$eb,$db);  // запись в бд
     }
   }

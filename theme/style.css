@@ -132,3 +132,31 @@ table .tablesorter { margin: 20px 0 0 0; }
 .settingsLine div:last-child {
   min-width: 600px;
 }
+.gk-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/province_types.png);
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-origin: padding-box;
+  background-repeat: no-repeat;
+  background-size: auto auto;
+  display: inline-block;
+  margin: 0px;
+  margin-left: 3px;
+  padding: 0px;
+  vertical-align: middle;
+}
+.gk-gold {
+    background-position: 0 0;
+}
+.gk-start {
+    background-position: -24px 0;
+}
+.gk-normal {
+    background-position: -48px 0;
+}
+.gk-def {
+    background-position: -72px 0;
+}

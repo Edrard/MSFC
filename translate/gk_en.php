@@ -37,4 +37,11 @@
   $lang['gk_info_10'] = 'Vehicle';
   $lang['gk_info_11'] = 'Destroyed?';
   $lang['gk_error_10'] = 'Choose destroyed vehicles:';
+  $lang['yes'] = 'Yes';
+  $lang['no'] = 'No';
+  $lang['gk_def'] = 'Defense of province';
+  $lang['gk_start'] = 'Landing (Attack)';
+  $lang['gk_gold'] = 'Capital (Attack)';
+  $lang['gk_normal'] = 'Normal (Attack)';
+  $lang['gk_win_or_lose'] = 'You won the fight?';
 ?>
