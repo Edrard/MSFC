@@ -716,7 +716,7 @@
                       $tanks_sorted[$tank['name']]['type'] = $tank['type'];
                       $tanks_sorted[$tank['name']]['class'] = $tank['class'];
                       $tanks_sorted[$tank['name']]['nation'] = $tank['nation'];
-                      $tanks_sorted[$tank['name']]['link'] = preg_replace('/http:\/\/worldoftanks.[a-z]*/', '', $tank['link']);
+                      $tanks_sorted[$tank['name']]['link'] = $tank['link'];
                   }
                 }
               }

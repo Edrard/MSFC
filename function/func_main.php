@@ -228,7 +228,7 @@
 
 
         foreach($result['data']['vehicles'] as $veh){
-            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['link'] = 'http://'.$stat_config['gm_url'].$veh['image_url'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['link'] = $veh['image_url'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['lvl'] = $veh['level'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['type'] = $veh['localized_name'];
             $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['name'] = $veh['name'];

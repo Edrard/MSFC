@@ -87,7 +87,7 @@
     if(isset($_GET['multi'])){
         $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
     }
-
+    
     include_once(ROOT_DIR.'/function/tabs.php');
     include_once(ROOT_DIR.'/including/show.php');
     include_once(ROOT_DIR.'/including/gk.php');

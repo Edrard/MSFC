@@ -73,6 +73,8 @@
     и будем выводить строку, или несколько, исходного кода, где произошла ошибка. */
     function myErrorHandler($errno, $errstr, $errfile, $errline)
     {
+        global $config;
+
         if (!(error_reporting() & $errno)) {
             // Этот код ошибки не включен в error_reporting
             return;
@@ -94,6 +96,8 @@
             unset($f);
         }
 
+        if (!isset($config['theme'])) { $config['theme'] = 'ui-lightness'; }
+        echo '<link rel="stylesheet" href="./theme/'.$config['theme'].'/jquery-ui.css" type="text/css" media="print, projection, screen" />';
         show_message($errstr,$errline,$errfile,$code);
 
         /* Не запускаем внутренний обработчик ошибок PHP */
