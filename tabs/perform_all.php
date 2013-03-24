@@ -20,6 +20,7 @@
 $(document).ready(function() {
     $( "#triggerperform" ).buttonset();
     $(".averageshow").hide();
+    $(".fullshow").show();
     $("#change_button_averageshow").click(function() {
       $(".fullshow").hide();
       $(".averageshow").show();

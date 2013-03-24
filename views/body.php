@@ -66,8 +66,10 @@
                 </td>
                 <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
                 <td align="center">
+                    <a href="http://worldoftanks.ru/community/clans/<?=$config['clan']?>" target="_blank">
                     <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
-                    height="64px" width="64px" border="0" title='<?= $new["data"]["description_html"];?>'/> <br>
+                    height="64px" width="64px" border="0" title='<?= $new["data"]["description_html"];?>'/>
+                    </a><br>
                     <?php print_R('<font color="'.$new['data']['color'].'">');
                         print_R('<br>'.$new['data']['name'].'</font>') ?>
                 </td>
