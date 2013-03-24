@@ -96,8 +96,10 @@
             unset($f);
         }
 
-        if (!isset($config['theme'])) { $config['theme'] = 'ui-lightness'; }
-        echo '<link rel="stylesheet" href="./theme/'.$config['theme'].'/jquery-ui.css" type="text/css" media="print, projection, screen" />';
+        if(!headers_sent()) {
+          if (!isset($config['theme'])) { $config['theme'] = 'ui-lightness'; }
+          echo '<link rel="stylesheet" href="./theme/'.$config['theme'].'/jquery-ui.css" type="text/css" media="print, projection, screen" />';
+        }
         show_message($errstr,$errline,$errfile,$code);
 
         /* Не запускаем внутренний обработчик ошибок PHP */
