@@ -673,7 +673,7 @@
                         <div class="settingsLine admin_cdhide">
                            <div><?=$lang['admin_cron_multi'];?></div>
                            <div>
-                              <input <?=($config['cron_multi']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_auth" value="1" size="2" />
+                              <input <?=($config['cron_multi']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_multi" value="1" size="2" />
                            </div>
                         </div>
                         <div class="settingsLine admin_cdhide">
