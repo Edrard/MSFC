@@ -108,7 +108,7 @@ table .tablesorter { margin: 20px 0 0 0; }
   white-space:nowrap;
 }
 .settingsLine {
-  border-bottom: 1px dashed grey;
+  border-bottom: 1px dotted grey;
   padding-right: 10px;
   padding-left: 10px;
   padding-top: 15px;
@@ -127,7 +127,7 @@ table .tablesorter { margin: 20px 0 0 0; }
 }
 .settingsLine div:first-child {
   width: 300px;
-  white-space: pre-line; 
+  white-space: pre-line;
 }
 .settingsLine div:last-child {
   min-width: 600px;
