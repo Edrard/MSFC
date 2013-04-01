@@ -35,8 +35,8 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         foreach($result as $val){
-            if(!isset($roster[$val['name']])){
-                $losed[$val['name']] = $val;   
+            if(!isset($roster[$val['account_id']])){
+                $losed[$val['name']] = $val;
             }
         }
         return $losed;
