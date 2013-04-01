@@ -389,17 +389,8 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                <th colspan="3" align="center"><?=$lang['new_tanks'];?></th>
                             </thead>
                             <tbody>
-                                <?php $sql = "SELECT tank,title,nation,link FROM `tanks`;";
-                                      $q = $db->prepare($sql);
-                                      if ($q->execute() == TRUE) {
-                                         $tanks_list = $q->fetchAll();
-                                      } else {
-                                         print_r($q->errorInfo());
-                                         die();
-                                      };
-                                      if (count($new_tanks) > 0){
-                                      foreach($new_tanks as $val){
-                                        if(isset($roster_id[$val['account_id']]['account_id'])){ ?>
+                                <?php if (count($new_tanks) > 0){
+                                      foreach($new_tanks as $val){ ?>
                                         <tr style="height:31px;">
                                             <td align="left"><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>"
                                                     target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
@@ -407,16 +398,11 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                               <?=$val['tank']; ?>
                                             </td>
                                             <td width="130px" align="right">
-                                              <?php
-                                              foreach ($tanks_list as $tanks_list_key => $wall)
-                                                 if ($wall['title'] == $val['title']) {
-                                                    echo '<img src="http://',$config['gm_url'],'/static/3.6.0.1/common/img/nation/',$wall['nation'],'.png" />';
-                                                    echo '<img style="right: -50px; position: absolute;" src="http://',$config['gm_url'],$wall['link'],'" />';};
-                                              ?>
+                                              <img src="http://<?=$config['gm_url'];?>/static/3.6.0.1/common/img/nation/<?=$val['nation'];?>.png" />
+                                              <img style="right: -50px; position: absolute;" src="http://<?=$config['gm_url'],$val['link'];?>" />
                                             </td>
                                         </tr>
-                                        <?php }
-                                          }}else{ ?>
+                                        <?php } } else { ?>
                                     <tr>
                                         <td colspan="3" align="center"><?=$lang['no_new']; ?></td>
                                     </tr>

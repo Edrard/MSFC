@@ -489,10 +489,12 @@
                                 $tmp = explode('_',$key);
                                 if($tmp[1] == 't'){
                                     if(!isset($vals[$first][$key])){
-                                        $new[] = array('account_id'=> $vals[0]['account_id'],'tank' => $tank_name[($tmp[0])]['tank'],'title'=> $tank_name[($tmp[0])]['title']);
-                                    }   
+                                        $tank_name[($tmp[0])]['account_id'] = $vals[0]['account_id'];
+                                        $new[] = $tank_name[($tmp[0])];
+                                    }
                                     if($vals[$first][$key] == 0 && $val > 0){
-                                        $new[] = array('account_id'=> $vals[0]['account_id'],'tank' => $tank_name[($tmp[0])]['tank'],'title'=> $tank_name[($tmp[0])]['title']);                                    }
+                                        $tank_name[($tmp[0])]['account_id'] = $vals[0]['account_id'];
+                                        $new[] = $tank_name[($tmp[0])];                                    }
                                 }
                             }
                         }
