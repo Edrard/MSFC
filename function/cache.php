@@ -135,7 +135,7 @@
                 $dir = $this->dir;
             }
 
-            $exclude_list = array('.', '..');
+            $exclude_list = array('.', '..', '.htaccess');
             $exclude_last = array();
 
             if(isset($exclude_option))

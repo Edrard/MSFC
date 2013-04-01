@@ -1,3 +1,11 @@
-/cache/
-/function/mysql.config.php
-/tabs/test_tab.php
+#Ignore files in cache folder
+cache/*
+
+#Don't ignore .htaccess in cahce folder
+!cache/.htaccess
+
+#Ignore alternative settings for mysql connect
+function/mysql.config.php
+
+#Ignore tab
+tabs/test_tab.php
