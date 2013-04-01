@@ -113,14 +113,9 @@
     switch ($page) {
 
         case 'login':
-            if ( $auth->isLoggedInAdmin(1) ) { 
-                if (!headers_sent()) {
-                    header ( 'Location: index.php?page=main'.$multi_get );
-                    exit;
-                } else { print_R('<script type="text/javascript">
-                    location.replace("Location: index.php?page=main'.$multi_get.'");
-                    </script>');
-                }
+            if ( $auth->isLoggedInAdmin(1) ) {
+              header ( 'Location: index.php?page=main'.$multi_get );
+              exit;
             }
 
             include_once(LOCAL_DIR.'/views/ad_header.php');
@@ -131,13 +126,8 @@
         case 'main':
 
             if ( !$auth->isLoggedInAdmin(1) ) {
-                if (!headers_sent()) {
-                    header ( 'Location: index.php?error=1'.$multi_get );
-                    exit;
-                } else { print_R('<script type="text/javascript">
-                    location.replace("Location: index.php?error=1'.$multi_get.'");
-                    </script>');
-                }
+              header ( 'Location: index.php?error=1'.$multi_get );
+              exit;
             }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
@@ -151,14 +141,8 @@
 
         case 'install':
             if ( $config['error'] != 2) {
-                if (!headers_sent()) {
-                    header ( 'Location: index.php' );
-                    exit;
-                } else { ?>
-                <script type="text/javascript">
-                    location.replace("index.php");
-                </script>
-                <?      }
+              header ( 'Location: index.php' );
+              exit;
             }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');

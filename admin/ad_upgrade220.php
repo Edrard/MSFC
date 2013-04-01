@@ -162,12 +162,7 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
       Update complete. Redirecting to main page.
    </div>
 <?php
-   if (!headers_sent()) {
-        header ( 'Location: '.ROOT_DIR.'index.php');
-        exit;
-   } else { print_R('<script type="text/javascript">
-        location.replace("./index.php");
-        </script>');
-   }
+    header ( 'Location: '.ROOT_DIR.'index.php');
+    exit;
 ?>
 </div>

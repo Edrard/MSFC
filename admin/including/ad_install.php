@@ -59,14 +59,8 @@
               }
            }
          }
-        if (!headers_sent()) {
-           header ( 'Location: index.php' );
-           exit;
-        } else { ?>
-           <script type="text/javascript">
-             location.replace("index.php");
-           </script>
-<?      }
+         header ( 'Location: index.php' );
+         exit;
     }
     global $oldmodule;
     $sql = "SHOW TABLES;";

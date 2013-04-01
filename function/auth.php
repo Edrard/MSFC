@@ -18,13 +18,8 @@
 <?php
     if (preg_match ("/auth.php/", $_SERVER['PHP_SELF']))
     {
-        if (!headers_sent()) {
-          header ("Location: /index.php");
-          exit;
-        } else { print_R('<script type="text/javascript">
-          location.replace("/index.php");
-          </script>');
-        }
+      header ("Location: /index.php");
+      exit;
     }
 
     /*
@@ -112,13 +107,8 @@
                         if(isset($_GET['multi'])){
                             $multi_get = '?multi='.$_GET['multi'];
                         }
-                        if (!headers_sent()) {
-                          header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
-                          exit;
-                        } else { print_R('<script type="text/javascript">
-                          location.replace("'.$_SERVER['PHP_SELF'].$multi_get.'");
-                          </script>');
-                        }
+                        header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+                        exit;
                     } else {
                         $this->rights = '';
                         $this->replays = 0;
@@ -192,13 +182,8 @@
             if(isset($_GET['multi'])){
                 $multi_get = '?multi='.$_GET['multi'];
             }
-            if (!headers_sent()) {
-              header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
-              exit;
-            } else { print_R('<script type="text/javascript">
-              location.replace("'.$_SERVER['PHP_SELF'].$multi_get.'");
-              </script>');
-            }
+            header('Location: '.$_SERVER['PHP_SELF'].$multi_get);
+            exit;
         }
 
         private function check() {

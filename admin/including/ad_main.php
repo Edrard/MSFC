@@ -27,39 +27,19 @@
     }
     if (isset($_GET['del'])){
         delete_tab($_GET);
-        if (!headers_sent()) {
-            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-2' );
-            exit;
-        } else { ?>
-        <script type="text/javascript">
-            location.replace("index.php?page=main<?=$multi_get;?>#tabs-2");
-        </script>
-        <?      }
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-2' );
+        exit;
     }
     if (isset($_GET['removeclan'])){
         delete_multi($_GET);
-        if (!headers_sent()) {
-            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-8' );
-            exit;
-        } else { ?>
-        <script type="text/javascript">
-            location.replace("index.php?page=main<?=$multi_get;?>#tabs-8");
-        </script>
-        <?      }
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-8' );
+        exit;
     }
     if (isset($_POST['consub']) || isset($_POST['consub_2'])){
         insert_config($_POST);
-        if(isset($_POST['consub'])) {
-          if (!headers_sent()) {
-              header ( 'Location: index.php?page=main'.$multi_get.'#tabs-1' );
-              exit;
-          } else { ?>
-          <script type="text/javascript">
-              location.replace("index.php?page=main<?=$multi_get;?>#tabs-1");
-          </script>
-          <?      }
-        }
-    } 
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-1' );
+        exit;
+    }
     if (isset($_POST['mcsort'])){
         edit_multi_clan($_POST);
     }
@@ -78,14 +58,8 @@
             $message['text'] = $lang['admin_del_user_error'];
             $message['color'] = 'red';    
         }else{
-            if (!headers_sent()) {
-                header ( 'Location: index.php?page=main'.$multi_get.'#tabs-3' );
-                exit;
-            } else { ?>
-            <script type="text/javascript">
-                location.replace("index.php?page=main<?=$multi_get;?>#tabs-3");
-            </script>
-            <?      }
+            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-3' );
+            exit;
         }
     }
     if (isset($_POST['edituser'])){
@@ -216,14 +190,8 @@
     }
     if (isset($_GET['removetoptank'])){
         delete_top_tank($_GET['tank']);
-        if (!headers_sent()) {
-            header ( 'Location: index.php?page=main'.$multi_get.'#tabs-6' );
-            exit;
-        } else { ?>
-        <script type="text/javascript">
-            location.replace("index.php?page=main<?=$multi_get;?>#tabs-6");
-        </script>
-        <?      }
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-6' );
+        exit;
     }
     //Clear cache
     if (isset($_POST['admclearcache'])){

@@ -261,28 +261,14 @@
                                 if(isset($_GET['multi'])){
                                     $multi_get = '&multi='.$_GET['multi'];
                                 }
-                                if (!headers_sent()) {
-                                    header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
-                                    exit;
-                                } else { print_R('<script type="text/javascript">
-                                    location.replace("Location: index.php?page=main#tabs-8'.$multi_get.'");
-                                    </script>');
-                                }
                             }
                         }
                     }
                 }
             }
         }
-
-        if (!headers_sent()) {
-            header ( 'Location: index.php?page=main#tabs-8' );
-            exit;
-        } else { ?>
-        <script type="text/javascript">
-            location.replace("index.php?page=main#tabs-8");
-        </script>
-        <?      }
+        header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
+        exit;
     }
 
 
