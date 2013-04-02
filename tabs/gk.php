@@ -120,7 +120,7 @@ $cur_time = time();
       </tbody>
       </table>
       <? } else {
-            echo $lang['gk_error_9'];
+            echo '<div align="center" class="ui-widget ui-widget-content ui-corner-all fixed-menu">',$lang['gk_error_9'],'<br /><br />',$lang['gk_tip'],'</div>';
          } ?>
  </div>
 

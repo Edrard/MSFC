@@ -33,4 +33,7 @@
     $lang['activity_main_progress'] = 'Main progress';
     $lang['activity_average_progress'] = 'Average progress';
     $lang['activity_er_progress'] = 'Efficiency rating for the period';
+    $lang['activity_tip'] = 'Data about activity collected by uploading replays (not even full - no need to wait until the end of the battle).<br /> <br />
+      All players of Clan, who was in replay, for any of the sides, will get one fight to activity. <br /> <br />
+      Olny authorized users can upload replays.';
 ?>

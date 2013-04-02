@@ -160,3 +160,10 @@ table .tablesorter { margin: 20px 0 0 0; }
 .gk-def {
     background-position: -72px 0;
 }
+.fixed-menu {
+  text-align: left;
+  width: 400px;
+  font-size: 12px;
+  padding: 10px;
+  margin:10px;
+}

@@ -77,6 +77,7 @@
               a_cat_2 :  1,
               a_cat_3 :  1,
               a_cat_4 :  1,
+              default :  1,
               db_pref : '<?php echo $db->prefix; ?>',
               key     : '<?=$key;?>'
             },
@@ -154,7 +155,7 @@
     <?php } ?>
     <a href="#tabs-<?php echo $key; ?>" id="a_show_activity"><?=$lang['select_show'];?></a>
     <br />
-    <div id="activity_settings_m" style="text-align: left; width: 400px;" align="center">
+    <div id="activity_settings_m" align="center" class="ui-widget ui-widget-content ui-corner-all fixed-menu">
     <div align="center"><?=$lang['activity_6'];?></div>
     <input type="checkbox" name="a_cat_1" id="a_cat_1" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_1'];?><br />
     <input type="checkbox" name="a_cat_2" id="a_cat_2" style="margin:0px; padding:0px;" checked="checked" /> - <?=$lang['a_cat_2'];?><br />

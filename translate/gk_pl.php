@@ -44,4 +44,5 @@
   $lang['gk_gold'] = 'Capital (Attack)';
   $lang['gk_normal'] = 'Normal (Attack)';
   $lang['gk_win_or_lose'] = 'You won the fight?';
+  $lang['gk_tip'] = 'Data about blocked vehicles for fights on Global Map, collected by uploading replays. <br /><br />You must upload only full replays (you can\'t leave fight until it ends).<br /> <br />Olny authorized users can upload replays.';
 ?>

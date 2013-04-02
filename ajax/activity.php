@@ -180,8 +180,14 @@
 */
     //foreach
     unset($t,$cache_activity);
+
+    if(isset($_POST['default']) and $empty == 0) {
+      echo'<div align="center" class="ui-widget ui-widget-content ui-corner-all fixed-menu">',$lang['activity_tip'],'</div>';
+      $a_all = 0;
+    }
+
+    if($empty != 0 or ($a_all == 1)) {
 ?>
-<?php if($empty != 0 or ($a_all == 1)) { ?>
 <script type="text/javascript">
     $(document).ready(function()
     {
@@ -222,5 +228,5 @@
 </table>
 <?php } else {
  echo $lang['activity_error_2'];
- } 
+ }
 unset($activity,$activity_total);?>
