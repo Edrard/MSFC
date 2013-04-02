@@ -68,7 +68,7 @@
                 <td align="center">
                     <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
                     <img class="bb" src="<?php echo $config['clan_img'],$config['clan'];?>/emblem_64x64.png"
-                    style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title="<?=$new['data']['description_html'];?>" /></a>
+                    style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title='<?=$new["data"]["description_html"];?>' /></a>
                     <br>
                     <font color="<?=$new['data']['color'];?>">
                         <br><?=$new['data']['name'];?>
