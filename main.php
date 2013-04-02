@@ -85,7 +85,11 @@
 
     $multi_url = '';
     if(isset($_GET['multi'])){
-        $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
+      $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
+      $multi_url_param = '&multi='.str_replace('_','',$_GET['multi']);
+    } else {
+      $multi_url = '';
+      $multi_url_param = '';
     }
 
     include_once(ROOT_DIR.'/function/tabs.php');

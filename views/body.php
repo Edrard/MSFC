@@ -43,9 +43,9 @@
                     });
                 </script>
                 <?php
-                    $multi_get = '';    
+                    $multi_get = '';
                     if($val['main'] != 1){
-                        $multi_get = '?multi='.str_replace('_','',$val['prefix']);   
+                        $multi_get = '?multi='.str_replace('_','',$val['prefix']);
                     }
                 ?>                                                             
                 <a style="margin: 0 5px;" id="<?=$val['prefix'].'1';?>" href="./index.php<?=$multi_get?>">
@@ -67,21 +67,16 @@
                 <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
                 <td align="center">
                     <a href="http://worldoftanks.ru/community/clans/<?=$config['clan']?>" target="_blank">
-                    <img class="bb" src="<?php print_R($config['clan_img'].$config['clan']);?>/emblem_64x64.png"
+                    <img class="bb" src="<?php echo $config['clan_img'],$config['clan'];?>/emblem_64x64.png"
                     height="64px" width="64px" border="0" title='<?= $new["data"]["description_html"];?>'/>
                     </a><br>
-                    <?php print_R('<font color="'.$new['data']['color'].'">');
-                        print_R('<br>'.$new['data']['name'].'</font>') ?>
+                    <font color="<?=$new['data']['color'];?>">
+                        <br><?=$new['data']['name'];?>
+                    </font>
                 </td>
                 <td width="300px"><img src="./images/logo_small.png" /></td>
                 <td width="420px"><?php if($config['lang'] == 'ru' && $config['news'] == '1'){ ?>
-                        <?php
-                            $multi_get = '';    
-                            if(isset($_GET['multi'])){
-                                $multi_get = '?multi='.$_GET['multi'];   
-                            }
-                        ?> 
-                        <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
+                        <iframe src="./news.php<?=$multi_url;?>" frameborder="0" scrolling="no" width="100%" align="middle" height="50px"></iframe>
                     <?php } ?></td>
                 <td align="right" width="180px">
                     <?php if($logged > 0){ ?>
@@ -93,21 +88,9 @@
                                 <tr>
                                     <td>
                                         <? if($logged == 2) { ?>
-                                            <?php
-                                                $multi_get = '';
-                                                if(isset($_GET['multi'])){
-                                                    $multi_get = '?multi='.str_replace('_','',$_GET['multi']);
-                                                }
-                                            ?> 
-                                            <a href="./admin/index.php<?=$multi_get?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
-                                            <? } ?>
-                                        <?php    
-                                            $multi_get = '';
-                                            if(isset($_GET['multi'])){
-                                                $multi_get = '&multi='.str_replace('_','',$_GET['multi']);
-                                            }
-                                        ?>     
-                                        <a href="./main.php?logout=true<?=$multi_get?>"><?=$lang['logout'];?></a>
+                                            <a href="./admin/index.php<?=$multi_url;?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
+                                        <? } ?>
+                                        <a href="./main.php?logout=true<?=$multi_url_param;?>"><?=$lang['logout'];?></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -131,7 +114,7 @@
                                     if(is_numeric($key)){ ?>
                                     <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
                                     <?php }else{  ?>
-                                    <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="<?php echo $key; if(isset($_GET['multi'])){if(substr_count($key, '?') > 0){echo '&multi='.$_GET['multi'];}else{echo '?multi='.$_GET['multi'];}}?>"><?=$link; ?></a></li>
+                                    <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="<?php echo $key; if(substr_count($key, '?') > 0){echo $multi_url_param;}else{echo $multi_url;}?>"><?=$link; ?></a></li>
                                     <?php  }
                                     $i++;
                                 }  
