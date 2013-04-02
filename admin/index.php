@@ -150,11 +150,7 @@
             include_once(LOCAL_DIR.'/including/ad_install.php');
             //Viewing
             include_once(LOCAL_DIR.'/views/ad_header.php');
-            if ($oldmodule) {
-               include_once(LOCAL_DIR.'/ad_upgrade220.php');
-            } else {
-               include_once(LOCAL_DIR.'/views/ad_install.php');
-            }
+            include_once(LOCAL_DIR.'/views/ad_install.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
             break;
     }

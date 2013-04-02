@@ -95,7 +95,7 @@
                 }
             });
             $(elem).parent('li').addClass("ui-state-active");
-            if(elem.id == 'out'){ window.location = "../index.php"; }
+            if(elem.id == 'out'){ window.location = "../index.php?<?=$multi_get;?>"; }
             if(elem.id == 'out2'){ window.location = "index.php?logout=true<?=$multi_get;?>"; }
         };
         function magic3(){
