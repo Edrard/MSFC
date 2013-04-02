@@ -1,29 +1,41 @@
 <div align="center">
- <?php $avt_memb = $new['data']['members_count'];
-       $avt = rating($res, $lang);
-       $avtdmg = $avt['rat'];
-       $darkgreen = '<span style="color:DarkGreen;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/up.png">&nbsp;';
-       $darkred = '<span style="color:DarkRed;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/down.png">&nbsp;';
+  <?php
+    $darkgreen = '<span style="color:DarkGreen;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/up.png">&nbsp;';
+    $darkred = '<span style="color:DarkRed;"><img style="vertical-align: -5%;" width="11" height="11" src="./images/down.png">&nbsp;';
 
-   foreach($res as $name => $val){
-    $avt_eff[$eff_rating[$name]['eff']] = $name;
-    $avt_games[] = $val['overall'][$lang['total']];
-    $avt_win[] = $val['overall'][$lang['victories']];
-    $avt_lose[] = $val['overall'][$lang['defeats']];
-    $avt_surv[] = $val['overall'][$lang['alive']];
-    $avt_seek[] = $val['perform'][$lang['spotted']];
-    $avt_dest[] = $val['perform'][$lang['destroyed']];
-    $avt_pers[] = $val['perform'][$lang['hit_ratio']];
-    $avt_dama[] = $val['perform'][$lang['damage']];
-    $avt_capt[] = $val['perform'][$lang['capture']];
-    $avt_defe[] = $val['perform'][$lang['defend']];
-    $avt_summ[] = $val['exp'][$lang['total_exp']];
-    $avt_max[] = $val['exp'][$lang['exp_max']];
- };
- krsort($avt_eff);
- $avt_eff = array_slice($avt_eff, 0, 5, true);
- unset($avt);
-?>
+    $avt = rating($res, $lang);
+    $avtdmg = $avt['rat'];
+
+    foreach($res as $name => $val){
+      $avt_eff[$eff_rating[$name]['eff']] = $name;
+      $a1[] = $val['overall'][$lang['total']];
+      $a2[] = $val['overall'][$lang['victories']];
+      $a3[] = $val['overall'][$lang['defeats']];
+      $a4[] = $val['overall'][$lang['alive']];
+      $a5[] = $val['perform'][$lang['spotted']];
+      $a6[] = $val['perform'][$lang['destroyed']];
+      $a7[] = $val['perform'][$lang['hit_ratio']];
+      $a8[] = $val['perform'][$lang['damage']];
+      $a9[] = $val['perform'][$lang['capture']];
+      $aa[] = $val['perform'][$lang['defend']];
+      $ab[] = $val['exp'][$lang['total_exp']];
+      $avt_mexp[] = $val['exp'][$lang['exp_max']];
+    }
+    $avt_games = array_sum($a1);
+    $avt_win   = array_sum($a2);
+    $avt_lose  = array_sum($a3);
+    $avt_alive = array_sum($a4);
+    $avt_spot  = array_sum($a5);
+    $avt_dest  = array_sum($a6);
+    $avt_pers  = array_sum($a7);
+    $avt_dmg   = array_sum($a8);
+    $avt_cap   = array_sum($a9);
+    $avt_def   = array_sum($aa);
+    $avt_texp  = array_sum($ab);
+
+    krsort($avt_eff);
+    $avt_eff = array_slice($avt_eff, 0, 5, true);
+  ?>
 
 <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
    <tbody>
@@ -111,19 +123,16 @@
 <?php
 $rowss=2;
 if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ 
-  $h24total = $h24win = $h24lose = $h24alive = $h24spot = $h24des = $h24dmg = $h24cap = $h24def = $h24exp = 0;
-  foreach($main_progress['main'] as $name => $vals){
-    $h24total += $vals['total'];
-    $h24win   += $vals['win'];
-    $h24lose  += $vals['lose'];
-    $h24alive += $vals['alive'];
-    $h24spot  += $vals['spot'];
-    $h24des   += $vals['des'];
-    $h24dmg   += $vals['dmg'];
-    $h24cap   += $vals['cap'];
-    $h24def   += $vals['def'];
-    $h24exp   += $vals['exp'];
-  };
+  $h24total = $main_progress['total']['total'];
+  $h24win   = $main_progress['total']['win'];
+  $h24lose  = $main_progress['total']['lose'];
+  $h24alive = $main_progress['total']['alive'];
+  $h24spot  = $main_progress['total']['spot'];
+  $h24des   = $main_progress['total']['des'];
+  $h24dmg   = $main_progress['total']['dmg'];
+  $h24cap   = $main_progress['total']['cap'];
+  $h24def   = $main_progress['total']['def'];
+  $h24exp   = $main_progress['total']['exp'];
   $rowss=3;
 };
 ?>
@@ -148,13 +157,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
   <tbody>
     <tr>
      <td align="left"><span class="hidden">1</span><?=$lang['roster']; ?>:</td>
-     <td colspan="<?=($rowss-1); ?>" align="center"><strong><?=$avt_memb ?></strong></td>
+     <td colspan="<?=($rowss-1); ?>" align="center"><strong><?=$new['data']['members_count']; ?></strong></td>
      <td align="left"><?=$lang['spo']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24spot.' (';
+           echo $h24spot,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24spot/$h24total,2) >= round(array_sum($avt_seek)/array_sum($avt_games),2)) {
+             if (round($h24spot/$h24total,2) >= round($avt_spot/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -165,12 +174,12 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                };?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_seek) ?> (<?php echo round(array_sum($avt_seek)/array_sum($avt_games),2) ?>)</td>
+     <td><?=$avt_spot; ?> (<?php echo round($avt_spot/$avt_games,2) ?>)</td>
      <td align="left"><?=$lang['total_exp']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?=$h24exp;?></td>
      <? } ?>
-     <td><?php echo array_sum($avt_summ) ?></td>
+     <td><?=$avt_texp; ?></td>
     </tr>
 
     <tr>
@@ -178,13 +187,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <?php if ($rowss<>'2') { ?>
      <td><?=$h24total;?></td>
      <? } ?>
-     <td><?php echo array_sum($avt_games) ?></td>
+     <td><?=$avt_games; ?></td>
      <td align="left"><?=$lang['destroyed']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24des.' (';
+           echo $h24des,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24des/$h24total,2) >= round(array_sum($avt_dest)/array_sum($avt_games),2)) {
+             if (round($h24des/$h24total,2) >= round($avt_dest/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -195,13 +204,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_dest) ?> (<?php echo round(array_sum($avt_dest)/array_sum($avt_games),2) ?>)</td>
+     <td><?=$avt_dest; ?> (<?php echo round($avt_dest/$avt_games,2) ?>)</td>
      <td align="left"><?=$lang['averag_exp']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24exp.' (';
+           echo $h24exp,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24exp/$h24total,2) >= round(array_sum($avt_summ)/array_sum($avt_games),2)) {
+             if (round($h24exp/$h24total,2) >= round($avt_texp/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -212,16 +221,16 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo round(array_sum($avt_summ)/array_sum($avt_games),2) ?></td>
+     <td><?php echo round($avt_texp/$avt_games,2) ?></td>
     </tr>
 
     <tr>
      <td align="left"><span class="hidden">3</span><?=$lang['victories']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24win.' (';
+           echo $h24win,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24win/$h24total*100,2) >= round(array_sum($avt_win)/array_sum($avt_games)*100,2)) {
+             if (round($h24win/$h24total*100,2) >= round($avt_win/$avt_games*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -232,20 +241,20 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_win) ?> (<?php echo round(array_sum($avt_win)/array_sum($avt_games)*100,2) ?>%)</td>
+     <td><?=$avt_win; ?> (<?php echo round($avt_win/$avt_games*100,2) ?>%)</td>
      <td align="left"><?=$lang['averag_hit_ratio']; ?>:</td>
-     <td colspan="<?=($rowss-1); ?>" align="center"><?php echo round(array_sum($avt_pers)/$avt_memb,2) ?>%</td>
+     <td colspan="<?=($rowss-1); ?>" align="center"><?php echo round($avt_pers/$new['data']['members_count'],2) ?>%</td>
      <td align="left"><?=$lang['max_exp']; ?>:</td>
-     <td colspan="<?=($rowss-1); ?>" align="center"><?php echo max($avt_max) ?></td>
+     <td colspan="<?=($rowss-1); ?>" align="center"><?php echo max($avt_mexp) ?></td>
     </tr>
 
     <tr>
      <td align="left"><span class="hidden">4</span><?=$lang['defeats']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24lose.' (';
+           echo $h24lose,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24lose/$h24total*100,2) >= round(array_sum($avt_lose)/array_sum($avt_games)*100,2)) {
+             if (round($h24lose/$h24total*100,2) >= round($avt_lose/$avt_games*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -256,13 +265,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_lose) ?> (<?php echo round(array_sum($avt_lose)/array_sum($avt_games)*100,2) ?>%)</td>
+     <td><?=$avt_lose; ?> (<?php echo round($avt_lose/$avt_games*100,2) ?>%)</td>
      <td align="left"><?=$lang['damage']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24dmg.' (';
+           echo $h24dmg,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24dmg/$h24total,2) >= round(array_sum($avt_dama)/array_sum($avt_games),2)) {
+             if (round($h24dmg/$h24total,2) >= round($avt_dmg/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -273,16 +282,17 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_dama) ?> (<?php echo round(array_sum($avt_dama)/array_sum($avt_games),2) ?>)</td>
+     <td><?=$avt_dmg; ?> (<?php echo round($avt_dmg/$avt_games,2) ?>)</td>
      <td colspan="<?=$rowss; ?>"></td>
     </tr>
     <tr>
      <td align="left"><span class="hidden">5</span><?=$lang['dead_heat']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo(($h24total-$h24win)-$h24lose).' (';
+           echo ($h24total-$h24win-$h24lose),' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round((($h24total-$h24win)-$h24lose)/$h24total*100,2) >= round(((array_sum($avt_games)-array_sum($avt_win))-array_sum($avt_lose))/array_sum($avt_games)*100,2)) {                 echo $darkgreen;
+             if (round((($h24total-$h24win)-$h24lose)/$h24total*100,2) >= round(($avt_games-$avt_win-$avt_lose)/$avt_games*100,2)) {
+                 echo $darkgreen;
                  } else {
                  echo $darkred;
                  };
@@ -292,13 +302,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo ((array_sum($avt_games)-array_sum($avt_win))-array_sum($avt_lose)) ?> (<?php echo round(((array_sum($avt_games)-array_sum($avt_win))-array_sum($avt_lose))/array_sum($avt_games)*100,2) ?>%)</td>
+     <td><?php echo ($avt_games-$avt_win-$avt_lose) ?> (<?php echo round(($avt_games-$avt_win-$avt_lose)/$avt_games*100,2) ?>%)</td>
      <td align="left"><?=$lang['capture']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24cap.' (';
+           echo $h24cap,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24cap/$h24total,2) >= round(array_sum($avt_capt)/array_sum($avt_games),2)) {
+             if (round($h24cap/$h24total,2) >= round($avt_cap/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -309,7 +319,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_capt) ?> (<?php echo round(array_sum($avt_capt)/array_sum($avt_games),2) ?>)</td>
+     <td><?=$avt_cap; ?> (<?php echo round($avt_cap/$avt_games,2) ?>)</td>
      <td colspan="<?=$rowss; ?>"></td>
     </tr>
 
@@ -317,9 +327,9 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td align="left"><span class="hidden">6</span><?=$lang['averag_surv']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24alive.' (';
+           echo $h24alive,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24alive/$h24total*100,2) >= round(array_sum($avt_surv)/array_sum($avt_games)*100,2)) {
+             if (round($h24alive/$h24total*100,2) >= round($avt_alive/$avt_games*100,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -330,13 +340,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_surv) ?> (<?php echo round(array_sum($avt_surv)/array_sum($avt_games)*100,2) ?>%)</td>
+     <td><?=$avt_alive; ?> (<?php echo round($avt_alive/$avt_games*100,2) ?>%)</td>
      <td align="left"><?=$lang['defend']; ?>:</td>
      <?php if ($rowss<>'2') { ?>
      <td><?php
-           echo $h24def.' (';
+           echo $h24def,' (';
            if(($h24total<>0) && ($avt_games<>0)){
-             if (round($h24def/$h24total,2) >= round(array_sum($avt_defe)/array_sum($avt_games),2)) {
+             if (round($h24def/$h24total,2) >= round($avt_def/$avt_games,2)) {
                  echo $darkgreen;
                  } else {
                  echo $darkred;
@@ -347,7 +357,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                  echo "0";
                }; ?>)</td>
          <? } ?>
-     <td><?php echo array_sum($avt_defe) ?> (<?php echo round(array_sum($avt_defe)/array_sum($avt_games),2) ?>)</td>
+     <td><?=$avt_def; ?> (<?php echo round($avt_def/$avt_games,2) ?>)</td>
      <td colspan="<?=$rowss; ?>"></td>
     </tr>
    </tbody>
@@ -368,7 +378,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                 <?php if (count($we_loosed) > 0){
                                          foreach($we_loosed as $val){ ?>
                                         <tr>
-                                            <td align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
+                                            <td align="left"><a href="<?php echo $config['base'],$val['name'],'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
                                             <td align="center"><?=$val['role'];?></td>
                                             <td align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
@@ -392,14 +402,14 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                 <?php if (count($new_tanks) > 0){
                                       foreach($new_tanks as $val){ ?>
                                         <tr style="height:31px;">
-                                            <td align="left"><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>"
+                                            <td align="left"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>"
                                                     target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
                                             <td align="right">
                                               <?=$val['tank']; ?>
                                             </td>
                                             <td width="130px" align="right">
-                                              <img src="http://<?=$config['gm_url'];?>/static/3.6.0.1/common/img/nation/<?=$val['nation'];?>.png" />
-                                              <img style="right: -50px; position: absolute;" src="http://<?=$config['gm_url'],$val['link'];?>" />
+                                              <?php echo '<img src="http://',$config['gm_url'],'/static/3.6.0.1/common/img/nation/',$val['nation'],'.png" />',
+                                                         '<img style="right: -50px; position: absolute;" src="http://',$config['gm_url'],$val['link'],'" />'; ?>
                                             </td>
                                         </tr>
                                         <?php } } else { ?>
@@ -421,7 +431,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                 <?php if (count($new_players) > 0){
                                          foreach($new_players as $name => $val){ ?>
                                         <tr>
-                                            <td align="left"><a href="<?php echo $config['base'].$val['name'].'/'; ?>"
+                                            <td align="left"><a href="<?php echo $config['base'],$val['name'],'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
                                             <td align="center"><?=$lang[$val['role']];?></td>
                                             <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
@@ -441,4 +451,4 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
         </table>
         <? };?>
 </div>
-<?php unset($avt_memb,$avtdmg,$darkgreen,$darkred,$avt_eff,$avt_games,$avt_win,$avt_lose,$avt_surv,$avt_seek,$avt_dest,$avt_pers,$avt_dama,$avt_capt,$avt_defe,$avt_summ,$avt_max,$rowss); ?>
+<?php unset($avtdmg,$avt_eff,$avt,$a1,$a2,$a3,$a4,$a5,$a6,$a7,$a8,$a9,$aa,$ab,$avt_mexp); ?>

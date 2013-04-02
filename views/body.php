@@ -66,10 +66,10 @@
                 </td>
                 <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
                 <td align="center">
-                    <a href="http://worldoftanks.ru/community/clans/<?=$config['clan']?>" target="_blank">
+                    <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
                     <img class="bb" src="<?php echo $config['clan_img'],$config['clan'];?>/emblem_64x64.png"
-                    height="64px" width="64px" border="0" title='<?= $new["data"]["description_html"];?>'/>
-                    </a><br>
+                    style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title="<?=$new['data']['description_html'];?>" /></a>
+                    <br>
                     <font color="<?=$new['data']['color'];?>">
                         <br><?=$new['data']['name'];?>
                     </font>
@@ -158,8 +158,8 @@
                 <td valign="top" colspan="6">
                     <div align="center" class="ui-widget ui-widget-content ui-corner-bottom">
                         © 2011-<?=date('Y') ?> <a href="http://wot-news.com/">Wot-news.com</a> <?=$lang['version']; ?> <?php echo VER; ?><br>
-                        <?php $end_time = microtime(true); echo $lang['ex_time'].' - '.round($end_time - $begin_time,4).' '.$lang['sec']; ?><br>
-                        <?php if(isset($memory_usage)){echo $lang['memory'].' '.$memory_usage;} ?>
+                        <?php $end_time = microtime(true); echo $lang['ex_time'],' - ',round($end_time - $begin_time,4),' ',$lang['sec']; ?><br>
+                        <?php if(isset($memory_usage)){echo $lang['memory'],' ',$memory_usage;} ?>
                     </div>
                 </td>
             </tr>

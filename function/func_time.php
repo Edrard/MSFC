@@ -75,6 +75,8 @@
         global $db;
         $diff = array();
         $diff['main'] = array();
+        $diff['total'] = array();
+        $diff['average'] = array();
         if($end == -1){
             $end = now();
         }
@@ -136,7 +138,9 @@
                     $diff['main'][$vals['name']]['alivep'] = round($f['alive'] - $s['alive'],4);       
                     foreach($vals as $key => $val){
                         if(!is_numeric($key) && $key != 'account_id' && $key != 'name' && $key != 'role' && $key != 'server' && $key != 'reg' && $key != 'local' && $key != 'member_since' && $key != 'up'){
-                            $diff['main'][$vals['name']][$key] = $val - $dfirst_new[$vals['name']][$key];    
+                            $diff['main'][$vals['name']][$key] = $val - $dfirst_new[$vals['name']][$key];
+                            if (!isset($diff['total'][$key])) $diff['total'][$key] = 0;
+                            $diff['total'][$key] += $diff['main'][$vals['name']][$key];
                         }
                     }
                     if(($vals['total'] - $dfirst_new[$vals['name']]['total']) != 0){
