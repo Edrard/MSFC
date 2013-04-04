@@ -48,11 +48,10 @@
         }
     }
 
-    /* Защита от дураков, удаливших табы, но не удаливших запись о них из БД */
     foreach($tabs as $key => $val) {
       foreach($val as $link => $file) {
         if(is_numeric($key)) {
-          if(!file_exists(ROOT_DIR.'/tabs/'.$file) and !is_array($file)) {
+          if(!is_array($file) and !file_exists(ROOT_DIR.'/tabs/'.$file)) {
             show_message(sprintf($lang['tab_del'],$link,$file));
             unset($tabs[$key]);
           }
