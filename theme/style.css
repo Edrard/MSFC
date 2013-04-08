@@ -86,7 +86,7 @@ label.error {
   font-size: 0.8em !important;
 }
 
-html, body {margin:0; padding:0; width:100%; height:100%;}
+html, body {margin:0; padding:0; width:100%; min-height:100%;}
 img { border:0px; }
 
 div { padding: 2px; }
@@ -108,7 +108,7 @@ table .tablesorter { margin: 20px 0 0 0; }
   white-space:nowrap;
 }
 .settingsLine {
-  border-bottom: 1px dotted grey;
+  border-bottom: 1px dashed grey;
   padding-right: 10px;
   padding-left: 10px;
   padding-top: 15px;
@@ -127,7 +127,7 @@ table .tablesorter { margin: 20px 0 0 0; }
 }
 .settingsLine div:first-child {
   width: 300px;
-  white-space: pre-line;
+  white-space: pre-line; 
 }
 .settingsLine div:last-child {
   min-width: 600px;
@@ -159,11 +159,4 @@ table .tablesorter { margin: 20px 0 0 0; }
 }
 .gk-def {
     background-position: -72px 0;
-}
-.fixed-menu {
-  text-align: left;
-  width: 400px;
-  font-size: 12px;
-  padding: 10px;
-  margin:10px;
 }

@@ -70,6 +70,7 @@
 
               $( "#login_dialog" ).dialog({
                   title: "<?php echo $lang['login']; ?>",
+                  appendTo: "#allcontainer",
                   autoOpen: false,
                   draggable: false,
                   resizable: false,
