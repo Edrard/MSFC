@@ -86,10 +86,10 @@ label.error {
   font-size: 0.8em !important;
 }
 
-html, body {margin:0; padding:0; width:100%; min-height:100%;}
+html, body {margin:0; padding:0; width:100%; height:100%;}
 img { border:0px; }
 
-div { padding: 2px; }
+div { padding: 2px 0 2px 0; }
 table .tablesorter { margin: 20px 0 0 0; }
 .ui-widget { font-size: 0.9em !important; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-size: 0.9em !important; }
