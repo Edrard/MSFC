@@ -20,7 +20,7 @@
     function get_clan_province($config,$id)
     {
         //echo $search;
-        $url = "http://".$config['gm_url']."/uc/clans/".$id."/provinces/?type=table" ;
+        $url = "http://".$config['gm_url']."/uc/clans/".$id."/provinces/list/" ;
         $ch = curl_init();
         $timeout = 10;
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -45,7 +45,7 @@
     function get_clan_attack($config,$id)
     {
         //echo $search;
-        $url = "http://".$config['gm_url']."/uc/clans/".$id."/battles/?type=table" ;
+        $url = "http://".$config['gm_url']."/uc/clans/".$id."/battles/list/" ;
         $ch = curl_init();
         $timeout = 10;
         curl_setopt($ch, CURLOPT_URL, $url);

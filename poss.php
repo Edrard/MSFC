@@ -79,11 +79,12 @@
                 <th><?=$lang['owned']; ?></th>
 
             </tr> 
-        </thead> 
+        </thead>
         <tbody>
             <?php if (isset($poss['request_data'])) {
                     $total = 0;
-                    foreach($poss['request_data']['items']  as $val){ 
+                    foreach($poss['request_data']['items']  as $val){
+                        /*
                         if(strlen($val['attacked']) > 0){
                             $attack = '<img src="./images/attacked.png">';
                         }elseif(strlen($val['combats_running']) > 0){
@@ -91,11 +92,12 @@
                         }else{
                             $attack = '';
                         }
+                        */
                         $total += $val['revenue'];
             ?>
                 <tr>
                     <td><img src="./images/<?php echo $val['type']; ?>.png"></td>
-                    <td><a href="<?php echo $config['clan_link']; ?>maps/?province=<?php echo $val['id']; ?>" target="_blank"><?php echo $val['name'].'</a> '.$attack; ?></td>
+                    <td><a href="<?php echo $config['clan_link']; ?>maps/?province=<?php echo $val['id']; ?>" target="_blank"><?php echo $val['name']; ?></a></td>
                     <td><?php echo $val['arena_name']; ?></td>
                     <td align="center"><?php echo date('H:i',$val['prime_time']); ?></td>
                     <td align="center" style="color: #ba904d;"><?php echo $val['revenue']; ?> <img src="./images/currency-gold.png"></td>
