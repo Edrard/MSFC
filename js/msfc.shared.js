@@ -1,6 +1,6 @@
 $.extend($.tablesorter.defaults, {
     headerTemplate : '<div style="padding: 0px; padding-right:12px;">{content}</div>{icon}',
-    widgets : ['uitheme', 'zebra'],
+    widgets : ['uitheme', 'zebra', 'stickyHeaders'],
     widthFixed : false,
     sortList : [[0,0]],
     theme : 'jui'

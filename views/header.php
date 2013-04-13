@@ -153,6 +153,7 @@
           return typeof(input)=='number';
         };
         function check_Width(input, element) {
+          return;
           if(input.length && element.length) {
               var windowWidth = $(window).width();
               var menuWidth =   $("td#tohide2").width();
