@@ -341,7 +341,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                         <tr>
                                             <td align="left"><a href="<?php echo $config['base'],$val['name'],'/'; ?>"
                                                     target="_blank"><?=$val['name'];?></a></td>
-                                            <td align="center"><?=$val['role'];?></td>
+                                            <td align="center"><?=$lang[$val['role']];?></td>
                                             <td align="center"><?php echo floor(($val['up'] - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
                                             <td align="center"><span class="hidden"><?=$val['up'];?></span><?php echo date('d.m.Y',$val['up']);?></td>
                                         </tr>
@@ -396,7 +396,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                                     target="_blank"><?=$val['name'];?></a></td>
                                             <td align="center"><?=$lang[$val['role']];?></td>
                                             <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['member_since']), date("d", $val['member_since']), date("Y", $val['member_since'])))/(3600*24)),$lang['days'];?></td>
-                                            <td align="center"><?php echo date('d.m.Y',$val['member_since']);?></td>
+                                            <td align="center"><span class="hidden"><?=$val['member_since'];?></span><?php echo date('d.m.Y',$val['member_since']);?></td>
                                         </tr>
                                         <?php }
                                           }else{ ?>
