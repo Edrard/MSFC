@@ -157,7 +157,7 @@
             <tr>
                 <td valign="top" colspan="6">
                     <div align="center" class="ui-widget ui-widget-content ui-corner-bottom">
-                        © 2011-<?=date('Y') ?> <a href="http://wot-news.com/">Wot-news.com</a> <?=$lang['version']; ?> <?php echo VER; ?><br>
+                        © 2011-<?=date('Y') ?> <a href="http://wot-news.com/" target="_blank">Wot-news.com</a> <?=$lang['version']; ?> <?php echo VER; ?><br>
                         <?php $end_time = microtime(true); echo $lang['ex_time'],' - ',round($end_time - $begin_time,4),' ',$lang['sec']; ?><br>
                         <?php if(isset($memory_usage)){echo $lang['memory'],' ',$memory_usage;} ?>
                     </div>
