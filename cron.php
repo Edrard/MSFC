@@ -114,7 +114,6 @@
         if(($user) && ($pass)){
             $auth->login($user, $pass); // This order: User/Email Password True/False (if you want to use email as auth
         }
-
         $logged = 0;
         if($auth->isLoggedIn(1)){
             $logged = 1;
@@ -138,7 +137,7 @@
                 $new['status_code'] = 'ERROR';
             }
             if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-                $cache->clear('get_last_roster_'.$config['clan'], $new);
+                $cache->clear('get_last_roster_'.$config['clan']);
                 $cache->set('get_last_roster_'.$config['clan'], $new);
                 if($log == 1){
                     fwrite($fh, $date.": Used roster from WG\n");
