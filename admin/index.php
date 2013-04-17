@@ -37,9 +37,6 @@
         include_once(ROOT_DIR.'/function/cache.php');
         include_once(ROOT_DIR.'/function/mysql.php');
 
-        //Updater
-        include_once(ROOT_DIR.'/including/updater.php');
-
         include_once(ROOT_DIR.'/function/func.php');  
         include_once(ROOT_DIR.'/function/func_get.php');
         include_once(ROOT_DIR.'/function/func_main.php');

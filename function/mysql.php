@@ -27,7 +27,7 @@
 
     $dbhost ='localhost';
     // username and password to log onto db SERVER
-    $dbuser ='';
+    $dbuser ='root';
     $dbpass  ='';
     // name of database
     $dbname='';

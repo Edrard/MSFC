@@ -32,9 +32,6 @@
     //MYSQL
     include_once(ROOT_DIR.'/function/mysql.php');
 
-    //Updater
-    include_once(ROOT_DIR.'/including/updater.php');
-
     //Multiget CURL
     include_once(ROOT_DIR.'/function/curl.php');
     include_once(ROOT_DIR.'/function/mcurl.php');
@@ -55,6 +52,8 @@
     if(!isset($config['clan'])){
         header ( 'Location: admin/index.php' );
     }
+    //Updater
+    include_once(ROOT_DIR.'/including/updater.php');
     //Loding language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
