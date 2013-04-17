@@ -185,6 +185,6 @@
     </form>
     </div>
     <?php } ?>
-    <? if(isset($activity_error)) { echo '<div align="left">'.$activity_error.'</div>'; } ?>
+    <? if(isset($activity_error)) { echo '<div align="center" class="ui-state-highlight ui-widget-content">',$activity_error,'</div>'; } ?>
     <div id="activity_result"></div>
 </div>

@@ -227,6 +227,6 @@
     </tbody>
 </table>
 <?php } else {
- echo $lang['activity_error_2'];
+ echo '<div align="center" class="ui-state-highlight ui-widget-content">',$lang['activity_error_2'],'</div>';
  }
 unset($activity,$activity_total);?>
