@@ -52,8 +52,6 @@
     if(!isset($config['clan'])){
         header ( 'Location: admin/index.php' );
     }
-    //Updater
-    include_once(ROOT_DIR.'/including/updater.php');
     //Loding language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
