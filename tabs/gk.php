@@ -97,7 +97,7 @@ $cur_time = time();
       <tbody>
          <?php foreach($res as $name => $val) {?>
          <tr>
-            <td><a href="<?php echo $config['base'].$name.'/';?>" target="_blank"><?php echo $name;?></a></td>
+            <td><a href="<?php echo $config['base'],$name,'/';?>" target="_blank"><?=$name;?></a></td>
                <?php foreach($gk_blocked_tanks as $column) {?>
                   <td align='center' style='padding: 0px !important; vertical-align: middle;'>
                      <?php
@@ -111,7 +111,7 @@ $cur_time = time();
                         $gk_title .= $lang['gk_info_4'].$gk_days.'<br /> ';
                         $gk_title .= $lang['gk_info_5'].$gk_hours.'<br /> ';
                         $gk_title .= $lang['gk_info_6'].$gk_min;
-                        echo '<span class="hidden">'.$blocked[$name][$column].'</span>','<img src="./images/no2.png" class="bb" title="'.$gk_title.'">';
+                        echo '<span class="hidden">',$blocked[$name][$column],'</span>','<img src="./images/no2.png" class="bb" title="',$gk_title,'">';
                      } ?>
                   </td>
                <?php }?>

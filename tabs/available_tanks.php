@@ -52,7 +52,7 @@ if($avalTanks['count'] > 1) { ?>
         <tbody>
             <?php foreach($res as $name => $val){ $x = array(); ?>
                 <tr>
-                    <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?php echo $name; ?></a></td>
+                    <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
                     <?php foreach($topTanki as $tank => $stat){ ?>
                         <td align='center' class="atanks_hide atanks_<?=$stat['index'];?>" style='padding: 0px !important; vertical-align: middle;'>
                         <?php if(isset($val['tank'][$stat['lvl']][$stat['type']][$tank]) and $val['tank'][$stat['lvl']][$stat['type']][$tank]['total'] > 0)

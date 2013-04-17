@@ -39,8 +39,7 @@
                                         <?php if($val['value'] != 0){ ?> 
                                             <tr> 
                                                 <td><?=$lang[$name];?></td>
-                                                <td><a href="<?php echo $config['base'].$val['name'].'/'; ?>" 
-                                                    target="_blank"><?php echo $val['name']; ?></a></td>
+                                                <td><a href="<?php echo $config['base'],$val['name'],'/'; ?>" target="_blank"><?=$val['name']; ?></a></td>
                                                 <td><?=$val['value'];?></td>
                                             </tr>
                                             <?php } ?>
@@ -63,9 +62,9 @@
                                     <?php foreach($best_medal_progress as $name => $val){ ?>  
                                         <?php if($val['value'] != 0){ ?>
                                             <tr> 
-                                                <td class="bb" <?php echo 'title="<table width=\'100%\' border=\'0\'  class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./images/medals/'.ucfirst($name).'.png\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$lang['medal_'.$name].'.</span><br> '.$lang['title_'.$name].'</td></tr></table>"';?>><?=$lang['medal_'.$name];?></td>
-                                                <td><a href="<?php echo $config['base'].$roster_id[$val['account_id']]['account_name'].'/'; ?>" 
-                                                    target="_blank"><?php echo $roster_id[$val['account_id']]['account_name']; ?></a></td>
+                                                <td class="bb" <?php echo 'title="<table width=\'100%\' border=\'0\'  class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./images/medals/',ucfirst($name),'.png\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$name],'.</span><br> ',$lang['title_'.$name],'</td></tr></table>"';?>><?=$lang['medal_'.$name];?></td>
+                                                <td><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank">
+                                                    <?php echo $roster_id[$val['account_id']]['account_name']; ?></a></td>
                                                 <td><?=$val['value'];?></td>
                                             </tr>
                                             <?php } ?>

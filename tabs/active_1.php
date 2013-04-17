@@ -26,7 +26,7 @@
                                 foreach(array_keys($mval) as $medals){
                                     $medal_key_img = './images/medals/'.ucfirst($medals).'.png';
                                 ?>
-                                <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./'.$medal_key_img.'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$lang['medal_'.$medals].'.</span><br> '.$lang['title_'.$medals].'</td></tr></table>"';?>><?php echo '<img src=\'./'.$medal_key_img.'\' style="width:60px;" /><br>'.$lang['medal_'.$medals]; ?></th>
+                                <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./',$medal_key_img,'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$medals],'.</span><br> ',$lang['title_'.$medals],'</td></tr></table>"';?>><?php echo '<img src=\'./',$medal_key_img,'\' style="width:60px;" /><br>',$lang['medal_'.$medals]; ?></th>
                                 <?php  } ?>
                             <?php  } ?>
 
@@ -52,7 +52,7 @@
             </table>
             <?php
                 // } else {echo '<div class="num">'.$lang["err_med1"].'</div>';}
-            } else {echo '<div class="num">'.$lang["err_med2"].'</div>';} ?>
+            } else {echo '<div class="num">',$lang["err_med2"],'</div>';} ?>
     </div>
     <?php }else{ ?>
     <div class="num"><?=$lang['error_cron_off_or_none'];?></div>

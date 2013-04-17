@@ -94,9 +94,9 @@
                 <?php foreach($res[$rand_keys]['medals'] as $tmed => $hkey){
                         foreach($hkey as $tm => $column) { ?>
                         <th align='center' valign='top' class="{sorter: 'digit'} bb allmedalhide <?=$tmed;?>show"
-                        <?php echo 'title="<table class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\' style=\'border: 0px !important;\'><tr><td><img src=\'./'.$column['img'].'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>'.$column['title'].'.</span><br> '.$lang['title_'.$tm].'</td></tr></table>"';?>
+                        <?php echo 'title="<table class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\' style=\'border: 0px !important;\'><tr><td><img src=\'./',$column['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$column['title'],'.</span><br> ',$lang['title_'.$tm],'</td></tr></table>"';?>
                         >
-                            <?php echo '<img src="'.$column['img'].'" style="width:60px;" /><br>'.$column['title']; ?>
+                            <?php echo '<img src="',$column['img'],'" style="width:60px;" /><br>',$column['title']; ?>
                         </th>
                         <?php   }
                     }
@@ -106,7 +106,7 @@
         <tbody>
             <?php foreach($res as $name => $val){ ?>
                 <tr>
-                    <td><a href="<?php echo $config['base'].$name.'/'; ?>"
+                    <td><a href="<?php echo $config['base'],$name,'/'; ?>"
                         target="_blank"><?php echo $name; ?></a></td>
                     <?php foreach($val['medals'] as $tmed => $tm) {
                             foreach($tm as $hkey => $result) {

@@ -57,8 +57,7 @@ $(document).ready(function() {
         <tbody>
             <?php foreach($res as $name => $val){  ?>
                 <tr> 
-                    <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
-                            target="_blank"><?php echo $name; ?></a></td>
+                    <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
                     <?php foreach($val['perform'] as $cat => $result){ ?>
                         <?php if($cat == $lang['hit_ratio']) { ?>
                             <td class='fullshow averageshow'>

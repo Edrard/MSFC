@@ -61,8 +61,7 @@
                     } else { $color = 'col_black';}
                 ?>
                 <tr>
-                    <td class="<?=$color?>"><a href="<?php echo $config['base'].$val['account_name'].'/'; ?>"
-                            target="_blank"><?=$val['account_name']; ?></a></td>
+                    <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
                     <td><?=$val['account_id']; ?></td>
                     <td><?=$date; ?></td>
                     <td><?php If (is_numeric($val['created_at'])){

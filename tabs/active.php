@@ -62,8 +62,7 @@
                 <?php foreach($main_progress['main'] as $name => $vals){ ?>
                     <?php $slice = array_slice($vals, 0, 16); ?>
                     <tr> 
-                        <td><a href="<?php echo $config['base'].$name.'/'; ?>" 
-                            target="_blank"><?php echo $name; ?></a></td>
+                        <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
                         <?php foreach($slice as $title => $val){  ?>
                             <?php if(isset($main_progress['average'][$rand_main_progress][$title])){ ?>
                                 <td class="all_progress_hide average_progress"><?=($main_progress['average'][$name][$title]!=0)?$main_progress['average'][$name][$title]:'';?></td>
