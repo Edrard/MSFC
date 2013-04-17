@@ -32,6 +32,9 @@
     //MYSQL
     include_once(ROOT_DIR.'/function/mysql.php');
 
+    //Updater
+    include_once(ROOT_DIR.'/including/updater.php');
+
     //Multiget CURL
     include_once(ROOT_DIR.'/function/curl.php');
     include_once(ROOT_DIR.'/function/mcurl.php');
@@ -85,11 +88,11 @@
 
     $multi_url = '';
     if(isset($_GET['multi'])){
-      $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
-      $multi_url_param = '&multi='.str_replace('_','',$_GET['multi']);
+        $multi_url = '?multi='.str_replace('_','',$_GET['multi']);
+        $multi_url_param = '&multi='.str_replace('_','',$_GET['multi']);
     } else {
-      $multi_url = '';
-      $multi_url_param = '';
+        $multi_url = '';
+        $multi_url_param = '';
     }
 
     include_once(ROOT_DIR.'/function/tabs.php');
@@ -98,24 +101,24 @@
     if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($new) > 0) {
         include_once(ROOT_DIR.'/views/index.php');
     } else {
-    include_once(ROOT_DIR.'/views/header.php');
-    if(count($new) > 0 ){
-        if($config['cron'] == 1 && $col_check > 2){
-            $medal_progress = medal_progress($roster_id,(now() - $config['medal_progress']),now());
-            $medal_resort = medals_resort($medal_progress,$roster_id);
-            $best_medal_progress = best_medal_progress($medal_progress['unsort']);
-            unset($medal_progress);
-            $we_loosed = went_players($roster_id,(now(1) - $config['we_loosed']),now());
-            $new_players = new_players($roster,(now() - $config['new_players']),now());
-            $main_progress = player_progress_main($roster,(now() - $config['main_progress']),now());
-            $best_main_progress = best_player_progress_main($main_progress['main']);
-            $new_tanks = new_tanks($roster,$col_tables,(now() - $config['new_tanks']),now());
+        include_once(ROOT_DIR.'/views/header.php');
+        if(count($new) > 0 ){
+            if($config['cron'] == 1 && $col_check > 2){
+                $medal_progress = medal_progress($roster_id,(now() - $config['medal_progress']),now());
+                $medal_resort = medals_resort($medal_progress,$roster_id);
+                $best_medal_progress = best_medal_progress($medal_progress['unsort']);
+                unset($medal_progress);
+                $we_loosed = went_players($roster_id,(now(1) - $config['we_loosed']),now());
+                $new_players = new_players($roster,(now() - $config['new_players']),now());
+                $main_progress = player_progress_main($roster,(now() - $config['main_progress']),now());
+                $best_main_progress = best_player_progress_main($main_progress['main']);
+                $new_tanks = new_tanks($roster,$col_tables,(now() - $config['new_tanks']),now());
+            }
+            include_once(ROOT_DIR.'/views/body.php');
+        }else{
+            include_once(ROOT_DIR.'/views/error.php');
         }
-        include_once(ROOT_DIR.'/views/body.php');
-    }else{
-        include_once(ROOT_DIR.'/views/error.php');
-    }
-    include_once(ROOT_DIR.'/views/footer.php');
+        include_once(ROOT_DIR.'/views/footer.php');
     }
 ?>
 

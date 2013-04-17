@@ -37,6 +37,9 @@
     //MYSQL
     include_once(ROOT_DIR.'/function/mysql.php');
 
+    //Updater
+    include_once(ROOT_DIR.'/including/updater.php');
+    
     //Multiget CURL
     include_once(ROOT_DIR.'/function/curl.php');
     include_once(ROOT_DIR.'/function/mcurl.php');

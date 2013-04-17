@@ -36,6 +36,10 @@
         include_once(ROOT_DIR.'/function/auth.php');
         include_once(ROOT_DIR.'/function/cache.php');
         include_once(ROOT_DIR.'/function/mysql.php');
+
+        //Updater
+        include_once(ROOT_DIR.'/including/updater.php');
+
         include_once(ROOT_DIR.'/function/func.php');  
         include_once(ROOT_DIR.'/function/func_get.php');
         include_once(ROOT_DIR.'/function/func_main.php');
@@ -114,8 +118,8 @@
 
         case 'login':
             if ( $auth->isLoggedInAdmin(1) ) {
-              header ( 'Location: index.php?page=main'.$multi_get );
-              exit;
+                header ( 'Location: index.php?page=main'.$multi_get );
+                exit;
             }
 
             include_once(LOCAL_DIR.'/views/ad_header.php');
@@ -126,8 +130,8 @@
         case 'main':
 
             if ( !$auth->isLoggedInAdmin(1) ) {
-              header ( 'Location: index.php?error=1'.$multi_get );
-              exit;
+                header ( 'Location: index.php?error=1'.$multi_get );
+                exit;
             }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
@@ -141,8 +145,8 @@
 
         case 'install':
             if ( $config['error'] != 2) {
-              header ( 'Location: index.php' );
-              exit;
+                header ( 'Location: index.php' );
+                exit;
             }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
