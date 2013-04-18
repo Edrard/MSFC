@@ -28,6 +28,21 @@
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        echo "Обновление выполнено/Update complite";        
+        echo "Обновление #1 выполнено/Update #1 complite<br>";        
+    }
+    $sql = "SELECT COUNT(*) FROM `config` WHERE name = 'version' ;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $up_rep = $q->fetchColumn();
+    }else{ 
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    if($up_rep == 0){
+        $sql = "INSERT INTO `config` (name,value) VALUES ('version','2.2.1');";;
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        } 
+        echo "Обновление #2 выполнено/Update #2 complite";
     }
 ?>
