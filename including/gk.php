@@ -144,7 +144,7 @@ $activity_error = '';
       $handle  = trim($lines[0]);
       if(isset($lines[1])) {$handle .= trim($lines[1]);}
 
-      if(!preg_match('/{\"mapName(.*)\"}/', $handle, $a_result)) {
+      if(!preg_match('/{\"clientVersionFromXml(.*)\"}/', $handle, $a_result)) {
           $file_error .= $lang['gk_error_3'];
       }
   unset($lines);
