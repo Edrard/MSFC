@@ -654,7 +654,7 @@
                         <div class="settingsLine">
                            <div><?=$lang['admin_cron'];?></div>
                            <div>
-                              <input <?=($config['cron']= '1')?'checked="yes"':'';?> type="checkbox" name="cron" value="1" size="2" onclick="magic3()"/>
+                              <input <?=($config['cron']== '1')?'checked="yes"':'';?> type="checkbox" name="cron" value="1" size="2" onclick="magic3()"/>
                            </div>
                         </div>
                         <div class="settingsLine admin_cdhide">
