@@ -48,7 +48,7 @@
 
         return($links);
     }
-    function cron_insert_pars_data($data,$roster,$config,$now,$log,$fh,$date){   
+    function cron_insert_pars_data($data,$roster,$config,$now,$log,$fh,$date,$pcount){
 
         global $db;
         //print_r($data);
@@ -59,7 +59,7 @@
         if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
             if(count($data['data']) > 0){
                 if($log == 1){
-                    fwrite($fh, $date.": Writing player ".$data['data']['name']."\n");    
+                    fwrite($fh, $date.": Writing player ".sprintf("%03d", $pcount).": ".$data['data']['name']."\n");
                 }
                 $mod = 1;
                 $dbb['account_id'] = $roster['account_id'];

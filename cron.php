@@ -170,8 +170,10 @@
                     unset($count);
                     multiget($links, $res,$config,prepare_stat(),$roster,$lang,1);    
                 }
-                foreach($res as $name => $val){ 
-                    cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date);
+                $pcount = 1;
+                foreach($res as $name => $val){
+                    cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date,$pcount);
+                    ++$pcount;
                 }
                 update_multi_cron($dbprefix);
                 if($log == 1){
