@@ -17,11 +17,11 @@
 ?>
 <?php
     $config['server'] = 'sa';
-    $config['base'] = 'http://worldoftanks-sea.com/uc/accounts/named/';
-    $config['base_direct'] = 'http://worldoftanks-sea.com/community/accounts/';
-    $config['clan_img'] = 'http://worldoftanks-sea.com/dcont/clans/emblems/';
-    $config['rating_link'] = 'http://worldoftanks-sea.com/static/3.0.9.2/common/img/ratings/small/';
-    $config['clan_link'] = 'http://worldoftanks-sea.com/uc/clanwars/';
-    $config['gm_url'] = 'worldoftanks-sea.com';
-    $config['td'] = 'http://api.worldoftanks-sea.com';
+    $config['base'] = 'http://worldoftanks.asia/uc/accounts/named/';
+    $config['base_direct'] = 'http://worldoftanks.asia/community/accounts/';
+    $config['clan_img'] = 'http://worldoftanks.asia/dcont/clans/emblems/';
+    $config['rating_link'] = 'http://worldoftanks.asia/static/3.0.9.2/common/img/ratings/small/';
+    $config['clan_link'] = 'http://worldoftanks.asia/uc/clanwars/';
+    $config['gm_url'] = 'worldoftanks.asia';
+    $config['td'] = 'http://api.worldoftanks.asia';
 ?>

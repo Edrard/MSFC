@@ -35,7 +35,7 @@
         } else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        fwrite($fh, $date.": Current run number ".($player_stat + 1)."\n"); 
+        fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
 
     } 
     function cron_links($players,$config)
@@ -58,9 +58,7 @@
         //print_r($data['data']['achievements']);die;
         if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
             if(count($data['data']) > 0){
-                if($log == 1){
-                    fwrite($fh, $date.": Writing player ".sprintf("%03d", $pcount).": ".$data['data']['name']."\n");
-                }
+                if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $pcount).": ".$data['data']['name']."\n"); }
                 $mod = 1;
                 $dbb['account_id'] = $roster['account_id'];
                 $dbb['name'] = $data['data']['name'];
@@ -270,7 +268,7 @@
             } 
         }else{
             if($log == 1){
-                fwrite($fh, $date.": No data for player with ID ".$roster['account_id']." ({$data['error']})\n");    
+                fwrite($fh, $date.": (Err) No data for player with ID ".$roster['account_id']." ({$data['error']})\n");
             }
         }
     }
