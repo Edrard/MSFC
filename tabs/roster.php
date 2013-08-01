@@ -19,6 +19,7 @@
     <table id="roster" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
+                <th><? echo ' ';?></th>
                 <th><?=$lang['name']; ?></th>
                 <th>ID</th> 
                 <th class="{sorter: 'shortDate'}"><?=$lang['in_clan']; ?></th>
@@ -61,7 +62,12 @@
                     } else { $color = 'col_black';}
                 ?>
                 <tr>
-                    <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
+                   <td align="center" ><a href="./main.php?nickname=<?=$val['account_name'],$multi_url_param;?>" target="_self">
+                       <div style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-info">
+                          &nbsp;
+                        </div></a></td>
+                    <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_name'],'/'; ?>"
+                            target="_blank"><?=$val['account_name']; ?></a></td>
                     <td><?=$val['account_id']; ?></td>
                     <td><?=$date; ?></td>
                     <td><?php If (is_numeric($val['created_at'])){

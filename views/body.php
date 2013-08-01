@@ -112,6 +112,10 @@
                 <td valign="top" id="tohide2">
                     <ul id="menu" class="tabsmenu ui-corner-all">
                         <?php $i=0;
+                              $nickname = 0;
+                              if (isset($_GET['nickname']) and in_array($_GET['nickname'],array_keys($res))){ $nickname = $_GET['nickname']; ?>
+                              <li class="ui-corner-all" value="-6533"><a id="id--6533"  onclick="magic(this)" href="#tabs-player">Статистика: <?php echo $nickname; ?></a></li>
+                              <?php }
                             foreach($tabs as $key => $val){
                                 foreach(array_keys($val) as $link){
                                     if(is_numeric($key)){ ?>
@@ -126,7 +130,12 @@
                 </td>
                 <td valign="top" colspan="5">
                     <div>
-                        <?php
+                        <?php if ($nickname){
+                                  ?>
+                                  <div id="tabs-player">
+                                    <?php include_once(ROOT_DIR.'/ajax/ajax_player.php'); ?>
+                                  </div>
+                                    <?php }
                             foreach($tabs as $key => $val){
                                 foreach($val as $file){    
                                     if(is_numeric($key)){ 
