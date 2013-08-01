@@ -64,7 +64,10 @@
                         &nbsp;
                     </div>
                 </td>
-                <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
+                <td width="222px" align="center" id="tohide">
+					<a href="/">Вернуться на сайт</a><br><br>
+					<?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?>
+				</td>
                 <td align="center">
                     <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
                     <img class="bb" src="<?=$new['data']['emblems']['large'];?>"

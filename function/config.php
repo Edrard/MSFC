@@ -46,7 +46,8 @@
             '2'=>'Europe/Kiev',  //+
             '3'=>'Europe/Kaliningrad', //+
             '3.5'=>'Asia/Tehran', //+
-            '4'=>'Asia/Baku', //+
+            //'4'=>'Asia/Baku', //+
+			'4'=>'Europe/Moscow', //+
             '4.5'=>'Asia/Kabul', //+
             '5'=>'Asia/Karachi',  //+
             '5.5'=>'Asia/Kolkata', //+

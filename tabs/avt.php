@@ -23,7 +23,7 @@
     }
 
     krsort($avt_eff);
-    $avt_eff = array_slice($avt_eff, 0, 5, true);
+    $avt_eff = array_slice($avt_eff, 0, 5, true);//#Tux //5 -> 10
   ?>
 
 <table cellspacing="0" cellpadding="0" width="100%" style="border-width: 0; ">
