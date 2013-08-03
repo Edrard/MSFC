@@ -16,10 +16,8 @@
     */
 ?>
 <?php
-
     function get_clan_province($config,$id)
     {
-        //echo $search;
         $url = "http://".$config['gm_url']."/uc/clans/".$id."/provinces/list/" ;
         $ch = curl_init();
         $timeout = 10;
@@ -33,18 +31,18 @@
             "Connection: Keep-Alive",
         ));
         $data = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch) ;
         curl_close($ch);
-        if($err == 0){
-            return (json_decode(trim($data), true));
-        }else{
+        if ($data === false) {
+            $header = curl_getinfo($ch);
+            $err = curl_errno($ch);
+            $errmsg = curl_error($ch);
             return array();
+        }   else{
+            return (json_decode(trim($data), true));
         }
     }
     function get_clan_attack($config,$id)
     {
-        //echo $search;
         $url = "http://".$config['gm_url']."/uc/clans/".$id."/battles/list/" ;
         $ch = curl_init();
         $timeout = 10;
@@ -58,13 +56,14 @@
             "Connection: Keep-Alive",
         ));
         $data = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch) ;
         curl_close($ch);
-        if($err == 0){
-            return (json_decode(trim($data), true));
-        }else{
+        if ($data === false) {
+            $header = curl_getinfo($ch);
+            $err = curl_errno($ch);
+            $errmsg = curl_error($ch);
             return array();
+        }   else{
+            return (json_decode(trim($data), true));
         }
     }
     function get_api_roster($clan_id,$config)
@@ -76,16 +75,15 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch) ;
-        $header = curl_getinfo($ch);
         curl_close($ch);
-        if($err == 0){
-            return json_decode(trim($data), true);
-        }else{
+        if ($data === false) {
+            $header = curl_getinfo($ch);
+            $err = curl_errno($ch);
+            $errmsg = curl_error($ch);
             return array();
+        }   else{
+            return (json_decode(trim($data), true));
         }
-
     }
 
     function multiget($inurls, &$res,$config,$transit,$roster,$lang,$multi = 0)
@@ -94,8 +92,8 @@
         $tcurl = $config['pars'];
         $num = $config['multiget'];
         $urlss = array_chunk($inurls,$num,TRUE);
-        foreach($urlss as $urls){
-            if($tcurl == 'curl'){
+        foreach($urlss as $id => $urls){
+            if ($tcurl == 'curl'){
                 $curl = new CURL();
                 $curl->retry = 2;
                 $opts = array( CURLOPT_RETURNTRANSFER => true );
@@ -104,12 +102,39 @@
                 }  
                 $result = $curl->exec();  
                 $curl->clear();
-            } else{
+            }   elseif($tcurl == 'mcurl') {
                 $curl = new MCurl; 
                 $curl->threads = 100;  
                 $curl->timeout = 15;    
                 $curl->sec_multiget($urls, $result);
-            }             
+            }   else {
+                foreach($urls as $id => $link){
+                   $ch[$id] = curl_init();
+                   curl_setopt($ch[$id], CURLOPT_URL, $link);
+                   curl_setopt($ch[$id], CURLOPT_RETURNTRANSFER, 1);
+                   curl_setopt($ch[$id], CURLOPT_FAILONERROR, true);
+                   curl_setopt($ch[$id], CURLOPT_CONNECTTIMEOUT, 10);
+                   curl_setopt($ch[$id], CURLOPT_HTTPHEADER, array(
+                     "X-Requested-With: XMLHttpRequest",
+                     "Accept: text/html, */*",
+                     "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+                     "Connection: Keep-Alive",
+                   ));
+                }
+                $mh = curl_multi_init();
+                foreach($ch as $id => $h) curl_multi_add_handle($mh,$h);
+                $running = null;
+                do{     curl_multi_exec($mh, $running);
+                }while($running > 0);
+                foreach($ch as $id => $h){
+                  $result[$id] = curl_multi_getcontent( $h );
+                }
+                foreach($ch as $id => $h){
+                  curl_multi_remove_handle($mh, $h);
+                }
+                curl_multi_close($mh);
+                unset($ch);
+            }
             if($multi != 0){
                 foreach($result as $name => $val){
                     $res[$name] = $val;
@@ -138,15 +163,13 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch) ;
-        $header = curl_getinfo($ch);
-        curl_close($ch);
-        if($err == 0){
-            return json_decode(trim($data), true);
-        }else{
+        if ($data === false) {
+            $header = curl_getinfo($ch);
+            $err = curl_errno($ch);
+            $errmsg = curl_error($ch);
             return array();
+        }   else{
+            return (json_decode(trim($data), true));
         }
-
     }
 ?>

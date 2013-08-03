@@ -350,13 +350,32 @@
             $curl->addSession( $url[0], 0, $opts );
             $result = $curl->exec();
             $curl->clear();
-        } else{
+        } elseif($config['pars']  == 'mcurl' ) {
             $curl = new MCurl;
             $curl->threads = 100;
             $curl->timeout = 15;
             $curl->sec_multiget($url, $result);
+        } else {
+           $ch = curl_init();
+           curl_setopt($ch, CURLOPT_URL, $link);
+           curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+           curl_setopt($ch, CURLOPT_FAILONERROR, true);
+           curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+           curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+             'Accept: application/json',
+             'X-Requested-With: XMLHttpRequest',
+             'Connection: Keep-Alive',
+           ));
+           $data = curl_exec($ch);
+           if ($data === false) {
+               $err = curl_errno($ch);
+               $errmsg = curl_error($ch) ;
+               $result[0] = '';
+           } else {
+               $result[0] = $data;
+           }
+          curl_close($ch);
         }
-
         return $result[0];
     }
     function directory_map($source_dir, $directory_depth = 0, $hidden = FALSE)

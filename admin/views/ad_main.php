@@ -202,6 +202,7 @@
                               <select name="pars">
                                   <option value="curl" <?php if($config['pars'] == 'curl'){ echo 'selected="selected"';} ?>>Curl</option>
                                   <option value="mcurl" <?php if($config['pars'] == 'mcurl'){ echo 'selected="selected"';} ?>>MCurl</option>
+                                  <option value="curl2" <?php if($config['pars'] == 'curl2'){ echo 'selected="selected"';} ?>>Curl2</option>
                               </select>
                            </div>
                         </div>
