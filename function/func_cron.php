@@ -179,28 +179,28 @@
                                 }
                                 if(count($nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
+                                    `account_id` INT(12) NOT NULL,
                                     `up` INT( 12 ) NOT NULL,
                                     KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
                                 }
                                 if(count($col_nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
+                                    `account_id` INT(12) NOT NULL,
                                     `up` INT( 12 ) NOT NULL,
                                     KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
 
                                 }
                                 $ask = "ALTER TABLE `col_tank_".$val['nation']."`
-                                ADD `".$id."_w` INT( 12 ) NOT NULL,
-                                ADD `".$id."_t` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_w` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_t` INT( 12 ) NOT NULL DEFAULT 0;";
                                 $db->prepare($ask)->execute();
                                 $ask = "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                                ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                                ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                                ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                                ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_sp` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_dd` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_sb` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_fr` INT( 12 ) NOT NULL DEFAULT 0;";
                                 $db->prepare($ask)->execute();
 
                                 $tmp[$val['nation']][$id.'_t'] = str_replace(' ','',$val['battle_count']);
@@ -256,6 +256,9 @@
                             unset($data['data']['achievements'][$key]);
                         }
                     }
+
+                    //Tux
+                    $data['data']['achievements'] = array_diff($data['data']['achievements'],array(''));
 
                     //print_r($new_med);
                     $data['data']['achievements']['account_id'] = $roster['account_id'];
