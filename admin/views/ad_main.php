@@ -35,7 +35,7 @@
                     if($val['main'] == 0){
                         $multi_clan_prefix = '&multi='.str_replace('_','',$val['prefix']);
                 } ?>
-                <a style="margin: 0 5px" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_clan_prefix;?>">
+                <a style="margin: 0 5px; min-height: 48px; min-width: 48px;" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_clan_prefix;?>">
                     <img height="24" src="<?=$multiclan_info[$val['id']]['data']['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
                 </a>
                 <?php

@@ -23,14 +23,14 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
     <div style="height: 25%; "></div>
     <div class="adinsider">
         <form action="./index.php" method="post">
-            <table width="300px" cellspacing="4" cellpadding="0" class="ui-widget-content">
+            <table width="340px" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>
                     <td colspan="2" align="center">
                         <h3><?=$lang['admin_db_creat'];?></h3>
                     </td>
                 </tr>
                 <tr>
-                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_lang'];?>: </td>
+                    <td width="120" align="left">&nbsp;&nbsp;<?=$lang['admin_lang'];?>: </td>
                     <td align="left">
                         <select name="lang">
                             <option value="ru">Русский</option>
@@ -39,7 +39,7 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                     </td>
                 </tr>
                 <tr>
-                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_server'];?>: </td>
+                    <td width="120" align="left">&nbsp;&nbsp;<?=$lang['admin_server'];?>: </td>
                     <td align="left">
                         <select id="iserver" name="server">
                             <option value="ru">RU</option>
@@ -51,9 +51,18 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                     </td>
                 </tr>
                 <tr>
-                    <td width="80" align="left">&nbsp;&nbsp;<?=$lang['admin_clan_id'];?>: </td>
+                    <td width="120" align="left">&nbsp;&nbsp;<?=$lang['admin_clan_id'];?>: </td>
                     <td align="left">
                         <input id="iclan" type="text" name="clan" value="37" size="18" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" align="left">&nbsp;&nbsp;<?=$lang['admin_curl_lib'];?>: </td>
+                    <td align="left">
+                        <select id="iparse" name="parse">
+                            <option value="curl" selected="selected">cURL</option>
+                            <option value="mcurl">mcURL</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>

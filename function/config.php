@@ -26,49 +26,21 @@
     $config = get_config();
     if (function_exists('date_default_timezone_set'))
     {
-        $timezones_sys = array(
-            '-11'=>'Pacific/Midway',
-            '-10'=>'Pacific/Honolulu', //+
-            '-9.5'=>'Pacific/Marquesas', //+
-            '-9'=>'America/Juneau', //+
-            '-8'=>'America/Los_Angeles', //+
-            '-7'=>'America/Denver', //+
-            '-6'=>'America/Mexico_City', //+
-            '-5'=>'America/New_York', //+
-            '-4.5'=>'America/Caracas', //+
-            '-4'=>'America/Martinique', //+
-            '-3.5'=>'America/St_Johns', //+
-            '-3'=>'America/Argentina/Buenos_Aires', //+
-            '-2'=>'America/Noronha', //+
-            '-1'=>'Atlantic/Azores', //+
-            '0'=>'Europe/London', //+
-            '1'=>'Europe/Paris', //+
-            '2'=>'Europe/Kiev',  //+
-            '3'=>'Europe/Kaliningrad', //+
-            '3.5'=>'Asia/Tehran', //+
-            '4'=>'Asia/Baku', //+
-            '4.5'=>'Asia/Kabul', //+
-            '5'=>'Asia/Karachi',  //+
-            '5.5'=>'Asia/Kolkata', //+
-            '5.75'=>'Asia/Kathmandu', //+
-            '6'=>'Asia/Dhaka',  //+
-            '6.5'=>'Indian/Cocos', //+
-            '7'=>'Asia/Bangkok', //+
-            '8'=>'Asia/Singapore', //+
-            '8.75'=>'Australia/Eucla',
-            '9'=>'Asia/Tokyo',  //+
-            '9.5'=>'Australia/Darwin', //+
-            '10'=>'Pacific/Guam', //+
-            '10.5'=>'Australia/Lord_Howe', //+
-            '11'=>'Etc/GMT-11',
-            '11.5'=>'Pacific/Norfolk',
-            '12'=>'Pacific/Fiji', //+
-            '12.75'=>'Pacific/Chatham', //+
-            '13'=>'Pacific/Tongatapu', //+
-            '14'=>'Pacific/Kiritimati', //+
-        );
-        if(isset($config['time']) and isset($timezones_sys[$config['time']]) and $config['time'] !='none' ) {
-          date_default_timezone_set($timezones_sys[$config['time']]);
+        if(isset($config['time']) and $config['time'] !='none' ) {
+          //date_default_timezone_set($timezones_sys[$config['time']]);
+          $tz = floor($config['time']);
+          if ( $tz ==  0 )
+          {
+          	date_default_timezone_set( 'GMT' );
+          }
+          elseif ( $tz > 0 )
+          {
+          	date_default_timezone_set( 'Etc/GMT-' . $tz );
+          }
+          elseif ( $tz < 0 )
+          {
+          	date_default_timezone_set( 'Etc/GMT+' . abs( $tz ) );
+          }
         } else {
           date_default_timezone_set(@date_default_timezone_get());
         }

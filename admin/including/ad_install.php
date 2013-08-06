@@ -36,6 +36,11 @@
         }  else {
            $config['server'] = 'ru';
         }
+        if (isset($_POST['pars'])){
+           $config['pars'] = $_POST['pars'];
+        }  else {
+           $config['pars'] = 'curl';
+        }
         insert_multicaln($config['clan'],$config['server'],$dbprefix);
         insert_config($config);
 

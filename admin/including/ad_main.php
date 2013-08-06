@@ -149,15 +149,15 @@
     $current_tab = read_tabs();
     $current_user = read_users();
 
-    /**Мультиклан считываем**/ 
+    /**Мультиклан считываем**/
 
     $multiclan = read_multiclan();
     $multiclan_main = multi_main($multiclan);
 
     foreach($multiclan as $clan){
         $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
-        if($multiclan_info[$clan['id']] === FALSE) {
-            $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);    
+        /*if($multiclan_info[$clan['id']] === FALSE) {
+            $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);
         }
         if(empty($multiclan_info)){
             $multiclan_info[$clan['id']]['status'] = 'error';
@@ -168,7 +168,7 @@
             $cache->set('get_last_roster_'.$clan['id'], $multiclan_info[$clan['id']]);
         }else{
             die('No cahced data');
-        }
+        }*/
     }
     //print_r($multiclan_info);
 

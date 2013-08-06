@@ -32,6 +32,7 @@
 
     }
     include_once(ROOT_DIR.'/including/check.php');
+    include_once(ROOT_DIR.'/function/cache.php');
     include_once(ROOT_DIR.'/function/auth.php');
     include_once(ROOT_DIR.'/function/mysql.php');
     include_once(ROOT_DIR.'/function/func.php');
@@ -82,7 +83,10 @@
                             if($status_clan == 0 ){
                                 if($status_prefix != 0){
                                     $message['prefix'] = $lang['error_multi_7'];
-                                } 
+                                } else {
+                                  $cache = new Cache(ROOT_DIR.'/cache/');
+                                  $cache->set('get_last_roster_'.$_GET['id'], $roster);
+                                }
                             }else{
                                 $message['id'] = $lang['error_multi_6'];
                             }
