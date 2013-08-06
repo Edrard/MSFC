@@ -92,22 +92,22 @@
                             $sql .= "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
                             `account_id` INT(12),
                             `up` INT( 12 ) NOT NULL,
-                            KEY `up` (`up`) ) ENGINE=MYISAM;";
+                            KEY `up` (`up`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;";
                             $sql .= "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
                             `account_id` INT(12),
                             `up` INT( 12 ) NOT NULL,
-                            KEY `up` (`up`) ) ENGINE=MYISAM;";
+                            KEY `up` (`up`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;";
                             $col_tank[] = $val['nation']; //добавляем в массив, дабы не создавать еще раз.
                         }
 
                         $tsql .= "ALTER TABLE `col_tank_".$val['nation']."`
-                        ADD `".$id."_w` INT( 12 ) NOT NULL,
-                        ADD `".$id."_t` INT( 12 ) NOT NULL;";
+                        ADD `".$id."_w` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_t` smallint(12) UNSIGNED NOT NULL DEFAULT 0;";
                         $tsql .= "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                        ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                        ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                        ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                        ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                        ADD `".$id."_sp` mediumint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_dd` INT( 12 ) NOT NULL DEFAULT 0,
+                        ADD `".$id."_sb` mediumint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_fr` mediumint(12) UNSIGNED NOT NULL DEFAULT 0;";
                     }
                 }
                 /* Запросы к БД вынесенные за цикл */
