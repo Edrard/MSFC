@@ -78,10 +78,12 @@
         arsort($rat['mcap']);
         arsort($rat['mdef']);
         $ratt = $rat;
-        $rat['mdmg'] = array_slice($rat['mdmg'],0,5,true);
-        $rat['mspo'] = array_slice($rat['mspo'],0,5,true);
-        $rat['mcap'] = array_slice($rat['mcap'],0,5,true);
-        $rat['mdef'] = array_slice($rat['mdef'],0,5,true);
+
+		if( defined('MAXCMS') ) $top_val = 10; else $top_val = 5;
+        $rat['mdmg'] = array_slice($rat['mdmg'],0,$top_val,true);//#Tux // 5->10
+        $rat['mspo'] = array_slice($rat['mspo'],0,$top_val,true);
+        $rat['mcap'] = array_slice($rat['mcap'],0,$top_val,true);
+        $rat['mdef'] = array_slice($rat['mdef'],0,$top_val,true);
 
         arsort($total);
         $news['total'] = array_slice($total,0,10);

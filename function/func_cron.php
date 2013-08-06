@@ -84,26 +84,26 @@
                 $dbb['averag_exp'] = $data['data']['experience']['battle_avg_xp'];
                 $dbb['max_exp'] = $data['data']['experience']['max_xp'];
                 $dbb['gr_v'] = $data['data']['ratings']['integrated_rating']['value'];
-                $dbb['gr_p'] = $data['data']['ratings']['integrated_rating']['place'];
+                $dbb['gr_p'] = $data['data']['ratings']['integrated_rating']['place'] == '' ? 0 : $data['data']['ratings']['integrated_rating']['place'];
                 $dbb['wb_v'] = $data['data']['ratings']['battle_avg_performance']['value'];
-                $dbb['wb_p'] = $data['data']['ratings']['battle_avg_performance']['place'];
+                $dbb['wb_p'] = $data['data']['ratings']['battle_avg_performance']['place'] == '' ? 0 : $data['data']['ratings']['battle_avg_performance']['place'];
                 $dbb['eb_v'] = $data['data']['ratings']['battle_avg_xp']['value'];
-                $dbb['eb_p'] = $data['data']['ratings']['battle_avg_xp']['place'];
+                $dbb['eb_p'] = $data['data']['ratings']['battle_avg_xp']['place'] == '' ? 0 : $data['data']['ratings']['battle_avg_xp']['place'];
                 $dbb['win_v'] = $data['data']['ratings']['battle_wins']['value'];
-                $dbb['win_p'] = $data['data']['ratings']['battle_wins']['place'];
+                $dbb['win_p'] = $data['data']['ratings']['battle_wins']['place'] == '' ? 0 : $data['data']['ratings']['battle_wins']['place'];
                 $dbb['gpl_v'] = $data['data']['ratings']['battles']['value'];
-                $dbb['gpl_p'] = $data['data']['ratings']['battles']['place'];
-                $dbb['cpt_p'] = $data['data']['ratings']['ctf_points']['place'];
+                $dbb['gpl_p'] = $data['data']['ratings']['battles']['place'] == '' ? 0 : $data['data']['ratings']['battles']['place'];
+                $dbb['cpt_p'] = $data['data']['ratings']['ctf_points']['place'] == '' ? 0 : $data['data']['ratings']['ctf_points']['place'];
                 $dbb['cpt_v'] = $data['data']['ratings']['ctf_points']['value'];
-                $dbb['dmg_p'] = $data['data']['ratings']['damage_dealt']['place'];
+                $dbb['dmg_p'] = $data['data']['ratings']['damage_dealt']['place'] == '' ? 0 : $data['data']['ratings']['damage_dealt']['place'];
                 $dbb['dmg_v'] = $data['data']['ratings']['damage_dealt']['value'];
-                $dbb['dpt_p'] = $data['data']['ratings']['dropped_ctf_points']['place'];
+                $dbb['dpt_p'] = $data['data']['ratings']['dropped_ctf_points']['place'] == '' ? 0 : $data['data']['ratings']['dropped_ctf_points']['place'];
                 $dbb['dpt_v'] = $data['data']['ratings']['dropped_ctf_points']['value'];
-                $dbb['frg_p'] = $data['data']['ratings']['frags']['place'];
+                $dbb['frg_p'] = $data['data']['ratings']['frags']['place'] == '' ? 0 : $data['data']['ratings']['frags']['place'];
                 $dbb['frg_v'] = $data['data']['ratings']['frags']['value'];
-                $dbb['spt_p'] = $data['data']['ratings']['spotted']['place'];
+                $dbb['spt_p'] = $data['data']['ratings']['spotted']['place'] == '' ? 0 : $data['data']['ratings']['spotted']['place'];
                 $dbb['spt_v'] = $data['data']['ratings']['spotted']['value'];
-                $dbb['exp_p'] = $data['data']['ratings']['xp']['place'];
+                $dbb['exp_p'] = $data['data']['ratings']['xp']['place'] == '' ? 0 : $data['data']['ratings']['xp']['place'];
                 $dbb['exp_v'] = $data['data']['ratings']['xp']['value'];
                 //print_r($status);
                 if($data['data']['name']){
@@ -179,28 +179,28 @@
                                 }
                                 if(count($nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
+                                    `account_id` INT(12) NOT NULL,
                                     `up` INT( 12 ) NOT NULL,
                                     KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
                                 }
                                 if(count($col_nation_db) < 1){
                                     $sql = "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
+                                    `account_id` INT(12) NOT NULL,
                                     `up` INT( 12 ) NOT NULL,
                                     KEY `up` (`up`) ) ENGINE=MYISAM;";
                                     $db->prepare($sql)->execute();
 
                                 }
                                 $ask = "ALTER TABLE `col_tank_".$val['nation']."`
-                                ADD `".$id."_w` INT( 12 ) NOT NULL,
-                                ADD `".$id."_t` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_w` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_t` INT( 12 ) NOT NULL DEFAULT 0;";
                                 $db->prepare($ask)->execute();
                                 $ask = "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                                ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                                ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                                ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                                ADD `".$id."_fr` INT( 12 ) NOT NULL;";
+                                ADD `".$id."_sp` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_dd` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_sb` INT( 12 ) NOT NULL DEFAULT 0,
+                                ADD `".$id."_fr` INT( 12 ) NOT NULL DEFAULT 0;";
                                 $db->prepare($ask)->execute();
 
                                 $tmp[$val['nation']][$id.'_t'] = str_replace(' ','',$val['battle_count']);
@@ -256,6 +256,9 @@
                             unset($data['data']['achievements'][$key]);
                         }
                     }
+
+                    //Tux
+                    $data['data']['achievements'] = array_diff($data['data']['achievements'],array(''));
 
                     //print_r($new_med);
                     $data['data']['achievements']['account_id'] = $roster['account_id'];

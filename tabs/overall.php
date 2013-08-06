@@ -59,7 +59,12 @@ $(document).ready(function() {
             </tr>
         </thead>
         <tbody>
-            <?php foreach($res as $name => $val){
+            <?php
+//$kpd = 0;$wn6 = 0;$brone = 0;
+
+			foreach($res as $name => $val){
+
+//$kpd += $eff_rating[$name]['eff']; $wn6 += $eff_rating[$name]['wn6']; $brone += $eff_rating[$name]['brone'];
 
             switch ($eff_rating[$name]['eff']+1) {
             case ($eff_rating[$name]['eff'] > 1725):
@@ -153,4 +158,7 @@ $(document).ready(function() {
     </tr>
     </table>
 </div>
-<? unset($color_brone,$color_wn6,$color); ?>
+<? unset($color_brone,$color_wn6,$color);
+
+//echo 'kpd = ' . $kpd/100 . ' | ' . 'wn6 = ' . $wn6/100 . ' | ' . 'brone = ' . $brone/100;
+?>
