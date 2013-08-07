@@ -89,6 +89,7 @@
     function multiget($inurls, &$res,$config,$transit,$roster,$lang,$multi = 0)
     {
         global $db,$cache;
+        $timeout = 10;
         $tcurl = $config['pars'];
         $num = $config['multiget'];
         $urlss = array_chunk($inurls,$num,TRUE);
@@ -96,7 +97,7 @@
             if ($tcurl == 'curl'){
                 $curl = new CURL();
                 $curl->retry = 2;
-                $opts = array( CURLOPT_RETURNTRANSFER => true );
+                $opts = array( CURLOPT_RETURNTRANSFER => true, CURLOPT_CONNECTTIMEOUT => $timeout );
                 foreach($urls as $key => $link){
                     $curl->addSession( $link, $key, $opts );
                 }  
@@ -113,7 +114,7 @@
                    curl_setopt($ch[$id], CURLOPT_URL, $link);
                    curl_setopt($ch[$id], CURLOPT_RETURNTRANSFER, 1);
                    curl_setopt($ch[$id], CURLOPT_FAILONERROR, true);
-                   curl_setopt($ch[$id], CURLOPT_CONNECTTIMEOUT, 10);
+                   curl_setopt($ch[$id], CURLOPT_CONNECTTIMEOUT, $timeout);
                    curl_setopt($ch[$id], CURLOPT_HTTPHEADER, array(
                      "X-Requested-With: XMLHttpRequest",
                      "Accept: text/html, */*",
