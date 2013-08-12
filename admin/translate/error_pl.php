@@ -17,4 +17,5 @@
 ?>
 <?php
     $lang['error_1'] = 'Problem z załadowaniem zakładki. Pewnie problem powstał po stronie wargaming.net';
+    $lang['error_toolong'] = 'Hasło nie może być dłuższe niż 12 znaków.';
 ?>

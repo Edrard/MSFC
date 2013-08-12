@@ -63,7 +63,7 @@
         }
     }
     if (isset($_POST['edituser'])){
-        edit_user($_POST);
+        $message = edit_user($_POST);
     } 
     if (isset($_POST['newuser'])){ 
         if(new_user($_POST) == TRUE){
