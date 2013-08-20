@@ -748,7 +748,7 @@
           }
 
           if(count($tmp)>0) {
-              $roster_id_tmp = implode(',',array_keys($roster_id));
+              $roster_id_tmp = implode(',',$roster_id);
 
               foreach($tmp as $val) {
                 $sql = 'DELETE FROM '.$val.' WHERE account_id NOT IN('.$roster_id_tmp.');';

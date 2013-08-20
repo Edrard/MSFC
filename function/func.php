@@ -22,6 +22,11 @@
       header ("Location: ./index.php");
       exit;
     }
+    function echop ($param = '') {
+      echo '<pre>';
+      print_r($param);
+      echo '</pre>';
+    }
     function array_resort($array,$param){
         foreach($array as $val){
             $new[$val[$param]] = $val;
