@@ -357,6 +357,7 @@
     $lang['ussr'] = 'СССР';
     $lang['france'] = 'Франция';
     $lang['uk'] = 'Англия';
+    $lang['japan'] = 'Япония';
 
     $lang['AT-SPG'] = 'пт';
     $lang['SPG'] = 'сау';

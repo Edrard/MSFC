@@ -350,6 +350,7 @@
     $lang['ussr'] = 'Ussr';
     $lang['france'] = 'France';
     $lang['uk'] = 'England';
+    $lang['japan'] = 'Japan';
 
     $lang['AT-SPG'] = 'td';
     $lang['SPG'] = 'spg';
