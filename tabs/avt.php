@@ -370,7 +370,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                                             </td>
                                             <td width="130px" align="right">
                                               <?php echo '<img src="http://',$config['gm_url'],'/static/3.6.0.1/common/img/nation/',$val['nation'],'.png" />',
-                                                         '<img style="right: -50px; position: absolute;" src="http://',$config['gm_url'],$val['link'],'" />'; ?>
+                                                         '<img style="right: -50px; position: absolute;" src="',$val['link'],'" />'; ?>
                                             </td>
                                         </tr>
                                         <?php } } else { ?>
