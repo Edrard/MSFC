@@ -109,15 +109,16 @@
             //формирование массиво по игрокам
             $return_data['data']['members'] = array();
             $i = 0;
-
-            foreach($tmp['data'][$clan_id]['members'] as $t_id => $val) {
-              $return_data['data']['members'][$i]['account_id'] = $val['account_id'];
-              $return_data['data']['members'][$i]['account_name'] = $val['account_name'];
-              $return_data['data']['members'][$i]['created_at'] = $val['created_at'];
-              $return_data['data']['members'][$i]['updated_at'] = 0;
-              $return_data['data']['members'][$i]['role'] = $val['role'];
-              $return_data['data']['members'][$i]['role_localised'] = $val['role'];
-              $i++;
+            if(is_array($tmp['data'][$clan_id]['members'])) {
+              foreach($tmp['data'][$clan_id]['members'] as $t_id => $val) {
+                $return_data['data']['members'][$i]['account_id'] = $val['account_id'];
+                $return_data['data']['members'][$i]['account_name'] = $val['account_name'];
+                $return_data['data']['members'][$i]['created_at'] = $val['created_at'];
+                $return_data['data']['members'][$i]['updated_at'] = 0;
+                $return_data['data']['members'][$i]['role'] = $val['role'];
+                $return_data['data']['members'][$i]['role_localised'] = $val['role'];
+                $i++;
+              }
             }
             return $return_data;
         }
