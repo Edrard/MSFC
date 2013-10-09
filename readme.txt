@@ -1,4 +1,4 @@
-Текущая версия 2.2.1
+Текущая версия 2.2.2
 
 Данный програмный продукт Clan Stat распространяеться по лицензии Creative Common Licence: Attribution-Noncommercial-Share Alike 3.0
 Вы вправе:
