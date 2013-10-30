@@ -67,6 +67,7 @@
                 <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
                 <td align="center">
                     <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
+                    <?php $new['data']['description_html'] = str_replace("'", '"', $new['data']['description_html']); ?>
                     <img class="bb" src="<?=$new['data']['emblems']['large'];?>"
                     style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title='<?=$new["data"]["description_html"];?>' /></a>
                     <br>
