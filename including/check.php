@@ -180,5 +180,5 @@
         show_message($lang['d_chmod_off']);
     }
 
-    define("VER",'2.2.1');
+    define("VER",'2.2.2');
 ?>
