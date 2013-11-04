@@ -31,15 +31,14 @@
             "Connection: Keep-Alive",
         ));
         $data = curl_exec($ch);
-        curl_close($ch);
-        if ($data === false) {
-            $header = curl_getinfo($ch);
-            $err = curl_errno($ch);
-            $errmsg = curl_error($ch);
-            return array();
-        }   else{
-            return (json_decode(trim($data), true));
+        if ($data === false or curl_errno($ch)) {
+            $return = array('status' => 'error', 'status_code' => curl_error($ch) );
+            curl_close($ch);
+            return $return;
         }
+        curl_close($ch);
+
+        return (json_decode(trim($data), true));
     }
     function get_clan_attack($config,$id)
     {
@@ -56,15 +55,14 @@
             "Connection: Keep-Alive",
         ));
         $data = curl_exec($ch);
-        curl_close($ch);
-        if ($data === false) {
-            $header = curl_getinfo($ch);
-            $err = curl_errno($ch);
-            $errmsg = curl_error($ch);
-            return array();
-        }   else{
-            return (json_decode(trim($data), true));
+        if ($data === false or curl_errno($ch)) {
+            $return = array('status' => 'error', 'status_code' => curl_error($ch) );
+            curl_close($ch);
+            return $return;
         }
+        curl_close($ch);
+
+        return (json_decode(trim($data), true));
     }
     function get_api_roster($clan_id,$config)
     {
@@ -75,53 +73,60 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);
-        curl_close($ch);
-        if ($data === false) {
-            $header = curl_getinfo($ch);
-            $err = curl_errno($ch);
-            $errmsg = curl_error($ch);
-            return array();
-        }   else{
-            //обратная совместимость под апи 1.1
-            $return_data = array();
-            $tmp = json_decode(trim($data), true);
-
-            //Статусы
-            $return_data['status'] = $tmp['status'];
-            $return_data['status_code'] = 'NO_ERROR';
-            //данные о клане
-            $return_data['data'] = array();
-
-            //id лидера
-            $return_data['data']['leader_id'] = $tmp['data'][$clan_id]['owner_id'];
-
-            $return_data['data']['description'] = $tmp['data'][$clan_id]['description'];
-            $return_data['data']['color'] = $tmp['data'][$clan_id]['clan_color'];
-            $return_data['data']['updated_at'] = $tmp['data'][$clan_id]['updated_at'];
-            $return_data['data']['abbreviation'] = $tmp['data'][$clan_id]['abbreviation'];
-            $return_data['data']['motto'] = $tmp['data'][$clan_id]['motto'];
-            $return_data['data']['members_count'] = $tmp['data'][$clan_id]['members_count'];
-            $return_data['data']['name'] = $tmp['data'][$clan_id]['name'];
-            $return_data['data']['emblems'] = $tmp['data'][$clan_id]['emblems'];
-            $return_data['data']['description_html'] = $tmp['data'][$clan_id]['description_html'];
-            $return_data['data']['created_at'] = $tmp['data'][$clan_id]['created_at'];
-
-            //формирование массиво по игрокам
-            $return_data['data']['members'] = array();
-            $i = 0;
-            if(is_array($tmp['data'][$clan_id]['members'])) {
-              foreach($tmp['data'][$clan_id]['members'] as $t_id => $val) {
-                $return_data['data']['members'][$i]['account_id'] = $val['account_id'];
-                $return_data['data']['members'][$i]['account_name'] = $val['account_name'];
-                $return_data['data']['members'][$i]['created_at'] = $val['created_at'];
-                $return_data['data']['members'][$i]['updated_at'] = 0;
-                $return_data['data']['members'][$i]['role'] = $val['role'];
-                $return_data['data']['members'][$i]['role_localised'] = $val['role'];
-                $i++;
-              }
-            }
-            return $return_data;
+        if ($data === false or curl_errno($ch)) {
+            $return = array('status' => 'error', 'status_code' => curl_error($ch) );
+            curl_close($ch);
+            return $return;
         }
+        curl_close($ch);
+
+        //Костыль обратной совместимости под апи 1.1
+        //По хорошему убрать бы его отсюда.
+        $return_data = array();
+        $tmp = json_decode(trim($data), true);
+
+        //Статусы
+        $return_data['status'] = $tmp['status'];
+        if(isset($tmp['error'])) {
+           $return_data['status_code'] = $tmp['error']['message'];
+           //ошибка от ВГ при выдаче данных, даже не продолжаем обработку для обратной совместимости
+           //В принципе, такое надо делать при парсинге данных, но т.к. это костыль, то это тут
+           return $return_data;
+        } else {
+           $return_data['status_code'] = 'NO_ERROR';
+        }
+        //данные о клане
+        $return_data['data'] = array();
+
+        //id лидера
+        $return_data['data']['leader_id'] = $tmp['data'][$clan_id]['owner_id'];
+
+        $return_data['data']['description'] = $tmp['data'][$clan_id]['description'];
+        $return_data['data']['color'] = $tmp['data'][$clan_id]['clan_color'];
+        $return_data['data']['updated_at'] = $tmp['data'][$clan_id]['updated_at'];
+        $return_data['data']['abbreviation'] = $tmp['data'][$clan_id]['abbreviation'];
+        $return_data['data']['motto'] = $tmp['data'][$clan_id]['motto'];
+        $return_data['data']['members_count'] = $tmp['data'][$clan_id]['members_count'];
+        $return_data['data']['name'] = $tmp['data'][$clan_id]['name'];
+        $return_data['data']['emblems'] = $tmp['data'][$clan_id]['emblems'];
+        $return_data['data']['description_html'] = $tmp['data'][$clan_id]['description_html'];
+        $return_data['data']['created_at'] = $tmp['data'][$clan_id]['created_at'];
+
+        //формирование массиво по игрокам
+        $return_data['data']['members'] = array();
+        $i = 0;
+        if(is_array($tmp['data'][$clan_id]['members'])) {
+          foreach($tmp['data'][$clan_id]['members'] as $t_id => $val) {
+            $return_data['data']['members'][$i]['account_id'] = $val['account_id'];
+            $return_data['data']['members'][$i]['account_name'] = $val['account_name'];
+            $return_data['data']['members'][$i]['created_at'] = $val['created_at'];
+            $return_data['data']['members'][$i]['updated_at'] = 0;
+            $return_data['data']['members'][$i]['role'] = $val['role'];
+            $return_data['data']['members'][$i]['role_localised'] = $val['role'];
+            $i++;
+          }
+        }
+        return $return_data;
     }
 
     function multiget($inurls, &$res,$config,$transit,$roster,$lang,$multi = 0)
@@ -179,7 +184,7 @@
                     $res[$name] = $val;
                 }   
             }else{
-                foreach($result as $name => $val){ 
+                foreach($result as $name => $val){
                     $json = json_decode($val,TRUE);
                     if($json['status'] == 'ok' && $json['status_code'] == 'NO_ERROR'){
                         $transit = insert_stat($json,$roster[$name],$config,$transit);
@@ -192,7 +197,8 @@
 
         }
     }
-
+    /*
+    //Временно закоментированно, т.к. функционал еще не написан, а апи еще сырой.
     function get_api_tanks($config)
     {
         $url = 'http://api.'.$config['gm_url']."/encyclopedia/vehicles/api/1.0/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats" ;
@@ -211,4 +217,5 @@
             return (json_decode(trim($data), true));
         }
     }
+    */
 ?>
