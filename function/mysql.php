@@ -14,8 +14,6 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
     if (preg_match ("/mysql.php/", $_SERVER['PHP_SELF']))
     {
         //header ("Location: /index.php");
