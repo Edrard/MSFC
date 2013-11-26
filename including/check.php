@@ -18,8 +18,8 @@
 <?php
     if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
     {
-      header ("Location: /index.php");
-      exit;
+        header ("Location: /index.php");
+        exit;
     }
     /*
     if ( !extension_loaded('pdo') ) {
@@ -151,6 +151,7 @@
     $lang['b_chmod_off'] = 'Directory <b>/cache/players</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/players</b> не существует, или невозможна запись.';
     $lang['c_chmod_off'] = 'Directory <b>/admin/sql</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/admin/sql</b> не существует, или невозможна запись.';
     $lang['d_chmod_off'] = 'Directory <b>/cache/other/</b> doesn\'t exist, or no permission to write. <br /> Директория <b>/cache/other/</b> не существует, или невозможна запись.';
+    $lang['m_chmod_off'] = 'File <b>mysql.config.php</b> is writeble, pls change his permision to 555. <br /> Файла <b>mysql.config.php</b> доступен на запись, пожалуйста измените его права на 555.';
 
     if ( !extension_loaded('pdo') ) {
         show_message($lang['pdo_off']);
@@ -178,6 +179,11 @@
     }
     if(!file_exists(ROOT_DIR.'/cache/other/') || !is_writable(ROOT_DIR.'/cache/other/')){
         show_message($lang['d_chmod_off']);
+    }
+    if(defined('MAIN')){
+        if(!file_exists(ROOT_DIR.'/mysql.config.php') || is_writable(ROOT_DIR.'/mysql.config.php')){
+            show_message($lang['m_chmod_off']);
+        }
     }
 
     define("VER",'3.0.0');

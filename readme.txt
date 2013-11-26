@@ -44,7 +44,7 @@ php-pdo_mysql
 
 Имеются некоторые ограничения при использовании статистики на програмном продукте Denwer.
 
-После установки продукта, не забудьте выставить права 777 на папки cache/ и /admin/sql 
+После установки продукта, не забудьте выставить права 777 на папки cache/ и /admin/sql и файлы cron.log и mysql.config.php
 
 Подробную инструкцию по установке вы можете прочесть здесь - https://docs.google.com/document/d/1PWj81jEnCduP538RihEu3tImB18DaamBnyhxWC_bL7U/edit
 

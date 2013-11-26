@@ -14,8 +14,7 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
     error_reporting(E_ALL & ~E_STRICT);
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
@@ -25,7 +24,10 @@
     }
     //Starting script time execution timer
     $begin_time = microtime(true);
-
+    
+    // MAIN - this parametr show us thats we running main.php, to turn on mysql.config.php permisiion check
+    define('MAIN', '');
+    
     //Checker
     include_once(ROOT_DIR.'/including/check.php');
 

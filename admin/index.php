@@ -14,8 +14,7 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
     error_reporting(E_ALL & ~E_STRICT);
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
@@ -144,7 +143,7 @@
             if ( $config['error'] != 2) {
                 header ( 'Location: index.php' );
                 exit;
-            }
+            }   
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller

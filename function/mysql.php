@@ -19,23 +19,13 @@
         //header ("Location: /index.php");
         exit;
     }
-    if(file_exists(ROOT_DIR.'/function/mysql.config.php') and is_readable(ROOT_DIR.'/function/mysql.config.php')) {
-      include_once(ROOT_DIR.'/function/mysql.config.php');
-    } else {
-
-    $dbhost ='localhost';
-    // username and password to log onto db SERVER
-    $dbuser ='root';
-    $dbpass  ='';
-    // name of database
-    $dbname='';
-    //en - Prefix must be min 1 symbol, max 5 symbols, with _ at the end. Only a-z, A-Z and numbers allowed. For example: $dbprefix = 'msfc_';
-    //ru - Префикс должен быть не менее 1 и не более 5 символов, в конце префикса должен быть символ _. Разрешены только английские буквы и цифры.
-    //Для примера: $dbprefix = 'msfc_';
+    
+    include_once(ROOT_DIR.'/mysql.config.php');      
+    
     $dbprefix = '';
     $sqlchar = 'utf8';
 
-    }
+
     //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
     if (!class_exists('MyPDO')) {
         class MyPDO extends PDO
@@ -115,7 +105,7 @@
                 if(preg_match('/^\d/', $_POST['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_POST['prefix'])) <=5){
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_POST['prefix']))){
                         $_POST['prefix'] = strtolower($_POST['prefix']);
-                        
+
                         if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'])){
                             $dbprefix = $_POST['prefix'];
                         }else{
@@ -131,8 +121,14 @@
     try {
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
     } catch (PDOException $e) {
-        //echo $e->getMessage();
-        die(show_message($e->getMessage()));
+        if(defined('MAIN')){
+            header ( 'Location: admin/index.php' );    
+        }
+        //echo show_message($e->getMessage());
+        include(ROOT_DIR.'/admin/including/ad_mysql.php');
+        include(ROOT_DIR.'/admin/views/ad_mysql.php');
+
+        die;
     }
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
@@ -151,9 +147,9 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         if($multi == 1){
-          $db->change_prefix($tmp_prefix);
+            $db->change_prefix($tmp_prefix);
         } else {
-          unset($_GET['multi']);
+            unset($_GET['multi']);
         }
     }
 ?>
