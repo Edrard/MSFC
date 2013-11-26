@@ -11,7 +11,7 @@
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -943,7 +943,7 @@
                         ADD `".$id."_fr` mediumint(12) UNSIGNED NOT NULL DEFAULT 0;";
                     }
                 }
-                // ?—?°??Nˆ??N?N‹ ?? ?‘?” ??N‹???µN??µ????N‹?µ ?·?° N†?????»
+                // ??????N???N?N? ?? ???? ??N?????N???????N??? ???? N???????
                 if($sql != '') {
                     $q = $db->prepare($sql);
                     if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
@@ -963,7 +963,7 @@
 
     function pars_data2($result,$fname,$stat_config,$trans,$roster)
     {
-        //?”?°N‚N‹
+        //????N?N?
         $new['data']['name'] = $roster['account_name']; 
         $new['data']['account_id'] = $roster['account_id'];
 
@@ -971,14 +971,14 @@
         $new['date']['reg_num'] = $result['data']['created_at'];
         $new['date']['local'] = $trans['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);
         $new['date']['local_num'] = $result['data']['updated_at'];
-        //?z?±N‰???µ Nˆ?µ?·N??»N?N‚?°N‚N‹
+        //?z??N????? N?????N???N?N???N?N?
         $new['overall'][$trans['games_p']] = $result['data']['summary']['battles_count'];
         $new['overall'][$trans['victories']] = $result['data']['summary']['wins'];
         $new['overall'][$trans['defeats']] = $result['data']['summary']['losses'];
         $new['overall'][$trans['battles_s']] = $result['data']['summary']['survived_battles'];
 
 
-        //?‘???µ???°N? N?N„N„?µ??N‚????????N?N‚N?
+        //??????????N? N?N?N?????N?????????N?N?N?
         $new['perform'][$trans['destroyed']] = $result['data']['battles']['frags'];
         $new['perform'][$trans['spotted']] = $result['data']['battles']['spotted'];
         $new['perform'][$trans['hit_ratio']] = $result['data']['battles']['hits_percents'];
@@ -986,13 +986,13 @@
         $new['perform'][$trans['capture']] = $result['data']['battles']['capture_points'];
         $new['perform'][$trans['defend']] = $result['data']['battles']['dropped_capture_points'];
 
-        //?‘???µ?????? ????N‹N‚
+        //???????????? ????N?N?
         $new['exp'][$trans['total_exp']] = $result['data']['experience']['xp'];
         $new['exp'][$trans['exp_battle']] = $result['data']['experience']['battle_avg_xp'];
         $new['exp'][$trans['exp_max']] = $result['data']['experience']['max_xp'];
 
 
-        //? ?µ??N‚??????
+        //??????N???????
         $new['rating'][$trans['gr']]['type'] = 'GR';
         $new['rating'][$trans['gr']]['link'] = $stat_config['rating_link'].'gr.png';
         $new['rating'][$trans['gr']]['name'] = $trans['gr'];
