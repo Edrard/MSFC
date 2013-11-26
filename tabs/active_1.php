@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-22 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -23,10 +23,8 @@
                     <tr>
                         <th><?=$lang['name'];?></th>
                         <?php foreach($medal_resort['list'] as $mval) {
-                                foreach(array_keys($mval) as $medals){
-                                    $medal_key_img = './images/medals/'.ucfirst($medals).'.png';
-                                ?>
-                                <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./',$medal_key_img,'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$medals],'.</span><br> ',$lang['title_'.$medals],'</td></tr></table>"';?>><?php echo '<img src=\'./',$medal_key_img,'\' style="width:60px;" /><br>',$lang['medal_'.$medals]; ?></th>
+                                foreach(array_keys($mval) as $medals){ ?>
+                                <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./',$medn[$medals]['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$medals],'.</span><br> ',$lang['title_'.$medals],'</td></tr></table>"';?>><?php echo '<img src=\'./',$medn[$medals]['img'],'\' style="width:60px;" /><br>',$lang['medal_'.$medals]; ?></th>
                                 <?php  } ?>
                             <?php  } ?>
 

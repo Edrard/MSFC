@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-22 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -34,9 +34,8 @@
         $user = $_GET['user'];
         $pass = $_GET['pass'];
     }                                          
-    // Check Admin(1) 
 
-    //Cheker
+    //Checker
     include_once(ROOT_DIR.'/including/check.php');
 
     //MYSQL
@@ -48,7 +47,6 @@
 
     // Include Module functions
     include_once(ROOT_DIR.'/function/auth.php');
-    include_once(ROOT_DIR.'/function/rating.php');
     include_once(ROOT_DIR.'/function/func.php');
     include_once(ROOT_DIR.'/function/func_main.php');
     include_once(ROOT_DIR.'/function/func_cron.php');
@@ -59,7 +57,7 @@
     include(ROOT_DIR.'/function/config.php');
     include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
-    //Loding language pack
+    //Loading language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
             include_once(ROOT_DIR.'/translate/'.$files);
@@ -72,6 +70,7 @@
     $log = 0;
     $links = array();
     $date = date('Y-m-d H:i');
+    $time = time();
     if($fh = fopen($myFile, 'a')){
         $log = 1;
         fwrite($fh, $date."////////////////////////////////////////////--->\n");
@@ -127,11 +126,20 @@
             die($lang['log_to_cron']);
         }    
     }
+
     if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
         if ($config['cron'] == 1){
-            //Geting clan roster from local DB and from wargaming.
+            //check table tanks
+            cron_update_tanks_db();
+            $nations = tanks_nations();
+            $medals = medn($nations);
+            $tanks = tanks();
+            //check other tables
+            check_tables($medals, $nations, $tanks);
+
+            //Geting clan roster from wargaming.
             $new = $cache->get('get_last_roster_'.$config['clan'],0);
-            $new2 = get_api_roster($config['clan'], $config); //dg65tbhjkloinm
+            $new2 = get_clan_v2($config['clan'], 'info', $config); //dg65tbhjkloinm
 
             if ($new2 === FALSE) {
                 if($log == 1)  fwrite($fh, $date.": (Err) No roster from WG!"."\n");
@@ -140,40 +148,72 @@
                 if ($new === FALSE) {
                     if($log == 1)  fwrite($fh, $date.": (WG) First load of roster from WG."."\n");
                 }   else {
-                    if($log == 1)  fwrite($fh, $date.": (WG) Successfully loaded roster from WG."."\n");
+                    if($log == 1)  fwrite($fh, $date.": (WG) Successful get some data from WG."."\n");
                 }
                 if (empty($new2)){
                     $new2['status'] = 'error';
-                    $new2['status_code'] = 'ERROR';
                 }
-                if (!isset($new['data']['updated_at'])){
-                     $new['data']['updated_at'] = 0;
+                if (!isset($new['data'][$config['clan']]['updated_at'])){
+                     $new['data'][$config['clan']]['updated_at'] = 0;
                 }
-                if ($new2['status'] == 'ok' &&  $new2['status_code'] == 'NO_ERROR'){
-                    if ($new2['data']['updated_at'] >= $new['data']['updated_at']) {
+                //$new2 = $new; //leave for testing perpuse
+                if ($new2['status'] == 'ok'){
+                    if ($new2['data'][$config['clan']]['updated_at'] >= $new['data'][$config['clan']]['updated_at']) {
                         //write to cache
                         $cache->clear('get_last_roster_'.$config['clan']);
                         $cache->set('get_last_roster_'.$config['clan'], $new2);
                         //Sorting roster
-                        $roster = roster_sort($new2['data']['members']);
+                        $roster = roster_sort($new2['data'][$config['clan']]['members']);
                         $now = mktime(date("H"), 0, 0, date("m")  , date("d"), date("Y"));
                         //Starting geting data
-                        if (count($new2['data']['members']) > 0){
-                            $links = cron_links($roster,$config);
-                            $count = count($links); 
-                            if ($count > 0){
-                                if($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$count." players"."\n");
-                                unset($count);
-                                multiget($links, $res,$config,prepare_stat(),$roster,$lang,1);    
+                        if (count($new2['data'][$config['clan']]['members']) > 0){
+                            foreach ($new2['data'][$config['clan']]['members'] as $val){
+                              $toload[$val['account_id']] = $val['account_id'];
+                              //break; //leave for testing perpuse
                             }
-                            $pcount = 1;
-                            foreach($res as $name => $val){
-                              cron_insert_pars_data($val,$roster[$name],$config,$now,$log,$fh,$date,$pcount);
-                              ++$pcount;
+                            if (!empty($toload)) {
+                                $plc = count($toload);
+                                if ($plc > 0){
+                                    if($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
+                                }
+                                $res1 = multiget_v2($toload, 'account/info', $config);
+                                $res2 = multiget_v2($toload, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+                                $res3 = multiget_v2($toload, 'account/ratings', $config);
+                                foreach ($res1 as $key => $val) {
+                                   if ($res2[$key]['status'] <> 'ok' ) {
+                                       $res1[$key]['status'] = $res2[$key]['status'];
+                                       if (isset($res2[$key]['error']['message'])) $res1[$key]['error']['message'] = $res2[$key]['error']['message'];
+                                   }  /* elseif ($res3[$key]['status'] <> 'ok' ) {
+                                       $res1[$key]['status'] = $res3[$key]['status'];
+                                       if (isset($res3[$key]['error']['message'])) $res1[$key]['error']['message'] = $res3[$key]['error']['message'];
+                                   } */
+                                }
+                                $plc = 1;
+                                foreach ($res1 as $key => $val) {
+                                   if ($val['status'] == 'ok' ) {
+                                       $val['data']['tanks'] = $res2[$key]['data'];
+                                       if (isset($res3[$key]['data'])) $val['data']['ratings'] = $res3[$key]['data'];
+                                       $val['data']['role'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['role'];
+                                       $val['data']['created_at'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['created_at'];
+                                       $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                                       if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $plc).": ".$val['data']['nickname']."\n"); }
+                                       cron_insert_pars_data($val, $medals, $tanks, $nations, $time);
+                                   }   else {
+                                       if($log == 1){
+                                       if (isset($val['error']['message'])) {
+                                           $message = ' ( '.$val['error']['message'].' )';
+                                       }   else {
+                                           $message = '';
+                                       }
+                                       fwrite($fh, $date.": (Err) Not correct data for player ".sprintf("%03d", $plc)." with ID : ".$val['data']['account_id'].$message."\n"); }
+                                   }
+                                   $plc++;
+                                }
+                                unset($links, $res1, $res2, $res3);
+                                update_multi_cron($dbprefix);
+                                if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
+                                echo $lang['cron_done'];
                             }
-                            update_multi_cron($dbprefix);
-                            if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
-                            echo $lang['cron_done'];
                         }   else {//count($new2['data']['members'] <=0
                             if($log == 1)  fwrite($fh, $date.": (Err) Members count is zero."."\n");
                         }
@@ -181,7 +221,12 @@
                         if($log == 1)  fwrite($fh, $date.": (Err) Get old data from WG."."\n");
                     }
                 }   else { //new2['status'] <> 'ok'
-                    if($log == 1) fwrite($fh, $date.": (Err) General problem. Unusual roster from WG."."\n");
+                    if (isset($new2['error']['message'])) {
+                        $message = '( '.$new2['error']['message'].' )';
+                    }   else {
+                        $message = '';
+                    }
+                    if($log == 1) fwrite($fh, $date.": (Err) Unusual roster from WG. ".$message."\n");
                 }
             } //new2ok
         }   else { // ($config['cron'] <> 1
@@ -195,11 +240,16 @@
     //write some data for debug
     if ($log == 1){
         $end_time = microtime(true);
-        fwrite($fh, $date.": (Info) ".count($links)." players processed in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
+        if (isset($toload)) {
+            fwrite($fh, $date.": (Info) ".count($toload)." players processed in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
+        }   else {
+            fwrite($fh, $date.": (Info) Cron finished  in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
+        }
         if(is_numeric($db->count)) {
             fwrite($fh, $date.": (Info) Number of MySQL queries - ".($db->count)."\n");
         }
         fwrite($fh, $date.": (Info) End cron job\n");
     }
-    //print_r($lang);
 ?>
+
+

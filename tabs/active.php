@@ -5,20 +5,26 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-22 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
 <?php
     if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ 
-        $rand_main_progress = array_rand($main_progress['main'], 1); 
-        $slice = array_slice($main_progress['main'][$rand_main_progress], 0, 16); 
+        $rand_main_progress = array_rand($main_progress['main'], 1);
+        $stats2 = array('wins', 'losses', 'survived_battles', 'frags',
+                        'spotted', 'damage_dealt', 'damage_received',
+                        'capture_points', 'dropped_capture_points',  'xp'
+                        // 'shots',  'hits',  'draws', 'battle_avg_xp', 'hits_percents',
+                         );
+        $stats7 = array('losses', 'wins', 'survived_battles');
+        $ni = array ('battles');
     ?>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -49,28 +55,55 @@
         <table id="active_main" cellspacing="1" class="table-id-<?=$key;?> ui-widget-content">
             <thead>
                 <tr>
-                    <th><?=$lang['name'];?></th>
-                    <?php foreach(array_keys($slice) as $title){?>
-                        <?php if(isset($main_progress['average'][$rand_main_progress][$title])){ ?>
-                            <th class="{sorter: 'digit'} all_progress_hide average_progress"><?=$lang[$title];?></th>
-                            <?php } ?>
-                        <th class="{sorter: 'digit'} all_progress_hide main_progress"><?=$lang[$title];?></th>
-                        <?php } ?>
+                  <th><?=$lang['name'];?></th>
+                  <th><?=$lang['all_battles'];?></th>
+                  <?
+                  foreach ($stats2 as $val) {
+                     if ($main_progress['totaldiff']['all'][$val] <>0) {?>
+                         <th class="{sorter: 'digit'} all_progress_hide main_progress"><?=$lang['all_'.$val];?></th>
+                  <? }
+                     if (($main_progress['totalavr']['all'][$val] <>0)&&(!in_array($key,$ni))) {?>
+                         <th class="{sorter: 'digit'} all_progress_hide average_progress"><?=$lang['all_'.$val];?></th>
+                  <? }
+                  } ?>
                 </tr>  
             </thead>
             <tbody>
-                <?php foreach($main_progress['main'] as $name => $vals){ ?>
-                    <?php $slice = array_slice($vals, 0, 16); ?>
-                    <tr> 
-                        <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                        <?php foreach($slice as $title => $val){  ?>
-                            <?php if(isset($main_progress['average'][$rand_main_progress][$title])){ ?>
-                                <td class="all_progress_hide average_progress"><?=($main_progress['average'][$name][$title]!=0)?$main_progress['average'][$name][$title]:'';?></td>
-                            <?php } ?>
-                            <td class="all_progress_hide main_progress"><?=($val!=0)?$val:'';?></td>
-                        <?php } ?>
-                    </tr>
-                    <?php } ?>
+            <?php foreach ($roster_id as $acc_id =>$val2) {
+                     echo '<tr>';
+                     echo '<td><a href="',$config['base'],$roster_id[$acc_id]['account_name'],'/','" target="_blank">',$roster_id[$acc_id]['account_name'],'</a></td>';
+                     echo '<td>';
+                     if (isset($main_progress['delta'][$acc_id]['all']['battles']) && ($main_progress['delta'][$acc_id]['all']['battles']<>0)) {
+                                echo $main_progress['delta'][$acc_id]['all']['battles'];
+                            }
+                     echo '</td>';
+                     foreach ($stats2 as $val) {
+
+                        if ($main_progress['totaldiff']['all'][$val] <>0) {
+                            echo '<td class="all_progress_hide main_progress">';
+                            if (isset($main_progress['delta'][$acc_id]['all'][$val]) && ($main_progress['delta'][$acc_id]['all'][$val]<>0)) {
+                                echo $main_progress['delta'][$acc_id]['all'][$val];
+                            }
+                            echo '</td>';
+                        }
+
+                        if (($main_progress['totalavr']['all'][$val] <>0)&&(!in_array($val,$ni))) {
+                            echo '<td class="all_progress_hide average_progress">';
+                            if (isset($main_progress['average'][$acc_id]['all'][$val]) && ($main_progress['average'][$acc_id]['all'][$val]<>0)) {
+                                if (in_array($val,$stats7)) {
+                                    echo '<span class ="bb" title="';
+                                    if ($main_progress['main'][$acc_id]['all'][$val]>0) echo '+';
+                                    echo $main_progress['main'][$acc_id]['all'][$val],'">';
+                                    echo $main_progress['average'][$acc_id]['all'][$val]*100,'%</span>';
+                                }   else {
+                                    echo round($main_progress['average'][$acc_id]['all'][$val],2);
+                                }
+                            }
+                            echo '</td>';
+                        }
+                     }
+                     echo '</tr>';
+                 } ?>
             </tbody>  
         </table>
     </div>

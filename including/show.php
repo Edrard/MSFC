@@ -5,84 +5,18 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 11:54:02 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, Shw  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.3.0 $
     *
     */
 ?>
 <?php
-    //Geting clan roster fron wargaming or from local DB.
 
-    //$new2 = get_player($config['clan'],$config);   //dg65tbhjkloinm
-    $new = get_api_roster($config['clan'],$config);
-    if(empty($new)){
-        $new['status'] = 'error';
-        $new['status_code'] = 'ERROR';
-    }
-
-    //print_r($new);
-    if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-        $cache->clear('get_last_roster_'.$config['clan']);
-        $cache->set('get_last_roster_'.$config['clan'], $new);
-    }else{
-        unset($new);
-        $new = $cache->get('get_last_roster_'.$config['clan'],0);
-        if($new === FALSE or empty($new)) { die('No cahced data'); }
-    }
-    //Starting geting data
-    if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){
-        //Sorting roster
-        $roster = roster_sort($new['data']['members']);
-        $roster_id = roster_resort_id($roster);
-        // get list of all tanks in game from api
-        /*$tanks = $cache->get('tanks_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
-        if(empty($tanks)){
-            $tanks = get_api_tanks($config);
-            if($tanks['status'] == 'ok' &&  $tanks['status_code'] == 'NO_ERROR'){
-                $cache->clear('tanks_'.$config['clan'],ROOT_DIR.'/cache/other/');
-                $cache->set('tanks_'.$config['clan'], $tanks['data']['items'],ROOT_DIR.'/cache/other/');
-                $tanks = $tanks['data']['items'];
-            }
-        } */
-
-        //Check if DB updating now
-        while(lock_check() !== TRUE){
-            sleep('10');
-        }
-        $get = array();
-        foreach($roster as $name => $pldata){
-            $tmp = $cache->get($name,$config['cache']*3600+1,ROOT_DIR.'/cache/players/');
-            if($tmp === FALSE or empty($tmp)){
-                $get[$name] = $pldata;
-            }else{
-                $res[$name] = $tmp;
-            }
-        }
-        unset($pldata,$tmp);
-        if (!empty($get))
-        {
-            //Trying to lock DB
-            while(lockin_mysql() !== TRUE){
-                sleep('10');
-            }
-            foreach($get as $val){
-                $cache->clear($val['account_name'],ROOT_DIR.'/cache/players/');
-                $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.9/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
-            }
-            multiget($links, $res,$config,prepare_stat(),$roster,$lang);
-            //print_r($result);
-            unset($links);
-            // Unlocking DB now
-            lockout_mysql();
-            //$cache->set('res', $res,ROOT_DIR.'/cache/players');
-        }
-    }
-    // In $res array stored player statistic.
     $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
@@ -91,44 +25,107 @@
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 
-    $sql = "SELECT DISTINCT up FROM `col_players` ;";
+    $sql = "SELECT DISTINCT updated_at FROM `col_players` ;";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
         $col_check = count($q->fetchAll());
     } else {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
+
     $multiclan = read_multiclan();
     $multiclan_main = multi_main($multiclan);
-
+    //Starting geting data for clans
     foreach($multiclan as $clan){
-        if($clan['id'] != $config['clan']){
-            $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
-            if($multiclan_info[$clan['id']] === FALSE or empty($multiclan_info[$clan['id']])) {
-                $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);
-            }
-            if(empty($multiclan_info)){
+        $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
+        if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($clan['id'] == $config['clan'])) {
+            $multiclan_info[$clan['id']] = get_clan_v2($clan['id'],'info', $config);
+            if (empty($multiclan_info[$clan['id']])) {
                 $multiclan_info[$clan['id']]['status'] = 'error';
-                $multiclan_info[$clan['id']]['status_code'] = 'ERROR';
             }
-            if($multiclan_info[$clan['id']]['status'] == 'ok' &&  $multiclan_info[$clan['id']]['status_code'] == 'NO_ERROR'){
+            if ($multiclan_info[$clan['id']]['status'] == 'ok'){
                 $cache->clear('get_last_roster_'.$clan['id']);
                 $cache->set('get_last_roster_'.$clan['id'], $multiclan_info[$clan['id']]);
-            }else{
-                die('No cahced data');
             }
-        }else{
-            $multiclan_info[$clan['id']] = &$new;
+        }
+        if (isset($multiclan_info[$clan['id']]['error']['message']) ) {
+            $message = $multiclan_info[$clan['id']]['error']['message'];
+        }   else {
+            $message = '';
+        }
+        if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($multiclan_info[$clan['id']]['status'] != 'ok')) {
+             if ($clan['id'] == $config['clan']) {
+                 $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
+             }
+             if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) ){
+                  die('No cahced data! ClanID='.$clan['id'].', ('.$message.')');
+             }
         }
     }
-    //Autoclener
-    autoclean((86400*7),$multiclan,$config,ROOT_DIR.'/cache/players/');
 
-    $rand_keys = array_rand($res, 1);
-    $eff_rating = eff_rating($res,$lang);
+    //Starting geting data for players
+    if($multiclan_info[$config['clan']]['status'] == 'ok'){
+        $roster = roster_sort($multiclan_info[$config['clan']]['data'][$config['clan']]['members']);
+        $roster_id = roster_resort_id($roster);
+
+        //check is any players data to load
+        $links = array();
+        foreach($roster as $name => $pldata){
+            $tmp = $cache->get($pldata['account_id'], $config['cache']*3600+1, ROOT_DIR.'/cache/players/');
+            if( ($tmp === FALSE) || (empty($tmp)) || ((isset($tmp['status'])) && ($tmp['status']<>'ok')) ) {
+                $cache->clear($pldata['account_id'],ROOT_DIR.'/cache/players/');
+                $links[] = $pldata['account_id'];
+            }
+        }
+        unset($pldata,$tmp);
+        if (!empty($links)) {
+             $res1 = multiget_v2($links, 'account/info', $config);
+             $res2 = multiget_v2($links, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+             $res3 = multiget_v2($links, 'account/ratings', $config);
+             foreach ($res1 as $key => $val) {
+                if ($res2[$key]['status'] <> 'ok' ) {
+                    $res1[$key]['status'] = $res2[$key]['status'];
+                }  /* elseif ($res3[$key]['status'] <> 'ok' ) {
+                    $res1[$key]['status'] = $res3[$key]['status'];
+                }  */
+             }
+             foreach ($res1 as $key => $val) {
+                if ($val['status'] == 'ok' ) {
+                    $val['data']['tanks'] = $res2[$key]['data'];
+                    if (isset ($res3[$key]['data'])) $val['data']['ratings'] = $res3[$key]['data'];
+                    $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                }   else {
+                    //show error with getting data
+                }
+             }
+             unset($links, $res1, $res2, $res3);
+        }
+        foreach($roster as $name => $pldata){
+            $tmp = $cache->get($pldata['account_id'], $config['cache']*3600+1, ROOT_DIR.'/cache/players/');
+            if( ($tmp === FALSE) || (empty($tmp)) || ((isset($tmp['status'])) && ($tmp['status']<>'ok')) ) {
+                 $res[$name] = $pldata;
+            }    else {
+                 $res[$name] = $tmp;
+            }
+        }
+    }
+
+    //Autocleaner
+    autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
+
+    $tanks = tanks();
+    // update list of all tanks in game from api if need
+    if (empty($tanks)) {
+        include_once(ROOT_DIR.'/admin/func_admin.php');
+        update_tanks_db();
+        $tanks = tanks();
+    }
+
+    $eff_rating = eff_rating($res);
     $tanks_nation = tanks_nations();
     $tanks_types = tanks_types();
     $tanks_lvl = tanks_lvl();
+    $medn = medn($tanks_nation);
+
     sort($tanks_lvl);
-   
 ?>

@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -580,156 +580,178 @@
             }        
         }    
     }
-    /***** Exinaus *****/
-    function get_top_tanks_list() {
-        global $db;
-        $top_tanks=array();
+/***** Exinaus *****/
+function get_top_tanks_list() {
+   global $db;
+   $top_tanks=array();
 
-        $sql='SELECT tt.lvl, tt.type, tt.shortname, tt.show, tt.order, t.tank, tt.title, tt.index
-        FROM `top_tanks` tt, `tanks` t
-        WHERE t.title = tt.title;';
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $top_tanks_unsorted = $q->fetchAll();
-        }else{
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-
-        foreach($top_tanks_unsorted as $val) {
-            $top_tanks[$val['tank']]['lvl'] = $val['lvl'];
-            $top_tanks[$val['tank']]['title'] = $val['title'];
-            $top_tanks[$val['tank']]['type'] = $val['type'];
-            $top_tanks[$val['tank']]['show'] = ($val['show'] == 1) ? 'checked="checked"' : '';
-            $top_tanks[$val['tank']]['order'] = $val['order'];
-            $top_tanks[$val['tank']]['shortname'] = isset($val['shortname']) ? $val['shortname'] : '';
-            $top_tanks[$val['tank']]['index'] = $val['index'];
-        }
-
-        return $top_tanks;
-    }
-    function update_top_tanks($config)
-    {
-        global $db;
-
-        foreach($config as $name => $var){
-            $var['show'] = isset($var['show']) ? 1 : 0;
-            $sql = 'UPDATE `top_tanks`
-            SET
-            `show` = "'.$var['show'].'",
-            `order` = "'.$var['order'].'",
-            `shortname` = "'.$var['shortname'].'",
-            `index` = "'.$var['index'].'"
-            WHERE title = "'.$name.'";';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-            unset($q);
-        }
+    $sql='SELECT t.level, t.type, t.name_i18n, t.tank_id, tt.show, tt.order, tt.shortname, tt.index
+          FROM `top_tanks` tt, `tanks` t
+          WHERE t.tank_id = tt.tank_id;';
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $top_tanks_unsorted = $q->fetchAll();
+    }   else{
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 
-    function delete_top_tank($info) {
-        global $db;
-
-        $sql = 'DELETE FROM `top_tanks`
-        WHERE title = "'.$info.'";';
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+    foreach($top_tanks_unsorted as $val) {
+       $top_tanks[$val['index']][$val['tank_id']]['tank_id'] = $val['tank_id'];
+       $top_tanks[$val['index']][$val['tank_id']]['name_i18n'] = $val['name_i18n'];
+       $top_tanks[$val['index']][$val['tank_id']]['lvl'] = $val['level'];
+       $top_tanks[$val['index']][$val['tank_id']]['type'] = $val['type'];
+       $top_tanks[$val['index']][$val['tank_id']]['show'] = ($val['show'] == 1) ? 'checked="checked"' : '';
+       $top_tanks[$val['index']][$val['tank_id']]['order'] = $val['order'];
+       $top_tanks[$val['index']][$val['tank_id']]['shortname'] = isset($val['shortname']) ? $val['shortname'] : '';
+       $top_tanks[$val['index']][$val['tank_id']]['index'] = $val['index'];
     }
-    function add_top_tanks($lvl,$type) {
-        global $db;
+    return $top_tanks;
+}
 
-        $sql = 'select t.title
-        from `tanks` t
-        left join `top_tanks` tt
-        on t.title = tt.title
-        where tt.title is null AND t.lvl = "'.$lvl.'" AND t.type = "'.$type.'";';
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
-        } else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-        //print_r($tanks);
+function update_top_tanks($array) {
+   global $db;
+   foreach ($array as $index =>$misc) {
+      foreach ($misc as $tank_id => $val) {
+         $val['show'] = isset($val['show']) ? 1 : 0;
+         $sql = 'UPDATE `top_tanks` SET
+                 `show` = "'.$val['show'].'",
+                 `order` = "'.$val['order'].'",
+                 `shortname` = "'.$val['shortname'].'"
+                 WHERE tank_id = "'.$tank_id.'" AND `index` = "'.$index.'";';
+         $q = $db->prepare($sql);
+         if ($q->execute() != TRUE) {
+             die(show_message($q->errorInfo(),__line__,__file__,$sql));
+         }
+      }
+      unset($q);
+   }
+}
 
-        if(count($tanks) > 0) {
-            unset($q);
-            $i = count($tanks);
-            $j = 1;
-            $sql = 'INSERT INTO `top_tanks` (`title`, `lvl`, `type`) VALUES ';
+function delete_top_tank($tank_id, $index) {
+   global $db;
+   $sql = 'DELETE FROM `top_tanks`
+           WHERE tank_id = '.$tank_id.' AND `index` = '.$index.';';
+   $q = $db->prepare($sql);
+   if ($q->execute() != TRUE) {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
+}
 
-            foreach($tanks as $val) {
-                $sql .= "('{$val['title']}', '$lvl', '$type')";
-                if($i != $j) { $sql .= ', '; $j++; } else { $sql .= ';'; }
-            }
-            //echo $sql;
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-        }
+function add_top_tanks($lvl,$type) {
+    global $db;
+
+    $sql = 'SELECT * FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";';
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
+    }   else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
-    function delete_top_tanks($lvl,$type) {
-        global $db;
-
-        $sql = 'DELETE FROM `top_tanks`
-        WHERE lvl = "'.$lvl.'" AND type = "'.$type.'";';
+    //print_r($tanks);
+    $tmp = get_available_tanks_index();
+    $index = 0;
+    for ($i=1; $i<=10; $i++){
+       if (!isset($tmp['index'][$i])) {
+           $index = $i;
+           break;
+       }
+    }
+    //print_r($index);
+    if ((count($tanks)) > 0 &&($index <> 0)) {
+        unset($q);
+        $i = count($tanks);
+        $j = 1;
+        $sql = 'INSERT INTO `top_tanks` (`tank_id`, `index`,  `order`) VALUES ';
+        foreach($tanks as $val) {
+           $sql .= "('{$val['tank_id']}', '".($index)."', '".$j."')";
+           if($i != $j) { $sql .= ', '; $j++; } else { $sql .= ';'; }
+        }
+        //echo $sql;
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
     }
-    function update_tanks_db() {
-      global $db,$cache,$config;
+}
 
-      $new = $cache->get('get_last_roster_'.$config['clan'],0);
-      if($new['status'] == 'ok' &&  $new['status_code'] == 'NO_ERROR'){ //begin 1
-        foreach($new['data']['members'] as $val){
-           $tmp = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players/');
-           if($tmp != FALSE or !empty($tmp)){
-               $res[$val['account_name']] = $tmp;
-           }
+function delete_top_tanks($lvl, $type) {
+   global $db;
+    $sql = 'SELECT tank_id FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";';
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
+    }   else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    if (count($tanks) > 0) {
+        unset($q);
+        $i = count($tanks);
+        $j = 1;
+        $sql = 'DELETE FROM `top_tanks` where ';
+        foreach ($tanks as $val) {
+           $sql .= 'tank_id = "'.$val['tank_id'].'"';
+           if($i != $j) { $sql .= ' OR '; $j++; } else { $sql .= ';'; }
         }
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+    }
+}
 
-        $tanks_sorted = array();
-        $tanks_list = array();
-
-        foreach($res as $val) {
-          if(isset($val['tank']) and !empty($val['tank']) and is_array($val['tank'])) {
-            foreach($val['tank'] as $lvl => $types){
-              foreach($types as $type => $tanks){
-                foreach($tanks as $tank){
-                  if(!in_array($tank['name'],$tanks_list)){
-                      $tanks_list[] = $tank['name'];
-                      $tanks_sorted[$tank['name']]['lvl'] = $tank['lvl'];
-                      $tanks_sorted[$tank['name']]['type'] = $tank['type'];
-                      $tanks_sorted[$tank['name']]['class'] = $tank['class'];
-                      $tanks_sorted[$tank['name']]['nation'] = $tank['nation'];
-                      $tanks_sorted[$tank['name']]['link'] = $tank['link'];
-                  }
-                }
-              }
-            }
+function update_tanks_db() {
+   global $db,$config;
+   $sql = "DELETE from `tanks` WHERE 1;";
+   $q = $db->prepare($sql);
+   if ($q->execute() != TRUE) {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
+   $tmp = get_tank_v2($config);
+   if ($tmp['status'] == 'ok') {
+       $updatearr = $toload = array ();
+       foreach ($tmp['data'] as $tank_id => $val) {
+          $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
+          $updatearr [$tank_id]['type']        = $val['type'];
+          $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
+          $updatearr [$tank_id]['level']       = $val['level'];
+          $updatearr [$tank_id]['nation']      = $val['nation'];
+          if ($val['is_premium']== true) {
+              $updatearr [$val['tank_id']]['is_premium']      = 1;
+          }   else {
+              $updatearr [$val['tank_id']]['is_premium']      = 0;
           }
-        }
+          $toload[] = $val['tank_id'];
+       }
+       unset($tmp);
+       $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
+       foreach ($tmp as $tank_id => $val) {
+          $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
+          $updatearr [$tank_id]['image']         = $val['data']['image'];
+          $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
+          $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+       }
+       unset($tmp);
+       $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+       foreach ($updatearr as $tank_id => $val) {
+          $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+       }
+       $sql = substr($sql, 0, strlen($sql)-2);
+       $sql .= ';';
+       $q = $db->prepare($sql);
+       if ($q->execute() != TRUE) {
+           die(show_message($q->errorInfo(),__line__,__file__,$sql));
+       }
+   }   else {
+       if (isset($tmp['error']['message'])) {
+           $message = ' ( '.$tmp['error']['message'].' )';
+       }   else {
+           $message = '';
+       }
+       die ('Some error with getting data from WG'.$message);
+   }
+}
 
-        foreach($tanks_sorted as $name => $val) {
-            $sql = "UPDATE `tanks` SET
-                `tank` = '{$val['type']}',
-                `nation` = '{$val['nation']}',
-                `lvl` = '{$val['lvl']}',
-                `type` = '{$val['class']}',
-                `link` = '{$val['link']}'
-            WHERE title = '$name';" ;
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-        }
-      } // end1
-    }
+
     function clean_db_left_players() {
       global $db,$cache,$config;
 

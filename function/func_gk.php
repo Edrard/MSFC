@@ -1,27 +1,27 @@
 <?php
-    /*
-    * Project:     Clan Stat
-    * License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported
-    * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
-    * -----------------------------------------------------------------------
-    * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
-    * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
-    * @link        http://wot-news.com
-    * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
-    *
-    */
-?>
+    /*                                                                                                                    
+    * Project:     Clan Stat                                                                                              
+    * License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported                                  
+    * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/                                                      
+    * -----------------------------------------------------------------------                                             
+    * Began:       2011                                                                                                   
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $                                                                     
+    * -----------------------------------------------------------------------                                             
+    * @author      $Author: Edd, Exinaus, SHW  $                                                                          
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov                                                                      
+    * @link        http://wot-news.com                                                                                    
+    * @package     Clan Stat                                                                                              
+    * @version     $Rev: 3.0.0 $                                                                                          
+    *                                                                                                                     
+    */                                                                                                                    
+?>                                                                                                                        
 <?php
     function gk_get_all($db) //Получаем список всей заблокированной техники
     {
-        $sql = "SELECT g.time AS time, t.tank AS tank, g.name AS name
+        $sql = "SELECT g.time AS time, t.tank_id AS tank, g.name AS name
         FROM `gk` g
         LEFT OUTER JOIN `tanks` t
-        ON g.tank = t.title
+        ON g.tank = t.tank_id
         ORDER BY g.time ASC;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {

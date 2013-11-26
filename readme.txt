@@ -1,4 +1,4 @@
-Текущая версия 2.2.2
+﻿Текущая версия 3.0.0
 
 Данный програмный продукт Clan Stat распространяеться по лицензии Creative Common Licence: Attribution-Noncommercial-Share Alike 3.0
 Вы вправе:
@@ -49,3 +49,5 @@ php-pdo_mysql
 После установки продукта, не забудьте выставить права 777 на папки cache/ и /admin/sql 
 
 Подробную инструкцию по установке вы можете прочесть здесь - https://docs.google.com/document/d/1PWj81jEnCduP538RihEu3tImB18DaamBnyhxWC_bL7U/edit
+
+Если вам необходимо указать Application ID - вводите следующий: 2d177718a1fc6fc8fa0a6a4c5d6c753b

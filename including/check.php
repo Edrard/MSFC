@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
+    * @author      $Author: Edd, Exinaus, SHW  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.3.0 $
     *
     */
 ?>
@@ -180,5 +180,5 @@
         show_message($lang['d_chmod_off']);
     }
 
-    define("VER",'2.2.2');
+    define("VER",'3.0.0');
 ?>

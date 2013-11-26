@@ -5,54 +5,49 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2011-10-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
 <?php
-
     $lang['language'] = 'en';
     $lang['total_p'] = 'Total Players';
     $lang['games_p'] = 'Games Played'; 
-    $lang['total'] = 'Games Played';
+    $lang['all_battles'] = $lang['clan_battles'] = $lang['company_battles'] ='Games Played';
+    $lang['all_wins'] = $lang['clan_wins'] = $lang['company_wins'] = 'Victories';
+    $lang['all_losses'] = $lang['clan_losses'] = $lang['company_losses'] = 'Defeats';
+    $lang['all_draws'] = $lang['clan_draws'] = $lang['company_draws'] = 'Draws';
+    $lang['all_survived_battles'] = $lang['clan_survived_battles'] = $lang['company_survived_battles'] =  'Battles Survived';
+    $lang['all_frags'] = $lang['clan_frags'] = $lang['company_frags'] = 'Destroyed';
+    $lang['all_spotted'] = $lang['clan_spotted'] = $lang['company_spotted'] = 'Spotted';
+    $lang['all_damage_dealt'] = $lang['clan_damage_dealt'] = $lang['company_damage_dealt'] = 'Damage Dealt';
+    $lang['all_capture_points'] = $lang['clan_capture_points'] = $lang['company_capture_points'] = 'Capture Points';
+    $lang['all_dropped_capture_points'] = $lang['clan_dropped_capture_points'] = $lang['company_dropped_capture_points'] = 'Dropped capture Points';
+    $lang['all_xp'] = $lang['clan_xp'] = $lang['company_xp'] = 'Total Experience';
+    $lang['all_battle_avg_xp'] = $lang['clan_battle_avg_xp'] = $lang['company_battle_avg_xp'] = 'Average Experience per Battle';
+    $lang['all_damage_received'] = $lang['clan_damage_received'] = $lang['company_damage_received'] ='Damage Received';
+    $lang['all_hits_percents'] = $lang['clan_hits_percents'] = $lang['company_hits_percents'] = 'Hit Ratio';
+    $lang['max_xp'] = 'Maximum Experience per Battle';
     $lang['page_title'] = 'Clan Roster';
-    $lang['victories'] = 'Victories';
-    $lang['defeats'] = 'Defeats';
-    $lang['alive'] = 'Battles Survived';
     $lang['winp'] = 'Victories %';
-    $lang['losep'] = 'Defeats %';
-    $lang['alivep'] = 'Battles Survived %';
-    $lang['battles_s'] = 'Battles Survived';
-    $lang['destroyed'] = 'Destroyed';
-    $lang['spotted'] = 'Spotted';
-    $lang['accure'] = 'Hit Ratio';
-    $lang['hit_ratio'] = 'Hit Ratio';
-    $lang['damage'] = 'Damage';
-    $lang['capture'] = 'Capture Points';
-    $lang['defend'] = 'Defense Points';
-    $lang['total_exp'] = 'Total Experience';
-    $lang['exp_battle'] = 'Average Experience per Battle';
-    $lang['averag_exp'] = 'Average Experience per Battle';
-    $lang['exp_max'] = 'Maximum Experience per Battle';
-    $lang['max_exp'] = 'Maximum Experience per Battle';
-    $lang['gr'] = 'Global Rating';
-    $lang['wb'] = 'Wins/Battles';
-    $lang['eb'] = 'Average Experience per Battle';
-    $lang['win'] = 'Victories';
-    $lang['gpl'] = 'Games Played';
-    $lang['cpt'] = 'Capture Points';
-    $lang['dmg'] = 'Damage';
-    $lang['dpt'] = 'Defense Points';
-    $lang['frg'] = 'Targets Destroyed';
-    $lang['spt'] = 'Targets Spotted';
-    $lang['exp'] = 'Total Experience';
-    $lang['spot'] = 'Targets Spotted';
+
+    $lang['r_integrated_rating'] = 'Global Rating';
+    $lang['r_battle_avg_performance'] = 'Wins/Battles';
+    $lang['r_battle_avg_xp'] = 'Average Experience per Battle';
+    $lang['r_battle_wins'] = 'Victories';
+    $lang['r_battles'] = 'Games Played';
+    $lang['r_ctf_points'] = 'Capture Points';
+    $lang['r_damage_dealt'] = 'Damage';
+    $lang['r_dropped_ctf_points'] = 'Defense Points';
+    $lang['r_frags'] = 'Targets Destroyed';
+    $lang['r_spotted'] = 'Targets Spotted';
+    $lang['r_xp'] = 'Total Experience';
 
     $lang['gr_p'] = 'Position in rating global Rating';
     $lang['wb_p'] = 'Position in rating wins/Battles';
@@ -76,7 +71,7 @@
     $lang['frg_v'] = 'Value in rating targets Destroyed';
     $lang['spt_v'] = 'Value in rating targets Spotted';
     $lang['exp_v'] = 'Value in rating total Experience';
-
+//checked use until here
     $lang['clan'] = 'Member of Clan';
     $lang['overall_title'] = 'Overall Results';
     $lang['perform_title'] = 'Battle Performance';
@@ -142,22 +137,21 @@
 
     $lang['medal_max'] = 'Max series, to get this title you need 20';
     $lang['medal_max2'] = 'Max series, to get this title you need 5';
-    $lang['medal_medalCarius'] = 'Carius\' Medal';
-    $lang['medal_medalEkins'] = 'Ekins\' Medal';
-    $lang['medal_medalKay'] = 'Kay\'s Medal';
-    $lang['medal_medalLeClerc'] = 'Leclerc\'s Medal';
-    $lang['medal_medalAbrams'] = 'Abrams\' Medal';
-    $lang['medal_medalPoppel'] = 'Popel\'s Medal';
-    $lang['medal_medalLavrinenko'] = 'Lavrinenko\'s Medal';
-    $lang['medal_medalKnispel'] = 'Knispel\'s Medal';
-    $lang['medal_medalHalonen'] = 'Halonen\'s Medal';
-    $lang['medal_medalFadin'] = 'Fadin\'s Medal';
-    $lang['medal_medalOrlik'] = 'Orlik\'s Medal';
-    $lang['medal_medalWittmann'] = 'Boelter\'s Medal';
-    $lang['medal_medalBurda'] = 'Burda\'s Medal';
-    $lang['medal_medalOskin'] = 'Oskin\'s Medal';
-    $lang['medal_medalBillotte'] = 'Billotte\'s Medal';
-    $lang['medal_medalKolobanov'] = 'Kolobanov\'s Medal';
+    $lang['medal_medal_carius'] = 'Carius\' Medal';
+    $lang['medal_medal_ekins'] = 'Ekins\' Medal';
+    $lang['medal_medal_kay'] = 'Kay\'s Medal';
+    $lang['medal_medal_le_clerc'] = 'Leclerc\'s Medal';
+    $lang['medal_medal_abrams'] = 'Abrams\' Medal';
+    $lang['medal_medal_poppel'] = 'Popel\'s Medal';
+    $lang['medal_medal_lavrinenko'] = 'Lavrinenko\'s Medal';
+    $lang['medal_medal_knispel'] = 'Knispel\'s Medal';
+    $lang['medal_medal_halonen'] = 'Halonen\'s Medal';
+    $lang['medal_medal_fadin'] = 'Fadin\'s Medal';
+    $lang['medal_medal_orlik'] = 'Orlik\'s Medal';
+    $lang['medal_medal_burda'] = 'Burda\'s Medal';
+    $lang['medal_medal_oskin'] = 'Oskin\'s Medal';
+    $lang['medal_medal_billotte'] = 'Billotte\'s Medal';
+    $lang['medal_medal_kolobanov'] = 'Kolobanov\'s Medal';
     $lang['medal_invader'] = 'Invader';
     $lang['medal_defender'] = 'Defender';
     $lang['medal_supporter'] = 'Confederate';
@@ -165,61 +159,61 @@
     $lang['medal_sniper'] = 'Sniper';
     $lang['medal_warrior'] = 'Top Gun';
     $lang['medal_scout'] = 'Scout';
-    $lang['medal_armorPiercer'] = 'Master Gunner';
+    $lang['medal_armor_piercer'] = 'Master Gunner';
     $lang['medal_mousebane'] = 'Mouse Trap';
-    $lang['medal_handOfDeath'] = 'Reaper';
-    $lang['medal_titleSniper'] = 'Sharpshooter';
+    $lang['medal_hand_of_death'] = 'Reaper';
+    $lang['medal_title_sniper'] = 'Sharpshooter';
     $lang['medal_beasthunter'] = 'Tank Hunter';
     $lang['medal_kamikaze'] = 'Kamikaze';
     $lang['medal_raider'] = 'Raider';
     $lang['medal_invincible'] = 'Invincible';
     $lang['medal_lumberjack'] = 'Invincible';
-    $lang['medal_tankExpert'] = 'Master Tanker';
+    $lang['medal_tank_expert'] = 'Master Tanker';
     $lang['medal_diehard'] = 'Survivor';
-    $lang['medal_medalBoelter'] = 'Boelter\'s Medal';
+    $lang['medal_medal_boelter'] = 'Boelter\'s Medal';
 
     $lang['medal_maxPiercingSeries'] = 'Master Gunner - max series';
     $lang['medal_maxKillingSeries'] = 'Reaper - max series';
     $lang['medal_maxSniperSeries'] = 'Sharpshooter - max series';
 
-    $lang['medal_tankExperts_usa'] = 'Expert: U.S.A';
-    $lang['medal_tankExperts_france'] = 'Expert: France';
-    $lang['medal_tankExperts_ussr'] = 'Expert: U.S.S.R.';
-    $lang['medal_tankExperts_china'] = 'Expert: China';
-    $lang['medal_tankExperts_uk'] = 'Expert: UK';
-    $lang['medal_tankExperts_germany'] = 'Expert: Germany';
+    $lang['medal_tank_expert_usa'] = 'Expert: U.S.A';
+    $lang['medal_tank_expert_france'] = 'Expert: France';
+    $lang['medal_tank_expert_ussr'] = 'Expert: U.S.S.R.';
+    $lang['medal_tank_expert_china'] = 'Expert: China';
+    $lang['medal_tank_expert_uk'] = 'Expert: UK';
+    $lang['medal_tank_expert_germany'] = 'Expert: Germany';
 
-    $lang['medal_mechanicEngineers_usa'] = 'Technical Engineer, U.S.A.';
-    $lang['medal_mechanicEngineers_france'] = 'Technical Engineer, France';
-    $lang['medal_mechanicEngineers_ussr'] = 'Technical Engineer, U.S.S.R.';
-    $lang['medal_mechanicEngineers_china'] = 'Technical Engineer, China';
-    $lang['medal_mechanicEngineers_uk'] = 'Technical Engineer, UK';
-    $lang['medal_mechanicEngineers_germany'] = 'Technical Engineer, Germany';
-    $lang['medal_mechanicEngineer'] = 'Senior Technical Engineer';
+    $lang['medal_mechanic_engineer_usa'] = 'Technical Engineer, U.S.A.';
+    $lang['medal_mechanic_engineer_france'] = 'Technical Engineer, France';
+    $lang['medal_mechanic_engineer_ussr'] = 'Technical Engineer, U.S.S.R.';
+    $lang['medal_mechanic_engineer_china'] = 'Technical Engineer, China';
+    $lang['medal_mechanic_engineer_uk'] = 'Technical Engineer, UK';
+    $lang['medal_mechanic_engineer_germany'] = 'Technical Engineer, Germany';
+    $lang['medal_mechanic_engineer'] = 'Senior Technical Engineer';
 
     $lang['medal_sinai'] = 'The Lion of Sinai';
 
     $lang['medal_evileye'] = 'Patrol Duty';
-    $lang['medal_medalDeLanglade'] = 'de Langlade\'s Medal';
-    $lang['medal_medalTamadaYoshio'] = 'Tamada Yoshio Medal';
-    $lang['medal_medalNikolas'] = 'Nichols’ Medal';
-    $lang['medal_medalLehvaslaiho'] = 'Lehvaslaiho’s Medal';
-    $lang['medal_medalDumitru'] = 'Dumitru’s Medal';
-    $lang['medal_medalPascucci'] = 'Pascucci’s Medal';
-    $lang['medal_medalLafayettePool'] = 'Pool’s Medal';
-    $lang['medal_medalRadleyWalters'] = 'Radley-Walters’ Medal';
-    $lang['medal_medalTarczay'] = 'Tarczay’s Medal';
-    $lang['medal_medalBrunoPietro'] = 'Bruno’s Medal';
-    $lang['medal_medalCrucialContribution'] = 'Crucial Contribution';
-    $lang['medal_medalBrothersInArms'] = 'Brothers in Arms';
-    $lang['medal_heroesOfRassenay'] = 'Raseiniai Heroes\' Medal';
+    $lang['medal_medal_delanglade'] = 'de Langlade\'s Medal';
+    $lang['medal_medal_tamada_yoshio'] = 'Tamada Yoshio Medal';
+    $lang['medal_medal_nikolas'] = 'Nichols’ Medal';
+    $lang['medal_medal_lehvaslaiho'] = 'Lehvaslaiho’s Medal';
+    $lang['medal_medal_dumitru'] = 'Dumitru’s Medal';
+    $lang['medal_medal_pascucci'] = 'Pascucci’s Medal';
+    $lang['medal_medal_lafayette_pool'] = 'Pool’s Medal';
+    $lang['medal_medal_radley_walters'] = 'Radley-Walters’ Medal';
+    $lang['medal_medal_tarczay'] = 'Tarczay’s Medal';
+    $lang['medal_medal_bruno_pietro'] = 'Bruno’s Medal';
+    $lang['medal_medal_crucial_contribution'] = 'Crucial Contribution';
+    $lang['medal_medal_brothers_in_arms'] = 'Brothers in Arms';
+    $lang['medal_medal_heroes_of_rassenay'] = 'Raseiniai Heroes\' Medal';
     $lang['medal_bombardier'] = 'Bombardier';
 
     $lang['medal_huntsman'] = ' Ranger';
-    $lang['medal_luckyDevil'] = 'Lucky';
-    $lang['medal_ironMan'] = 'Cool-Headed';
+    $lang['medal_lucky_devil'] = 'Lucky';
+    $lang['medal_iron_man'] = 'Cool-Headed';
     $lang['medal_sturdy'] = 'Spartan';
-    $lang['medal_pattonValley'] = 'Patton Valley';
+    $lang['medal_patton_valley'] = 'Patton Valley';
 
     $lang['medal_class'] = 'class';
     $lang['medal_class2'] = 'class';
@@ -233,84 +227,83 @@
     $lang['expert'] = 'Expert';
     $lang['mechanic'] = 'Technical Engineer';
     $lang['achiv'] = 'Achievements';
-    $lang['title_medalCarius'] = 'Awarded for the destruction of enemy tanks and self-propelled guns in four classes:Class IV - 10 vehicles Class III - 100 vehicles Class II - 1,000 vehicles Class I - 10,000 vehicles';
-    $lang['title_medalHalonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.'; 
-    $lang['title_invader'] = 'apture the maximum number of points from the enemy base, but not less than 80. The achievement is granted on successful base capture, including only the points that were part of the base capture.';
-    $lang['title_medalFadin'] = 'Awarded for destroying the last enemy vehicle in the battle with the last shell remaining on the player\'s tank.'; 
-    $lang['title_armorPiercer'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
-    $lang['title_medalEkins'] = 'Awarded in four classes for destroying tier 8, 9 or 10 enemy tanks and self-propelled guns: Class IV - 3 vehicles Class III - 30 vehicles Class II - 300 vehicles Class I - 3,000 vehicles.';
+    $lang['title_medal_carius'] = 'Awarded for the destruction of enemy tanks and self-propelled guns in four classes:Class IV - 10 vehicles Class III - 100 vehicles Class II - 1,000 vehicles Class I - 10,000 vehicles';
+    $lang['title_medal_halonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.'; 
+    $lang['title_invader'] = 'Capture the maximum number of points from the enemy base, but not less than 80. The achievement is granted on successful base capture, including only the points that were part of the base capture.';
+    $lang['title_medal_fadin'] = 'Awarded for destroying the last enemy vehicle in the battle with the last shell remaining on the player\'s tank.'; 
+    $lang['title_armor_piercer'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
+    $lang['title_medal_ekins'] = 'Awarded in four classes for destroying tier 8, 9 or 10 enemy tanks and self-propelled guns: Class IV - 3 vehicles Class III - 30 vehicles Class II - 300 vehicles Class I - 3,000 vehicles.';
     $lang['title_mousebane'] = 'Destroy 10 or more PzKpfw VIII Maus tanks. (the icon displays the number of tanks destroyed).';
-    $lang['title_medalKay'] = 'Awarded for achieving the Battle Hero status in four classes:Class IV - 1 time Class III - 10 times Class II - 100 times Class I - 1,000 times.'; 
+    $lang['title_medal_kay'] = 'Awarded for achieving the Battle Hero status in four classes:Class IV - 1 time Class III - 10 times Class II - 100 times Class I - 1,000 times.'; 
     $lang['title_defender'] = 'Reduce the amount of enemy capture points on a friendly base by 70 or more.'; 
-    $lang['title_medalLeClerc'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points'; 
+    $lang['title_medal_le_clerc'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points'; 
     $lang['title_supporter'] = 'Hit more enemy vehicles than any other player on your team (at least 6), which are subsequently destroyed by another player.'; 
     $lang['title_steelwall'] = 'Receive the most hits (at least 11) of any player on your team, with potential damage of at least 1,000 HP, and survive.'; 
-    $lang['title_medalAbrams'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 100 points Class III - 1,000 points Class II - 10,000 points Class I - 100,000 points'; 
-    $lang['title_medalPoppel'] = 'Awarded for detecting enemy tanks and self-propelled guns in all battles, in four classes: Class IV - 20 vehicles Class III - 200 vehicles Class II - 2,000 vehicles Class I - 20,000 vehicles.'; 
-    $lang['title_medalOrlik'] = 'Awarded for destroying three or more enemy vehicles with a light tank. The targets must be at least two tiers higher than the player\'s tank.'; 
-    $lang['title_handOfDeath'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
+    $lang['title_medal_abrams'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 100 points Class III - 1,000 points Class II - 10,000 points Class I - 100,000 points'; 
+    $lang['title_medal_poppel'] = 'Awarded for detecting enemy tanks and self-propelled guns in all battles, in four classes: Class IV - 20 vehicles Class III - 200 vehicles Class II - 2,000 vehicles Class I - 20,000 vehicles.'; 
+    $lang['title_medal_orlik'] = 'Awarded for destroying three or more enemy vehicles with a light tank. The targets must be at least two tiers higher than the player\'s tank.'; 
+    $lang['title_hand_of_death'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
     $lang['title_sniper'] = 'Achieve at least 85% hits out of a minimum of ten shots fired with the potential damage of 1,000 HP and more. No team hits allowed, non-penetrating hits included.'; 
     $lang['title_warrior'] = 'Destroy more enemy vehicles than any other player in your team during the battle (at least 6).'; 
-    $lang['title_titleSniper'] = 'Hit an enemy vehicle ten or more times in a row without missing. The results of the next battle in a row using any vehicle also count towards this number, unless the sequence is broken by a miss. (the icon displays the longest sequence).';
-    $lang['title_medalWittmann'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.'; 
-    $lang['title_medalBurda'] = 'Awarded for the destruction of five or more enemy self-propelled guns.'; 
+    $lang['title_title_sniper'] = 'Hit an enemy vehicle ten or more times in a row without missing. The results of the next battle in a row using any vehicle also count towards this number, unless the sequence is broken by a miss. (the icon displays the longest sequence).';
+    $lang['title_medal_burda'] = 'Awarded for the destruction of five or more enemy self-propelled guns.'; 
     $lang['title_scout'] = 'Detect most enemy tanks and self-propelled guns than anyone else on your team (at least nine). The achievement is granted to the winning team only.'; 
     $lang['title_beasthunter'] = 'Destroy 100 or more animals : Jagdpanther, Jagdtiger, PzKpfw V Panther, PzKpfw VI Tiger, and PzKpfw VI Ausf. B Tiger II.';
     $lang['title_kamikaze'] = 'Destroy a higher-tier enemy vehicle by ramming it. (the icon displays the number of tanks destroyed).';
     $lang['title_raider'] = 'Capture the enemy base and remain undetected during the entire battle. (the icon displays the number of enemy vehicles that failed to detect the player).';
-    $lang['title_medalOskin'] = 'Awarded for destroying three or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.'; 
-    $lang['title_medalBillotte'] = 'Awarded to players who destroy at least one enemy vehicle and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points.'; 
-    $lang['title_medalLavrinenko'] = 'Awarded for reducing the total number of capture points of a friendly base, up to 100 points per battle.This award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points.';
-    $lang['title_medalKolobanov'] = 'Awarded to a player who stands alone against five or more enemy tanks or self-propelled guns and wins (this means that you can capture the enemy base by yourself when you are against five enemies and you will recieve the achievement.).'; 
+    $lang['title_medal_oskin'] = 'Awarded for destroying three or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.'; 
+    $lang['title_medal_billotte'] = 'Awarded to players who destroy at least one enemy vehicle and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points.'; 
+    $lang['title_medal_lavrinenko'] = 'Awarded for reducing the total number of capture points of a friendly base, up to 100 points per battle.This award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points.';
+    $lang['title_medal_kolobanov'] = 'Awarded to a player who stands alone against five or more enemy tanks or self-propelled guns and wins (this means that you can capture the enemy base by yourself when you are against five enemies and you will recieve the achievement.).'; 
     $lang['title_invincible'] = 'Survive 5 or more battles without taking any damage (not including battles fought using self-propelled guns).';
     $lang['title_lumberjack'] = 'Survive 5 or more battles without taking any damage (not including battles fought using self-propelled guns).';
-    $lang['title_tankExpert'] = 'Destroy at least one of every type of enemy vehicle currently available in the game. This achievement will not be revoked if new vehicle types appear in the game.';
+    $lang['title_tank_expert'] = 'Destroy at least one of every type of enemy vehicle currently available in the game. This achievement will not be revoked if new vehicle types appear in the game.';
     $lang['title_diehard'] = 'Survive 20 or more battles. Battles fought using self-propelled guns do not break the sequence, but are not included either.';
-    $lang['title_medalKnispel'] = 'Awarded for the total amount of damage caused and received in four classes: Class IV - 10,000 HP Class III - 100,000 HP Class II - 1,000,000 HP Class I - 10,000,000 HP.'; 
-    $lang['title_medalBoelter'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.'; 
+    $lang['title_medal_knispel'] = 'Awarded for the total amount of damage caused and received in four classes: Class IV - 10,000 HP Class III - 100,000 HP Class II - 1,000,000 HP Class I - 10,000,000 HP.'; 
+    $lang['title_medal_boelter'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.'; 
 
     $lang['title_maxPiercingSeries'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
     $lang['title_maxKillingSeries'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
     $lang['title_maxSniperSeries'] = 'Hit an enemy vehicle ten or more times in a row without missing. The results of the next battle in a row using any vehicle also count towards this number, unless the sequence is broken by a miss. (the icon displays the longest sequence).';
 
-    $lang['title_tankExperts_usa'] = 'Destroy at least one of each type from the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_tankExperts_france'] = 'Destroy at least one of each type from the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_tankExperts_ussr'] = 'Destroy at least one of each type from the Russian tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_tankExperts_china'] = 'Destroy at least one of each type from the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_tankExperts_uk'] = 'Destroy at least one of each type from the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_tankExperts_germany'] = 'Destroy at least one of each type from the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_usa'] = 'Destroy at least one of each type from the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_france'] = 'Destroy at least one of each type from the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_ussr'] = 'Destroy at least one of each type from the Russian tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_china'] = 'Destroy at least one of each type from the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_uk'] = 'Destroy at least one of each type from the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_germany'] = 'Destroy at least one of each type from the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
 
-    $lang['title_mechanicEngineers_usa'] = 'Research all vehicles in the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineers_france'] = 'Research all vehicles in the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineers_ussr'] = 'Research all vehicles in the Soviet tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineers_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineers_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineers_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
-    $lang['title_mechanicEngineer'] = 'Research all vehicles in all tech trees. In the event that new vehicles are added to any tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_usa'] = 'Research all vehicles in the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_france'] = 'Research all vehicles in the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_ussr'] = 'Research all vehicles in the Soviet tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer'] = 'Research all vehicles in all tech trees. In the event that new vehicles are added to any tech tree, the award becomes void.';
 
     $lang['title_sinai'] = 'The Lion of Sinai - Destroy at least 100 tanks of the IS series, and vehicles based on their chassis: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Object 704, or Object 261';
 
     $lang['title_evileye'] = 'Awarded to the player who helps the team damage at least six enemy vehicles by highlighting them. The tanks must be highlighted only by you when they take damage.';
-    $lang['title_medalDeLanglade'] = 'Awarded to the player who destroys four or more enemy vehicles that were in the process of capturing the player\'s base. On 13 September 1944, Colonel Paul Girot de Langlade\'s Groupement Tactique Langlade (G.T.L), outnumbered by over two to one, attacked a German 112th Panzer Regiment occupying the French village of Dompaire. In the ensuing battle de Langlade\'s 16 M4A2 tanks and 4 M10 tank destroyers, with support from French artillery and American fighter-bombers, destroyed 69 of 90 PzKpfw V Panther and PzKpfw IV tanks.';
-    $lang['title_medalTamadaYoshio'] = 'Awarded to a player who destroys at least three Self-Propelled Guns while driving a light tank, and survives the battle. The targets must be at least two tiers higher than the player\'s tank. Tamada Yoshio commanded the Japanese 4th Tank Regiment (Type 95 Ha-Gō light tanks) in an attack that overran and destroyed twelve Russian artillery guns during the Second Sino-Japanese War in July 1939.';
-    $lang['title_medalNikolas'] = 'Awarded for destroying four or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.Alfie Nicolas was a British tank gunner. During the battle of Al Alamein he destroyed fourteen enemy vehicles.';
-    $lang['title_medalLehvaslaiho'] = 'Awarded for destroying two enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank. Reino Lehväslaiho was a Finnish tank ace who destroyed seven tanks and tank destroyers.';
-    $lang['title_medalDumitru'] = 'Awarded for the destruction of four enemy self-propelled guns. Ion S. Dumitru was a Romanian tank ace. He fought in World War II for just twenty-five days, of which five on the German side, and, after Romania changed sides, twenty days against the Germans. On March 6th, 1945, Dumitru contributed to the destruction of six enemy tank destroyers and capture of a battery of 150 mm guns.';
-    $lang['title_medalPascucci'] = 'Awarded for the destruction of three enemy self-propelled guns. Second Lieutenant Luigi Arbib Pascucci was an Italian tank commander during World War Two. He fought with the Ariete Tank Division in North Africa. Pascucci fought in the Second Battle of El Alamein, where he sacrificed his life in a reckless frontal attack that enabled the rest of his company to escape encirclement.';
-    $lang['title_medalLafayettePool'] = 'Awarded for destroying 10 or more enemy tanks and self-propelled guns with any vehicle. The targets must be at least tier four enemy vehicles. Lafayette G. Pool is widely recognized as the U.S. tank ace of aces, credited with 12 confirmed tank kills and 258 total armored vehicle and self-propelled gun kills.';
-    $lang['title_medalRadleyWalters'] = 'Awarded to players in the 5th or higher tier for destroying 8 or 9 enemy vehicles in one battle. Sydney Valpy Radley-Walters was a Canadian tank ace of the 27th Armored Regiment. In 1944–1945 he destroyed 18 German vehicles with his Sherman Firefly.';
-    $lang['title_medalTarczay'] = 'Awarded to players who destroy at least five enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Ervin Tarczay was a Hungarian tank ace. He fought with the Hungarian 2nd Armored Division and destroyed at least ten enemy vehicles.';
-    $lang['title_medalBrunoPietro'] = 'Awarded to players who destroy three or four enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Pietro Bruno was an Italian tank ace. For exceptional valor in the face of the enemy he was awarded the Gold Medal of Military Valor (Medaglia d\'oro al Valore Militare), the highest Italian award.';
-    $lang['title_medalCrucialContribution'] = 'Awarded to a platoon which destroyed at least 12 enemy vehicles in one battle. Each platoon participant receive this title.';
-    $lang['title_medalBrothersInArms'] = 'Awarded to a platoon in which all platoon members destroy at least 3 enemy vehicles and survive in battle. Each platoon participant receive this title.';
-    $lang['title_heroesOfRassenay'] = 'Awarded to a player who destroys single-handedly all enemy vehicles (at least 14 vehicles). In June 1941, near the Lithuanian town of Raseiniai, roughly 20 KV tanks of the Soviet 3rd Mechanized Corps met the assault of the 6th Panzer Division, with approximately 100 vehicles. A single KV-2 tank managed to hold off the German advance for a full day while being pummeled by a variety of antitank weapons, until finally the KV-2 ran out of ammunition and was knocked out.';
+    $lang['title_medal_delanglade'] = 'Awarded to the player who destroys four or more enemy vehicles that were in the process of capturing the player\'s base. On 13 September 1944, Colonel Paul Girot de Langlade\'s Groupement Tactique Langlade (G.T.L), outnumbered by over two to one, attacked a German 112th Panzer Regiment occupying the French village of Dompaire. In the ensuing battle de Langlade\'s 16 M4A2 tanks and 4 M10 tank destroyers, with support from French artillery and American fighter-bombers, destroyed 69 of 90 PzKpfw V Panther and PzKpfw IV tanks.';
+    $lang['title_medal_tamada_yoshio'] = 'Awarded to a player who destroys at least three Self-Propelled Guns while driving a light tank, and survives the battle. The targets must be at least two tiers higher than the player\'s tank. Tamada Yoshio commanded the Japanese 4th Tank Regiment (Type 95 Ha-Gō light tanks) in an attack that overran and destroyed twelve Russian artillery guns during the Second Sino-Japanese War in July 1939.';
+    $lang['title_medal_nikolas'] = 'Awarded for destroying four or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.Alfie Nicolas was a British tank gunner. During the battle of Al Alamein he destroyed fourteen enemy vehicles.';
+    $lang['title_medal_lehvaslaiho'] = 'Awarded for destroying two enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank. Reino Lehväslaiho was a Finnish tank ace who destroyed seven tanks and tank destroyers.';
+    $lang['title_medal_dumitru'] = 'Awarded for the destruction of four enemy self-propelled guns. Ion S. Dumitru was a Romanian tank ace. He fought in World War II for just twenty-five days, of which five on the German side, and, after Romania changed sides, twenty days against the Germans. On March 6th, 1945, Dumitru contributed to the destruction of six enemy tank destroyers and capture of a battery of 150 mm guns.';
+    $lang['title_medal_pascucci'] = 'Awarded for the destruction of three enemy self-propelled guns. Second Lieutenant Luigi Arbib Pascucci was an Italian tank commander during World War Two. He fought with the Ariete Tank Division in North Africa. Pascucci fought in the Second Battle of El Alamein, where he sacrificed his life in a reckless frontal attack that enabled the rest of his company to escape encirclement.';
+    $lang['title_medal_lafayette_pool'] = 'Awarded for destroying 10 or more enemy tanks and self-propelled guns with any vehicle. The targets must be at least tier four enemy vehicles. Lafayette G. Pool is widely recognized as the U.S. tank ace of aces, credited with 12 confirmed tank kills and 258 total armored vehicle and self-propelled gun kills.';
+    $lang['title_medal_radley_walters'] = 'Awarded to players in the 5th or higher tier for destroying 8 or 9 enemy vehicles in one battle. Sydney Valpy Radley-Walters was a Canadian tank ace of the 27th Armored Regiment. In 1944–1945 he destroyed 18 German vehicles with his Sherman Firefly.';
+    $lang['title_medal_tarczay'] = 'Awarded to players who destroy at least five enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Ervin Tarczay was a Hungarian tank ace. He fought with the Hungarian 2nd Armored Division and destroyed at least ten enemy vehicles.';
+    $lang['title_medal_bruno_pietro'] = 'Awarded to players who destroy three or four enemy vehicles and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points. Pietro Bruno was an Italian tank ace. For exceptional valor in the face of the enemy he was awarded the Gold Medal of Military Valor (Medaglia d\'oro al Valore Militare), the highest Italian award.';
+    $lang['title_medal_crucial_contribution'] = 'Awarded to a platoon which destroyed at least 12 enemy vehicles in one battle. Each platoon participant receive this title.';
+    $lang['title_medal_brothers_in_arms'] = 'Awarded to a platoon in which all platoon members destroy at least 3 enemy vehicles and survive in battle. Each platoon participant receive this title.';
+    $lang['title_medal_heroes_of_rassenay'] = 'Awarded to a player who destroys single-handedly all enemy vehicles (at least 14 vehicles). In June 1941, near the Lithuanian town of Raseiniai, roughly 20 KV tanks of the Soviet 3rd Mechanized Corps met the assault of the 6th Panzer Division, with approximately 100 vehicles. A single KV-2 tank managed to hold off the German advance for a full day while being pummeled by a variety of antitank weapons, until finally the KV-2 ran out of ammunition and was knocked out.';
     $lang['title_bombardier'] = 'Awarded to the player who destroys two or more vehicles with one shot.';
 
     $lang['title_huntsman'] = 'Destroy all the enemy light tanks (must be at least three) in the course of a single battle.';
-    $lang['title_luckyDevil'] = 'Witness the destruction of an enemy vehicle by an enemy team player. You must be within 10 meters or less from the enemy vehicle at the moment of its destruction.';
-    $lang['title_ironMan'] = 'Survive at least 10 ricochets and non-penetrations in a row from enemy players.';
+    $lang['title_lucky_devil'] = 'Witness the destruction of an enemy vehicle by an enemy team player. You must be within 10 meters or less from the enemy vehicle at the moment of its destruction.';
+    $lang['title_iron_man'] = 'Survive at least 10 ricochets and non-penetrations in a row from enemy players.';
     $lang['title_sturdy'] = 'Survive a ricochet or non-penetrating shot from an enemy player. Your vehicle must have less than 10% of its hit points (HP) left and you must survive the battle.';
-    $lang['title_pattonValley'] = 'Destroy 100 M46 Patton or M48A1 Patton III.';
+    $lang['title_patton_valley'] = 'Destroy 100 M46 Patton or M48A1 Patton III.';
 
     $lang['logout'] = 'Logout';
     $lang['login'] = 'Login';
@@ -323,7 +316,6 @@
     $lang['loosed_today'] = 'Losses in the clan';
     $lang['new_tanks'] = 'New tanks';
     $lang['new_players'] = 'New players in the clan';
-    $lang['days'] = 'd';
     $lang['noone'] = 'No one';
     $lang['players_best_results'] = 'The best overall results';
     $lang['players_best_medals'] = 'The best results for the awards';
@@ -376,12 +368,12 @@
 
     $lang['err_med1'] = 'Received medals belong to the players who left the clan';
     $lang['err_med2'] = 'No earned medals';
-
-    $lang['greeting_top1'] = 'Top 5 efficiency rating';
-    $lang['greeting_top2'] = 'Top 5 damage';
-    $lang['greeting_top3'] = 'Top 5 spotted';
-    $lang['greeting_top4'] = 'Top 5 capture';
-    $lang['greeting_top5'] = 'Top 5 defend';
+    $lang['greeting_top1'] = 'Top ';
+    $lang['greeting_top1'] = ' efficiency rating';
+    $lang['greeting_top2'] = ' damage';
+    $lang['greeting_top3'] = ' spotted';
+    $lang['greeting_top4'] = ' capture';
+    $lang['greeting_top5'] = ' defend';
     $lang['greeting_h1'] = 'Clan overall rate';
     $lang['greeting_h2'] = 'Clan battle performance';
     $lang['greeting_h3'] = 'Clan experience';
@@ -389,8 +381,61 @@
     $lang['greeting_sub2'] = 'All';
     $lang['averag_hit_ratio'] = 'Average hit, %';
     $lang['averag_surv'] = 'Average survive, %';
-    $lang['dead_heat'] = 'Dead heat';
     $lang['no_new'] = 'No new tanks';
 
     $lang['table_resized'] = 'The table is too wide, and displayed partially. To see hidden part of table, use scroll at the bottom of table.';
+
+    $lang['st_title'] = 'Player statistics';
+    $lang['classVf'] = 'Virtuoso <br>(rating higher than 99% of the players)';
+    $lang['classMf'] = 'Master <br>(rating higher than 95% of the players)';
+    $lang['class1f'] = 'Tankman 1st Class <br>(rating higher than 80% of the players)';
+    $lang['class2f'] = 'Tankman 2nd Class <br>(rating higher than 60% of the players)';
+    $lang['class3f'] = 'Tankman 3rd Class <br>(rating higher than 45% of the players)';
+    $lang['deer3f'] = 'Gamer 3rd Class <br>(rating higher than 30% of the players)';
+    $lang['deer2f'] = 'Gamer 2nd Class <br>(rating higher than 20% of the players)';
+    $lang['deer1f'] = 'Gamer 1st Class <br>(rating higher than 10% of the players)';
+    $lang['deerMf'] = 'Noob <br>(rating lower than 10% of the players)';
+    $lang['emem'] = 'Game style';
+    $lang['emem_fsb_title'] = 'The ratio of the amount detected and destroyed enemies to the battles amount';
+    $lang['emem_fsb'] = 'Overall aggressiveness';
+    $lang['emem_fb_title'] = 'The ratio of the amount destroyed enemies to the battles amount';
+    $lang['emem_fb'] = 'Fighter';
+    $lang['emem_sb_title'] = 'The ratio of the amount spotted enemies to the battles amount';
+    $lang['emem_sb'] = 'Scout';
+    $lang['emem_cb_title'] = 'The ratio of the amount capture points to the battles amount';
+    $lang['emem_cb'] = 'Invader';
+    $lang['emem_db_title'] = 'The ratio of the amount dropped capture points to the battles amount';
+    $lang['emem_db'] = 'Defender';
+
+    $lang['brone_anno'] = 'This rating does not demonstrate clear boundaries.';
+    $lang['upd_at'] = 'Statistics updated at';
+    $lang['perform_class'] = ' grouped by class';
+    $lang['perform_nation'] = ' grouped by nation';
+    $lang['perform_lvl'] = ' grouped by Level';
+    $lang['duckandcover'] = 'Clans history';
+    $lang['till_today'] = 'till today';
+    $lang['unknown'] = 'Unknown';
+    $lang['med_title'] = 'Achievements stat';
+    $lang['teh_title'] = 'Tanks stat';
+    $lang['lvl_up1'] = 'For ';
+    $lang['lvl_up2'] = '<br>At the current level of the game it will take appr. ';
+    $lang["lvl_b"] = " battles.";
+    $lang["lvl_kay"] = " classes of Kay's Medal you'll need ";
+    $lang["lvl_heroes"] = " of 'Battle Hero Achievements'.";
+    $lang["lvl_car"] = " classes of Carius' Medal you'll need to destroy";
+    $lang["lvl_des"] = " enemy tanks.";
+    $lang["lvl_lac"] = " classes of Leclerc's Medal you'll need ";
+    $lang["lvl_cap"] = " capture points.";
+    $lang["lvl_abr"] = " classes of Abrams' Medal you'll need to win and survive in ";
+    $lang["lvl_ali"] = " battles.";
+    $lang["lvl_pop"] = " classes of Popel's Medal you'll need to detect ";
+    $lang["lvl_spo"] = " enemy tanks.";
+    $lang["lvl_lav"] = " classes of Lavrinenko's Medal you'll need ";
+    $lang["lvl_def"] = " dropped capture points.";
+    $lang['lvl_kni'] = " classes of Knispel's Medal you'll need to cause or receive ";
+    $lang['lvl_dd'] = " hp damage";
+    $lang['class'] = 'Class';
+    $lang['nation'] = 'Nation';
+    $lang['level'] = 'Level';
+    $lang['teh_anno'] = '*In tables display tanks with more than 20 battles.';
 ?>

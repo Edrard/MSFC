@@ -5,66 +5,66 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
 <script>
     $(document).ready(function() {
-        $(".allmedalhide").hide();
-        $(".heroshow").show();
+        $(".amh").hide();
+        $(".heros").show();
         $("#triggermedals").buttonset();
         $("#show_hero").click(function() {
-            $(".allmedalhide").hide();
-            $(".heroshow").show();
+            $(".amh").hide();
+            $(".heros").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_major").click(function() {
-            $(".allmedalhide").hide();
-            $(".majorshow").show();
+            $(".amh").hide();
+            $(".majors").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_epic").click(function() {
-            $(".allmedalhide").hide();
-            $(".epicshow").show();
+            $(".amh").hide();
+            $(".epics").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_epic2").click(function() {
-            $(".allmedalhide").hide();
-            $(".epic2show").show();
+            $(".amh").hide();
+            $(".epic2s").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_special").click(function() {
-            $(".allmedalhide").hide();
-            $(".specialshow").show();
+            $(".amh").hide();
+            $(".specials").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_special2").click(function() {
-            $(".allmedalhide").hide();
-            $(".special2show").show();
+            $(".amh").hide();
+            $(".special2s").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_expert").click(function() {
-            $(".allmedalhide").hide();
-            $(".expertshow").show();
+            $(".amh").hide();
+            $(".experts").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_mechanic").click(function() {
-            $(".allmedalhide").hide();
-            $(".mechanicshow").show();
+            $(".amh").hide();
+            $(".mechanics").show();
             check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
@@ -89,66 +89,70 @@
     <br />
     <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2"  class="table-id-<?=$key;?>">
         <thead>
-            <tr>
-                <th><?=$lang['name']; ?></th>
-                <?php foreach($res[$rand_keys]['medals'] as $tmed => $hkey){
-                        foreach($hkey as $tm => $column) { ?>
-                        <th align='center' valign='top' class="{sorter: 'digit'} bb allmedalhide <?=$tmed;?>show"
-                        <?php echo 'title="<table class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\' style=\'border: 0px !important;\'><tr><td><img src=\'./',$column['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$column['title'],'.</span><br> ',$lang['title_'.$tm],'</td></tr></table>"';?>
-                        >
-                            <?php echo '<img src="',$column['img'],'" style="width:60px;" /><br>',$column['title']; ?>
-                        </th>
-                        <?php   }
-                    }
-                ?>
+            <tr><?php
+               echo '<th>'.$lang['name'].'</th>';
+               foreach ($medn as $medname => $val) { ?>
+                  <th valign='top' class="{sorter: 'digit'} bb amh <?=$val['type'];?>s"
+                  <?php
+                     echo 'title="<table class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\' style=\'border: 0px !important;\'><tr><td>';
+                     echo '<img src=\'./',$val['img'],'\' /></td><td><span class=\'spcl\'>',$lang['medal_'.$medname],'.</span><br> ',$lang['title_'.$medname],'</td></tr></table>">';
+                     echo '<img src="',$val['img'],'" style="width:60px;" /><br>',$lang['medal_'.$medname];
+                     echo '</th>';
+               } ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
-                <tr>
-                    <td><a href="<?php echo $config['base'],$name,'/'; ?>"
-                        target="_blank"><?php echo $name; ?></a></td>
-                    <?php foreach($val['medals'] as $tmed => $tm) {
-                            foreach($tm as $hkey => $result) {
-                                if($hkey == 'titleSniper' || $hkey == 'armorPiercer' || $hkey == 'handOfDeath'){
-                                    @$result['value'] = $result['max'];
-                                }
-                                if($hkey == 'invincible'){
-                                    if($result['value'] > 0 ){
-                                        @$result['value'] = $result['max'];
-                                    }else{
-                                        @$result['value'] = '0 ('.$result['max'].' <span style="color:red;">*</span>)';
-                                    }
-                                }
-                                if($hkey == 'diehard'){
-                                    if($result['value'] == 0 ){
-                                        @$result['value'] = '0 ('.$result['max'].' <span style="color:red;">**</span>)';
-                                    }
-                                }
-                                if($tmed == 'expert' or $tmed == 'mechanic'){
-                                    $num_n = 0;
-                                    if($result['value'] == 1){
-                                        $num_n = 1;
-                                        $result['value'] = '<img src="./images/cgreen.png" />';
-                                    }else{
-                                        $result['value'] = '';
-                                    }
-                                ?>
-                                <td align='center' class="allmedalhide <?=$tmed;?>show"><span style="display: none;"><?php echo $num_n; ?></span><?php echo $result['value']; ?></td>
-                                <?php    
-                                }else{
-                                ?>
-                                <td align='center' class="allmedalhide <?=$tmed;?>show"><?php echo $result['value']; ?></td>
-                                <?php
-                                }
-                            }
-                        }
-                    ?>
+                <tr><?php
+                   echo '<td><a href="',$config['base'],$name,'/','" target="_blank">',$name,'</a></td>';
+                   foreach ($medn as $mdn => $val) {
+                      if ($mdn <> 'lumberjack') {
+                          if ($mdn == 'diehard') {
+                              if ($res[$name]['data']['achievements'][$mdn] == 0) {
+                                  @$result['value'] = '0 ('.$res[$name]['data']['achievements']['max_diehard_series'].' <span style="color:red;">**</span>)';
+                              }   else {
+                                  @$result['value'] = $res[$name]['data']['achievements'][$mdn];
+                              }
+                          }   elseif ($mdn == 'handOfDeath'){
+                              @$result['value'] = $res[$name]['data']['achievements']['max_killing_series'];
+                          }   elseif ($mdn == 'invincible'){
+                              if ($res[$name]['data']['achievements'][$mdn] == 0) {
+                                  @$result['value'] = '0 ('.$res[$name]['data']['achievements']['max_invincible_series'].' <span style="color:red;">*</span>)';
+                              }   else {
+                                  @$result['value'] = $res[$name]['data']['achievements'][$mdn];
+                              }
+                          }   elseif ($mdn == 'armor_piercer'){
+                              @$result['value'] = $res[$name]['data']['achievements']['max_piercing_series'];
+                          }   elseif ($mdn == 'title_sniper'){
+                              @$result['value'] = $res[$name]['data']['achievements']['max_sniper_series'];
+                          }   elseif (!isset($val['type'])){
+                              //print_R($val);
+                          }   elseif (($val['type'] =='expert') || ($val['type'] =='mechanic')){
+                              $num_n = 0;
+                              if ($res[$name]['data']['achievements'][$mdn] == 1) {
+                                  $num_n = 1;
+                                  @$result['value'] = '<img src="./images/cgreen.png" />';
+                              }   else {
+                                  @$result['value'] = '';
+                              }
+
+                          }   else {
+                              @$result['value'] = $res[$name]['data']['achievements'][$mdn];
+                          }
+
+                          if (isset($num_n)) {
+                              echo "<td class='amh ".$val['type']."s'><span style='display: none;'>",$num_n,"</span>",$result['value'],"</td>";
+                              unset($num_n);
+                          }   else {
+                              echo "<td class='amh ".$val['type']."s'>".$result['value']."</td>";
+                          }
+                      }
+                   }?>
                 </tr>
-                <?php } ?>
+            <?php } ?>
         </tbody>  
     </table>
-    <div class="allmedalhide specialshow" align="left">
+    <div class="amh specials" align="left">
         <span style="color:red;">*</span> <?=$lang['medal_max2']; ?><br />
         <span style="color:red;">**</span> <?=$lang['medal_max']; ?>
     </div>

@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -36,7 +36,7 @@
                         $multi_clan_prefix = '&multi='.str_replace('_','',$val['prefix']);
                 } ?>
                 <a style="margin: 0 5px; min-height: 48px; min-width: 48px;" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_clan_prefix;?>">
-                    <img height="24" src="<?=$multiclan_info[$val['id']]['data']['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                    <img height="24" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['clan_color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['abbreviation']?></span>
                 </a>
                 <?php
             } ?>
@@ -109,20 +109,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <? foreach($adm_top_tanks as $adm_tname => $val) { ?>
-                                                <tr>
-                                                    <td align="center"><?=$adm_tname?></td>
-                                                    <td align="center"><?=$lang_s['class'][$val['type']]?></td>
-                                                    <td align="center"><?=$val['lvl']?></td>
-                                                    <td align="center"><div class="hidden"><?=$val['order']?></div><input type="text" value="<?=$val['order']?>" name="Array[<?=$val['title']?>][order]" style="width: 30px;"></td>
-                                                    <td align="center"><input type="checkbox" <?=$val['show']?> name="Array[<?=$val['title']?>][show]"></td>
-                                                    <td align="center"><input type="text" value="<?=$val['shortname']?>" name="Array[<?=$val['title']?>][shortname]"></td>
-                                                    <td align="center"><div class="hidden"><?=$val['index']?></div>
-                                                        <select name="Array[<?=$val['title']?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
+                                        <?php foreach($adm_top_tanks as $index => $val) {
+                                                foreach($val as $val2) { ?>
+                                                  <tr>
+                                                    <td align="center"><?=$val2['name_i18n'];?></td>
+                                                    <td align="center"><?=$lang_s['class'][$val2['type']]?></td>
+                                                    <td align="center"><?=$val2['lvl']?></td>
+                                                    <td align="center"><div class="hidden"><?=$val2['order']?></div><input type="text" value="<?=$val2['order']?>" name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][order]" style="width: 30px;"></td>
+                                                    <td align="center"><input type="checkbox" <?=$val2['show']?> name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][show]"></td>
+                                                    <td align="center"><input type="text" value="<?=$val2['shortname']?>" name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][shortname]"></td>
+                                                    <td align="center"><div class="hidden"><?=$val2['index']?></div>
+                                                        <select name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val2['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
                                                     </td>
-                                                    <td align="center"><a href="./index.php?removetoptank=1&tank=<?=$val['title']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$adm_tname;?>?')"><img src="../images/cred.png" /></a></td>
-                                                </tr>
-                                                <? } ?>
+                                                    <td align="center"><a href="./index.php?removetoptank=1&tank_id=<?=$val2['tank_id']?>&index=<?=$val2['index']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$val2['name_i18n'];?>?')"><img src="../images/cred.png" /></a></td>
+                                                  </tr>
+                                        <?      }
+                                              } ?>
                                         </tbody>
                                     </table>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
@@ -210,6 +212,18 @@
                            <div><?=$lang['admin_multiget'];?></div>
                            <div>
                               <input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" />
+                           </div>
+                        </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_application_id'];?></div>
+                           <div>
+                              <input type="text" name="application_id" value="<?=$config['application_id']; ?>" size="30" />
+                           </div>
+                        </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_top'];?></div>
+                           <div>
+                              <input type="text" name="top" value="<?=$config['top']; ?>" size="2" />
                            </div>
                         </div>
                         <div class="settingsLine">
@@ -624,8 +638,8 @@
                                                   <?php } ?>
                                               <td align="center"><?=$mclan['server']?></td>
                                               <td align="center"><?=$mclan['id']?></td>
-                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data']['abbreviation']?></td>
-                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data']['members_count']?></td>
+                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['abbreviation']?></td>
+                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['members_count']?></td>
                                               <td align="center"><?=$mclan['prefix']?></td>
                                               <?php
                                                   $cmsg_status = '';

@@ -167,3 +167,56 @@ table .tablesorter { margin: 20px 0 0 0; }
   padding: 10px;
   margin:10px;
 }
+/* try to minimize load data*/
+.amh { text-align: center; }
+.spcl {text-align: center, font-weight: bold; }
+.all {text-align: center;min-width: 30px;}
+.clan {text-align: center;min-width: 30px;}
+.company {text-align: center;min-width: 30px;}
+
+/* new tab */
+.a_num {
+    position:absolute; 
+    bottom:1px; 
+    padding:0px 3px; 
+    text-align:center; 
+    right:1px; 
+    min-width:18px; 
+    color: black; 
+    border:1px solid black;
+    font-size:10px;
+}
+.medalDiv {
+    text-align:center;
+    width:70px; 
+    height:75px; 
+    *display:inline; 
+    *float:left;
+    display:inline-block; 
+    margin:5px; 
+    position:relative;
+}
+.clanDiv {
+    text-align:center;
+    *display:inline; 
+    *float:left;
+    display:inline-block; 
+    margin:5px; 
+    position:relative;
+    vertical-align: top;
+}
+.faded {
+    opacity:0.4;
+    filter: alpha(opacity=40);
+}
+.medalContainer {
+    border:1px solid #666; text-align:center;
+}
+.levelup {
+    background:url(../images/upgrade.png) center center no-repeat;
+    width:16px;
+    height:16px;
+    position:absolute;
+    top:0;
+    right:0;
+}

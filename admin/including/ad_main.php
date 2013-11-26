@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -157,13 +157,12 @@
     foreach($multiclan as $clan){
         $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'],0);
         /*if($multiclan_info[$clan['id']] === FALSE) {
-            $multiclan_info[$clan['id']] = get_api_roster($clan['id'],$config);
+            $multiclan_info[$clan['id']] = get_clan_v2($clan['id'],'info',$config);
         }
         if(empty($multiclan_info)){
             $multiclan_info[$clan['id']]['status'] = 'error';
-            $multiclan_info[$clan['id']]['status'] = 'ERROR';
         }
-        if($multiclan_info[$clan['id']]['status'] == 'ok' &&  $multiclan_info[$clan['id']]['status_code'] == 'NO_ERROR'){
+        if($multiclan_info[$clan['id']]['status'] == 'ok'){
             $cache->clear('get_last_roster_'.$clan['id']);
             $cache->set('get_last_roster_'.$clan['id'], $multiclan_info[$clan['id']]);
         }else{
@@ -189,7 +188,7 @@
 
     }
     if (isset($_GET['removetoptank'])){
-        delete_top_tank($_GET['tank']);
+        delete_top_tank($_GET['tank_id'], $_GET['index']);
         header ( 'Location: index.php?page=main'.$multi_get.'#tabs-6' );
         exit;
     }

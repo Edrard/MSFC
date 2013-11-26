@@ -60,7 +60,7 @@
                 } else {
                     $this->prefix = 'msfc_';
                 }
-                $this->pattern = '/([`\'"])(col_medals|col_players|col_rating_tank[\w%]*|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|tanks|gk)([`\'"])/';
+                $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
                 $this->replacement = '$1'.$this->prefix.'$2$3';
 
                 parent::__construct($dsn, $user, $password, $driver_options);

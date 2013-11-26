@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
+    * @author      $Author: Edd, Exinaus, SHW  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -159,4 +159,6 @@
     $lang['clear_old_cron_date'] = 'Удалить Крон данные старше <input type="text" size="1" name="clear_old_cron_date" value="30" /> дней.';
     $lang['admin_clean_db_left_players'] = 'Очистить БД от ушедших игроков';
     $lang['admin_clean_db_old_cron'] = 'Очистить БД от старых Крон данных';
+    $lang['admin_application_id'] = 'ID приложения';
+    $lang['admin_top'] = 'Выводить в приветственном табе топ по игрокам';
 ?>

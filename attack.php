@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -26,7 +26,7 @@
     //Starting script time execution timer
     $begin_time = microtime(true);
 
-    //Cheker
+    //Checker
     include_once(ROOT_DIR.'/including/check.php');
 
     //MYSQL
@@ -37,11 +37,9 @@
     include_once(ROOT_DIR.'/function/mcurl.php');
 
     // Include Module functions
-    include_once(ROOT_DIR.'/function/rating.php');
     include_once(ROOT_DIR.'/function/func.php');
     include_once(ROOT_DIR.'/function/func_main.php');
     include_once(ROOT_DIR.'/function/func_get.php');
-    include_once(ROOT_DIR.'/function/func_gk.php');
 
     // Including main config files
     include_once(ROOT_DIR.'/function/config.php');
@@ -54,9 +52,8 @@
         }
     }
     $battel = array();
-
-    if(is_valid_url($config['td']) == true){
-        $battel = get_clan_attack($config,$config['clan']);
+    if (is_valid_url($config['td']) == true){
+        $battel = get_clan_v2($config['clan'], 'battles', $config);
     }
 
     //include_once(ROOT_DIR.'/views/header.php');
@@ -78,38 +75,37 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (isset($battel['request_data'])){
-                    foreach ($battel['request_data']['items'] as $val){
-                        if (strlen($val['time']) > 1){
-                            $date = date('H:i',$val['time']);
-                        } else {
-                            $date = '--:--';
-                        }
-                        if ($val['type'] == 'landing'){
-                            $type = '<img src="./images/landing.png">';
-                        } elseif ($val['type'] == 'for_province'){
-                            $type = '<img src="./images/attacked.png">';
-                        } elseif ($val['type'] == 'meeting_engagement'){
-                            $type = '<img src="./images/combats_running.png">';
-                        };
-                    ?>
-                    <tr>
-                        <td align="center"><?=$type; ?></td>
-                        <td><?=$date; ?></td>
-                        <td><a href="<?=$config['clan_link']; ?>maps/?province=<?=$val['provinces'][0]['id']; ?>" target="_blank"><?=$val['provinces'][0]['name']; ?></a></td>
-                    </tr>
-                    <?php };
-                    if ((isset($battel['request_data'])) && (count($battel['request_data']['items']) == 0 )) {  ?>
-                    <tr>
-                        <td colspan="3" align="center"><?=$lang['no_war']; ?></td>
-                    </tr>
-                    <?php
-                    };
-                } else { ?>
-                <tr>
-                    <td colspan="3" align="center"><?=$lang['error_1']?></td>
-                </tr>
-                <?php }; ?>
+        <?php if (isset($battel['data'])){
+                  if (empty($battel['data'][$config['clan']])) {
+                      echo '<tr><td colspan="3" align="center">'.$lang['no_war'].'</td></tr>';
+                  }   else {
+                      foreach ($battel['data'][$config['clan']] as $misc => $val){
+                          if (strlen($val['time']) > 1){
+                              $date = date('H:i',$val['time']);
+                          } else {
+                              $date = '--:--';
+                          }
+                          if ($val['type'] == 'landing'){
+                              $type = '<img src="./images/landing.png">';
+                          } elseif ($val['type'] == 'for_province'){
+                              $type = '<img src="./images/attacked.png">';
+                          } elseif ($val['type'] == 'meeting_engagement'){
+                              $type = '<img src="./images/combats_running.png">';
+                          };
+                      ?>
+                      <tr>
+                          <td align="center"><?=$type; ?></td>
+                          <td><?=$date; ?></td>
+                          <td><a href="<?=$config['clan_link']; ?>maps/globalmap/?province=<?=$val['provinces'][0]; ?>" target="_blank"><?=$val['arenas'][0]['name']; ?></a></td>
+                      </tr>
+                      <?php
+                      };
+                  }
+              }  else {
+                 $message = $lang['error_1'];
+                 if (isset ($battel['error']['message'])) $message .= ' ('.$battel['error']['message'].')';
+                 echo '<tr><td colspan="3" align="center">'.$message.'</td></tr>';
+              }; ?>
         </tbody>
     </table>
 </div>

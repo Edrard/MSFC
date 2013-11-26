@@ -5,26 +5,182 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-10-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
 <?php
-    function cron_current_run($fh,$date)
-    {
+function cron_update_tanks_db() {
+   global $db, $config;
+   $sql = "select tank_id from `tanks`;";
+   $q = $db->prepare($sql);
+   if ($q->execute() == TRUE) {
+       $sel = $q->fetchAll();
+   }   else {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
+   $tanks = array();
+
+   foreach ($sel as $key => $val) {
+      $tanks[$val['tank_id']] = $val['tank_id'];
+   }
+   unset($sel);
+   $tmp = get_tank_v2($config);
+   if ($tmp['status'] == 'ok') {
+       $updatearr = $toload = array ();
+       foreach ($tmp['data'] as $tank_id => $val) {
+          if (!in_array($tank_id,$tanks)) {
+               $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
+               $updatearr [$tank_id]['type']        = $val['type'];
+               $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
+               $updatearr [$tank_id]['level']       = $val['level'];
+               $updatearr [$tank_id]['nation']      = $val['nation'];
+               if ($val['is_premium']== true) {
+                   $updatearr [$val['tank_id']]['is_premium']      = 1;
+               }   else {
+                   $updatearr [$val['tank_id']]['is_premium']      = 0;
+               }
+               $toload[] = $val['tank_id'];
+          }
+       }
+       unset($tmp);
+       if (!empty($toload)) {
+            $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
+            foreach ($tmp as $tank_id => $val) {
+               $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
+               $updatearr [$tank_id]['image']         = $val['data']['image'];
+               $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
+               $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+            }
+            unset($tmp);
+            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+            foreach ($updatearr as $tank_id => $val) {
+               $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+            }
+            $sql = substr($sql, 0, strlen($sql)-2);
+            $sql .= ';';
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+       }
+       $message = 'ok';
+   }   else {
+       if (isset($tmp['error']['message'])) {
+           $message = 'Some error with getting data from WG ( '.$tmp['error']['message'].' )';
+       }   else {
+           $message = 'Some error with getting data from WG';
+       }
+   }
+   return $message;
+}
+
+function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
+   global $db;
+//   print_r($data);
+   $col_pl = $col_med = $col_tanks = $col_rat = $sqlarr = array();
+   $stats = array('all', 'clan', 'company');
+   $stats2 = array('spotted', 'hits', 'battle_avg_xp', 'draws', 'wins', 'losses', 'capture_points',
+                   'battles', 'damage_dealt', 'hits_percents', 'damage_received', 'shots', 'xp', 'frags',
+                   'survived_battles', 'dropped_capture_points');
+   $stats4 = array ('place', 'value');
+   $stats5 = array ('spotted', 'dropped_ctf_points', 'battle_avg_xp', 'battles', 'damage_dealt', 'frags',
+                    'ctf_points', 'integrated_rating', 'xp', 'battle_avg_performance', 'battle_wins');
+
+   if ($data['status'] == 'ok'){
+       $data = $data['data'];
+       $col_pl['account_id'] = $col_med['account_id'] = $col_rat['account_id'] = $data['account_id'];
+       $col_pl['updated_at'] = $col_med['updated_at'] = $col_rat['updated_at'] = $time;
+       foreach ($nationsin as $val2){
+          $col_tanks[$val2['nation']]['account_id'] = $data['account_id'];
+          $col_tanks[$val2['nation']]['updated_at'] = $time;
+       }
+
+       foreach ($stats as $val){
+          foreach ($stats2 as $val2){
+             $col_pl[$val.'_'.$val2] = $data['statistics'][$val][$val2];
+          }
+       }
+       $col_pl['nickname']   = $data['nickname'];
+       $col_pl['max_xp'] = $data['statistics']['max_xp'];
+       $col_pl['created_at'] = $data['created_at'];
+       $col_pl['role'] = $data['role'];
+
+       foreach ($medals as $key => $val) {
+           $col_med[$key] = $data['achievements'][$key];
+       }
+       foreach ($data['tanks'] as $key => $val) {
+           $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_battles'] = $val['statistics']['battles'];
+           $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_wins'] = $val['statistics']['wins'];
+           $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_mark_of_mastery'] = $val['mark_of_mastery'];
+       }
+       foreach ($stats5 as $val) {
+          foreach ($stats4 as $pv) {
+             if (isset($data['ratings'][$val][$pv])) $col_rat[$val.'_'.$pv]  = $data['ratings'][$val][$pv];
+          }
+       }
+   }
+   unset($data, $medals, $tanks);
+   if (!empty($col_pl)) {
+        $sqlarr[] = "INSERT INTO `col_players` (".(implode(",",array_keys($col_pl))).") VALUES ('".(implode("','",$col_pl))."'); ";
+   }
+   if (!empty($col_med)) {
+        $sqlarr[] = "INSERT INTO `col_medals` (".(implode(",",array_keys($col_med))).") VALUES ('".(implode("','",$col_med))."'); ";
+   }
+   if (!empty($col_tanks)) {
+        foreach ($col_tanks as $nation =>$val){
+           $sqlarr[] = "INSERT INTO `col_tank_".$nation."` (".(implode(",",array_keys($val))).") VALUES ('".(implode("','",$val))."'); ";
+        }
+   }
+   if (!empty($col_rat)) {
+       $sqlarr [] = "INSERT INTO `col_ratings` (".(implode(",",array_keys($col_rat))).") VALUES ('".(implode("','",$col_rat))."'); ";
+   }
+
+  // print_R($sqlarr);
+  if (!empty($sqlarr)) {
+       foreach ($sqlarr as $sql) {
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+       }
+   }
+}
+
+function update_multi_cron($dbprefix) {
+   global $db;
+   $sql = "UPDATE multiclan SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
+   $q = $db->prepare($sql);
+   if ($q->execute() != TRUE) {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
+}
+
+function get_config_cron_time($prefix) {
+   global $db;
+   $sql = "SELECT * FROM ".$prefix."config WHERE name = 'cron_time';";
+   $q = $db->prepare($sql);
+   if ($q->execute() == TRUE) {
+       return $q->fetchAll(PDO::FETCH_ASSOC);
+   }   else {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
+}
+
+    function cron_current_run($fh,$date) {
         global $db, $config;
 
         $sql = "SELECT account_id FROM `col_players` LIMIT 1;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $id = $q->fetchColumn();
-        } else {
+        }   else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
@@ -36,262 +192,5 @@
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
         fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
-
-    } 
-    function cron_links($players,$config)
-    {
-
-        $links = array();
-        foreach($players as $val){
-            $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.9/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
-        }
-
-        return($links);
     }
-    function cron_insert_pars_data($data,$roster,$config,$now,$log,$fh,$date,$pcount){
-
-        global $db;
-        //print_r($data);
-        if(!is_array($data)){ 
-            $data = json_decode($data,TRUE);
-        }
-        //print_r($data['data']['achievements']);die;
-        if($data['status'] == 'ok' && $data['status_code'] == 'NO_ERROR'){
-            if(count($data['data']) > 0){
-                if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $pcount).": ".$data['data']['name']."\n"); }
-                $mod = 1;
-                $dbb['account_id'] = $roster['account_id'];
-                $dbb['name'] = $data['data']['name'];
-                $dbb['role'] = $roster['role'];
-                $dbb['server'] = $config['server'];
-                $dbb['reg'] = $data['data']['created_at'];
-                $dbb['local'] = $data['data']['updated_at'];
-                $dbb['member_since'] = $roster['created_at'];
-                $dbb['up'] = $now;
-
-                $dbb['total'] = $data['data']['summary']['battles_count'];
-                $dbb['win'] = $data['data']['summary']['wins'];
-                $dbb['lose'] = $data['data']['summary']['losses'];
-                $dbb['alive'] = $data['data']['summary']['survived_battles'];
-
-                $dbb['des'] = $data['data']['battles']['frags'];
-                $dbb['spot'] = $data['data']['battles']['spotted'];
-                $dbb['accure'] = (int) $data['data']['battles']['hits_percents'];
-                $dbb['dmg'] = $data['data']['battles']['damage_dealt'];
-                $dbb['cap'] = $data['data']['battles']['capture_points'];
-                $dbb['def'] = $data['data']['battles']['dropped_capture_points'];
-                $dbb['exp'] = $data['data']['experience']['xp'];
-                $dbb['averag_exp'] = $data['data']['experience']['battle_avg_xp'];
-                $dbb['max_exp'] = $data['data']['experience']['max_xp'];
-                $dbb['gr_v'] = $data['data']['ratings']['integrated_rating']['value'];
-                $dbb['gr_p'] = $data['data']['ratings']['integrated_rating']['place'];
-                $dbb['wb_v'] = $data['data']['ratings']['battle_avg_performance']['value'];
-                $dbb['wb_p'] = $data['data']['ratings']['battle_avg_performance']['place'];
-                $dbb['eb_v'] = $data['data']['ratings']['battle_avg_xp']['value'];
-                $dbb['eb_p'] = $data['data']['ratings']['battle_avg_xp']['place'];
-                $dbb['win_v'] = $data['data']['ratings']['battle_wins']['value'];
-                $dbb['win_p'] = $data['data']['ratings']['battle_wins']['place'];
-                $dbb['gpl_v'] = $data['data']['ratings']['battles']['value'];
-                $dbb['gpl_p'] = $data['data']['ratings']['battles']['place'];
-                $dbb['cpt_p'] = $data['data']['ratings']['ctf_points']['place'];
-                $dbb['cpt_v'] = $data['data']['ratings']['ctf_points']['value'];
-                $dbb['dmg_p'] = $data['data']['ratings']['damage_dealt']['place'];
-                $dbb['dmg_v'] = $data['data']['ratings']['damage_dealt']['value'];
-                $dbb['dpt_p'] = $data['data']['ratings']['dropped_ctf_points']['place'];
-                $dbb['dpt_v'] = $data['data']['ratings']['dropped_ctf_points']['value'];
-                $dbb['frg_p'] = $data['data']['ratings']['frags']['place'];
-                $dbb['frg_v'] = $data['data']['ratings']['frags']['value'];
-                $dbb['spt_p'] = $data['data']['ratings']['spotted']['place'];
-                $dbb['spt_v'] = $data['data']['ratings']['spotted']['value'];
-                $dbb['exp_p'] = $data['data']['ratings']['xp']['place'];
-                $dbb['exp_v'] = $data['data']['ratings']['xp']['value'];
-                //print_r($status);
-                if($data['data']['name']){
-
-                    $sql = "INSERT INTO `col_players` (".(implode(",",array_keys($dbb))).") VALUES ('".(implode("','",$dbb))."');";
-
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-
-
-                    //$current_tmp = $db->query("SELECT id,tank,nation,title FROM tanks;")->fetchAll();
-
-                    $sql = "SELECT id,tank,nation,title FROM `tanks`;";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $current_tmp = $q->fetchAll();
-                    } else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-
-                    foreach($current_tmp as $val){
-                        $current[$val['id']] = $val['title'].'_'.$val['nation'];    
-                    }
-
-
-                    if(!isset($current)){
-                        $current = array();
-                    }
-
-                    $tmp = array();
-                    $tmp_second = array();
-                    $current_flip = array_flip($current);
-                    if(isset($data['data']['vehicles'])){
-                        foreach($data['data']['vehicles'] as $val){
-                            if(in_array($val['name'].'_'.$val['nation'],$current)){
-                                $tmp[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_t'] = str_replace(' ','',$val['battle_count']);
-                                $tmp[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_w'] = str_replace(' ','',$val['win_count']);        
-                                $tmp_second[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_sp'] = (int) str_replace(' ','',$val['spotted']);
-                                $tmp_second[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_dd'] = (int) str_replace(' ','',$val['damageDealt']);
-                                $tmp_second[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_sb'] = (int) str_replace(' ','',$val['survivedBattles']);
-                                $tmp_second[$val['nation']][$current_flip[trim($val['name']).'_'.$val['nation']].'_fr'] = (int) str_replace(' ','',$val['frags']);
-                            }else{
-                                $tank = array(
-                                    'tank' => trim($val['localized_name']),
-                                    'nation' => $val['nation'],
-                                    'type' => $val['class'],
-                                    'lvl' => $val['level'],
-                                    'link' => $val['image_url'],
-                                    'title' => $val['name'],
-                                );
-                                $tsql = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
-                                $q = $db->prepare($tsql);
-                                if ($q->execute() !== TRUE) {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$tsql));
-                                }
-                                $id = $db->lastInsertId(); //шикарная функция, возвращает значение автоинкремент поля из последнего запроса
-
-                                $sql = "show tables like 'col_tank_".$val['nation']."';";
-                                $q = $db->prepare($sql);
-                                if ($q->execute() == TRUE) {
-                                    $nation_db = $q->fetchAll();
-                                } else {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                }
-                                $sql = "show tables like 'col_rating_tank_".$val['nation']."';";
-                                $q = $db->prepare($sql);
-                                if ($q->execute() == TRUE) {
-                                    $col_nation_db = $q->fetchAll();
-                                } else {
-                                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                                }
-                                if(count($nation_db) < 1){
-                                    $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
-                                    `up` INT( 12 ) NOT NULL,
-                                    KEY `up` (`up`) ) ENGINE=MYISAM;";
-                                    $db->prepare($sql)->execute();
-                                }
-                                if(count($col_nation_db) < 1){
-                                    $sql = "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
-                                    `account_id` INT(12),
-                                    `up` INT( 12 ) NOT NULL,
-                                    KEY `up` (`up`) ) ENGINE=MYISAM;";
-                                    $db->prepare($sql)->execute();
-
-                                }
-                                $ask = "ALTER TABLE `col_tank_".$val['nation']."`
-                                ADD `".$id."_w` INT( 12 ) NOT NULL,
-                                ADD `".$id."_t` INT( 12 ) NOT NULL;";
-                                $db->prepare($ask)->execute();
-                                $ask = "ALTER TABLE `col_rating_tank_".$val['nation']."`
-                                ADD `".$id."_sp` INT( 12 ) NOT NULL,
-                                ADD `".$id."_dd` INT( 12 ) NOT NULL,
-                                ADD `".$id."_sb` INT( 12 ) NOT NULL,
-                                ADD `".$id."_fr` INT( 12 ) NOT NULL;";
-                                $db->prepare($ask)->execute();
-
-                                $tmp[$val['nation']][$id.'_t'] = str_replace(' ','',$val['battle_count']);
-                                $tmp[$val['nation']][$id.'_w'] = str_replace(' ','',$val['win_count']); 
-                                $tmp_second[$val['nation']][$id.'_sp'] = (int) str_replace(' ','',$val['spotted']);
-                                $tmp_second[$val['nation']][$id.'_dd'] = (int) str_replace(' ','',$val['damageDealt']);
-                                $tmp_second[$val['nation']][$id.'_sb'] = (int) str_replace(' ','',$val['survivedBattles']);
-                                $tmp_second[$val['nation']][$id.'_fr'] = (int) str_replace(' ','',$val['frags']); 
-
-                            }
-                        }
-                    }
-                    //print_r($tmp_second);
-
-
-                    //Inserting tanks
-                    $sql = "show tables like 'col_tank_%';";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $nation_db_now = $q->fetchAll();
-                    } else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-
-                    foreach($tmp as $key => $t){
-                        $t['account_id'] = $roster['account_id'];
-                        $t['up'] = $now;
-                        $q = $db->prepare("INSERT INTO `col_tank_".$key."` (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
-                    }
-                    //Inserting second part of tanks
-
-                    $sql = "show tables like 'col_rating_tank_%';";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $nation_db_now = $q->fetchAll();
-                    } else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-
-                    foreach($tmp_second as $key => $t){
-                        $t['account_id'] = $roster['account_id'];
-                        $t['up'] = $now;
-                        $q = $db->prepare("INSERT INTO `col_rating_tank_".$key."` (".(implode(",",array_keys($t))).") VALUES ('".(implode("','",$t))."');")->execute();
-
-                    }
-
-                    foreach($data['data']['achievements']  as $key => $val){
-                        if(is_array($val)){
-                            foreach($val as $yek => $v){
-                                $data['data']['achievements'][$key.'_'.$yek] = (int)$v;
-                                unset($val[$yek]);    
-                            }
-                            unset($data['data']['achievements'][$key]);
-                        }
-                    }
-
-                    //print_r($new_med);
-                    $data['data']['achievements']['account_id'] = $roster['account_id'];
-                    $data['data']['achievements']['up'] = $now;
-                    $sql = "INSERT INTO `col_medals` (".(implode(",",array_keys($data['data']['achievements']))).") VALUES ('".(implode("','",$data['data']['achievements']))."');";
-                    //echo $sql;
-                    $q = $db->prepare($sql)->execute();
-
-                }
-            } 
-        }else{
-            if($log == 1){
-                fwrite($fh, $date.": (Err) No data for player with ID ".$roster['account_id']." ({$data['error']})\n");
-            }
-        }
-    }
-    function update_multi_cron($dbprefix)
-    {
-        global $db;
-        $sql = "UPDATE multiclan SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }    
-    }
-    function get_config_cron_time($prefix)
-    {
-        global $db;
-        $sql = "SELECT * FROM ".$prefix."config WHERE name = 'cron_time';";    
-
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            return $q->fetchAll(PDO::FETCH_ASSOC);
-        }else{ 
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }  
-    }
-
 ?>

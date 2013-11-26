@@ -837,4 +837,289 @@
         $new['data'] = &$data;
         return $new;
     }
+    function add_tanks_preset($tank) {
+      global $db;
+
+      $presets = array();
+      $sql = 'SELECT `type`, `lvl`, `show`, `index` FROM `top_tanks` GROUP BY `type`, `lvl`, `show`, `index` ORDER BY `show` DESC, `index` ASC;';
+      $q = $db->prepare($sql);
+      if ($q->execute() == TRUE) {
+          $presets = $q->fetchAll(PDO :: FETCH_ASSOC);
+      } else {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      foreach($presets as $val) {
+        if($val['lvl'] == $tank['lvl'] and $val['type'] == $tank['type']) {
+            $sql = 'INSERT IGNORE INTO `top_tanks` (`title`, `lvl`, `type`, `index`, `show`) VALUES ';
+            $sql .= "('{$tank['title']}', '{$tank['lvl']}', '{$tank['type']}', '{$val['index']}', '{$val['show']}');";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            break;
+        }
+      }
+    }
+    function tanks_group_full($array,$nation_s,$type_s,$lvl_s){
+        $name = array();
+        foreach($array as $val){
+            if(isset($val['tank'])){
+                if(is_array($val['tank'])) {
+                    foreach($val['tank'] as $lvl => $types){
+                        foreach($types as $type => $tanks){
+                            foreach($tanks as $tank){
+                                if(in_array($tank['lvl'],$lvl_s) && in_array($tank['class'],$type_s) && in_array($tank['nation'],$nation_s)){
+                                    $name[$type][$lvl][($tank['type'])] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ksort($name);
+        foreach(array_keys($name) as $types){
+            ksort($name[$types]);   
+        }
+        return $name;
+    }
+    function cron_links($players,$config)
+    {
+
+        $links = array();
+        foreach($players as $val){
+            $links[$val['account_name']] = $config['td'].'/uc/accounts/'.$val['account_id'].'/api/1.9/?source_token=Intellect_Soft-WoT_Mobile-unofficial_stats';
+        }
+
+        return($links);
+    }
+    function insert_stat($data,$roster,$config,$transit = array('current' => array(),'col_tank' => array())){
+
+        global $db;
+        if(count($data['data']) > 0){
+            $current = $transit['current'];
+            $col_tank = $transit['col_tank'];
+
+            if(isset($data['data']['vehicles'])){
+                $tsql = '';
+                $sql = '';
+                foreach($data['data']['vehicles'] as $val){
+                    if(!in_array($val['name'].'_'.$val['nation'],$current)){
+
+                        $tank = array(
+                            'tank' => trim($val['localized_name']),
+                            'nation' => $val['nation'],
+                            'type' => $val['class'],
+                            'lvl' => $val['level'],
+                            'link' => $val['image_url'],
+                            'title' => $val['name'],
+                        );
+                        $sqlt = "INSERT INTO `tanks` (".(implode(",",array_keys($tank))).") VALUES ('".(implode("','",$tank))."');";
+                        $q = $db->prepare($sqlt);
+                        if ($q->execute() !== TRUE) {
+                            die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
+                        }
+                        unset($q);
+                        $id = $db->lastInsertId();
+                        $current[$id] = $val['name'].'_'.$val['nation'];
+                        add_tanks_preset($tank);
+
+                        if(!in_array($val['nation'],$col_tank)) {
+
+                            $sql .= "CREATE TABLE IF NOT EXISTS `col_rating_tank_".$val['nation']."` (
+                            `account_id` INT(12),
+                            `up` INT( 12 ) NOT NULL,
+                            KEY `up` (`up`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;";
+                            $col_tank[] = $val['nation'];
+                        }
+
+                        $tsql .= "ALTER TABLE `col_tank_".$val['nation']."`
+                        ADD `".$id."_w` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_t` smallint(12) UNSIGNED NOT NULL DEFAULT 0;";
+                        $tsql .= "ALTER TABLE `col_rating_tank_".$val['nation']."`
+                        ADD `".$id."_sp` mediumint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_dd` INT( 12 ) NOT NULL DEFAULT 0,
+                        ADD `".$id."_sb` mediumint(12) UNSIGNED NOT NULL DEFAULT 0,
+                        ADD `".$id."_fr` mediumint(12) UNSIGNED NOT NULL DEFAULT 0;";
+                    }
+                }
+                // ?—?°??Nˆ??N?N‹ ?? ?‘?” ??N‹???µN??µ????N‹?µ ?·?° N†?????»
+                if($sql != '') {
+                    $q = $db->prepare($sql);
+                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
+                }
+                if($tsql != '') {
+                    $q = $db->prepare($tsql);
+                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+                }
+            }
+            unset($transit); $transit = array('current' => array(),'col_tank' => array());
+            $transit['current'] = $current;
+            $transit['col_tank'] = $col_tank;
+        }
+        return $transit;
+    }
+
+
+    function pars_data2($result,$fname,$stat_config,$trans,$roster)
+    {
+        //?”?°N‚N‹
+        $new['data']['name'] = $roster['account_name']; 
+        $new['data']['account_id'] = $roster['account_id'];
+
+        $new['date']['reg'] = $trans['reg'].' '.date('d.m.Y',$result['data']['created_at']);
+        $new['date']['reg_num'] = $result['data']['created_at'];
+        $new['date']['local'] = $trans['dateof'].' '.date('d.m.Y',$result['data']['updated_at']);
+        $new['date']['local_num'] = $result['data']['updated_at'];
+        //?z?±N‰???µ Nˆ?µ?·N??»N?N‚?°N‚N‹
+        $new['overall'][$trans['games_p']] = $result['data']['summary']['battles_count'];
+        $new['overall'][$trans['victories']] = $result['data']['summary']['wins'];
+        $new['overall'][$trans['defeats']] = $result['data']['summary']['losses'];
+        $new['overall'][$trans['battles_s']] = $result['data']['summary']['survived_battles'];
+
+
+        //?‘???µ???°N? N?N„N„?µ??N‚????????N?N‚N?
+        $new['perform'][$trans['destroyed']] = $result['data']['battles']['frags'];
+        $new['perform'][$trans['spotted']] = $result['data']['battles']['spotted'];
+        $new['perform'][$trans['hit_ratio']] = $result['data']['battles']['hits_percents'];
+        $new['perform'][$trans['damage']] = $result['data']['battles']['damage_dealt'];
+        $new['perform'][$trans['capture']] = $result['data']['battles']['capture_points'];
+        $new['perform'][$trans['defend']] = $result['data']['battles']['dropped_capture_points'];
+
+        //?‘???µ?????? ????N‹N‚
+        $new['exp'][$trans['total_exp']] = $result['data']['experience']['xp'];
+        $new['exp'][$trans['exp_battle']] = $result['data']['experience']['battle_avg_xp'];
+        $new['exp'][$trans['exp_max']] = $result['data']['experience']['max_xp'];
+
+
+        //? ?µ??N‚??????
+        $new['rating'][$trans['gr']]['type'] = 'GR';
+        $new['rating'][$trans['gr']]['link'] = $stat_config['rating_link'].'gr.png';
+        $new['rating'][$trans['gr']]['name'] = $trans['gr'];
+        $new['rating'][$trans['gr']]['value'] = $result['data']['ratings']['integrated_rating']['value'];
+        $new['rating'][$trans['gr']]['place'] = $result['data']['ratings']['integrated_rating']['place'];
+
+        $new['rating'][$trans['wb']]['type'] = 'W/B';
+        $new['rating'][$trans['wb']]['link'] = $stat_config['rating_link'].'wb.png';
+        $new['rating'][$trans['wb']]['name'] = $trans['wb'];
+        $new['rating'][$trans['wb']]['value'] = $result['data']['ratings']['battle_avg_performance']['value'].'%';
+        $new['rating'][$trans['wb']]['place'] = $result['data']['ratings']['battle_avg_performance']['place'];
+
+        $new['rating'][$trans['eb']]['type'] = 'E/B';
+        $new['rating'][$trans['eb']]['link'] = $stat_config['rating_link'].'eb.png';
+        $new['rating'][$trans['eb']]['name'] = $trans['eb'];
+        $new['rating'][$trans['eb']]['value'] = $result['data']['ratings']['battle_avg_xp']['value'];
+        $new['rating'][$trans['eb']]['place'] = $result['data']['ratings']['battle_avg_xp']['place'];
+
+        $new['rating'][$trans['win']]['type'] = 'WIN';
+        $new['rating'][$trans['win']]['link'] = $stat_config['rating_link'].'win.png';
+        $new['rating'][$trans['win']]['name'] = $trans['win'];
+        $new['rating'][$trans['win']]['value'] = $result['data']['ratings']['battle_wins']['value'];
+        $new['rating'][$trans['win']]['place'] = $result['data']['ratings']['battle_wins']['place'];
+
+        $new['rating'][$trans['gpl']]['type'] = 'GPL';
+        $new['rating'][$trans['gpl']]['link'] = $stat_config['rating_link'].'gpl.png';
+        $new['rating'][$trans['gpl']]['name'] = $trans['gpl'];
+        $new['rating'][$trans['gpl']]['value'] = $result['data']['ratings']['battles']['value'];
+        $new['rating'][$trans['gpl']]['place'] = $result['data']['ratings']['battles']['place'];
+
+        $new['rating'][$trans['cpt']]['type'] = 'CPT';
+        $new['rating'][$trans['cpt']]['link'] = $stat_config['rating_link'].'cpt.png';
+        $new['rating'][$trans['cpt']]['name'] = $trans['cpt'];
+        $new['rating'][$trans['cpt']]['value'] = $result['data']['ratings']['ctf_points']['value'];
+        $new['rating'][$trans['cpt']]['place'] = $result['data']['ratings']['ctf_points']['place'];
+
+        $new['rating'][$trans['dmg']]['type'] = 'DMG';
+        $new['rating'][$trans['dmg']]['link'] = $stat_config['rating_link'].'dmg.png';
+        $new['rating'][$trans['dmg']]['name'] = $trans['dmg'];
+        $new['rating'][$trans['dmg']]['value'] = $result['data']['ratings']['damage_dealt']['value'];
+        $new['rating'][$trans['dmg']]['place'] = $result['data']['ratings']['damage_dealt']['place'];
+
+        $new['rating'][$trans['dpt']]['type'] = 'DPT';
+        $new['rating'][$trans['dpt']]['link'] = $stat_config['rating_link'].'dpt.png';
+        $new['rating'][$trans['dpt']]['name'] = $trans['dpt'];
+        $new['rating'][$trans['dpt']]['value'] = $result['data']['ratings']['dropped_ctf_points']['value'];
+        $new['rating'][$trans['dpt']]['place'] = $result['data']['ratings']['dropped_ctf_points']['place'];
+
+        $new['rating'][$trans['frg']]['type'] = 'FRG';
+        $new['rating'][$trans['frg']]['link'] = $stat_config['rating_link'].'frg.png';
+        $new['rating'][$trans['frg']]['name'] = $trans['frg'];
+        $new['rating'][$trans['frg']]['value'] = $result['data']['ratings']['frags']['value'];
+        $new['rating'][$trans['frg']]['place'] = $result['data']['ratings']['frags']['place'];
+
+        $new['rating'][$trans['spt']]['type'] = 'SPT';
+        $new['rating'][$trans['spt']]['link'] = $stat_config['rating_link'].'spt.png';
+        $new['rating'][$trans['spt']]['name'] = $trans['spt'];
+        $new['rating'][$trans['spt']]['value'] = $result['data']['ratings']['spotted']['value'];
+        $new['rating'][$trans['spt']]['place'] = $result['data']['ratings']['spotted']['place'];
+
+        $new['rating'][$trans['exp']]['type'] = 'EXP';
+        $new['rating'][$trans['exp']]['link'] = $stat_config['rating_link'].'exp.png';
+        $new['rating'][$trans['exp']]['name'] = $trans['exp'];
+        $new['rating'][$trans['exp']]['value'] = $result['data']['ratings']['xp']['value'];
+        $new['rating'][$trans['exp']]['place'] = $result['data']['ratings']['xp']['place'];
+
+
+        foreach($result['data']['vehicles'] as $veh){
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['link'] = $veh['image_url'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['lvl'] = $veh['level'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['type'] = $veh['localized_name'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['name'] = $veh['name'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['total'] = $veh['battle_count'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['win'] = $veh['win_count'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['nation'] = $veh['nation'];
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['class'] = $veh['class'];  
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['spotted'] = (int) str_replace(' ','',$veh['spotted']);
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['damageDealt'] = (int) str_replace(' ','',$veh['damageDealt']);
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['survivedBattles'] = (int) str_replace(' ','',$veh['survivedBattles']);
+            $new['tank'][$veh['level']][$veh['class']][$veh['localized_name']]['frags'] = (int) str_replace(' ','',$veh['frags']);     
+        }
+
+        foreach($result['data']['achievements'] as $name => $medal){
+            if($name == 'maxDiehardSeries'){
+                $medn['diehard']['max'] = $medal;
+                $medn['diehard']['max_name'] = 'maxDiehardSeries';    
+            }elseif($name == 'maxInvincibleSeries'){
+                $medn['invincible']['max'] = $medal;
+                $medn['invincible']['max_name'] = 'maxInvincibleSeries';    
+            }elseif($name == 'maxPiercingSeries'){
+                $medn['armorPiercer']['max'] = $medal;
+                $medn['armorPiercer']['max_name'] = 'maxPiercingSeries';    
+            }elseif($name == 'maxKillingSeries'){
+                $medn['handOfDeath']['max'] = $medal; 
+                $medn['handOfDeath']['max_name'] = 'maxKillingSeries';   
+            }elseif($name == 'maxSniperSeries'){
+                $medn['titleSniper']['max'] = $medal; 
+                $medn['titleSniper']['max_name'] = 'maxSniperSeries';   
+            }elseif($name == 'tankExperts' && is_array($medal)){
+                foreach($medal as $spname => $spmed){
+                    $medn[$name.'_'.$spname]['value'] = (int)$spmed;
+                }
+            }elseif($name == 'mechanicEngineers' && is_array($medal)){
+                foreach($medal as $spname => $spmed){
+                    $medn[$name.'_'.$spname]['value'] = (int)$spmed;
+                }
+            }else{
+                $medn[$name]['value'] = $medal;
+            }
+        }
+
+        foreach(array_keys($medn) as $name){  
+            if(isset($trans['medal_'.$name])){
+                $medn[$name]['title'] = $trans['medal_'.$name];
+            }     
+        }
+
+
+
+        foreach($medn as $name => $val){
+            if(isset($val['type'])){
+                $nmedn[$val['type']][$name] = $val;
+            }
+        }
+        unset($nmedn['special']['lumberjack']);
+        $new['medals'] = $nmedn;
+        //print_r($new);
+        return $new;
+    }
 ?>

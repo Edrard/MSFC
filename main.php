@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
+    * @author      $Author: Edd, Exinaus, SHW  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -95,21 +95,21 @@
     include_once(ROOT_DIR.'/function/tabs.php');
     include_once(ROOT_DIR.'/including/show.php');
     include_once(ROOT_DIR.'/including/gk.php');
-    if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($new) > 0) {
+    if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($res) > 0) {
         include_once(ROOT_DIR.'/views/index.php');
     } else {
         include_once(ROOT_DIR.'/views/header.php');
-        if(count($new) > 0 ){
+        if(count($res) > 0 ){
             if($config['cron'] == 1 && $col_check > 2){
-                $medal_progress = medal_progress($roster_id,(now() - $config['medal_progress']),now());
+                $medal_progress = medal_progress($roster_id, $medn,(now() - $config['medal_progress']),now());
                 $medal_resort = medals_resort($medal_progress,$roster_id);
                 $best_medal_progress = best_medal_progress($medal_progress['unsort']);
                 unset($medal_progress);
                 $we_loosed = went_players($roster_id,(now(1) - $config['we_loosed']),now());
-                $new_players = new_players($roster,(now() - $config['new_players']),now());
-                $main_progress = player_progress_main($roster,(now() - $config['main_progress']),now());
-                $best_main_progress = best_player_progress_main($main_progress['main']);
-                $new_tanks = new_tanks($roster,$col_tables,(now() - $config['new_tanks']),now());
+                $new_players = new_players($roster_id,(now() - $config['new_players']),now());
+                $main_progress = player_progress_main($roster_id,(now() - $config['main_progress']),now());
+                $best_main_progress = best_player_progress_main($main_progress['delta']);
+                $new_tanks = new_tanks($roster_id,$col_tables,(now() - $config['new_tanks']),now());
             }
             include_once(ROOT_DIR.'/views/body.php');
         }else{

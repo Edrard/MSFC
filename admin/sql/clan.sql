@@ -17,151 +17,100 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `test2`
+-- База данных: ``
 --
 
 -- --------------------------------------------------------
-
---
--- Структура таблицы `col_medals`
---
-
-CREATE TABLE IF NOT EXISTS `col_medals` (
-  `account_id` int(12) NOT NULL,
-  `up` int(12) NOT NULL,
-  `medalCarius` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalHalonen` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `invader` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalFadin` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `armorPiercer` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalEkins` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `mousebane` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalKay` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `defender` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalLeClerc` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `supporter` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `steelwall` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalAbrams` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalPoppel` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalOrlik` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `handOfDeath` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `sniper` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `warrior` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `titleSniper` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalWittmann` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalBurda` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `scout` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `beasthunter` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `kamikaze` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `raider` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalOskin` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalBillotte` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalLavrinenko` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalKolobanov` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `invincible` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `lumberjack` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `tankExpert` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `diehard` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalKnispel` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `maxDiehardSeries` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `maxInvincibleSeries` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `maxPiercingSeries` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `maxKillingSeries` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `maxSniperSeries` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalBoelter` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `sinai` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `evileye` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalDeLanglade` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalTamadaYoshio` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalNikolas` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalLehvaslaiho` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalDumitru` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalPascucci` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalLafayettePool` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalRadleyWalters` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalTarczay` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalBrunoPietro` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalCrucialContribution` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `medalBrothersInArms` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `huntsman` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `luckyDevil` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `ironMan` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `sturdy` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `pattonValley` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `heroesOfRassenay` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `bombardier` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `mechanicEngineer` smallint(11) UNSIGNED NOT NULL DEFAULT 0,
-  `tankExperts_usa` tinyint(1) NOT NULL DEFAULT 0,
-  `tankExperts_france` tinyint(1) NOT NULL DEFAULT 0,
-  `tankExperts_ussr` tinyint(1) NOT NULL DEFAULT 0,
-  `tankExperts_china` tinyint(1) NOT NULL DEFAULT 0,
-  `tankExperts_uk` tinyint(1) NOT NULL DEFAULT 0,
-  `tankExperts_germany` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_usa` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_france` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_ussr` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_china` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_uk` tinyint(1) NOT NULL DEFAULT 0,
-  `mechanicEngineers_germany` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `col_players`
---
 
 CREATE TABLE IF NOT EXISTS `col_players` (
   `account_id` int(12) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `role` varchar(50) NOT NULL,
-  `server` varchar(2) NOT NULL,
-  `reg` int(12) NOT NULL,
-  `local` int(12) NOT NULL,
-  `member_since` varchar(11) NOT NULL,
-  `up` int(12) NOT NULL,
-  `total` int(8) NOT NULL,
-  `win` int(8) NOT NULL,
-  `lose` int(8) NOT NULL,
-  `alive` int(8) NOT NULL,
-  `des` int(8) NOT NULL,
-  `spot` int(8) NOT NULL,
-  `accure` int(3) NOT NULL,
-  `dmg` int(15) NOT NULL,
-  `cap` int(12) NOT NULL,
-  `def` int(12) NOT NULL,
-  `exp` int(15) NOT NULL,
-  `averag_exp` int(4) NOT NULL,
-  `max_exp` int(4) NOT NULL,
-  `gr_v` int(12) NOT NULL,
-  `gr_p` int(12) NOT NULL,
-  `wb_v` int(12) NOT NULL,
-  `wb_p` int(12) NOT NULL,
-  `eb_v` int(12) NOT NULL,
-  `eb_p` int(12) NOT NULL,
-  `win_v` int(12) NOT NULL,
-  `win_p` int(12) NOT NULL,
-  `gpl_v` int(12) NOT NULL,
-  `gpl_p` int(12) NOT NULL,
-  `cpt_p` int(12) NOT NULL,
-  `cpt_v` int(12) NOT NULL,
-  `dmg_p` int(12) NOT NULL,
-  `dmg_v` int(12) NOT NULL,
-  `dpt_p` int(12) NOT NULL,
-  `dpt_v` int(12) NOT NULL,
-  `frg_p` int(12) NOT NULL,
-  `frg_v` int(12) NOT NULL,
-  `spt_p` int(12) NOT NULL,
-  `spt_v` int(12) NOT NULL,
-  `exp_p` int(12) NOT NULL,
-  `exp_v` int(12) NOT NULL
+  `nickname` varchar(50) NOT NULL,
+  `updated_at` int(12) NOT NULL,
+  `all_spotted` int(8) NOT NULL,
+  `all_hits` int(8) NOT NULL,
+  `all_battle_avg_xp` int(8) NOT NULL,
+  `all_draws` int(8) NOT NULL,
+  `all_wins` int(8) NOT NULL,
+  `all_losses` int(8) NOT NULL,
+  `all_capture_points` int(8) NOT NULL,
+  `all_battles` int(8) NOT NULL,
+  `all_damage_dealt` int(8) NOT NULL,
+  `all_hits_percents` int(8) NOT NULL,
+  `all_damage_received` int(8) NOT NULL,
+  `all_shots` int(8) NOT NULL,
+  `all_xp` int(8) NOT NULL,
+  `all_frags` int(8) NOT NULL,
+  `all_survived_battles` int(8) NOT NULL,
+  `all_dropped_capture_points` int(8) NOT NULL,
+  `clan_spotted` int(8) NOT NULL,
+  `clan_hits` int(8) NOT NULL,
+  `clan_battle_avg_xp` int(8) NOT NULL,
+  `clan_draws` int(8) NOT NULL,
+  `clan_wins` int(8) NOT NULL,
+  `clan_losses` int(8) NOT NULL,
+  `clan_capture_points` int(8) NOT NULL,
+  `clan_battles` int(8) NOT NULL,
+  `clan_damage_dealt` int(8) NOT NULL,
+  `clan_hits_percents` int(8) NOT NULL,
+  `clan_damage_received` int(8) NOT NULL,
+  `clan_shots` int(8) NOT NULL,
+  `clan_xp` int(8) NOT NULL,
+  `clan_frags` int(8) NOT NULL,
+  `clan_survived_battles` int(8) NOT NULL,
+  `clan_dropped_capture_points` int(8) NOT NULL,
+  `company_spotted` int(8) NOT NULL,
+  `company_hits` int(8) NOT NULL,
+  `company_battle_avg_xp` int(8) NOT NULL,
+  `company_draws` int(8) NOT NULL,
+  `company_wins` int(8) NOT NULL,
+  `company_losses` int(8) NOT NULL,
+  `company_capture_points` int(8) NOT NULL,
+  `company_battles` int(8) NOT NULL,
+  `company_damage_dealt` int(8) NOT NULL,
+  `company_hits_percents` int(8) NOT NULL,
+  `company_damage_received` int(8) NOT NULL,
+  `company_shots` int(8) NOT NULL,
+  `company_xp` int(8) NOT NULL,
+  `company_frags` int(8) NOT NULL,
+  `company_survived_battles` int(8) NOT NULL,
+  `company_dropped_capture_points` int(8) NOT NULL,
+  `max_xp` int(4) NOT NULL,
+  `created_at` int(12) NOT NULL,
+  `role` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
+-- Структура таблицы `col_ratings`
+CREATE TABLE IF NOT EXISTS `col_ratings` (
+  `account_id` int(12) NOT NULL,
+  `updated_at` int(12) NOT NULL,
+  `spotted_place` int(12) NOT NULL,
+  `dropped_ctf_points_place` int(12) NOT NULL,
+  `battle_avg_xp_place` int(12) NOT NULL,
+  `battles_place` int(12) NOT NULL,
+  `damage_dealt_place` int(12) NOT NULL,
+  `frags_place` int(12) NOT NULL,
+  `ctf_points_place` int(12) NOT NULL,
+  `integrated_rating_place` int(12) NOT NULL,
+  `xp_place` int(12) NOT NULL,
+  `battle_avg_performance_place` int(12) NOT NULL,
+  `battle_wins_place` int(12) NOT NULL,
+  `spotted_value` int(12) NOT NULL,
+  `dropped_ctf_points_value` int(12) NOT NULL,
+  `battle_avg_xp_value` int(12) NOT NULL,
+  `battles_value` int(12) NOT NULL,
+  `damage_dealt_value` int(12) NOT NULL,
+  `frags_value` int(12) NOT NULL,
+  `ctf_points_value` int(12) NOT NULL,
+  `integrated_rating_value` int(12) NOT NULL,
+  `xp_value` int(12) NOT NULL,
+  `battle_avg_performance_value` int(12) NOT NULL,
+  `battle_wins_value` int(12) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
---
+-- --------------------------------------------------------
 -- Структура таблицы `multiclan`
---
 
 CREATE TABLE IF NOT EXISTS `multiclan` (
   `id` bigint(225) NOT NULL,
@@ -169,18 +118,16 @@ CREATE TABLE IF NOT EXISTS `multiclan` (
   `sort` int(9) NOT NULL,
   `main` int(1) NOT NULL DEFAULT '0',
   `server` varchar(3) NOT NULL,
-  `cron` int(13) NOT NULL DEFAULT 0,
+  `cron` int(13) NOT NULL DEFAULT '0',
   KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
---
 -- Структура таблицы `config`
---
 
 CREATE TABLE IF NOT EXISTS `config` (
   `name` varchar(15) NOT NULL,
-  `value` varchar(25) NOT NULL,
+  `value` varchar(33) NOT NULL,
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -200,7 +147,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('cron', '1'),
 ('news', '1'),
 ('cron_time', '23'),
-('multiget', '10'),
+('multiget', '20'),
 ('autoclean', '0'),
 ('cron_auth', '0'),
 ('cron_multi', '0'),
@@ -209,14 +156,13 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '2.2.2'),
-('new_tanks', '172800');
+('version', '3.0.0'),
+('new_tanks', '172800'),
+('application_id', 'demo'),
+('top', '5');
 
 -- --------------------------------------------------------
-
---
 -- Структура таблицы `gk`
---
 
 CREATE TABLE IF NOT EXISTS `gk` (
   `name` varchar(50) NOT NULL,
@@ -226,10 +172,7 @@ CREATE TABLE IF NOT EXISTS `gk` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
 -- Структура таблицы `tabs`
---
 
 CREATE TABLE IF NOT EXISTS `tabs` (
   `id` mediumint(10) NOT NULL,
@@ -263,38 +206,32 @@ INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
 (20, 'Активность награды', 'active_1.php', 0, 1, 'all');
 
 -- --------------------------------------------------------
-
---
 -- Структура таблицы `tanks`
---
 
 CREATE TABLE IF NOT EXISTS `tanks` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(40) NOT NULL,
-  `tank` varchar(40) NOT NULL,
+  `tank_id` int(8),
+  `nation_i18n` varchar(20) NOT NULL,
+  `level` tinyint(2) NOT NULL,
   `nation` varchar(20) NOT NULL,
-  `lvl` varchar(4) NOT NULL,
+  `is_premium` tinyint(1) NOT NULL DEFAULT '0',
+  `name_i18n` varchar(40) NOT NULL,
   `type` varchar(15) NOT NULL,
-  `link` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `title` (`title`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `image` text NOT NULL,
+  `contour_image` text NOT NULL,
+  `image_small` text NOT NULL,
+  PRIMARY KEY (`tank_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
 -- Структура таблицы `top_tanks`
---
 
 CREATE TABLE IF NOT EXISTS `top_tanks` (
-  `title` varchar(40) NOT NULL,
-  `lvl` tinyint(3) unsigned NOT NULL,
-  `type` varchar(15) NOT NULL,
+  `tank_id` int(8) NOT NULL,
   `show` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(5) unsigned NOT NULL DEFAULT '0',
   `shortname` varchar(30) NOT NULL DEFAULT '',
   `index` tinyint(10) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`title`),
   KEY `index` (`index`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -302,19 +239,19 @@ CREATE TABLE IF NOT EXISTS `top_tanks` (
 -- Дамп данных таблицы `top_tanks`
 --
 
-INSERT INTO `top_tanks` (`title`, `lvl`, `type`, `show`, `order`, `shortname`, `index`) VALUES
-('Maus', 10, 'heavyTank', 1, 40, '', 1),
-('F10_AMX_50B', 10, 'heavyTank', 1, 30, '', 1),
-('IS-7', 10, 'heavyTank', 1, 20, '', 1),
-('E-100', 10, 'heavyTank', 1, 30, '', 1),
-('T110', 10, 'heavyTank', 1, 10, '', 1),
-('IS-4', 10, 'heavyTank', 1, 50, '', 1);
+INSERT INTO `top_tanks` (`tank_id`, `show`, `order`, `shortname`, `index`) VALUES
+(10785, 1, 10, 'T110E5', 1),
+(14881, 1, 20, 'T57 Heavy Tank', 1),
+(6929,  1, 30, 'Maus', 1),
+(9489,  1, 40, 'E-100', 1),
+(7169,  1, 50, 'IS-7', 1),
+(6145,  1, 60, 'IS-4', 1),
+(6209,  1, 70, 'AMX 50B', 1),
+(5425,  1, 80, '113', 1),
+(6225,  1, 90, 'FV215b', 1);
 
 -- --------------------------------------------------------
-
---
 -- Структура таблицы `users`
---
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

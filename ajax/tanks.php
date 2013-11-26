@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -51,8 +51,8 @@
     $cache = new Cache(ROOT_DIR.'/cache/');
     $new_roster = $cache->get('get_last_roster_'.$config['clan'],0);
     //print_r($new_roster);
-    foreach($new_roster['data']['members'] as $val){
-        $res[$val['account_name']] = $cache->get($val['account_name'],0,ROOT_DIR.'/cache/players/');
+    foreach($new_roster['data'][$config['clan']]['members'] as $val){
+        $res[$val['account_name']] = $cache->get($val['account_id'],0,ROOT_DIR.'/cache/players/');
     }
     if($_POST['type'] != 'all'){
         $type = array($_POST['type']);   
@@ -69,8 +69,12 @@
     }else{
         $lvl = array('1','2','3','4','5','6','7','8','9','10');
     }
-    $tanks_group = tanks_group_full($res,$nation,$type,$lvl);
-
+    $tanks = tanks();
+    foreach ($tanks as $key => $val) {
+       if (!in_array ($val['level'], $lvl) || !in_array ($val['nation'], $nation) || !in_array ($val['type'], $type) ){
+           unset($tanks[$key]);
+       }
+    }
     //print_r($res);
 ?>
 <script type="text/javascript">
@@ -81,47 +85,32 @@
 <table id="tankslist" width="100%" cellspacing="1" class="table-id-<?=$_POST['key'];?>">
     <thead>
         <tr>
-            <th><?=$lang['name']; ?></th>
-            <?php foreach($tanks_group as $type => $types){
-                    foreach($types as $lvl => $tank) {
-                        foreach($tank as $column => $tmp){ ?>
-                        <th><?=$column; ?></th>
-                        <?php }
-                    }
-                }
-            ?>
+            <th><?=$lang['name']; ?></th><?php 
+            foreach ($tanks as $key => $val) {
+               echo '<th>',$val['name_i18n'],'</th>';
+            } ?>
         </tr>
     </thead>
     <tbody>
         <?php foreach($res as $name => $val){ ?>
             <tr>
-                <td><a href="<?php echo $config['base'].$name.'/'; ?>"
-                    target="_blank"><?=$name; ?></a></td>
-                <?php foreach($tanks_group as $type => $types){
-                        foreach($types as $lvl => $tmp){
-                            foreach($tmp as $column => $one){ ?>
-                            <td>
-                                <?php
-                                    if(isset($val['tank'][$lvl][$type][$column])){
-                                        if($val['tank'][$lvl][$type][$column]['total'] == 0){
-                                            $percent = 0;
-                                        }else{
-                                            $percent = round($val['tank'][$lvl][$type][$column]['win']*100/$val['tank'][$lvl][$type][$column]['total'],2);
-                                        }
-
-                                        echo $percent.'% ('.$val['tank'][$lvl][$type][$column]['total'].'/'.$val['tank'][$lvl][$type][$column]['win'].')';
-                                    }else{
-                                        echo '';
-                                    }
-
-                                ?>
-                            </td>
-                            <?php
-                            }
-                        }
-                    }
-                ?>
+                <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?=$name; ?></a></td><?php
+                foreach ($tanks as $key => $stat) {
+                   echo '<td>';
+                   $present = 0;
+                   foreach ($val['data']['tanks'] as $key => $val2) {
+                      if ($val2['tank_id'] == $stat['tank_id'] ) {
+                          if ($val2['statistics']['battles'] > 0) {
+                              $percent = round($val2['statistics']['wins']/$val2['statistics']['battles']*100,2);
+                              echo $percent.'% ('.$val2['statistics']['wins'].'/'.$val2['statistics']['battles'].')';
+                              $present++;
+                          }
+                      }
+                   }
+                   if ($present==0) echo '<span style="display: none;">-1</span>';
+                   echo '</td>';
+                } ?>
             </tr>
             <?php } ?>
-    </tbody>  
-    </table>
+    </tbody>
+</table>

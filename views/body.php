@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-10-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
+    * @author      $Author: Edd, Exinaus, SHW  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -49,7 +49,7 @@
                     }
                 ?>                                                             
                 <a style="margin: 0 5px;" id="<?=$val['prefix'].'1';?>" href="./index.php<?=$multi_get?>">
-                    <img height="24" border="0" src="<?=$multiclan_info[$val['id']]['data']['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data']['color']?>"><?=$multiclan_info[$val['id']]['data']['abbreviation']?></span>
+                    <img height="24" border="0" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['clan_color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['abbreviation']?></span>
                 </a>
                 <?php
                 }
@@ -64,15 +64,15 @@
                         &nbsp;
                     </div>
                 </td>
-                <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $new['data']['members_count']; ?></td>
+                <td width="222px" align="center" id="tohide"><?=$lang['total_p']; ?>: <?= $multiclan_info[$config['clan']]['data'][$config['clan']]['members_count']; ?></td>
                 <td align="center">
                     <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
-                    <?php $new['data']['description_html'] = str_replace("'", '"', $new['data']['description_html']); ?>
-                    <img class="bb" src="<?=$new['data']['emblems']['large'];?>"
-                    style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title='<?=$new["data"]["description_html"];?>' /></a>
+                    <?php $multiclan_info[$config['clan']]['data'][$config['clan']]['description_html'] = str_replace("'", '"', $multiclan_info[$config['clan']]['data'][$config['clan']]['description_html']); ?>
+                    <img class="bb" src="<?=$multiclan_info[$config['clan']]['data'][$config['clan']]['emblems']['large'];?>"
+                    style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title='<?=$multiclan_info[$config["clan"]]["data"][$config["clan"]]["description_html"];?>' /></a>
                     <br>
-                    <font color="<?=$new['data']['color'];?>">
-                        <br><?=$new['data']['name'];?>
+                    <font color="<?=$multiclan_info[$config['clan']]['data'][$config['clan']]['clan_color'];?>">
+                        <br><?=$multiclan_info[$config['clan']]['data'][$config['clan']]['name'];?>
                     </font>
                 </td>
                 <td width="300px"><img src="./images/logo_small.png" /></td>

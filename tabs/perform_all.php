@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-10-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
+    * @author      $Author: Edd, Exinaus, SHW  $
     * @copyright   2011-2012 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -19,17 +19,17 @@
 <script>
 $(document).ready(function() {
     $( "#triggerperform" ).buttonset();
-    $(".averageshow").hide();
-    $(".fullshow").show();
+    $(".as").hide();
+    $(".fs").show();
     $("#change_button_averageshow").click(function() {
-      $(".fullshow").hide();
-      $(".averageshow").show();
+      $(".fs").hide();
+      $(".as").show();
       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_button_fullshow").click(function() {
-      $(".averageshow").hide();
-      $(".fullshow").show();
+      $(".as").hide();
+      $(".fs").show();
       check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
@@ -44,13 +44,14 @@ $(document).ready(function() {
     <table id="perform_all" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
-                <th><?php echo $lang['name']; ?></th> 
-                <?php foreach($res[$rand_keys]['perform'] as $column => $cat){ ?>
-                    <?php if($column == $lang['hit_ratio']) { ?>
-                            <th class='fullshow averageshow'><?=$column;?></th>
+                <?php echo '<th>'.$lang['name'].'</th>';
+                $perform = array ('hits_percents', 'frags',  'damage_dealt', 'damage_received', 'spotted', 'capture_points', 'dropped_capture_points');
+                foreach($perform as $cat){ ?>
+                    <?php if($cat == 'hits_percents') { ?>
+                            <th class='fs as'><?=$lang['all_'.$cat];?></th>
                     <? } else { ?>
-                            <th class='averageshow'><?=$column;?></th>
-                            <th class='fullshow'><?=$column;?></th>
+                            <th class='as'><?=$lang['all_'.$cat];?></th>
+                            <th class='fs'><?=$lang['all_'.$cat];?></th>
                     <?php } } ?>
             </tr>  
         </thead>
@@ -58,17 +59,17 @@ $(document).ready(function() {
             <?php foreach($res as $name => $val){  ?>
                 <tr> 
                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                    <?php foreach($val['perform'] as $cat => $result){ ?>
-                        <?php if($cat == $lang['hit_ratio']) { ?>
-                            <td class='fullshow averageshow'>
-                            <?php echo $result; ?>
+                    <?php foreach($perform as $cat){ ?>
+                        <?php if($cat == 'hits_percents') { ?>
+                            <td class='fs as'>
+                            <?php echo $val['data']['statistics']['all'][$cat]; ?>
                             </td>
                         <?php } else { ?>
-                            <td class='averageshow'>
-                            <? if($val['overall'][$lang['games_p']] > 0) { echo round($result/$val['overall'][$lang['games_p']],2); } else { echo '0'; } ?>
+                            <td class='as'>
+                            <? if($val['data']['statistics']['all']['battles'] > 0) { echo round($val['data']['statistics']['all'][$cat]/$val['data']['statistics']['all']['battles'],2); } else { echo '0'; } ?>
                             </td>
-                            <td class='fullshow'>
-                            <?php echo $result; ?>
+                            <td class='fs'>
+                            <?php echo $val['data']['statistics']['all'][$cat]; ?>
                             </td>
                        <?php }
                        } ?>

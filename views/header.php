@@ -5,13 +5,13 @@
     * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
     * -----------------------------------------------------------------------
     * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
+    * Date:        $Date: 2013-11-22 00:00:00 +0200 $
     * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @author      $Author: Edd, Exinaus, SHW  $
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 2.2.0 $
+    * @version     $Rev: 3.0.0 $
     *
     */
 ?>
@@ -37,7 +37,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-              $("#roster").tablesorter({sortList:[[4,0],[3,1],[0,0]]});
+              $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
 
               $("#best_main")
               .add("#best_medal")
@@ -115,6 +115,19 @@
                   }
                 }
               ?>
+              $( "#player_result" ).dialog({
+                    title: "<?=$lang['st_title'];?>",
+                    appendTo: "#allcontainer",
+                    autoOpen: false,
+                    draggable: false,
+                    resizable: false,
+                    width: 1024,
+                    closeOnEscape: true,
+                    modal: true,
+                    zIndex: 1,
+                    open: function( event, ui ) {$('#id--6531').click();$("#roster").trigger("destroy");},
+                    beforeClose: function( event, ui ) {$("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});}
+                  });
         });
 
         function magic(elem){
@@ -149,6 +162,25 @@
                check_Width($("table.table-id-"+window.currentTabID), $("div#tabs-"+window.currentTabID));
             }
         };
+        function plmagic(elem){
+           $.ajax({
+                cache: true,
+                type: "POST",
+                data: ({
+                  nickname   : $(elem).attr("alt")
+                }),
+                url: "ajax/ajax_player.php",
+                success: function(msg){
+                    $("#player_result").addClass("ui-state-disabled");
+                    $("#player_result").html(msg).show();
+                },
+                complete: function() {
+                  $("#player_result").removeClass("ui-state-disabled");
+                  $("#player_result").dialog('open');
+                }
+            });
+        }
+
         function is_numeric(input){
           return typeof(input)=='number';
         };
