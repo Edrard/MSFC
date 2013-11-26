@@ -62,6 +62,7 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                         <select id="iparse" name="parse">
                             <option value="curl" selected="selected">cURL</option>
                             <option value="mcurl">mcURL</option>
+                            <option value="curl2">cURL2</option>
                         </select>
                     </td>
                 </tr>
