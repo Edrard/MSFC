@@ -92,6 +92,15 @@ function p_info($res, $t) {
 }
 ?>
 <script type="text/javascript" id="js">
+function updateall() {
+$("#player1")
+  <? for ($i=2; $i<=17; $i++) {?>
+  .add("#player<?=$i;?>")
+  <? } ;?>
+  .trigger('applyWidgetId', ['zebra']).trigger('update');
+return false;
+}
+
    $(document).ready(function() {
    $("#player1")
       <? for ($i=2; $i<=9; $i++) {?>
@@ -119,15 +128,6 @@ function p_info($res, $t) {
           headerTemplate : '<div style="padding-right: 12px;">{content}</div>{icon}',
           sortList:[[0,0]],
           theme : 'jui'
-      });
-
-      $('#id--6531').click(function() {
-         $("#player1")
-         <? for ($i=2; $i<=17; $i++) {?>
-              .add("#player<?=$i;?>")
-         <? } ;?>
-         .trigger('applyWidgetId', ['zebra']);
-         return false;
       });
       $('.bb[title]').tooltip({
           track: false,
@@ -484,14 +484,18 @@ if (isset($result)) {
      $new = $cache->get('get_last_roster_'.$val['clanids'],0);
      if ($new === FALSE) {
          $new2 = get_clan_v2($val['clanids'], 'info', $config);
-         if (($new2 === FALSE)||   ($new2['status'] <> 'ok') ) {
+         if (($new2 === FALSE)|| ($new2['status'] <> 'ok') ) {
               $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
          }    else {
               $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
               $cache->set('get_last_roster_'.$val['clanids'], $new2);
          }
      } else {
-          $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
+          if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
+              $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
+          }   else {
+              $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
+          }
      }
   }
 ?>

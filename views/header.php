@@ -125,7 +125,8 @@
                     closeOnEscape: true,
                     modal: true,
                     zIndex: 1,
-                    open: function( event, ui ) {$('#id--6531').click();$("#roster").trigger("destroy");},
+                    create: function( event, ui ) {},
+                    open: function( event, ui ) {$("#roster").trigger("destroy");},
                     beforeClose: function( event, ui ) {$("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});}
                   });
         });
@@ -177,6 +178,7 @@
                 complete: function() {
                   $("#player_result").removeClass("ui-state-disabled");
                   $("#player_result").dialog('open');
+                  updateall();
                 }
             });
         }

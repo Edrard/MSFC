@@ -63,7 +63,7 @@
                     }
                 ?>
                 <tr>
-                    <td align="center" ><a href="#" id="id--6531" onclick="plmagic(this)" target="_self" alt='<?=$val['account_id'];?>'>
+                    <td align="center" ><a href="#" onclick="plmagic(this)" target="_self" alt='<?=$val['account_id'];?>'>
                        <div style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-info">
                           &nbsp;
                         </div></a></td>
