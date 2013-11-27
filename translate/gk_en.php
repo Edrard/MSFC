@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['gk_error_1'] = 'Filesize are more than 3mb.<br />';
   $lang['gk_error_2'] = 'Error while uploading replay.<br />';
   $lang['gk_error_3'] = 'Can\'t found info about battle.<br />';

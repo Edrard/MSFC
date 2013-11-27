@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $config['server'] = 'us';
     $config['base'] = 'http://worldoftanks.com/uc/accounts/named/';
     $config['base_direct'] = 'http://worldoftanks.com/community/accounts/';

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 function rating($array,$config){
    $max = array('mdmg' => 0,'mspo' => 0,'mcap' => 0,'mdef' => 0);
    foreach($array as $name => $tmp){

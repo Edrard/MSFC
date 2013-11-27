@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     if (isset($_POST['recdb'])){
 
         recreat_db();

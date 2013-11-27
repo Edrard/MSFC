@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['admin_tab_top_tanks'] = 'Obecność techniki';
   $lang['admin_tab_top_tanks_name'] = 'Nazwa';
   $lang['admin_tab_top_class'] = 'Klasa';

@@ -1,64 +1,67 @@
 <?php
-    /*
-    * Project:     Clan Stat
-    * License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported
-    * Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
-    * -----------------------------------------------------------------------
-    * Began:       2011
-    * Date:        $Date: 2011-10-24 11:54:02 +0200 $
-    * -----------------------------------------------------------------------
-    * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
-    * @link        http://wot-news.com
-    * @package     Clan Stat
-    * @version     $Rev: 3.0.0 $
-    *
-    */
-?>
-<?php
-    if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
-        define('ROOT_DIR', dirname(__FILE__));
-    }else{
-        define('ROOT_DIR', '.');
+/*
+* Project:     Clan Stat
+* License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported
+* Link:        http://creativecommons.org/licenses/by-nc-sa/3.0/
+* -----------------------------------------------------------------------
+* Began:       2011
+* Date:        $Date: 2011-10-24 11:54:02 +0200 $
+* -----------------------------------------------------------------------
+* @author      $Author: Edd, Exinaus, Shw  $
+* @copyright   2011-2012 Edd - Aleksandr Ustinov
+* @link        http://wot-news.com
+* @package     Clan Stat
+* @version     $Rev: 3.0.0 $
+*
+*/
+
+
+if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
+    define('ROOT_DIR', dirname(__FILE__));
+}else{
+    define('ROOT_DIR', '.');
+}
+// MAIN - this parametr show us thats we running main.php, to turn on mysql.config.php permisiion check
+define('MAIN', '');
+
+//Multiget check
+$sender = '';
+$senderLoad = '';
+if(isset($_GET['multi']) && !isset($_GET['page'])){
+    $sender = '?multi='.$_GET['multi'];
+    $senderLoad = '&from_index=1';
+} else {
+    $senderLoad = '?from_index=1';
+}
+
+//Checker
+include_once(ROOT_DIR.'/including/check.php');
+
+//MYSQL
+include_once(ROOT_DIR.'/function/mysql.php');
+
+//Multiget CURL
+include_once(ROOT_DIR.'/function/curl.php');
+include_once(ROOT_DIR.'/function/mcurl.php');
+
+// Include Module functions
+include_once(ROOT_DIR.'/function/auth.php');
+include_once(ROOT_DIR.'/function/rating.php');
+include_once(ROOT_DIR.'/function/func.php');
+include_once(ROOT_DIR.'/function/func_main.php');
+include_once(ROOT_DIR.'/function/func_get.php');
+include_once(ROOT_DIR.'/function/func_gk.php');
+
+// Including main config files
+include_once(ROOT_DIR.'/function/config.php');
+include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+
+//Loding language pack
+foreach(scandir(ROOT_DIR.'/translate/') as $files){
+    if (preg_match ("/_".$config['lang'].".php/", $files)){
+        include_once(ROOT_DIR.'/translate/'.$files);
     }
-    //Multiget check
-    $sender = '';
-    $senderLoad = '';
-    if(isset($_GET['multi']) && !isset($_GET['page'])){
-      $sender = '?multi='.$_GET['multi'];
-      $senderLoad = '&from_index=1';
-    } else {
-      $senderLoad = '?from_index=1';
-    }
-
-    //Checker
-    include_once(ROOT_DIR.'/including/check.php');
-
-    //MYSQL
-    include_once(ROOT_DIR.'/function/mysql.php');
-    
-    //Multiget CURL
-    include_once(ROOT_DIR.'/function/curl.php');
-    include_once(ROOT_DIR.'/function/mcurl.php');
-
-    // Include Module functions
-    include_once(ROOT_DIR.'/function/auth.php');
-    include_once(ROOT_DIR.'/function/rating.php');
-    include_once(ROOT_DIR.'/function/func.php');
-    include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/func_get.php');
-    include_once(ROOT_DIR.'/function/func_gk.php');
-
-    // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
-
-    //Loding language pack
-    foreach(scandir(ROOT_DIR.'/translate/') as $files){
-        if (preg_match ("/_".$config['lang'].".php/", $files)){
-            include_once(ROOT_DIR.'/translate/'.$files);
-        }
-    }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -99,24 +102,24 @@
     <body onload="location.href = url;" style="overflow:hidden;overflow-y:hidden">
         <div id="main" class="ui-accordion-content ui-widget-content ui-accordion-content-active">
             <table style="width: 100%; height:100%;" cellpadding="4" cellspacing="0" class="ui-widget-content">
-               <tr style="vertical-align: bottom;">
-                  <td align="center" style="height: 50%; width:500px;">
-                     <?php if($config['lang'] == 'ru'){
-                              $multi_get = '';
-                              if(isset($_GET['multi'])){
+                <tr style="vertical-align: bottom;">
+                    <td align="center" style="height: 50%; width:500px;">
+                        <?php if($config['lang'] == 'ru'){
+                            $multi_get = '';
+                            if(isset($_GET['multi'])){
                                 $multi_get = '?multi='.$_GET['multi'];
-                              }?>
-                     <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
-                     <?php } ?>
-                  </td>
-               </tr>
-               <tr style="vertical-align: top;">
-                  <td align="center">
-                     <div class="ui-state-highlight ui-corner-all">
-                        <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
-                     </div>
-                  </td>
-               </tr>
+                            }?>
+                            <iframe src="./news.php<?=$multi_get?>" frameborder="0" scrolling="no" style="height:64px; width:450px;" ></iframe><br>
+                            <?php } ?>
+                    </td>
+                </tr>
+                <tr style="vertical-align: top;">
+                    <td align="center">
+                        <div class="ui-state-highlight ui-corner-all">
+                            <?=$lang['index_loading'];?><img src="./images/ajax-loader.gif">
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
     </body>

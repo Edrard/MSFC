@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['admin_title'] = 'Модуль статистики Админ панель';
     $lang['admin_tab_opt'] = 'Настройки';
     $lang['admin_tab_tabs'] = 'Закладки';

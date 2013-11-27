@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['activity_1'] = 'Pokazać aktywność z:';
     $lang['activity_2'] = 'po:';
     $lang['activity_3'] = 'Pokazać dni bez aktywności';

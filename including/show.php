@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {

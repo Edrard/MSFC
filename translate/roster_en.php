@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['roster_blue'] = 'Blue - was in the game in the last 3 days';
   $lang['roster_green'] = 'Green - wasn\'t in the game for 4-7 days';
   $lang['roster_grey'] = 'Grey - wasn\'t in the game for 8-14 days';

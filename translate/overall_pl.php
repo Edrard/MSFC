@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['overall_eff_table'] = '<table cellspacing=\'0\' cellpadding=\'2\' border=\'0\' class=\'ui-widget ui-widget-content\' style=\'border-width:0px;background-image:none;\'>
 <tr>
   <td colspan=\'2\' align=\'center\'><strong>Tabela znaczeń rankingu wydajności</strong></td>

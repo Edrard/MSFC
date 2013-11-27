@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['toptank_1'] = 'Wszystkiego';
   $lang['toptank_2'] = 'Nie wybrano czołgu. Zaloguj się w <a href="./admin/" target="_blank"> admin </a> dodajcie czołgi dla wyświetlenia.';
   $lang['toptank_3'] = 'Wszystkiego';

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['admin_tab_top_tanks'] = 'Availability of tanks';
     $lang['admin_tab_top_tanks_name'] = 'Title';
     $lang['admin_tab_top_class'] = 'Type';

@@ -14,15 +14,15 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['admin_title'] = 'ModuÅ‚ statystyki Admin panel';
     $lang['admin_tab_opt'] = 'Ustawienia';
     $lang['admin_tab_tabs'] = 'ZakÅ‚adki';
     $lang['admin_tab_user'] = 'Kierowanie uÅ¼ytkownikami';
     $lang['admin_tab_tanks'] = 'Lista czoÅ‚gÃ³w';
     $lang['admin_db'] = 'Baza danych';
-    $lang['admin_module'] = 'Powríª‰í¿¤o modulu';
+    $lang['admin_module'] = 'Powrï¿½ï¿½o modulu';
     $lang['admin_logout'] = 'Wyloguj';
     $lang['admin_server'] = 'Serwer';
     $lang['admin_clan_id'] = 'Numer klanu';

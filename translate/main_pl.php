@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['language'] = 'pl';
     $lang['total_p'] = 'Wszystkich graczy w klanie';
     $lang['games_p'] = 'Stoczone bitwy';
@@ -386,54 +386,54 @@
     $lang['table_resized'] = 'Tabela za szeroka, i widoczna czÄ™Å›ciowo. Dla przejrzenia ukrytej czÄ™Å›ci tabeli, wykorzystajcie przewijanie na dole tabeli.';
 
     $lang['st_title'] = 'Statystyki indywidualnego gracza ';
-    $lang['classVf'] = 'Wirtuoz <br> (ocena wyzsza niz 99% graczy)';
-    $lang['classMf'] = 'Mistrz tankowiec <br> (ocena wyzsza niz 95% graczy)';
-    $lang['class1f'] = 'Czolgista 1st Class <br> (ocena wyzsza niz 80% graczy)';
-    $lang['class2f'] = 'Czolgista 2nd Class <br> (ocena wyzsza niz 60% graczy)';
-    $lang['class3f'] = 'Czolgista Trzecia klasa <br> (ocena wyzsza niz 45% graczy)';
-    $lang['deer3f'] = 'Renifer Trzecia klasa <br> (ocena wyzsza niz 30% uczestnikow)';
-    $lang['deer2f'] = 'Renifer 2nd Class <br> (ocena wyzsza niz 20% graczy)';
-    $lang['deer1f'] = 'Renifer 1st Class <br> (ocena wyzsza niz 10% graczy)';
-    $lang['deerMf'] = 'mistrz Herdera <br> (ocena nizsza niz 10% graczy)';
-    $lang['emem'] = 'Gra w stylu';
-    $lang['emem_fsb_title'] = 'Stosunek ilosci wykrytych i zniszczonych wrogow do kwoty spedzil walczac';
-    $lang['emem_fsb'] = 'Agrescivnost razem ' ;
-    $lang['emem_fb_title'] = 'zniszczenie wrogow do kwoty spedzil walczac';
-    $lang['emem_fb'] = 'Fighter';
-    $lang['emem_sb_title'] = ' Twoj zwiazek z iloscia wykrytych wrogow prowadzone walki';
-    $lang['emem_sb'] = 'Scout';
-    $lang['emem_cb_title'] = 'stosunek kredytu do kwoty wychwytywania prowadzone walki';
-    $lang['emem_cb'] = 'Invader';
-    $lang['emem_db_title'] = 'stosunek kredytu do wartosci Obrony spedzil walczac';
-    $lang['emem_db'] = 'Defender';
+????$lang['classVf'] = 'Wirtuoz <br> (ocena wyzsza niz 99% graczy)';
+????$lang['classMf'] = 'Mistrz tankowiec <br> (ocena wyzsza niz 95% graczy)';
+????$lang['class1f'] = 'Czolgista 1st Class <br> (ocena wyzsza niz 80% graczy)';
+????$lang['class2f'] = 'Czolgista 2nd Class <br> (ocena wyzsza niz 60% graczy)';
+????$lang['class3f'] = 'Czolgista Trzecia klasa <br> (ocena wyzsza niz 45% graczy)';
+????$lang['deer3f'] = 'Renifer Trzecia klasa <br> (ocena wyzsza niz 30% uczestnikow)';
+????$lang['deer2f'] = 'Renifer 2nd Class <br> (ocena wyzsza niz 20% graczy)';
+????$lang['deer1f'] = 'Renifer 1st Class <br> (ocena wyzsza niz 10% graczy)';
+????$lang['deerMf'] = 'mistrz Herdera <br> (ocena nizsza niz 10% graczy)';
+????$lang['emem'] = 'Gra w stylu';
+????$lang['emem_fsb_title'] = 'Stosunek ilosci wykrytych i zniszczonych wrogow do kwoty spedzil walczac';
+????$lang['emem_fsb'] = 'Agrescivnost razem ' ;
+????$lang['emem_fb_title'] = 'zniszczenie wrogow do kwoty spedzil walczac';
+????$lang['emem_fb'] = 'Fighter';
+????$lang['emem_sb_title'] = ' Twoj zwiazek z iloscia wykrytych wrogow prowadzone walki';
+????$lang['emem_sb'] = 'Scout';
+????$lang['emem_cb_title'] = 'stosunek kredytu do kwoty wychwytywania prowadzone walki';
+????$lang['emem_cb'] = 'Invader';
+????$lang['emem_db_title'] = 'stosunek kredytu do wartosci Obrony spedzil walczac';
+????$lang['emem_db'] = 'Defender';
 
-    $lang['brone_anno'] = 'Ta ocena nie ma wyraznych granic demonstracji.';
-    $lang['upd_at'] = 'Statystyki Data';
-    $lang['perform_class'] = ' na technika class';
-    $lang['perform_nation'] = ' na technika nacja'
+????$lang['brone_anno'] = 'Ta ocena nie ma wyraznych granic demonstracji.';
+????$lang['upd_at'] = 'Statystyki Data';
+????$lang['perform_class'] = ' na technika class';
+??? $lang['perform_nation'] = ' na technika nacja'
     $lang['perform_lvl'] = ' na poziom techniki';
-    $lang['duckandcover'] = 'Statystyki Wyposazenie zawodnikow';
-    $lang['till_today'] = 'w tym dniu';
-    $lang['nieznany'] = 'nieznany';
-    $lang['med_title'] = 'Statystyki dotyczace nagrod i osiagniec';
-    $lang['teh_title'] = 'Statystyki dotyczace poszczegolnych maszyn ';
-    $lang['lvl_up1'] = 'Na';
-    $lang['lvl_up2'] = '<br> Na obecnym poziomie gry Potrwa ona okolo ';
-    $lang['lvl_b'] = ' walk .';
-    $lang['lvl_kay'] = " medale Kay potrzebujemy drugiego stopnia ";
-    $lang['lvl_heroes'] = ' title "Hero Battles".';
-    $lang['lvl_car'] = " medale stopnia Carius potrzebujesz innego ";
-    $lang['lvl_des'] = " jednostek pojazdow opancerzonych zniszczone.";
-    $lang['lvl_lac'] = " medale stopnia Leclerc potrzebujesz innego ";
-    $lang['lvl_cap'] = ' punktow przechwytywania.';
-    $lang['lvl_abr'] = " medale stopnia Abrams musza wygrac i przetrwac ";
-    $lang['lvl_ali'] = ' bitew.';
-    $lang['lvl_pop'] = " medale Popiel moc wymagana do znalezienia w bitwie ";
-    $lang['lvl_spo'] = ' jednostek pojazdow wroga.';
-    $lang['lvl_lav'] = ' medale stopnia Lavrynenko Poreba jeszcze ';
-    $lang['lvl_def'] = ' punkty obrony.';
-    $lang['lvl_kni'] = ' medale stopnia Knispelya Poreba zastosowania lub uzyskac wiecej ';
-    $lang['lvl_dd'] = ' punkty szkody.';
+????$lang['duckandcover'] = 'Statystyki Wyposazenie zawodnikow';
+????$lang['till_today'] = 'w tym dniu';
+????$lang['nieznany'] = 'nieznany';
+????$lang['med_title'] = 'Statystyki dotyczace nagrod i osiagniec';
+??? $lang['teh_title'] = 'Statystyki dotyczace poszczegolnych maszyn ';
+????$lang['lvl_up1'] = 'Na';
+??? $lang['lvl_up2'] = '<br> Na obecnym poziomie gry Potrwa ona okolo ';
+????$lang['lvl_b'] = ' walk .';
+????$lang['lvl_kay'] = " medale Kay potrzebujemy drugiego stopnia ";
+????$lang['lvl_heroes'] = ' title "Hero Battles".';
+????$lang['lvl_car'] = " medale stopnia Carius potrzebujesz innego ";
+????$lang['lvl_des'] = " jednostek pojazdow opancerzonych zniszczone.";
+????$lang['lvl_lac'] = " medale stopnia Leclerc potrzebujesz innego ";
+????$lang['lvl_cap'] = ' punktow przechwytywania.';
+????$lang['lvl_abr'] = " medale stopnia Abrams musza wygrac i przetrwac ";
+????$lang['lvl_ali'] = ' bitew.';
+????$lang['lvl_pop'] = " medale Popiel moc wymagana do znalezienia w bitwie ";
+????$lang['lvl_spo'] = ' jednostek pojazdow wroga.';
+????$lang['lvl_lav'] = ' medale stopnia Lavrynenko Poreba jeszcze ';
+????$lang['lvl_def'] = ' punkty obrony.';
+????$lang['lvl_kni'] = ' medale stopnia Knispelya Poreba zastosowania lub uzyskac wiecej ';
+??? $lang['lvl_dd'] = ' punkty szkody.';
     $lang['class'] = 'Class';
     $lang['nation'] = 'Nacja';
     $lang['level'] = 'Poziom';

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 function cron_update_tanks_db() {
    global $db, $config;
    $sql = "select tank_id from `tanks`;";

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 
 $gk_blocked = array();
 $gk_blocked_tanks = array();

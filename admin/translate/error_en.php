@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['error_1'] = "Couldn't load this tab. Most likely a problem on the wargaming.net site";
     $lang['error_toolong'] = 'The password can\'t be longer than 12 characters.';
 ?>

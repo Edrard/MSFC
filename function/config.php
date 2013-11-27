@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 
     if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
     {

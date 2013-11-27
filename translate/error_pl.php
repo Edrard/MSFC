@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['error_cron_off'] = 'Musicie włączyć zbieranie statystyki w admin panelu';
     $lang['error_cron_off_or_none'] = 'Nie starcza danych dla wyświetlenia tej zakładki albo nie włączone zbieranie statystyki w admin panelu.<br /><a href="http://wot-news.com/forum/viewtopic.php?f=30&t=2553" target="_blank">Инструкция, po ustawienia zbierania statystyki.</a>';
 

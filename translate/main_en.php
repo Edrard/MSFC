@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['language'] = 'en';
     $lang['total_p'] = 'Total Players';
     $lang['games_p'] = 'Games Played'; 

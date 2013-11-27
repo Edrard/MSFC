@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     if (isset($_POST['mysql'])){
 
         if (isset($_POST['clan'])){

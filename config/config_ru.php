@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $config['server'] = 'ru';
     $config['base'] = 'http://worldoftanks.ru/uc/accounts/named/';
     $config['clan_img'] = 'http://worldoftanks.ru/dcont/clans/emblems/';

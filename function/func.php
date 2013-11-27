@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 
     if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
     {

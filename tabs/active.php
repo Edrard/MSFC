@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){ 
         $rand_main_progress = array_rand($main_progress['main'], 1);
         $stats2 = array('wins', 'losses', 'survived_battles', 'frags',

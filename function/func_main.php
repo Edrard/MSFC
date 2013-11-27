@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 function marks() {
    $a = array(1=>'/static/3.15.0.4.2/common/img/classes/class-3.png', 2=> '/static/3.15.0.4.2/common/img/classes/class-2.png', 3=> '/static/3.15.0.4.2/common/img/classes/class-1.png', 4=>'/static/3.15.0.4.2/common/img/classes/class-ace.png');
    return $a;

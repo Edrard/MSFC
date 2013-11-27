@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 $lang_tz['timezones_list'] = array(
       "-11"  => "[UTC - 11] Czas Niue, Samoa Standard Time",
       "-10"  => "[UTC - 10] Hawaii-Aleutian Standard Time, Cook Island Time",

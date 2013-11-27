@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['log_login'] = 'Логин';
     $lang['log_pass'] = 'Пароль';
     $lang['log_auth'] = 'Авторизация';

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 $lang_tz['timezones_list'] = array(
         '-11'   => '[UTC − 11] о. Мидуэй, Самоа',
         '-10'   => '[UTC − 10] Гавайи',

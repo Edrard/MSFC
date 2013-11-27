@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     function get_data($name,$trans,$stat_config,$tables)
     {
         global $db;

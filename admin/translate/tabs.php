@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['en'] = 'English';
     $lang['pl'] = 'Polski';
     $lang['ru'] = 'Русский';

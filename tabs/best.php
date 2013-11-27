@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
+
+ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
          $stats2 = array('wins', 'losses', 'survived_battles', 'frags', 'spotted', 'damage_dealt',
                          'damage_received', 'capture_points', 'dropped_capture_points', 'xp', 'battles',
                          'draws', 'battle_avg_xp', 'hits_percents'

@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     $lang['language'] = 'ru';
     $lang['total_p'] = 'Всего игроков';
     $lang['games_p'] = 'Проведено боёв';

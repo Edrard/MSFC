@@ -14,7 +14,7 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 echo error_rep($multiclan_info[$config['clan']]['error'],$lang);
 ?>

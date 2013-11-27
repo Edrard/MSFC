@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 
 function went_players($rosterid,$start = 0,$end = -1){
    global $db;

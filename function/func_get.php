@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
 
 function checkfield($a) {
    if (!empty($a)) {

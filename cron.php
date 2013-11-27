@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
     header("Content-type: text/html; charset=utf-8");
     error_reporting(E_ALL & ~E_STRICT);
     ini_set("display_errors", 1);

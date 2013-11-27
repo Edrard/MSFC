@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-?>
-<?php
+
+
   $lang['gk_error_1'] = 'Rozmiar pliku przekracza trzy megabajty.<br />';
   $lang['gk_error_2'] = 'Błąd załadunku pliku.<br />';
   $lang['gk_error_3'] = 'Nie udało się znaleźć informację o bitwie.<br />';
