@@ -19,7 +19,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?=$lang['page_title']; ?></title>
+    <title><?php echo $lang['page_title'];
+    if (isset($multiclan_info[$config['clan']]['data'][$config['clan']]['abbreviation']))
+        echo " [",$multiclan_info[$config['clan']]['data'][$config['clan']]['abbreviation'],"]"; ?></title>
     <?php if (!isset($config['theme'])) {
         $config['theme'] = 'ui-lightness'; } ?>
     <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
