@@ -453,7 +453,7 @@
                                                     <select name="prefix">
                                                         <option value="all" <?php if($val['prefix'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
                                                         <? foreach($multiclan as $mclan) { ?>
-                                                        <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data']['abbreviation'];?></option>
+                                                        <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['abbreviation'];?></option>
                                                         <? } ?>
                                                     </select>
                                                 </td></tr>
