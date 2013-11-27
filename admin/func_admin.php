@@ -799,7 +799,7 @@ function update_tanks_db() {
 
       if(count($tmp)>0) {
         foreach($tmp as $val) {
-          $sql = 'DELETE FROM '.$val.' WHERE up < "'.$del.'";';
+          $sql = 'DELETE FROM '.$val.' WHERE updated_at < "'.$del.'";';
           $q = $db->prepare($sql);
           if ($q->execute() != TRUE) {
               die(show_message($q->errorInfo(),__line__,__file__,$sql));
