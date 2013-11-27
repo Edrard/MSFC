@@ -14,8 +14,7 @@
     * @version     $Rev: 3.0.0 $                                                                                          
     *                                                                                                                     
     */                                                                                                                    
-?>                                                                                                                        
-<?php
+
     function gk_get_all($db) //Получаем список всей заблокированной техники
     {
         $sql = "SELECT g.time AS time, t.tank_id AS tank, g.name AS name
