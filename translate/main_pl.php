@@ -18,7 +18,7 @@
 <?php
     $lang['language'] = 'pl';
     $lang['total_p'] = 'Wszystkich graczy w klanie';
-    $lang['games_p'] = 'Stoczone bitwy'';
+    $lang['games_p'] = 'Stoczone bitwy';
     $lang['all_battles'] = $lang['clan_battles'] = $lang['company_battles'] ='Stoczone bitwy';
     $lang['all_wins'] = $lang['clan_wins'] = $lang['company_wins'] = 'Zwycięstwa';
     $lang['all_losses'] = $lang['clan_losses'] = $lang['company_losses'] = 'Przegrane';
