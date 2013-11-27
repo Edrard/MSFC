@@ -62,7 +62,7 @@ function new_players($rosterid,$start = 0,$end = -1){
 function player_progress_main($rosterid = null, $start = 0,$end = -1){
    global $db;
    $diff = $dfirst_new = array();
-   $diff['main'] = $diff['total'] = $diff['average'] = array();
+   $diff['main'] = $diff['delta'] = $diff['total'] = $diff['average'] = array();
    if ($end == -1){
        $end = now();
    }
