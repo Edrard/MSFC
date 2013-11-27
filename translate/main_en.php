@@ -368,7 +368,7 @@
 
     $lang['err_med1'] = 'Received medals belong to the players who left the clan';
     $lang['err_med2'] = 'No earned medals';
-    $lang['greeting_top1'] = 'Top ';
+    $lang['greeting_top'] = 'Top ';
     $lang['greeting_top1'] = ' efficiency rating';
     $lang['greeting_top2'] = ' damage';
     $lang['greeting_top3'] = ' spotted';
