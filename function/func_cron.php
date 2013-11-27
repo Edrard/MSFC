@@ -52,11 +52,15 @@ function cron_update_tanks_db() {
        unset($tmp);
        if (!empty($toload)) {
             $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
-            foreach ($tmp as $tank_id => $val) {
-               $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
-               $updatearr [$tank_id]['image']         = $val['data']['image'];
-               $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
-               $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+            if ($tmp['status'] == 'ok') {
+                foreach ($tmp as $tank_id => $val) {
+                   $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
+                   $updatearr [$tank_id]['image']         = $val['data']['image'];
+                   $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
+                   $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+                }
+            }   else {
+                die('Problem with getting tank info. Solution on http://wot-news.com/forum/viewtopic.php?f=30&t=19358&p=45622#p45622');
             }
             unset($tmp);
             $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
