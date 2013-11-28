@@ -74,7 +74,6 @@ function get_player_v2($plid, $whattoload, $config, $fields_array = array()) {
   }   else {
       curl_close($ch);
       $ret = json_decode(trim($data), true);
-      if ($ret['status'] == 'ok') $cache->set($plid, $ret, ROOT_DIR.'/cache/players/');
       return ($ret);
   }
 }
