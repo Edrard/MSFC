@@ -231,13 +231,12 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player0">
          <thead>
            <tr>
-            <th align="center"><?=$lang['name']; ?>
+            <th align="center"><?=$lang['name']; ?></th>
            </tr>
          </thead>
          <tbody>
            <tr>
-             <td align="center"><b><?=$pres['data']['nickname'];?></b></font></td>
-             </td>
+             <td align="center"><b><?=$pres['data']['nickname'];?></b></td>
            </tr>
          </tbody>
        </table>
@@ -251,7 +250,6 @@ foreach ($statacc as $val) {
          <tbody>
            <tr>
              <td align="center"><font color="<?=$color; ?>"><?=$eff_ratpl[$nickname]['eff']; ?></font></td>
-             </td>
            </tr>
          </tbody>
        </table>
