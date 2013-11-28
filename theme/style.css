@@ -173,6 +173,7 @@ table .tablesorter { margin: 20px 0 0 0; }
 .all {text-align: center;min-width: 30px;}
 .clan {text-align: center;min-width: 30px;}
 .company {text-align: center;min-width: 30px;}
+.bb {cursor: pointer;}
 
 /* new tab */
 .a_num {

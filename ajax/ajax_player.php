@@ -93,8 +93,8 @@ function p_info($res, $t) {
 ?>
 <script type="text/javascript" id="js">
 function updateall() {
-$("#player1")
-  <? for ($i=2; $i<=17; $i++) {?>
+$("#player0")
+  <? for ($i=1; $i<=17; $i++) {?>
   .add("#player<?=$i;?>")
   <? } ;?>
   .trigger('applyWidgetId', ['zebra']).trigger('update');
@@ -102,8 +102,8 @@ return false;
 }
 
    $(document).ready(function() {
-   $("#player1")
-      <? for ($i=2; $i<=9; $i++) {?>
+   $("#player0")
+      <? for ($i=1; $i<=9; $i++) {?>
               .add("#player<?=$i;?>")
       <? } ;?>
       .tablesorter({
@@ -228,10 +228,23 @@ foreach ($statacc as $val) {
    <tbody>
     <tr>
      <td valign="top" width="20%">
+       <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player0">
+         <thead>
+           <tr>
+            <th align="center"><?=$lang['name']; ?>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td align="center"><b><?=$pres['data']['nickname'];?></b></font></td>
+             </td>
+           </tr>
+         </tbody>
+       </table>
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player5">
          <thead>
            <tr>
-            <th align="center" colspan="2" ><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['overall_eff_table'];?>"><?=$lang['eff_ret']; ?> (c)</span>
+            <th align="center" class="bb" title="<?=$lang['overall_eff_table'];?>"><?=$lang['eff_ret']; ?> (c)
             <br><a href="http://wot-news.com/" target="_blank">wot-news.com</a></th>
            </tr>
          </thead>
@@ -242,41 +255,10 @@ foreach ($statacc as $val) {
            </tr>
          </tbody>
        </table>
-       <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player7">
-         <thead>
-           <tr>
-             <th align="center" colspan="3"><?=$lang['emem'];?> (c) <br><a href="http://emem.ru/" target="_blank">emem.ru</a></th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr>
-             <td><span class="hidden">1</span><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['emem_fsb_title'];?>"><?=$lang['emem_fsb'];?></span>:</td>
-
-             <td><?php echo number_format(($pres['data']['statistics']['all']['spotted']+$pres['data']['statistics']['all']['frags'])/$pres['data']['statistics']['all']['battles'],3); ?></td>
-           </tr>
-           <tr>
-             <td><span class="hidden">2</span><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['emem_fb_title'];?>"></span><?=$lang['emem_fb'];?>:</td>
-             <td><?php echo number_format($pres['data']['statistics']['all']['frags']/$pres['data']['statistics']['all']['battles'],3); ?></td>
-           </tr>
-           <tr>
-             <td><span class="hidden">3</span><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['emem_sb_title'];?>"></span><?=$lang['emem_sb'];?>:</td>
-             <td><?php echo number_format($pres['data']['statistics']['all']['spotted']/$pres['data']['statistics']['all']['battles'],3); ?></td>
-           </tr>
-           <tr>
-             <td><span class="hidden">4</span><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['emem_cb_title'];?>"></span><?=$lang['emem_cb'];?>:</td>
-             <td><?php echo number_format($pres['data']['statistics']['all']['capture_points']/$pres['data']['statistics']['all']['battles'],3); ?></td>
-           </tr>
-           <tr>
-             <td><span class="hidden">5</span><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;" title="<?=$lang['emem_db_title'];?>"></span><?=$lang['emem_db'];?>:</td>
-             <td><?php echo number_format($pres['data']['statistics']['all']['dropped_capture_points']/$pres['data']['statistics']['all']['battles'],3); ?></td>
-           </tr>
-         </tbody>
-       </table>
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player6">
          <thead>
            <tr>
-            <th align="center" colspan="2" ><span class="bb" style="border-bottom: 1px dashed #666666; cursor: pointer;"
-                title="<?=$lang['brone_anno'];?>"><?=$lang['brone_ret'];?> (c)</span>
+            <th align="center" class="bb" title="<?=$lang['brone_anno'];?>"><?=$lang['brone_ret'];?> (c)
                 <br><a href="http://armor.kiev.ua/wot/" target="_blank">armor.kiev.ua/wot</a></th>
            </tr>
          </thead>
@@ -289,6 +271,35 @@ foreach ($statacc as $val) {
            </tr>
            <tr>
              <td align="center" colspan="2"><?=$textt; ?></td>
+           </tr>
+         </tbody>
+       </table>
+       <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player7">
+         <thead>
+           <tr>
+             <th align="center" colspan="2"><?=$lang['emem'];?> (c) <br><a href="http://emem.ru/" target="_blank">emem.ru</a></th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td class="bb" title="<?=$lang['emem_fsb_title'];?>"><span class="hidden">1</span><?=$lang['emem_fsb'];?>:</td>
+             <td><?php echo number_format(($pres['data']['statistics']['all']['spotted']+$pres['data']['statistics']['all']['frags'])/$pres['data']['statistics']['all']['battles'],3); ?></td>
+           </tr>
+           <tr>
+             <td class="bb" title="<?=$lang['emem_fb_title'];?>"><span class="hidden">2</span><?=$lang['emem_fb'];?>:</td>
+             <td><?php echo number_format($pres['data']['statistics']['all']['frags']/$pres['data']['statistics']['all']['battles'],3); ?></td>
+           </tr>
+           <tr>
+             <td class="bb" title="<?=$lang['emem_sb_title'];?>"><span class="hidden">3</span><?=$lang['emem_sb'];?>:</td>
+             <td><?php echo number_format($pres['data']['statistics']['all']['spotted']/$pres['data']['statistics']['all']['battles'],3); ?></td>
+           </tr>
+           <tr>
+             <td class="bb" title="<?=$lang['emem_cb_title'];?>"><span class="hidden">4</span><?=$lang['emem_cb'];?>:</td>
+             <td><?php echo number_format($pres['data']['statistics']['all']['capture_points']/$pres['data']['statistics']['all']['battles'],3); ?></td>
+           </tr>
+           <tr>
+             <td class="bb" title="<?=$lang['emem_db_title'];?>"><span class="hidden">5</span><?=$lang['emem_db'];?>:</td>
+             <td><?php echo number_format($pres['data']['statistics']['all']['dropped_capture_points']/$pres['data']['statistics']['all']['battles'],3); ?></td>
            </tr>
          </tbody>
        </table>
@@ -393,7 +404,7 @@ foreach ($statacc as $val) {
          <tbody>
            <?php foreach($info['table1'] as $name => $val) { ?>
            <tr>
-             <td><?=$lang[$name]; ?>:</td>
+             <td><?=$lang[$name]; ?></td>
              <td><?=$val['total']; ?></td>
              <td><?=$val['win']; ?></td>
              <td><?php echo number_format($val['win']/$val['total']*100,2); ?>%</td>
@@ -421,7 +432,7 @@ foreach ($statacc as $val) {
                       $info['table3'][$name['nation']]['win'] = 0;
                    } ?>
            <tr>
-             <td><?=$lang[$name['nation']]; ?>:</td>
+             <td><?=$lang[$name['nation']]; ?></td>
              <td><? echo number_format($info['table3'][$name['nation']]['total'],0, '.', ''); ?></td>
              <td><?=$info['table3'][$name['nation']]['win']; ?></td>
              <td><?php echo number_format($info['table3'][$name['nation']]['win']/$info['table3'][$name['nation']]['total']*100,2); ?>%</td>
