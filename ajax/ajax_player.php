@@ -490,21 +490,25 @@ $result = get_player_clans($pres['data']['nickname'], $config['server']);
 if($result) { $end = end($result);
 if (isset($result)) {
   foreach ($result as $key => $val ) {
-     $new = $cache->get('get_last_roster_'.$val['clanids'],0);
-     if ($new === FALSE) {
-         $new2 = get_clan_v2($val['clanids'], 'info', $config);
-         if (($new2 === FALSE)|| ($new2['status'] <> 'ok') ) {
-              $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
-         }    else {
-              $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
-              $cache->set('get_last_roster_'.$val['clanids'], $new2);
+     if (isset ($val['clanids'])) {
+         $new = $cache->get('get_last_roster_'.$val['clanids'],0);
+         if ($new === FALSE) {
+             $new2 = get_clan_v2($val['clanids'], 'info', $config);
+             if (($new2 === FALSE)|| ($new2['status'] <> 'ok') ) {
+                  $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
+             }    else {
+                  $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
+                  $cache->set('get_last_roster_'.$val['clanids'], $new2);
+             }
+         } else {
+              if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
+                  $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
+              }   else {
+                  $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
+              }
          }
-     } else {
-          if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
-              $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
-          }   else {
-              $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
-          }
+     }   else {
+         unset($result[$key]);
      }
   }
 ?>
@@ -522,13 +526,25 @@ if (isset($result)) {
         <br>
         <a href="http://<?php echo $config['gm_url'].'/community/clans/'.$val['clanids']; ?>/" target="_blank">[<?=$val['clantags']; ?>]</a>
         <br>
-        <?=$val['member_sinces']; ?>&nbsp;&mdash;&nbsp;<?php if($val['member_untils'] != 'undef') {echo $val['member_untils'];} else { if($val['member_sinces'] == $end['member_sinces']) {echo $lang['till_today'];} else {echo $lang['unknown'];} } ?>
+        <?=$val['member_sinces']; ?>&nbsp;&mdash;&nbsp;
+        <?php if ($val['member_untils'] != 'undef') {
+                  echo $val['member_untils'];
+              }   else {
+                  if ((isset($end['member_sinces'])) && ($val['member_sinces'] == $end['member_sinces'])) {
+                       echo $lang['till_today'];
+                  }    else {
+                       echo $lang['unknown'];
+                  }
+              } ?>
         <?php 
         
         $t1 = date_parse($val['member_sinces']);
         
-        if($val['member_sinces'] == $end['member_sinces'] and $val['member_untils'] == 'undef') { $t2 = date_parse(date('d.m.Y')); } 
-        else { $t2 = date_parse($val['member_untils']); }
+        if ((isset($end['member_sinces'])) && $val['member_sinces'] == $end['member_sinces'] && $val['member_untils'] == 'undef') {
+             $t2 = date_parse(date('d.m.Y'));
+        }    else {
+             $t2 = date_parse($val['member_untils']);
+        }
         
             if($t1['error_count'] == 0 and $t2['error_count'] == 0) {
 
