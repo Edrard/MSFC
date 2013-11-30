@@ -610,14 +610,16 @@ function get_top_tanks_list() {
 
 function update_top_tanks($array) {
    global $db;
+   $sql = "delete from `top_tanks`;";
+   $q = $db->prepare($sql);
+   if ($q->execute() != TRUE) {
+       die(show_message($q->errorInfo(),__line__,__file__,$sql));
+   }
    foreach ($array as $index =>$misc) {
       foreach ($misc as $tank_id => $val) {
          $val['show'] = isset($val['show']) ? 1 : 0;
-         $sql = 'UPDATE `top_tanks` SET
-                 `show` = "'.$val['show'].'",
-                 `order` = "'.$val['order'].'",
-                 `shortname` = "'.$val['shortname'].'"
-                 WHERE tank_id = "'.$tank_id.'" AND `index` = "'.$index.'";';
+         $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
+                 VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
          $q = $db->prepare($sql);
          if ($q->execute() != TRUE) {
              die(show_message($q->errorInfo(),__line__,__file__,$sql));
