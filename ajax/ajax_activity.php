@@ -59,8 +59,8 @@ if (isset($_POST['a_from']) and isset($_POST['a_to']) and preg_match('/[0-9]{2}.
     $t1 = explode('.',$_POST['a_from']);
     $t2 = explode('.',$_POST['a_to']);
     $time['from'] = mktime(0, 0, 0, $t1['1'], $t1['0'], $t1['2']);
-    $time['from'] = $time['from'] - 86400;
     $time['to'] = mktime(23, 59, 59, $t2['1'], $t2['0'], $t2['2']);
+    $time['to'] = $time['to'] + 86400;
 }   else {
     $time['from'] = mktime(0, 0, 0, date('m'), date('d')-8, date('Y'));
     $time['to'] = time();
@@ -85,15 +85,15 @@ $showarr = array('all', 'clan', 'company');
 
 foreach ($tmp2 as $keydata => $val){
   foreach ($val as $acc_id => $val2){
-     $prev = date('d.m.Y', strtotime($keydata .' -1 day'));
-     if (isset ($tmp2[$prev][$acc_id]['all_battles'])) {
+     $next = date('d.m.Y', strtotime($keydata .' +1 day'));
+     if (isset ($tmp2[$next][$acc_id]['all_battles'])) {
          foreach ($showarr as $keyacc) {
             if ($keyacc == 'all') {
-                $activity[$keydata][$val2['nickname']]['all_battles'] = $val2[$keyacc.'_battles'] - $tmp2[$prev][$acc_id][$keyacc.'_battles'] -
-                $val2['clan_battles'] + $tmp2[$prev][$acc_id]['clan_battles'] -
-                $val2['company_battles'] + $tmp2[$prev][$acc_id]['company_battles'];
+                $activity[$keydata][$val2['nickname']]['all_battles'] = $tmp2[$next][$acc_id]['all_battles'] - $val2['all_battles'] +
+                $val2['clan_battles'] - $tmp2[$next][$acc_id]['clan_battles'] +
+                $val2['company_battles'] - $tmp2[$next][$acc_id]['company_battles'];
             }   else {
-                $activity[$keydata][$val2['nickname']][$keyacc.'_battles'] = $val2[$keyacc.'_battles'] - $tmp2[$prev][$acc_id][$keyacc.'_battles'];
+                $activity[$keydata][$val2['nickname']][$keyacc.'_battles'] = $tmp2[$next][$acc_id][$keyacc.'_battles'] - $val2[$keyacc.'_battles'];
             }
             if (!isset ($activity[$keydata][$keyacc][$keyacc.'_battles'])) {
                  $activity[$keydata][$keyacc][$keyacc.'_battles'] = $activity[$keydata][$val2['nickname']][$keyacc.'_battles'];
@@ -112,7 +112,7 @@ foreach ($tmp2 as $keydata => $val){
      $count[$keyacc] += $activity[$keydata][$keyacc][$keyacc.'_battles'];
   }
 }
-$time['from'] = $time['from'] + 86400;
+$time['to'] = $time['to'] - 86400;
 unset($tmp,$tmp2);
 
 if ($count['all'] == 0 and $count['clan'] == 0 and $count['company'] == 0) {

@@ -15,12 +15,22 @@
     *
     */
 ?>
+<?php
+$sql = "SELECT MIN(updated_at) FROM `col_players`;";
+$q = $db->prepare($sql);
+     if ($q->execute() == TRUE) {
+         $mindate = $q->fetchColumn();
+     }   else {
+         $mindate = 0;
+     }
+?>
 <script type="text/javascript">
 
     $(document).ready(function(){
         $( "#a_from" ).datepicker({
             defaultDate: "-8d",
             firstDay: "1",
+            minDate: new Date(<?=$mindate;?>*1000),
             maxDate: "0",
             dateFormat: 'dd.mm.yy',
             onSelect: function( selectedDate ) {
