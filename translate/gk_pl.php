@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-
-
+?>
+<?php
   $lang['gk_error_1'] = 'Rozmiar pliku przekracza trzy megabajty.<br />';
   $lang['gk_error_2'] = 'Błąd załadunku pliku.<br />';
   $lang['gk_error_3'] = 'Nie udało się znaleźć informację o bitwie.<br />';
@@ -37,12 +37,12 @@
   $lang['gk_info_10'] = 'Czołg';
   $lang['gk_info_11'] = 'Zniszczony?';
   $lang['gk_error_10'] = 'Wybierzcie zniszczoną technikę:';
-  $lang['yes'] = 'Yes';
-  $lang['no'] = 'No';
-  $lang['gk_def'] = 'Defense of province';
-  $lang['gk_start'] = 'Landing (Attack)';
-  $lang['gk_gold'] = 'Capital (Attack)';
-  $lang['gk_normal'] = 'Normal (Attack)';
-  $lang['gk_win_or_lose'] = 'You won the fight?';
-  $lang['gk_tip'] = 'Data about blocked vehicles for fights on Global Map, collected by uploading replays. <br /><br />You must upload only full replays (you can\'t leave fight until it ends).<br /> <br />Olny authorized users can upload replays.';
+  $lang['yes'] = 'Tak';
+  $lang['no'] = 'Nie';
+  $lang['gk_def'] = 'Obrona prowincji';
+  $lang['gk_start'] = 'Londowanie (Atak)';
+  $lang['gk_gold'] = 'Inwazja (Atak)';
+  $lang['gk_normal'] = 'Normalny (Atak)';
+  $lang['gk_win_or_lose'] = 'Wygrałeś walkę?';
+  $lang['gk_tip'] = 'Dane o zablokowanych pojazdach z walk na Mapie Globalnej, zebranych przez przesłanie powtórki <br /><br />Musisz przesłać tylko pełne powtórki (nie możesz opuścić walki przed końcem).<br /> <br />Tylko autoryzowani użytkownicy mogą przesyłać powtórki.';
 ?>

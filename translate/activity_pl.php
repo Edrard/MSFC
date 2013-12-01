@@ -14,8 +14,8 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-
-
+?>
+<?php
     $lang['activity_1'] = 'Pokazać aktywność z:';
     $lang['activity_2'] = 'po:';
     $lang['activity_3'] = 'Pokazać dni bez aktywności';
@@ -33,7 +33,7 @@
     $lang['activity_main_progress'] = 'Główne zmiany';
     $lang['activity_average_progress'] = 'Postęp i znaczenie w ciągu okresu';
     $lang['activity_er_progress'] = 'Ocena efektywnosci na lata';
-    $lang['activity_tip'] = 'Data about activity added by uploading replays (not even full - no need to wait until the end of the battle).<br /> <br />
-      All players of Clan, who was in replay, for any of the sides, will get one fight to activity. <br /> <br />
-      Olny authorized users can upload replays.';
+    $lang['activity_tip'] = 'Dane o aktywności dodane z przesłanych powtórek (jeszcze nie pełna - nie trzeba czekać do końca bitwy).<br /> <br />
+      Każdy gracz z klanu, który był w powtórce, po którejś ze stron, będzie miał dodaną jedną walkę do aktywności. <br /> <br />
+      Tylko autoryzowani użytkownicy mogą przesyłać powtórki.';
 ?>
