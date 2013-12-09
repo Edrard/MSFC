@@ -14,9 +14,6 @@
     * @version     $Rev: 3.0.0 $
     *
     */
-
-
-
     if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
     {
       header ("Location: ./index.php");

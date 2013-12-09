@@ -145,10 +145,8 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
   }
   $urls = $res = array();
   foreach($clids as $arrid => $ids){
-      $toload = '';
-      foreach ($ids as $key => $id) {
-         $toload .= $id.',';
-      }
+
+            $toload = implode(',',$ids).',';
       $toload = substr($toload, 0, strlen($toload)-1);
       $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id']."&".$second[0]."=".$toload.$fields;
   }
