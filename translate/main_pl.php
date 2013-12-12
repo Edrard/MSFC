@@ -1,4 +1,4 @@
-﻿<?php
+<?php
     /*
     * Project:     Clan Stat
     * License:     Creative Commons - Attribution-Noncommercial-Share Alike 3.0 Unported
@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.0 $
+    * @version     $Rev: 3.0.1 $
     *
     */
 ?>

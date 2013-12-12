@@ -11,26 +11,11 @@
 * @copyright   2011-2012 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.0 $
+* @version     $Rev: 3.0.1 $
 *
 */
-
-
-$sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
-$q = $db->prepare($sql);
-if ($q->execute() == TRUE) {
-    $col_tables = reform($q->fetchAll());
-} else {
-    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-}
-
-$sql = "SELECT DISTINCT updated_at FROM `col_players` ;";
-$q = $db->prepare($sql);
-if ($q->execute() == TRUE) {
-    $col_check = count($q->fetchAll());
-} else {
-    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-}
+$col_tables = get_tables_like_col_tank($dbname);  
+$col_check = get_updated_at();
 
 $multiclan = read_multiclan();
 $multiclan_main = multi_main($multiclan);

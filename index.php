@@ -11,7 +11,7 @@
 * @copyright   2011-2012 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.0 $
+* @version     $Rev: 3.0.1 $
 *
 */
 
