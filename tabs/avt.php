@@ -194,7 +194,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
      <td><?=$avt_['wins']; ?> (<?php echo round($avt_['wins']/$avt_['battles']*100,2) ?>%)</td>
      <td align="left"><?=$lang['averag_hit_ratio']; ?>:</td>
      <td colspan="<?=($rowss-1); ?>" align="center"><?php echo round($avt_['hits_percents']/$multiclan_info[$config['clan']]['data'][$config['clan']]['members_count'],2) ?>%</td>
-     <td align="left"><?=$lang['all_xp']; ?>:</td>
+     <td align="left"><?=$lang['max_xp']; ?>:</td>
      <td colspan="<?=($rowss-1); ?>" align="center"><?php echo max($avt_mexp) ?></td>
     </tr>
 
