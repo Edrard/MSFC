@@ -525,4 +525,61 @@ function get_tables_like_col_tank($dbname){
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 }
+function update_tanks_db() {
+    global $db,$config;
+    $sql = "DELETE from `tanks` WHERE 1;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }    
+    $tmp = get_tank_v2($config); 
+    if ($tmp['status'] == 'ok') {
+        $updatearr = $toload = array ();
+        foreach ($tmp['data'] as $tank_id => $val) {
+            $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
+            $updatearr [$tank_id]['type']        = $val['type'];
+            $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
+            $updatearr [$tank_id]['level']       = $val['level'];
+            $updatearr [$tank_id]['nation']      = $val['nation'];
+            if ($val['is_premium']== true) {
+                $updatearr [$val['tank_id']]['is_premium']      = 1;
+            }   else {
+                $updatearr [$val['tank_id']]['is_premium']      = 0;
+            }
+            $toload[] = $val['tank_id'];
+        }
+        unset($tmp);
+        $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
+        foreach ($tmp as $tank_id => $val) {
+            $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
+            $updatearr [$tank_id]['image']         = $val['data']['image'];
+            $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
+            $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+            if($tank_id == 52225){
+                $updatearr [$tank_id]['name_i18n']     = 'БТ-СВ';
+                $updatearr [$tank_id]['image']         = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/ussr-bt-sv.png';
+                $updatearr [$tank_id]['contour_image'] = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/small/ussr-bt-sv.png';
+                $updatearr [$tank_id]['image_small']   = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/contour/ussr-bt-sv.png';    
+            }
+        }
+        unset($tmp);
+        $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+        foreach ($updatearr as $tank_id => $val) {
+            $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+        }
+        $sql = substr($sql, 0, strlen($sql)-2);
+        $sql .= ';';
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+    }   else {
+        if (isset($tmp['error']['message'])) {
+            $message = ' ( '.$tmp['error']['message'].' )';
+        }   else {
+            $message = '';
+        }
+        die ('Some error with getting data from WG'.$message);
+    }
+}
 ?>
