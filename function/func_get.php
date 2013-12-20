@@ -136,6 +136,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
     $timeout = 100;
     $tcurl = $config['pars'];
     $num = $config['multiget'];
+    
     $clids = array_chunk($clanids, $num, TRUE);
     $second = explode('/',$whattoload);
     if (($second[0] == 'clan') || ($second[0] == 'account')) {
@@ -145,11 +146,12 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
     }
     $urls = $res = array();
     foreach($clids as $arrid => $ids){
-
         $toload = implode(',',$ids).',';
         $toload = substr($toload, 0, strlen($toload)-1);
         $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id']."&".$second[0]."=".$toload.$fields;
     }
+
+    $urls = array_chunk($urls,2);   
     unset ($fields_array, $clids, $toload);
     if ($tcurl == 'curl'){
         $curl = new CURL();
@@ -157,9 +159,15 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
         $opts = array(CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => $timeout
         );
-        foreach($urls as $key => $url) $curl->addSession($url, $key, $opts);
-        $result = $curl->exec();
-        $curl->clear();
+
+        $result = array(); 
+        foreach($urls as $links){
+            usleep(5);
+            foreach($links as $key => $url) $curl->addSession($url, $key, $opts);
+            $result = array_special_merge($curl->exec(),$result);
+            $curl->clear();
+        }
+
     }   elseif($tcurl == 'mcurl') {
         $curl = new MCurl;
         $curl->threads = 100;
@@ -192,7 +200,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
         curl_multi_close($mh);
         unset($ch, $mh);
     }
-    unset($urls);
+    unset($urls);   
     if (isset($result)) {
         foreach ($result as $key => $val) {
             $json = json_decode($val,TRUE);
