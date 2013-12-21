@@ -8,10 +8,10 @@
 * Date:        $Date: 2011-10-24 11:54:02 +0200 $
 * -----------------------------------------------------------------------
 * @author      $Author: Edd, Exinaus, Shw  $
-* @copyright   2011-2012 Edd - Aleksandr Ustinov
+* @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.1 $
+* @version     $Rev: 3.0.2 $
 *
 */
 if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))

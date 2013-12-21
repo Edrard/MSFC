@@ -8,10 +8,10 @@
     * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, SHW  $
-    * @copyright   2011-2012 Edd - Aleksandr Ustinov
+    * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.3.0 $
+    * @version     $Rev: 3.0.2 $
     *
     */
 
@@ -186,5 +186,5 @@
         }
     }
 
-    define("VER",'3.0.1');
+    define("VER",'3.0.2');
 ?>
