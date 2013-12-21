@@ -61,24 +61,29 @@ if($multiclan_info[$config['clan']]['status'] == 'ok'){
             $links[] = $pldata['account_id'];
         }
     }
+    $links = array_chunk($links,$config['multiget']*2);
     unset($pldata,$tmp);
     if (!empty($links)) {
-        $res_base['info'] = multiget_v2($links, 'account/info', $config);
-        $res_base['tanks'] = multiget_v2($links, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-        $res_base['ratings'] = multiget_v2($links, 'account/ratings', $config);
+        foreach($links as $urls){
+            $res_base['info'] = multiget_v2($urls, 'account/info', $config);
+            $res_base['tanks'] = multiget_v2($urls, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+            $res_base['ratings'] = multiget_v2($urls, 'account/ratings', $config);
 
-        foreach ($res_base['info'] as $key => $val) {
-            if ($val['status'] == 'ok' && $res_base['tanks'][$key]['status'] == 'ok' && $res_base['ratings'][$key]['status'] == 'ok') {
-                $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
-                if (isset ($res_base['ratings'][$key]['data'])){ 
-                    $val['data']['ratings'] = $res_base['ratings'][$key]['data']; 
+            foreach ($res_base['info'] as $key => $val) {
+                if ($val['status'] == 'ok' && $res_base['tanks'][$key]['status'] == 'ok' && $res_base['ratings'][$key]['status'] == 'ok') {
+                    $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
+                    if (isset ($res_base['ratings'][$key]['data'])){ 
+                        $val['data']['ratings'] = $res_base['ratings'][$key]['data']; 
+                    }
+                    $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                    
+                }   else {
+                    //show error with getting data
                 }
-                $cache->set($key, $val, ROOT_DIR.'/cache/players/');
-            }   else {
-                //show error with getting data
-            }
+            } 
         }
         unset($links, $res_base);
+
     }
     foreach($roster as $name => $pldata){
         $tmp = $cache->get($pldata['account_id'], $config['cache']*3600+1, ROOT_DIR.'/cache/players/');
@@ -97,7 +102,6 @@ autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
 $tanks = tanks();
 // update list of all tanks in game from api if need
 if (empty($tanks)) {
-    include_once(ROOT_DIR.'/admin/func_admin.php');
     update_tanks_db();
     $tanks = tanks();
 }

@@ -130,13 +130,13 @@ function get_tankinfo_v2($tankid, $config, $fields_array = array()) {
 
 //------------------------------------------------------------------------------
 
-function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
+function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $result = array()) {
     //whattoload accept 'clan/info', 'clan/provinces', 'clan/battles', 'account/info', 'account/ratings', 'account/tanks', 'encyclopedia/tankinfo'
     $fields = checkfield($fields_array);
     $timeout = 100;
     $tcurl = $config['pars'];
     $num = $config['multiget'];
-    
+
     $clids = array_chunk($clanids, $num, TRUE);
     $second = explode('/',$whattoload);
     if (($second[0] == 'clan') || ($second[0] == 'account')) {
@@ -150,8 +150,6 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
         $toload = substr($toload, 0, strlen($toload)-1);
         $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id']."&".$second[0]."=".$toload.$fields;
     }
-
-    $urls = array_chunk($urls,2);   
     unset ($fields_array, $clids, $toload);
     if ($tcurl == 'curl'){
         $curl = new CURL();
@@ -159,14 +157,10 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array()) {
         $opts = array(CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => $timeout
         );
-
-        $result = array(); 
-        foreach($urls as $links){
-            usleep(5);
-            foreach($links as $key => $url) $curl->addSession($url, $key, $opts);
-            $result = array_special_merge($curl->exec(),$result);
-            $curl->clear();
-        }
+        usleep(5); 
+        foreach($urls as $key => $url) $curl->addSession($url, $key, $opts);
+        $result = array_special_merge($curl->exec(),$result);
+        $curl->clear();
 
     }   elseif($tcurl == 'mcurl') {
         $curl = new MCurl;

@@ -516,7 +516,7 @@ function get_updated_at(){
     }
 }
 function get_tables_like_col_tank($dbname){
-    global $db;
+    global $db;  
     $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
@@ -526,30 +526,53 @@ function get_tables_like_col_tank($dbname){
     }
 }
 function update_tanks_db() {
-    global $db,$config;
-    $sql = "DELETE from `tanks` WHERE 1;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }    
+    global $db,$config,$cache;
+    if(isset($_POST['update_tanks_db'])){
+        $sql = "DELETE from `tanks` WHERE 1;";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        } 
+        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/',7200);   
+    }
     $tmp = get_tank_v2($config); 
+    $tmp_tanks = tanks();
+    if(!empty($tmp_tanks)){
+        $current = array_resort($tmp_tanks,'tank_id');
+    }
+    unset($tmp_tanks);
     if ($tmp['status'] == 'ok') {
         $updatearr = $toload = array ();
         foreach ($tmp['data'] as $tank_id => $val) {
-            $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
-            $updatearr [$tank_id]['type']        = $val['type'];
-            $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
-            $updatearr [$tank_id]['level']       = $val['level'];
-            $updatearr [$tank_id]['nation']      = $val['nation'];
-            if ($val['is_premium']== true) {
-                $updatearr [$val['tank_id']]['is_premium']      = 1;
-            }   else {
-                $updatearr [$val['tank_id']]['is_premium']      = 0;
+            if(!isset($current[$val['tank_id']])){
+                $cache_tanks = $cache->get($val['tank_id'], 0, ROOT_DIR.'/cache/tanks/');
+                $updatearr [$tank_id] = $cache_tanks;
+                $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
+                $updatearr [$tank_id]['type']        = $val['type'];
+                $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
+                $updatearr [$tank_id]['level']       = $val['level'];
+                $updatearr [$tank_id]['nation']      = $val['nation'];
+                if ($val['is_premium']== true) {
+                    $updatearr [$val['tank_id']]['is_premium']      = 1;
+                }   else {
+                    $updatearr [$val['tank_id']]['is_premium']      = 0;
+                }
+                if( ($cache_tanks === FALSE) || (empty($cache_tanks)) || ((isset($cache_tanks['status'])) && ($cache_tanks['status']<>'ok')) ) {
+                    $toload[] = $val['tank_id'];
+                }
             }
-            $toload[] = $val['tank_id'];
         }
         unset($tmp);
-        $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
+        $toload = array_chunk($toload,$config['multiget']*2);
+        $tmp = array();
+        foreach($toload as $urls){
+            $tmp = array_special_merge($tmp,multiget_v2($urls, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n')));
+            foreach($tmp as $tank_id => $val){
+                if($val['status'] == 'ok'){
+                    $cache->set($tank_id, $val, ROOT_DIR.'/cache/tanks/');
+                }
+            }
+        }
         foreach ($tmp as $tank_id => $val) {
             $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
             $updatearr [$tank_id]['image']         = $val['data']['image'];
@@ -560,26 +583,29 @@ function update_tanks_db() {
                 $updatearr [$tank_id]['image']         = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/ussr-bt-sv.png';
                 $updatearr [$tank_id]['contour_image'] = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/small/ussr-bt-sv.png';
                 $updatearr [$tank_id]['image_small']   = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/contour/ussr-bt-sv.png';    
+            } 
+        }
+
+        unset($tmp);
+        if(!empty($updatearr)){
+            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+            foreach ($updatearr as $tank_id => $val) {
+                $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+            }
+            $sql = substr($sql, 0, strlen($sql)-2);
+            $sql .= ';';
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }
-        unset($tmp);
-        $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
-        foreach ($updatearr as $tank_id => $val) {
-            $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
-        }
-        $sql = substr($sql, 0, strlen($sql)-2);
-        $sql .= ';';
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-    }   else {
+    }else {
         if (isset($tmp['error']['message'])) {
             $message = ' ( '.$tmp['error']['message'].' )';
         }   else {
             $message = '';
         }
-        die ('Some error with getting data from WG'.$message);
+        die ('Some error with getting data from WG'.$message);  
     }
 }
 ?>
