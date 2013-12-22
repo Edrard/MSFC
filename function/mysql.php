@@ -133,7 +133,7 @@
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
-    $db->query ( 'SET SESSION wait_timeout = 60;');
+    $db->query ( 'SET SESSION wait_timeout = 120;');
 
     if(isset($_GET['multi']) and preg_match("/[a-zA-Z0-9]{1,5}/i", $_GET['multi']) and (strlen($_GET['multi'])<=5)) {
 

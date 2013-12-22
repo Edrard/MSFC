@@ -171,14 +171,14 @@
                               $toload[$val['account_id']] = $val['account_id'];
                               //break; //leave for testing perpuse
                             }
-                            if (!empty($toload)) {
+                            if (!empty($toload)) { 
                                 $plc = count($toload);
                                 if ($plc > 0){
                                     if($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
                                 }
                                 $res1 = multiget_v2($toload, 'account/info', $config);
                                 $res2 = multiget_v2($toload, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-                                $res3 = multiget_v2($toload, 'account/ratings', $config);
+                                $res3 = multiget_v2($toload, 'account/ratings', $config);  
                                 foreach ($res1 as $key => $val) {
                                    if ($res2[$key]['status'] <> 'ok' ) {
                                        $res1[$key]['status'] = $res2[$key]['status'];
@@ -188,7 +188,7 @@
                                        if (isset($res3[$key]['error']['message'])) $res1[$key]['error']['message'] = $res3[$key]['error']['message'];
                                    } */
                                 }
-                                $plc = 1;
+                                $plc = 1;   
                                 foreach ($res1 as $key => $val) {
                                    if ($val['status'] == 'ok' ) {
                                        $val['data']['tanks'] = $res2[$key]['data'];
@@ -213,7 +213,7 @@
                                 update_multi_cron($dbprefix);
                                 if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
                                 echo $lang['cron_done'];
-                            }
+                            } 
                         }   else {//count($new2['data']['members'] <=0
                             if($log == 1)  fwrite($fh, $date.": (Err) Members count is zero."."\n");
                         }

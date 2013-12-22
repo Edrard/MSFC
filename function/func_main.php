@@ -546,12 +546,18 @@ function update_tanks_db() {
         foreach ($tmp['data'] as $tank_id => $val) {
             if(!isset($current[$val['tank_id']])){
                 $cache_tanks = $cache->get($val['tank_id'], 0, ROOT_DIR.'/cache/tanks/');
-                $updatearr [$tank_id] = $cache_tanks;
+                $updatearr [$tank_id] = $cache_tanks['data'];
                 $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
                 $updatearr [$tank_id]['type']        = $val['type'];
                 $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
                 $updatearr [$tank_id]['level']       = $val['level'];
                 $updatearr [$tank_id]['nation']      = $val['nation'];
+                if($tank_id == 52225){
+                    $updatearr [$tank_id]['name_i18n']     = 'БТ-СВ';
+                    $updatearr [$tank_id]['image']         = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/ussr-bt-sv.png';
+                    $updatearr [$tank_id]['contour_image'] = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/small/ussr-bt-sv.png';
+                    $updatearr [$tank_id]['image_small']   = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/contour/ussr-bt-sv.png';    
+                } 
                 if ($val['is_premium']== true) {
                     $updatearr [$val['tank_id']]['is_premium']      = 1;
                 }   else {
