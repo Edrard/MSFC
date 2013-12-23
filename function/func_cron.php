@@ -66,7 +66,7 @@ function cron_update_tanks_db() {
                     }
                 }
             }   else {
-                die('Problem with getting tank info. Solution on http://wot-news.com/forum/viewtopic.php?f=30&t=19358&p=45622#p45622');
+                die('Problem with getting tank info. Solution on http://wot-news.com/forum/viewtopic.php?f=30&t=20191&start=40#p48619');
             }
             unset($tmp);
             $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
