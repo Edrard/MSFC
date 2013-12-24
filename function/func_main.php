@@ -23,6 +23,7 @@ function marks() {
 
 function medn($nations) {
     //$nations = array ('usa', 'france', 'ussr', 'china', 'uk', 'germany');
+    $medn = array();
     $tename = 'tank_expert';
     $mename = 'mechanic_engineer';
     foreach ($nations as $val2) {
@@ -311,8 +312,10 @@ function roster_sort($array)
     }
     return $new;  //new
 }
+
 function roster_resort_id($roster)
 {
+    $new = array();
     foreach($roster as $val){
         $new[$val['account_id']] = $val;
     }
@@ -334,7 +337,6 @@ function tanks_group($array){
             }
         }
     }
-
     return $name;
 }
 
@@ -355,6 +357,7 @@ function restr($array)
     }
     return $array;
 }
+
 function tanks_nations() {
     global $db;
     $sql='SELECT DISTINCT nation FROM `tanks`;';
@@ -365,6 +368,7 @@ function tanks_nations() {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 }
+
 function tanks_types() {
     global $db;
     $sql='SELECT DISTINCT type FROM `tanks`;';
@@ -375,6 +379,7 @@ function tanks_types() {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 }
+
 function tanks_lvl() {
     global $db;
     $sql='SELECT DISTINCT level FROM `tanks` order by level ASC;';
@@ -385,12 +390,12 @@ function tanks_lvl() {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 }
+
 /***** Exinaus *****/
 function get_available_tanks() {
     global $db;
-    $top_tanks=array();
-
-    $sql='SELECT t.level, t.type, t.name_i18n, t.tank_id, tt.show, tt.order, tt.shortname as title, tt.index
+    $top_tanks = array();
+    $sql = 'SELECT t.level, t.type, t.name_i18n, t.tank_id, tt.show, tt.order, tt.shortname as title, tt.index
     FROM `top_tanks` tt, `tanks` t
     WHERE t.tank_id = tt.tank_id AND tt.show = "1"
     ORDER BY tt.index ASC, tt.order ASC, t.name_i18n ASC;';
@@ -413,10 +418,11 @@ function get_available_tanks() {
     }
     return $top_tanks;
 }
+
 function get_available_tanks_index() {
     global $db;
     $top_tanks = array();
-    $sql='SELECT DISTINCT tt.index
+    $sql = 'SELECT DISTINCT tt.index
     FROM `top_tanks` tt
     WHERE tt.show = "1"
     ORDER BY tt.index ASC;';
@@ -438,6 +444,7 @@ function get_available_tanks_index() {
 /**** end ****/
 function roster_num($var)
 {
+    $data = array();
     $data['recruit'] = '8';
     $data['private'] = '7';
     $data['recruiter'] = '6';    
@@ -446,9 +453,9 @@ function roster_num($var)
     $data['commander'] = '3'; 
     $data['vice_leader'] = '2';  
     $data['leader'] = '1';
-
     return $data[$var];
 }
+
 function read_multiclan($dbprefix = FALSE)
 {
     global $db;
@@ -464,6 +471,7 @@ function read_multiclan($dbprefix = FALSE)
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }     
 }
+
 function autoclean($time,$multi,$config,$directory)
 {
     global $cache,$db;
