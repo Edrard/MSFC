@@ -160,7 +160,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
             if($new2['status'] == 'error'){
                 $new2 = $new;   
             }    
-            //$new2 = $new; //leave for testing perpuse
+            //$new2 = $new; //leave for testing purpose
             if ($new2['status'] == 'ok'){
                 if ($new2['data'][$config['clan']]['updated_at'] >= $new['data'][$config['clan']]['updated_at']) {
                     //write to cache
@@ -168,23 +168,20 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                     $cache->set('get_last_roster_'.$config['clan'], $new2);
                     //Sorting roster
                     $roster = roster_sort($new2['data'][$config['clan']]['members']);
-                    $now = mktime(date("H"), 0, 0, date("m")  , date("d"), date("Y"));
-                    //Starting geting data      
+                    //Starting geting data
                     if (count($new2['data'][$config['clan']]['members']) > 0){
                         foreach ($new2['data'][$config['clan']]['members'] as $val){
                             $toload[$val['account_id']] = $val['account_id'];
-                            //break; //leave for testing perpuse
+                            //break; //leave for testing purpose
                         }           
                         if (!empty($toload)) {
+                            $plc = count($toload);
+                            if ($plc > 0){
+                               if ($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
+                            }
                             $toload = array_chunk($toload,$config['multiget']*2); 
-                            $res1 = array();
-                            $res2 = array();
-                            $res3 = array();
+                            $res1 = $res2 = $res3 = array();
                             foreach($toload as $links){
-                                $plc = count($links);
-                                if ($plc > 0){
-                                    if($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
-                                }
                                 $res1 = array_special_merge($res1,multiget_v2($links, 'account/info', $config));
                                 $res2 = array_special_merge($res2,multiget_v2($links, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins'))); //loading only approved fields
                                 $res3 = array_special_merge($res3,multiget_v2($links, 'account/ratings', $config));  
@@ -202,7 +199,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             //print_r($res2);
                             foreach ($res1 as $key => $val) {
                                 if ($val['status'] == 'ok' ) {
-                                    $val['data']['tanks'] = $res2[$key]['data'];
+                                    if (isset($res2[$key]['data'])) $val['data']['tanks'] = $res2[$key]['data'];
                                     if (isset($res3[$key]['data'])) $val['data']['ratings'] = $res3[$key]['data'];
                                     $val['data']['role'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['role'];
                                     $val['data']['created_at'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['created_at'];
@@ -224,7 +221,6 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             update_multi_cron($dbprefix);
                             if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
                             echo $lang['cron_done'];
-
                         }
                     }   else {//count($new2['data']['members'] <=0
                         if($log == 1)  fwrite($fh, $date.": (Err) Members count is zero."."\n");
