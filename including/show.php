@@ -61,7 +61,7 @@ if($multiclan_info[$config['clan']]['status'] == 'ok'){
             $links[] = $pldata['account_id'];
         }
     }
-    $links = array_chunk($links,$config['multiget']*2);
+    $links = array_chunk($links,$config['multiget']*5);
     unset($pldata,$tmp);
     if (!empty($links)) {
         foreach($links as $urls){

@@ -179,7 +179,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             if ($plc > 0){
                                if ($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
                             }
-                            $toload = array_chunk($toload,$config['multiget']*2); 
+                            $toload = array_chunk($toload,$config['multiget']*5); 
                             $res1 = $res2 = $res3 = array();
                             foreach($toload as $links){
                                 $res1 = array_special_merge($res1,multiget_v2($links, 'account/info', $config));
