@@ -14,7 +14,9 @@
     * @version     $Rev: 3.0.2 $
     *
     */
-
-
-echo error_rep($multiclan_info[$config['clan']]['error'],$lang);
+if (isset ($multiclan_info[$config['clan']]['error'])) {
+    echo error_rep($multiclan_info[$config['clan']]['error'],$lang)
+}   else {
+    echo $lang['error_1'];
+}
 ?>
