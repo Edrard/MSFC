@@ -32,7 +32,7 @@ function cron_update_tanks_db() {
     }
     unset($sel);
     $tmp = get_tank_v2($config);
-    if ($tmp['status'] == 'ok') {
+    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
         $updatearr = $toload = array ();
         foreach ($tmp['data'] as $tank_id => $val) {
             if (!in_array($tank_id,$tanks)) {
@@ -52,7 +52,7 @@ function cron_update_tanks_db() {
         unset($tmp);
         if (!empty($toload)) {
             $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
-            if ($tmp['status'] == 'ok') {
+            if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
                 foreach ($tmp as $tank_id => $val) {
                     $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
                     $updatearr [$tank_id]['image']         = $val['data']['image'];
