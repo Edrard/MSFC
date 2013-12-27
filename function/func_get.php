@@ -198,7 +198,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $r
     if (isset($result)) {
         foreach ($result as $key => $val) {
             $json = json_decode($val,TRUE);
-            if ($json['status'] == 'ok') {
+            if ((isset($json['status'])) && ($json['status'] == 'ok')) {
                 foreach ($json['data'] as $clanid => $data) {
                     $res[$clanid]['status'] = $json['status'];
                     $res[$clanid]['count'] = '1';

@@ -24,7 +24,7 @@ foreach($multiclan as $clan){
     $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
     if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($clan['id'] == $config['clan'])) {
         $multiclan_info[$clan['id']] = get_clan_v2($clan['id'],'info', $config);
-        if (empty($multiclan_info[$clan['id']])) {
+        if ((empty($multiclan_info[$clan['id']])) || (!isset($multiclan_info[$clan['id']]['status']))) {
             $multiclan_info[$clan['id']]['status'] = 'error';
         }
         if ($multiclan_info[$clan['id']]['status'] == 'ok'){
@@ -37,7 +37,8 @@ foreach($multiclan as $clan){
     }   else {
         $message = '';
     }
-    if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($multiclan_info[$clan['id']]['status'] != 'ok')) {
+    if ( ($multiclan_info[$clan['id']] === FALSE) || (empty($multiclan_info[$clan['id']])) || (!isset($multiclan_info[$clan['id']]['status'])) ||
+         ((isset($multiclan_info[$clan['id']]['status']))&&($multiclan_info[$clan['id']]['status'] != 'ok'))  ) {
         if ($clan['id'] == $config['clan']) {
             $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
         }
@@ -48,7 +49,7 @@ foreach($multiclan as $clan){
 }
 
 //Starting geting data for players
-if($multiclan_info[$config['clan']]['status'] == 'ok'){
+if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$config['clan']]['status'] == 'ok')){
     $roster = roster_sort($multiclan_info[$config['clan']]['data'][$config['clan']]['members']);
     $roster_id = roster_resort_id($roster);
 
@@ -70,15 +71,18 @@ if($multiclan_info[$config['clan']]['status'] == 'ok'){
             $res_base['ratings'] = multiget_v2($urls, 'account/ratings', $config);
 
             foreach ($res_base['info'] as $key => $val) {
-                if ($val['status'] == 'ok' && $res_base['tanks'][$key]['status'] == 'ok' && $res_base['ratings'][$key]['status'] == 'ok') {
-                    $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
-                    if (isset ($res_base['ratings'][$key]['data'])){ 
-                        $val['data']['ratings'] = $res_base['ratings'][$key]['data']; 
-                    }
-                    $cache->set($key, $val, ROOT_DIR.'/cache/players/');
-                    
-                }   else {
-                    //show error with getting data
+                if ((isset ($val['status'])) && ($val['status'] == 'ok')) {
+                     if ((isset ($res_base['tanks'][$key]['status'])) && ($res_base['tanks'][$key]['status'] == 'ok')) {
+                          $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
+                          if (isset ($res_base['ratings'][$key]['data'])){ 
+                              $val['data']['ratings'] = $res_base['ratings'][$key]['data'];
+                          }
+                          $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                     }    else {
+                          $message = "Can't load data on ".$key." (tank info)";
+                     }
+                }  else {
+                   $message = "Can't load data on ".$key." (main player info)";
                 }
             } 
         }

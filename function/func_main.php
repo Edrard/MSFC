@@ -549,7 +549,7 @@ function update_tanks_db() {
         $current = array_resort($tmp_tanks,'tank_id');
     }
     unset($tmp_tanks);
-    if ($tmp['status'] == 'ok') {
+    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
         $updatearr = $toload = array ();
         foreach ($tmp['data'] as $tank_id => $val) {
             if(!isset($current[$val['tank_id']])){
@@ -577,12 +577,12 @@ function update_tanks_db() {
             }
         }
         unset($tmp);
-        $toload = array_chunk($toload,$config['multiget']*2);
+        $toload = array_chunk($toload,$config['multiget']*5);
         $tmp = array();
         foreach($toload as $urls){
             $tmp = array_special_merge($tmp,multiget_v2($urls, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n')));
             foreach($tmp as $tank_id => $val){
-                if($val['status'] == 'ok'){
+                if ((isset($val['status'])) && ($val['status'] == 'ok')) {
                     $cache->set($tank_id, $val, ROOT_DIR.'/cache/tanks/');
                 }
             }
@@ -613,7 +613,7 @@ function update_tanks_db() {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }
-    }else {
+    }   else {
         if (isset($tmp['error']['message'])) {
             $message = ' ( '.$tmp['error']['message'].' )';
         }   else {

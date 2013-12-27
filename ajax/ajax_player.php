@@ -494,7 +494,7 @@ if (isset($result)) {
          $new = $cache->get('get_last_roster_'.$val['clanids'],0);
          if ($new === FALSE) {
              $new2 = get_clan_v2($val['clanids'], 'info', $config);
-             if (($new2 === FALSE)|| ($new2['status'] <> 'ok') ) {
+             if (($new2 === FALSE)|| (!isset($new2['status'])) || ((isset($new2['status']))&&($new2['status'] <> 'ok') )) {
                   $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
              }    else {
                   $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];

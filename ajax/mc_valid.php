@@ -79,7 +79,7 @@
                         }
                         $roster = get_clan_v2($_GET['id'], 'info', $config);
                         //print_r($roster);
-                        if($roster['status'] == 'ok'){
+                        if ((isset($roster['status']))&&($roster['status'] == 'ok')) {
                             if($status_clan == 0 ){
                                 if($status_prefix != 0){
                                     $message['prefix'] = $lang['error_multi_7'];

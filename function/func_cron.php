@@ -102,8 +102,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
     $stats4 = array ('place', 'value');
     $stats5 = array ('spotted', 'dropped_ctf_points', 'battle_avg_xp', 'battles', 'damage_dealt', 'frags',
         'ctf_points', 'integrated_rating', 'xp', 'battle_avg_performance', 'battle_wins');
-
-    if ($data['status'] == 'ok'){
+     if ((isset($data['status'])) && ($data['status'] == 'ok')) {
         $data = $data['data'];
         $col_pl['account_id'] = $col_med['account_id'] = $col_rat['account_id'] = $data['account_id'];
         $col_pl['updated_at'] = $col_med['updated_at'] = $col_rat['updated_at'] = $time;

@@ -151,7 +151,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
             }   else {
                 if($log == 1)  fwrite($fh, $date.": (WG) Successful get some data from WG."."\n");
             }
-            if (empty($new2)){
+            if (empty($new2) || (!isset($new2['status']))) {
                 $new2['status'] = 'error';
             }
             if (!isset($new['data'][$config['clan']]['updated_at'])){
@@ -161,7 +161,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                 $new2 = $new;   
             }    
             //$new2 = $new; //leave for testing purpose
-            if ($new2['status'] == 'ok'){
+            if ((isset($new2['status'])) && ($new2['status'] == 'ok')) {
                 if ($new2['data'][$config['clan']]['updated_at'] >= $new['data'][$config['clan']]['updated_at']) {
                     //write to cache
                     $cache->clear('get_last_roster_'.$config['clan']);
@@ -187,7 +187,10 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                 $res3 = array_special_merge($res3,multiget_v2($links, 'account/ratings', $config));  
                             }
                             foreach ($res1 as $key => $val) {
-                                if ($res2[$key]['status'] <> 'ok' ) {
+                                if (!isset($res2[$key]['status'])) {
+                                     $res2[$key]['status'] = 'error';
+                                }
+                                if ($res2[$key]['status'] <> 'ok') {
                                     $res1[$key]['status'] = $res2[$key]['status'];
                                     if (isset($res2[$key]['error']['message'])) $res1[$key]['error']['message'] = $res2[$key]['error']['message'];
                                 }  /* elseif ($res3[$key]['status'] <> 'ok' ) {
@@ -198,6 +201,9 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             $plc = 1;
                             //print_r($res2);
                             foreach ($res1 as $key => $val) {
+                                if (!isset($val['status'])) {
+                                     $val['status'] = 'error';
+                                }
                                 if ($val['status'] == 'ok' ) {
                                     if (isset($res2[$key]['data'])) $val['data']['tanks'] = $res2[$key]['data'];
                                     if (isset($res3[$key]['data'])) $val['data']['ratings'] = $res3[$key]['data'];
