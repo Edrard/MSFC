@@ -23,7 +23,8 @@
     $lang['error_multi_2'] = "ID Klanu powinien być cyfrą";
     $lang['error_multi_3'] = "Prefiks nie powinien zaczynać się z cyfry i być duży od 5 liter";
     $lang['error_multi_4'] = "W prefiksie można wykorzystać tylko litery albo cyfry";
+    $lang['error_multi_5'] = "Nie można załadować danych z WG z obecnym Clan ID";
     $lang['error_multi_6'] = "Klan z takim ID już jest dodany";
-    $lang['error_multi_5'] = "Błędny ID klanu";
     $lang['error_multi_7'] = "Klan z takim prefiksem już jest dodany";
+    $lang['error_multi_8'] = "Klan z takim ID nie istnieje lub odwołany";
 ?>
