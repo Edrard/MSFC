@@ -182,6 +182,7 @@
     $lang['medal_tank_expert_china'] = 'Expert: China';
     $lang['medal_tank_expert_uk'] = 'Expert: UK';
     $lang['medal_tank_expert_germany'] = 'Expert: Germany';
+    $lang['medal_tank_expert_japan'] = 'Expert: Japan';
 
     $lang['medal_mechanic_engineer_usa'] = 'Technical Engineer, U.S.A.';
     $lang['medal_mechanic_engineer_france'] = 'Technical Engineer, France';
@@ -189,6 +190,7 @@
     $lang['medal_mechanic_engineer_china'] = 'Technical Engineer, China';
     $lang['medal_mechanic_engineer_uk'] = 'Technical Engineer, UK';
     $lang['medal_mechanic_engineer_germany'] = 'Technical Engineer, Germany';
+    $lang['medal_mechanic_engineer_japan'] = 'Technical Engineer, Japan';
     $lang['medal_mechanic_engineer'] = 'Senior Technical Engineer';
 
     $lang['medal_sinai'] = 'The Lion of Sinai';
@@ -219,7 +221,7 @@
     $lang['medal_class2'] = 'class';
     $lang['medal_amount'] = 'amount';
     $lang['medal_ps'] = 'For more information on the awards move your mouse over the name';
-    $lang['medal_battle'] = 'The number of fights to get a medal'; 
+    $lang['medal_battle'] = 'The number of fights to get a medal';
     $lang['epic'] = 'Epic Achievements';
     $lang['special'] = 'Special Achievements';
     $lang['major'] = 'Major Achievements';
@@ -228,39 +230,39 @@
     $lang['mechanic'] = 'Technical Engineer';
     $lang['achiv'] = 'Achievements';
     $lang['title_medal_carius'] = 'Awarded for the destruction of enemy tanks and self-propelled guns in four classes:Class IV - 10 vehicles Class III - 100 vehicles Class II - 1,000 vehicles Class I - 10,000 vehicles';
-    $lang['title_medal_halonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.'; 
+    $lang['title_medal_halonen'] = 'Awarded for destroying three or more enemy vehicles with a Tank Destroyer. The targets must be at least two tiers higher than the player\'s vehicle.';
     $lang['title_invader'] = 'Capture the maximum number of points from the enemy base, but not less than 80. The achievement is granted on successful base capture, including only the points that were part of the base capture.';
-    $lang['title_medal_fadin'] = 'Awarded for destroying the last enemy vehicle in the battle with the last shell remaining on the player\'s tank.'; 
+    $lang['title_medal_fadin'] = 'Awarded for destroying the last enemy vehicle in the battle with the last shell remaining on the player\'s tank.';
     $lang['title_armor_piercer'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
     $lang['title_medal_ekins'] = 'Awarded in four classes for destroying tier 8, 9 or 10 enemy tanks and self-propelled guns: Class IV - 3 vehicles Class III - 30 vehicles Class II - 300 vehicles Class I - 3,000 vehicles.';
     $lang['title_mousebane'] = 'Destroy 10 or more PzKpfw VIII Maus tanks. (the icon displays the number of tanks destroyed).';
-    $lang['title_medal_kay'] = 'Awarded for achieving the Battle Hero status in four classes:Class IV - 1 time Class III - 10 times Class II - 100 times Class I - 1,000 times.'; 
-    $lang['title_defender'] = 'Reduce the amount of enemy capture points on a friendly base by 70 or more.'; 
-    $lang['title_medal_le_clerc'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points'; 
-    $lang['title_supporter'] = 'Hit more enemy vehicles than any other player on your team (at least 6), which are subsequently destroyed by another player.'; 
-    $lang['title_steelwall'] = 'Receive the most hits (at least 11) of any player on your team, with potential damage of at least 1,000 HP, and survive.'; 
-    $lang['title_medal_abrams'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 100 points Class III - 1,000 points Class II - 10,000 points Class I - 100,000 points'; 
-    $lang['title_medal_poppel'] = 'Awarded for detecting enemy tanks and self-propelled guns in all battles, in four classes: Class IV - 20 vehicles Class III - 200 vehicles Class II - 2,000 vehicles Class I - 20,000 vehicles.'; 
-    $lang['title_medal_orlik'] = 'Awarded for destroying three or more enemy vehicles with a light tank. The targets must be at least two tiers higher than the player\'s tank.'; 
+    $lang['title_medal_kay'] = 'Awarded for achieving the Battle Hero status in four classes:Class IV - 1 time Class III - 10 times Class II - 100 times Class I - 1,000 times.';
+    $lang['title_defender'] = 'Reduce the amount of enemy capture points on a friendly base by 70 or more.';
+    $lang['title_medal_le_clerc'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points';
+    $lang['title_supporter'] = 'Hit more enemy vehicles than any other player on your team (at least 6), which are subsequently destroyed by another player.';
+    $lang['title_steelwall'] = 'Receive the most hits (at least 11) of any player on your team, with potential damage of at least 1,000 HP, and survive.';
+    $lang['title_medal_abrams'] = 'Awarded for the total amount of the player\'s enemy base capture points. An unsuccessful or reduced capture does not count toward this number. The award is established in four classes: Class IV - 100 points Class III - 1,000 points Class II - 10,000 points Class I - 100,000 points';
+    $lang['title_medal_poppel'] = 'Awarded for detecting enemy tanks and self-propelled guns in all battles, in four classes: Class IV - 20 vehicles Class III - 200 vehicles Class II - 2,000 vehicles Class I - 20,000 vehicles.';
+    $lang['title_medal_orlik'] = 'Awarded for destroying three or more enemy vehicles with a light tank. The targets must be at least two tiers higher than the player\'s tank.';
     $lang['title_hand_of_death'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
-    $lang['title_sniper'] = 'Achieve at least 85% hits out of a minimum of ten shots fired with the potential damage of 1,000 HP and more. No team hits allowed, non-penetrating hits included.'; 
-    $lang['title_warrior'] = 'Destroy more enemy vehicles than any other player in your team during the battle (at least 6).'; 
+    $lang['title_sniper'] = 'Achieve at least 85% hits out of a minimum of ten shots fired with the potential damage of 1,000 HP and more. No team hits allowed, non-penetrating hits included.';
+    $lang['title_warrior'] = 'Destroy more enemy vehicles than any other player in your team during the battle (at least 6).';
     $lang['title_title_sniper'] = 'Hit an enemy vehicle ten or more times in a row without missing. The results of the next battle in a row using any vehicle also count towards this number, unless the sequence is broken by a miss. (the icon displays the longest sequence).';
-    $lang['title_medal_burda'] = 'Awarded for the destruction of five or more enemy self-propelled guns.'; 
-    $lang['title_scout'] = 'Detect most enemy tanks and self-propelled guns than anyone else on your team (at least nine). The achievement is granted to the winning team only.'; 
+    $lang['title_medal_burda'] = 'Awarded for the destruction of five or more enemy self-propelled guns.';
+    $lang['title_scout'] = 'Detect most enemy tanks and self-propelled guns than anyone else on your team (at least nine). The achievement is granted to the winning team only.';
     $lang['title_beasthunter'] = 'Destroy 100 or more animals : Jagdpanther, Jagdtiger, PzKpfw V Panther, PzKpfw VI Tiger, and PzKpfw VI Ausf. B Tiger II.';
     $lang['title_kamikaze'] = 'Destroy a higher-tier enemy vehicle by ramming it. (the icon displays the number of tanks destroyed).';
     $lang['title_raider'] = 'Capture the enemy base and remain undetected during the entire battle. (the icon displays the number of enemy vehicles that failed to detect the player).';
-    $lang['title_medal_oskin'] = 'Awarded for destroying three or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.'; 
-    $lang['title_medal_billotte'] = 'Awarded to players who destroy at least one enemy vehicle and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points.'; 
+    $lang['title_medal_oskin'] = 'Awarded for destroying three or more enemy vehicles with a medium tank. The targets must be at least two tiers higher than the player\'s tank.';
+    $lang['title_medal_billotte'] = 'Awarded to players who destroy at least one enemy vehicle and survive the battle to victory despite receiving at least five different critical hits and 80% or more loss of hit points.';
     $lang['title_medal_lavrinenko'] = 'Awarded for reducing the total number of capture points of a friendly base, up to 100 points per battle.This award is established in four classes: Class IV - 30 points Class III - 300 points Class II - 3,000 points Class I - 30,000 points.';
-    $lang['title_medal_kolobanov'] = 'Awarded to a player who stands alone against five or more enemy tanks or self-propelled guns and wins (this means that you can capture the enemy base by yourself when you are against five enemies and you will recieve the achievement.).'; 
+    $lang['title_medal_kolobanov'] = 'Awarded to a player who stands alone against five or more enemy tanks or self-propelled guns and wins (this means that you can capture the enemy base by yourself when you are against five enemies and you will recieve the achievement.).';
     $lang['title_invincible'] = 'Survive 5 or more battles without taking any damage (not including battles fought using self-propelled guns).';
     $lang['title_lumberjack'] = 'Survive 5 or more battles without taking any damage (not including battles fought using self-propelled guns).';
     $lang['title_tank_expert'] = 'Destroy at least one of every type of enemy vehicle currently available in the game. This achievement will not be revoked if new vehicle types appear in the game.';
     $lang['title_diehard'] = 'Survive 20 or more battles. Battles fought using self-propelled guns do not break the sequence, but are not included either.';
-    $lang['title_medal_knispel'] = 'Awarded for the total amount of damage caused and received in four classes: Class IV - 10,000 HP Class III - 100,000 HP Class II - 1,000,000 HP Class I - 10,000,000 HP.'; 
-    $lang['title_medal_boelter'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.'; 
+    $lang['title_medal_knispel'] = 'Awarded for the total amount of damage caused and received in four classes: Class IV - 10,000 HP Class III - 100,000 HP Class II - 1,000,000 HP Class I - 10,000,000 HP.';
+    $lang['title_medal_boelter'] = 'Awarded for destroying seven or more enemy tanks and self-propelled guns with a tank or tank destroyer, or 10 or more vehicles with a self-propelled gun in one battle. The targets must be at least tier four enemy vehicles.';
 
     $lang['title_maxPiercingSeries'] = 'Achieve at least five armor penetrating hits in a row against enemy vehicles.';
     $lang['title_maxKillingSeries'] = 'Destroy three or more enemy vehicles in a row with a single round each. The achievement is granted on completion of the sequence.';
@@ -272,6 +274,7 @@
     $lang['title_tank_expert_china'] = 'Destroy at least one of each type from the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_tank_expert_uk'] = 'Destroy at least one of each type from the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_tank_expert_germany'] = 'Destroy at least one of each type from the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_tank_expert_japan'] = 'Destroy at least one of each type from the Japan tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
 
     $lang['title_mechanic_engineer_usa'] = 'Research all vehicles in the American tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanic_engineer_france'] = 'Research all vehicles in the French tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
@@ -279,6 +282,7 @@
     $lang['title_mechanic_engineer_china'] = 'Research all vehicles in the China tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanic_engineer_uk'] = 'Research all vehicles in the UK tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
     $lang['title_mechanic_engineer_germany'] = 'Research all vehicles in the German tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';
+    $lang['title_mechanic_engineer_japan'] = 'Research all vehicles in the Japan tech tree. In the event that new vehicles are added to the tech tree, the award becomes void.';    
     $lang['title_mechanic_engineer'] = 'Research all vehicles in all tech trees. In the event that new vehicles are added to any tech tree, the award becomes void.';
 
     $lang['title_sinai'] = 'The Lion of Sinai - Destroy at least 100 tanks of the IS series, and vehicles based on their chassis: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Object 704, or Object 261';

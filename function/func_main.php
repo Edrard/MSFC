@@ -23,7 +23,7 @@ function marks() {
 
 function medn($nations) {
     $medn = array();
-    $nations_id = array('ussr' => 0,  'germany' => 1, 'usa' => 2, 'china' => 3, 'france' => 4, 'uk' => 5, 'japan' => 6);
+    $nations_id = array('ussr' => 0,  'germany' => 1, 'usa' => 2, 'china' => 3, 'france' => 4, 'uk' => 5); //, 'japan' => 6
     $tename = 'tank_expert';
     $mename = 'mechanic_engineer';
     foreach ($nations as $val2) {
@@ -36,8 +36,17 @@ function medn($nations) {
         }
     }
 
+    $medn['medal_ekins']['img'] = 'images/medals/medalEkins1.png';
+    $medn['medal_carius']['img'] = 'images/medals/medalCarius1.png';
+    $medn['medal_kay']['img'] = 'images/medals/medalKay1.png';
+    $medn['medal_le_clerc']['img'] = 'images/medals/medalLeClerc1.png';
+    $medn['medal_abrams']['img'] = 'images/medals/medalAbrams1.png';
+    $medn['medal_poppel']['img'] = 'images/medals/medalPoppel1.png';
+    $medn['medal_lavrinenko']['img'] = 'images/medals/medalLavrinenko1.png';
+    $medn['medal_knispel']['img'] = 'images/medals/medalKnispel1.png';
+
     for ($i=0; $i<=4; $i++) {
-        if($i == 0) { $j = 1; } else { $j = $i; }
+        if($i == 0) { $j = 4; } else { $j = $i; }
         $medn['medal_abrams'][$i]['img'] = 'images/medals/medalAbrams'.$j.'.png';
         $medn['medal_carius'][$i]['img'] = 'images/medals/medalCarius'.$j.'.png';
         $medn['medal_ekins'][$i]['img'] = 'images/medals/medalEkins'.$j.'.png';

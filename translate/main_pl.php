@@ -182,6 +182,7 @@
     $lang['medal_tank_expert_china'] = 'Ekspert Chiny';
     $lang['medal_tank_expert_uk'] = 'Ekspert Anglia';
     $lang['medal_tank_expert_germany'] = 'Ekspert Niemcy';
+    $lang['medal_tank_expert_japan'] = 'Ekspert Japonia';
 
     $lang['medal_mechanic_engineer_usa'] = 'Inżynier-Mechanik USA';
     $lang['medal_mechanic_engineer_france'] = 'Inżynier-Mechanik Francja';
@@ -189,6 +190,7 @@
     $lang['medal_mechanic_engineer_china'] = 'Inżynier-Mechanik Chiny';
     $lang['medal_mechanic_engineer_uk'] = 'Inżynier-Mechanik Anglia';
     $lang['medal_mechanic_engineer_germany'] = 'Inżynier-Mechanik Niemcy';
+    $lang['medal_mechanic_engineer_japan'] = 'Inżynier-Mechanik Japonia';
     $lang['medal_mechanic_engineer'] = 'Inżynier-Mechanik';
 
     $lang['medal_sinai'] = 'Lew Synaju';
@@ -272,6 +274,7 @@
     $lang['title_tank_expert_china'] = 'Zniszcz co najmniej jeden pojazd każdego typu z danego drzewka technologicznego Chiny. Możliwe jest uzyskanie medalu Ekspert dla każdej nacji w grze. W przyszłości, gdy do drzewek technologicznych będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zniszczenia wszystkich pojazdów z danego drzewka technologicznego.';
     $lang['title_tank_expert_uk'] = 'Zniszcz co najmniej jeden pojazd każdego typu z danego drzewka technologicznego Anglii. Możliwe jest uzyskanie medalu Ekspert dla każdej nacji w grze. W przyszłości, gdy do drzewek technologicznych będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zniszczenia wszystkich pojazdów z danego drzewka technologicznego.';
     $lang['title_tank_expert_germany'] = 'Zniszcz co najmniej jeden pojazd każdego typu z danego drzewka technologicznego Niemcy. Możliwe jest uzyskanie medalu Ekspert dla każdej nacji w grze. W przyszłości, gdy do drzewek technologicznych będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zniszczenia wszystkich pojazdów z danego drzewka technologicznego.';
+    $lang['title_tank_expert_japan'] = 'Zniszcz co najmniej jeden pojazd każdego typu z danego drzewka technologicznego Japonia. Możliwe jest uzyskanie medalu Ekspert dla każdej nacji w grze. W przyszłości, gdy do drzewek technologicznych będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zniszczenia wszystkich pojazdów z danego drzewka technologicznego.';
 
     $lang['title_mechanic_engineer_usa'] = 'Zbadaj wszystkie pojazdy danej nacji USA. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
     $lang['title_mechanic_engineer_france'] = 'Zbadaj wszystkie pojazdy danej nacji Francji. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
@@ -279,6 +282,7 @@
     $lang['title_mechanic_engineer_china'] = 'Zbadaj wszystkie pojazdy danej nacji Chiny. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
     $lang['title_mechanic_engineer_uk'] = 'Zbadaj wszystkie pojazdy danej nacji Anglii. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
     $lang['title_mechanic_engineer_germany'] = 'Zbadaj wszystkie pojazdy danej nacji Niemcy. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
+    $lang['title_mechanic_engineer_japan'] = 'Zbadaj wszystkie pojazdy danej nacji Japonia. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
     $lang['title_mechanic_engineer'] = 'Zbadaj wszystkie pojazdy danej nacji. W przyszłości, gdy do danego drzewka technologicznego będą wprowadzane nowe pojazdy, osiągnięcie zostanie utracone do momentu ponownego zbadania wszystkich pojazdów.';
 
     $lang['title_sinai'] = 'Zniszcz co najmniej 100 czołgów z serii IS i czołgów opartych na zawieszeniu IS: IS, IS-3, IS-4, IS-6, IS-7, IS-8, ISU-152, Obiekt 704, Obiekt 261.';
