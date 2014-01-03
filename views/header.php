@@ -120,6 +120,8 @@
               $( "#player_result" ).dialog({
                     title: "<?=$lang['st_title'];?>",
                     appendTo: "#allcontainer",
+                    dialogClass: 'pstat',
+                    position: { my: "center", at: "top", of: "#allcontainer" },
                     autoOpen: false,
                     draggable: false,
                     resizable: false,
@@ -127,9 +129,14 @@
                     closeOnEscape: true,
                     modal: true,
                     zIndex: 1,
-                    create: function( event, ui ) {},
-                    open: function( event, ui ) {$("#roster").trigger("destroy");},
-                    beforeClose: function( event, ui ) {$("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});}
+                    open: function( event, ui ) {
+                      $("#roster").trigger("destroy");
+                      $('.pstat').css({'top': '100px'});
+                    },
+                    beforeClose: function( event, ui ) {
+                      $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
+                      $("#allcontainer").css({'min-height': '100%'});
+                    }
                   });
         });
 
@@ -173,13 +180,16 @@
                   nickname   : $(elem).attr("alt")
                 }),
                 url: "ajax/ajax_player.php",
+                beforeSend : function(data){
+                  $("#player_result").dialog('open');
+                  $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
+                },
                 success: function(msg){
-                    $("#player_result").addClass("ui-state-disabled");
-                    $("#player_result").html(msg).show();
+                    $("#player_result").empty();
+                    $("#player_result").html(msg);
+                    $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
                 },
                 complete: function() {
-                  $("#player_result").removeClass("ui-state-disabled");
-                  $("#player_result").dialog('open');
                   updateall();
                 }
             });

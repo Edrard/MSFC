@@ -97,6 +97,7 @@ $("#player0")
   <? for ($i=1; $i<=17; $i++) {?>
   .add("#player<?=$i;?>")
   <? } ;?>
+  .add("#player01")
   .trigger('applyWidgetId', ['zebra']).trigger('update');
 return false;
 }
@@ -106,6 +107,7 @@ return false;
       <? for ($i=1; $i<=9; $i++) {?>
               .add("#player<?=$i;?>")
       <? } ;?>
+              .add("#player01")
       .tablesorter({
           sortList:[[0,0]],
           headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false}, 4: {sorter: false},
@@ -116,7 +118,7 @@ return false;
       $("#player10").add("#player11").add("#player12")
       .tablesorter({
           headerTemplate : '<div style="padding-right: 12px;">{content}</div>{icon}',
-          sortList:[[0,0]],
+          sortList:[[1,1]],
           headers:{ 0: { sorter: false}},
           theme : 'jui'
       });
@@ -126,7 +128,7 @@ return false;
       <? } ;?>
       .tablesorter({
           headerTemplate : '<div style="padding-right: 12px;">{content}</div>{icon}',
-          sortList:[[0,0]],
+          sortList:[[1,1]],
           theme : 'jui'
       });
       $('.bb[title]').tooltip({
@@ -240,6 +242,18 @@ foreach ($statacc as $val) {
            </tr>
          </tbody>
        </table>
+       <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player01">
+         <thead>
+           <tr>
+            <th align="center"><?=$lang['upd_at'];?></th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td align="center"><b><?php echo date('d.m.Y',$pres['data']['updated_at']); ?></b></td>
+           </tr>
+         </tbody>
+       </table>
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player5">
          <thead>
            <tr>
@@ -319,12 +333,6 @@ foreach ($statacc as $val) {
            </tr>
            <?php } ?>
          </tbody>
-         <tfoot>
-           <tr>
-             <td><span class="hidden"><? echo $i;++$i; ?></span><?=$lang['upd_at'];?>:</td>
-             <td  align="center" colspan="2"><?php echo date('d.m.Y',$pres['data']['updated_at']); ?></td>
-           </tr>
-         </tfoot>
        </table>
 
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player2">
