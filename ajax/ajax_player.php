@@ -566,7 +566,11 @@ if (isset($result)) {
 } // if result
       foreach ($medn as $medname => $val) {
          $medtypes[$val['type']][] = $medname;
-      } ?>
+         if($val['type'] == 'major') {
+           $medn[$medname]['img'] = $medn[$medname][$pres['data']['achievements'][$medname]]['img'];
+         }
+      }
+      ksort($medtypes); ?>
 <table cellspacing="1" cellpadding="1" width="100%" id="player9">
   <thead>
     <tr>
