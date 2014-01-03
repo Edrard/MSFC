@@ -209,7 +209,7 @@
     $lang['medal_medal_heroes_of_rassenay'] = 'Raseiniai Heroes\' Medal';
     $lang['medal_bombardier'] = 'Bombardier';
 
-    $lang['medal_huntsman'] = ' Ranger';
+    $lang['medal_huntsman'] = 'Naydin Medal';
     $lang['medal_lucky_devil'] = 'Lucky';
     $lang['medal_iron_man'] = 'Cool-Headed';
     $lang['medal_sturdy'] = 'Spartan';
