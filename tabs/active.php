@@ -34,13 +34,11 @@
             $("#show_main_progress").click(function() {
                 $(".all_progress_hide").hide();
                 $(".main_progress").show();
-                check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 return false;
             });
             $("#show_average_progress").click(function() {
                 $(".all_progress_hide").hide();
                 $(".average_progress").show();
-                check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 return false;
             });
         });

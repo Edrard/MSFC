@@ -372,8 +372,8 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                               <td align="left"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>"
                                                 target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
                               <td width="130px" align="left">
-                                 <?php echo '<div style="position:relative;"><img src="http://',$config['gm_url'],'/static/3.6.0.1/common/img/nation/',$tanks[$val['tank_id']]['nation'],'.png" />',
-                                            '<img style="right:-50px; position:absolute;" src="',$tanks[$val['tank_id']]['image_small'],'" /></div>'; ?>
+                                 <div style="position:relative; min-height:31px; padding: 0px; background: url('http://<?=$config['gm_url'];?>/static/3.6.0.1/common/img/nation/<?=$tanks[$val['tank_id']]['nation'];?>.png') no-repeat scroll 0 0 transparent;">
+                                 <img style="right:-50px; position:absolute; padding: 0px;" src="<?=$tanks[$val['tank_id']]['image_small'];?>" /></div>
                               </td>
                               <td align="center">
                                  <?=$tanks[$val['tank_id']]['name_i18n']; ?>

@@ -23,49 +23,41 @@
         $("#show_hero").click(function() {
             $(".amh").hide();
             $(".heros").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_major").click(function() {
             $(".amh").hide();
             $(".majors").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_epic").click(function() {
             $(".amh").hide();
             $(".epics").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_epic2").click(function() {
             $(".amh").hide();
             $(".epic2s").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_special").click(function() {
             $(".amh").hide();
             $(".specials").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_special2").click(function() {
             $(".amh").hide();
             $(".special2s").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_expert").click(function() {
             $(".amh").hide();
             $(".experts").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
         $("#show_mechanic").click(function() {
             $(".amh").hide();
             $(".mechanics").show();
-            check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
             return false;
         });
     });

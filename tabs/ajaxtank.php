@@ -32,9 +32,6 @@
                 url: "./ajax/tanks.php",
                 success: function(msg){
                     $("#result").html(msg).show();
-                },
-                complete: function() {
-                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;

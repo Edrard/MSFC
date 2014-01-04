@@ -22,13 +22,11 @@ $(document).ready(function() {
     $("#change_ratingplace").click(function() {
       $(".ratingvalue").hide();
       $(".ratingplace").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_ratingvalue").click(function() {
       $(".ratingplace").hide();
       $(".ratingvalue").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $('.bb[title]').tooltip({

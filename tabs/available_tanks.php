@@ -14,7 +14,6 @@ if (isset($topTanki) and count($topTanki) > 0) {
                 echo " $('#show_atanks_$index').click(function() {
                        $('.atanks_hide').hide();
                        $('.atanks_$index').show();
-                       check_Width($('table.table-id-$key'), $('div#tabs-$key'));
                     }); ";
               } ?>
           });

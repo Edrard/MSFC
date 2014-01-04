@@ -23,13 +23,11 @@ $(document).ready(function() {
     $("#change_overall_value").click(function() {
       $(".overall_average").hide();
       $(".overall_value").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_overall_average").click(function() {
       $(".overall_value").hide();
       $(".overall_average").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
 });

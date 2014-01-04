@@ -65,9 +65,6 @@ $q = $db->prepare($sql);
                 url: "./ajax/ajax_activity.php",
                 success: function(msg){
                     $("#activity_result").html(msg).show();
-                },
-                complete: function() {
-                  check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
                 }
             });
             return false;

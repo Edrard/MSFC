@@ -130,21 +130,18 @@ if ($count['all'] == 0 and $count['clan'] == 0 and $count['company'] == 0) {
           $(".clan").hide();
           $(".company").hide();
           $(".all").show();
-          check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
           return false;
         });
         $("#change_clan").click(function() {
           $(".all").hide();
           $(".company").hide();
           $(".clan").show();
-          check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
           return false;
         });
         $("#change_company").click(function() {
           $(".all").hide();
           $(".clan").hide();
           $(".company").show();
-          check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
           return false;
         });
     });

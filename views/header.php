@@ -38,6 +38,7 @@
     <script type="text/javascript" src="./js/msfc.shared.js"></script>
 
     <script type="text/javascript">
+        $("#allcontainer").css({'height': $(window).height(), 'width': $(window).width(), 'overflow-x': 'hidden', 'overflow-y': 'hidden' });
         $(document).ready(function() {
               $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
 
@@ -63,12 +64,12 @@
               .add("#available_tanks").tablesorter();
 
               $("#avt1").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}}, widgetOptions: {uitheme : 'bootstrap'}});
-              <? for ($i=2; $i<=6; $i++) {?>
+              <? for ($i=2; $i<=6; $i++) { ?>
               $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[1,0]], widgetOptions: {uitheme : 'bootstrap'}});
               <? }
-                 for ($i=7; $i<=9; $i++) {?>
+                 for ($i=7; $i<=9; $i++) { ?>
               $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
-              <? }?>
+              <? } ?>
 
               $( "#login_dialog" ).dialog({
                   title: "<?php echo $lang['login']; ?>",
@@ -100,23 +101,10 @@
 
               if (typeof window.currentTabID === "undefined") {
                  window.currentTabID = getTabID();
-                 check_Width($("table.table-id-"+window.currentTabID), $("div#tabs-"+window.currentTabID));
               }
               if (typeof window.MenuStatus === "undefined") {
                  window.MenuStatus = 'visible';
               }
-              <?php
-                foreach($tabs as $key => $val) {
-                  if(is_numeric($key)) {
-                    echo "
-                      $('#id-$key').click(function() {
-                         $('#table_resized').remove();
-                         check_Width($('table.table-id-$key'), $('div#tabs-$key'));
-                      });
-                    ";
-                  }
-                }
-              ?>
               $( "#player_result" ).dialog({
                     title: "<?=$lang['st_title'];?>",
                     appendTo: "#allcontainer",
@@ -128,7 +116,7 @@
                     width: 1024,
                     closeOnEscape: true,
                     modal: true,
-                    zIndex: 1,
+                    zIndex: 5,
                     open: function( event, ui ) {
                       $("#roster").trigger("destroy");
                       $('.pstat').css({'top': '100px'});
@@ -137,7 +125,8 @@
                       $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
                       $("#allcontainer").css({'min-height': '100%'});
                     }
-                  });
+              });
+              $("#allcontainer").css({'height': '100%', 'width': '100%', 'overflow-x': 'visible', 'overflow-y': 'visible' });
         });
 
         function magic(elem){
@@ -168,9 +157,6 @@
                     window.MenuStatus = 'hidden';
                 }
             }
-            if(is_numeric(window.currentTabID)) {
-               check_Width($("table.table-id-"+window.currentTabID), $("div#tabs-"+window.currentTabID));
-            }
         };
         function plmagic(elem){
            $.ajax({
@@ -190,6 +176,7 @@
                     $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
                 },
                 complete: function() {
+                  $('body,html').scrollTop( 0 );
                   updateall();
                 }
             });
@@ -197,34 +184,6 @@
 
         function is_numeric(input){
           return typeof(input)=='number';
-        };
-        function check_Width(input, element) {
-          return;
-          if(input.length && element.length) {
-              var windowWidth = $(window).width();
-              var menuWidth =   $("td#tohide2").width();
-              var tohideWidth = input.width();
-              var resultWidth = 0;
-              var showWidth =   0;
-
-              if(window.MenuStatus == 'hidden') {
-                menuWidth = 1;
-              }
-
-              if(is_numeric(windowWidth) && is_numeric(tohideWidth) && is_numeric(menuWidth)){
-                resultWidth = windowWidth - tohideWidth - menuWidth - 50;
-                if (resultWidth <= 0) {
-                  showWidth = windowWidth - menuWidth - 50;
-                  element.css({'overflow-x': 'scroll', 'max-width': showWidth+'px'});
-                  $('#table_resized').remove();
-                  element.before('<div id="table_resized" class="ui-state-highlight ui-corner-all" style="text-align:center;" align="center"><?=$lang["table_resized"];?></div>');
-
-                } else {
-                  element.css({'overflow-x': 'visible', 'max-width': 'auto'});
-                  $('#table_resized').remove();
-                }
-              }
-          }
         };
         function getTabID() {
           var id = $("#menu .ui-state-active").val();

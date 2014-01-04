@@ -19,26 +19,24 @@
 <script>
 $(document).ready(function() {
     $( "#triggerperform" ).buttonset();
-    $(".as").hide();
-    $(".fs").show();
+    $(".fs").hide();
+    $(".as").show();
     $("#change_button_averageshow").click(function() {
       $(".fs").hide();
       $(".as").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
     $("#change_button_fullshow").click(function() {
       $(".as").hide();
       $(".fs").show();
-      check_Width($("table.table-id-<?=$key;?>"), $("div#tabs-<?=$key;?>"));
       return false;
     });
 });
 </script>
 <form>
     <div id="triggerperform" align="center" class="table-id-<?=$key;?>">
-        <input type="radio" id="change_button_fullshow" name="triggerperform" checked="checked" /><label for="change_button_fullshow"><?=$lang['show_full_perform'];?></label>
-        <input type="radio" id="change_button_averageshow" name="triggerperform" /><label for="change_button_averageshow"><?=$lang['show_average_perform'];?></label>
+        <input type="radio" id="change_button_fullshow" name="triggerperform" /><label for="change_button_fullshow"><?=$lang['show_full_perform'];?></label>
+        <input type="radio" id="change_button_averageshow" name="triggerperform" checked="checked" /><label for="change_button_averageshow"><?=$lang['show_average_perform'];?></label>
     </div>
 </form>
     <table id="perform_all" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
