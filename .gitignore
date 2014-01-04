@@ -6,6 +6,7 @@ cache/*
 
 #Ignore alternative settings for mysql connect
 function/mysql.config.php
+mysql.config.php
 
 #Ignore tab
 tabs/test_tab.php
