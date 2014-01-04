@@ -122,7 +122,7 @@
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
     } catch (PDOException $e) {
         if(defined('MAIN')){
-            header ( 'Location: admin/index.php' );    
+            header ( 'Location: admin/index.php' );
         }
         //echo show_message($e->getMessage());
         include(ROOT_DIR.'/admin/including/ad_mysql.php');

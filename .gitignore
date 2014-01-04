@@ -5,7 +5,6 @@ cache/*
 !cache/.htaccess
 
 #Ignore alternative settings for mysql connect
-function/mysql.config.php
 mysql.config.php
 
 #Ignore tab

@@ -109,6 +109,9 @@
     if(isset($_GET['multi'])){
         $multi_get = '&multi='.$_GET['multi'];
     }
+    if(empty($dbhost) and empty($dbuser) and empty($dbpass) and empty($dbname) and $config['error'] == '2') {
+      $page = 'mysql';
+    }
 
     switch ($page) {
 
@@ -143,7 +146,7 @@
             if ( $config['error'] != 2) {
                 header ( 'Location: index.php' );
                 exit;
-            }   
+            }
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller
@@ -152,6 +155,17 @@
             include_once(LOCAL_DIR.'/views/ad_header.php');
             include_once(LOCAL_DIR.'/views/ad_install.php');
             include_once(LOCAL_DIR.'/views/ad_footer.php');
+            break;
+
+        case 'mysql':
+            if ( $config['error'] != 2) {
+                header ( 'Location: index.php' );
+                exit;
+            }
+            //Controller
+            include(ROOT_DIR.'/admin/including/ad_mysql.php');
+            //Viewing
+            include(ROOT_DIR.'/admin/views/ad_mysql.php');
             break;
     }
 

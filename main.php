@@ -27,7 +27,7 @@
     
     // MAIN - this parametr show us thats we running main.php, to turn on mysql.config.php permisiion check
     define('MAIN', '');
-    
+
     //Checker
     include_once(ROOT_DIR.'/including/check.php');
 
