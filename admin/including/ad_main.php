@@ -280,5 +280,8 @@
       if(!isset($adm_company['tabs'])) {
         $adm_company['tabs'] = array();
       }
+      if(!isset($adm_company['in_company'])) {
+        $adm_company['in_company'] = array();
+      }
     }
 ?>
