@@ -3,7 +3,7 @@
 $topTanki = get_available_tanks();
 if (isset($topTanki) and count($topTanki) > 0) {
     $avalTanks = get_available_tanks_index();
-    $y = array();
+    $y = array_fill_keys($avalTanks['index'],0);
     if ($avalTanks['count'] > 1) { ?>
         <script type="text/javascript" id="js">
           $(document).ready(function() {
@@ -31,54 +31,68 @@ if (isset($topTanki) and count($topTanki) > 0) {
         <?php } ?>
     </div>
 </form>
-<?php }
+<? } ?>
 
-echo '<table id="available_tanks" width="100%" cellspacing="1" class="ui-widget-content table-id-',$key,'">';
-echo '<thead><tr>';
-echo '<th>',$lang['name'],'</th>';
-foreach($topTanki as $column => $val){ ?>
-   <th align='center' class="{sorter: 'digit'} atanks_hide atanks_<?=$val['index'];?>" style="min-width: 30px;">
-   <?php if($val['title'] != '') {echo $val['title'];} else {echo $column;} ?></th><?php
-}
-foreach($avalTanks['index'] as $index){
-   echo '<th class="atanks_hide atanks_',$index,'" align="center" style="min-width: 30px;">',$lang['toptank_1'],'</th>';
-}
-echo '</tr></thead><tbody>';
-foreach($res as $name => $val){
-   $x = array();
-   echo '<tr><td><a href="',$config['base'],$name,'/','" target="_blank">',$name,'</a></td>';
-   foreach($topTanki as $tank => $stat){
-      if (!isset($countTanks[$tank])) $countTanks[$tank] = 0;
-      echo '<td align="center" class="atanks_hide atanks_',$stat['index'],'" style="padding: 0px !important; vertical-align: middle;">';
-      $present = 0;
-      foreach ($val['data']['tanks'] as $key => $val2) {
-         if ($val2['tank_id'] == $stat['tank_id'] ) {
-             if ($val2['statistics']['battles'] > 0) {
-                 if (isset($blocked[$name][$stat['tank_id']])) {
+<table id="available_tanks" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
+    <thead>
+      <tr>
+          <th><?=$lang['name'];?></th>
+          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+              <th><?=$lang['company']; ?></th>
+          <? } ?>
+          <? foreach($topTanki as $column => $val){ ?>
+             <th align='center' class="{sorter:'digit'} atanks_hide atanks_<?=$val['index'];?>" style="min-width: 30px;">
+               <?php if($val['title'] != '') {echo $val['title'];} else {echo $column;} ?>
+             </th>
+          <? }
+             foreach($avalTanks['index'] as $index){ ?>
+               <th align='center' class="{sorter:'digit'} atanks_hide atanks_<?=$index;?>" align="center" style="min-width: 30px;"><?=$lang['toptank_1']?></th>
+          <? } ?>
+      </tr>
+    </thead>
+    <tbody>
+      <? foreach($res as $name => $val){ $x = array(); ?>
+      <tr>
+          <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?=$name;?></a></td>
+          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+              <td>
+              <?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?>
+              </td>
+          <? } ?>
+          <? foreach($topTanki as $tank_name => $tank_stat) { ?>
+             <td align="center" class="atanks_hide atanks_<?=$tank_stat['index'];?>" style="padding: 0px !important; vertical-align: middle;">
+             <?
+             if (!isset($countTanks[$tank_name])) { $countTanks[$tank_name] = 0; }
+             if (!isset($x[$tank_stat['index']])) { $x[$tank_stat['index']] = 0; }
+             $present = 0;
+             foreach ($val['data']['tanks'] as $t => $val2) {
+               if ($val2['tank_id'] == $tank_stat['tank_id'] and $val2['statistics']['battles'] > 0) {
+                 if (isset($blocked[$name][$tank_stat['tank_id']])) {
                      echo '<span style="display: none;">1</span>';
                  }   else {
                      echo '<span style="display: none;">2</span>';
                  }
                  echo '<img class="bb" src="./images/yes.png" title="'.$lang['all_battles'].': '.$val2['statistics']['battles'].'<br />'.$lang['all_wins'].': '.round($val2['statistics']['wins']/$val2['statistics']['battles']*100,2).'%">';
-                 @$countTanks[$tank] +=1;@$x[$stat['index']]++; @$y[$stat['index']]++; $present++;
+                 if (isset($blocked[$name][$tank_stat['tank_id']])) { echo '<img src="./images/no2.png">'; }
+                 $countTanks[$tank_name] +=1; $x[$tank_stat['index']]++; $y[$tank_stat['index']]++; $present++;
+               }
+               if ($present==0) echo '<span style="display: none;">0</span>';
              }
-             if (isset($blocked[$name][$stat['tank_id']])) {
-                 echo '<img src="./images/no2.png">';
-             }
-         }
-      }
-      if ($present==0) echo '<span style="display: none;">0</span>';
-      echo '</td>';
-   }
-   foreach($avalTanks['index'] as $index){
-      echo '<td class="atanks_hide atanks_',$index,'" align="center">',isset($x[$index])?$x[$index]:0,'</td>';
-   }
-   echo '</tr>';
-} ?>
-        </tbody>
+             ?>
+             </td>
+          <? } ?>
+          <? foreach($avalTanks['index'] as $index) { ?>
+            <td class="atanks_hide atanks_<?=$index;?>" align="center"><?=isset($x[$index])?$x[$index]:0;?></td>
+          <? } ?>
+      </tr>
+      <? } ?>
+     </tbody>
      <tfoot>
       <tr>
                 <th><?=$lang['toptank_3']?>:</th>
+                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <th>&nbsp;</th>
+                <? } ?>
                 <?php foreach($topTanki as $column => $val){ ?>
                   <th class="atanks_hide atanks_<?=$val['index'];?>" align="center"><?php echo @$countTanks[$column]; ?></th>
                 <?php } ?>
@@ -88,6 +102,9 @@ foreach($res as $name => $val){
       </tr>
             <tr>
                 <th>&nbsp;</th>
+                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <th><?=$lang['company']; ?></th>
+                <? } ?>
                 <?php foreach($topTanki as $column => $val){ ?>
                   <th class="atanks_hide atanks_<?=$val['index'];?>" align="center"><?php if($val['title'] != '') {echo $val['title'];} else {echo $column;} ?></th>
                 <?php } ?>
@@ -98,6 +115,6 @@ foreach($res as $name => $val){
      </tfoot>
     </table>
   </div>
-<? unset($name); unset($val); unset($column); unset($x); unset($y); unset($tank); unset($stat); unset($countTanks); unset($topTanki); ?>
-<? } else { echo $lang['toptank_2']; } ?>
+<? unset($name,$val,$column,$x,$y,$tank_name,$tank_stat,$countTanks,$topTanki,$t); ?>
+<? }  else { echo $lang['toptank_2']; }  ?>
 <!-- Наличие техники -->

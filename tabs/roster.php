@@ -21,7 +21,10 @@
             <tr>
                 <th>&nbsp;</th>
                 <th><?=$lang['name']; ?></th>
-                <th>ID</th> 
+                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <th><?=$lang['company']; ?></th>
+                <? } ?>
+                <th>ID</th>
                 <th class="{sorter: 'shortDate'}"><?=$lang['in_clan']; ?></th>
                 <th><?=$lang['day_clan']; ?></th>
                 <th><?=$lang['role']; ?></th>
@@ -68,6 +71,9 @@
                           &nbsp;
                         </div></a></td>
                     <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
+                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                        <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>
+                    <? } ?>
                     <td><?=$val['account_id']; ?></td>
                     <td><?=$date; ?></td>
                     <td><?php If (is_numeric($val['created_at'])){

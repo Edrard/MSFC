@@ -40,7 +40,12 @@
     <script type="text/javascript">
         $("#allcontainer").css({'height': $(window).height(), 'width': $(window).width(), 'overflow-x': 'hidden', 'overflow-y': 'hidden' });
         $(document).ready(function() {
-              $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
+              <? if($config['company'] == 1 ) {
+                   $roster_sortlist = '[6,0],[5,1],[1,0]';
+                 } else {
+                   $roster_sortlist = '[5,0],[4,1],[1,0]';
+                 } ?>
+              $("#roster").tablesorter({sortList:[<?=$roster_sortlist;?>], headers:{ 0: { sorter: false}}});
 
               $("#best_main")
               .add("#best_medal")
@@ -122,7 +127,7 @@
                       $('.pstat').css({'top': '100px'});
                     },
                     beforeClose: function( event, ui ) {
-                      $("#roster").tablesorter({sortList:[[5,0],[4,1],[1,0]], headers:{ 0: { sorter: false}}});
+                      $("#roster").tablesorter({sortList:[<?=$roster_sortlist;?>], headers:{ 0: { sorter: false}}});
                       $("#allcontainer").css({'min-height': '100%'});
                     }
               });

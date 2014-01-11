@@ -81,9 +81,12 @@
     <br />
     <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2"  class="table-id-<?=$key;?>">
         <thead>
-            <tr><?php
-               echo '<th>'.$lang['name'].'</th>';
-               foreach ($medn as $medname => $val) { ?>
+            <tr>
+                <th><?=$lang['name']; ?></th>
+                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <th><?=$lang['company']; ?></th>
+                <? } ?>
+               <? foreach ($medn as $medname => $val) { ?>
                   <th valign='top' class="{sorter: 'digit'} bb amh <?=$val['type'];?>s"
                   <?php
                      echo 'title="<table class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\' style=\'border: 0px !important;\'><tr><td>';
@@ -95,9 +98,12 @@
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
-                <tr><?php
-                   echo '<td><a href="',$config['base'],$name,'/','" target="_blank">',$name,'</a></td>';
-                   foreach ($medn as $mdn => $val) {
+                <tr>
+                  <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+                  <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                      <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                  <? } ?>
+                  <? foreach ($medn as $mdn => $val) {
                       if ($mdn <> 'lumberjack') {
                           if ($mdn == 'diehard') {
                               if ($res[$name]['data']['achievements'][$mdn] == 0) {

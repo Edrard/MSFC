@@ -159,6 +159,8 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('version', '3.0.2'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
+('company', '0'),
+('company_count', '1'),
 ('top', '5');
 
 -- --------------------------------------------------------

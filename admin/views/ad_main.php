@@ -70,6 +70,7 @@
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-9"><?=$lang['admin_cron_control'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-2"><?=$lang['admin_tab_tabs'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-3"><?=$lang['admin_tab_user'];?></a></li>
+                        <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-7"><?=$lang['admin_tab_company'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-4"><?=$lang['admin_db'];?></a></li>
                         <li class="ui-corner-all"><a onclick="magic(this)" href="#tabs-6"><?=$lang['admin_tab_top_tanks'];?></a></li>
                         <li id="ccontrol" class="ui-corner-all"><a onclick="magic(this)" href="#tabs-8"><?=$lang['admin_cln_control'];?></a></li>
@@ -750,6 +751,95 @@
                         </div>
                       </div>
                     </div>
+<!-- -->
+                    <div id="tabs-7">
+                      <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
+                      <div class="ui-corner-all ui-widget-content div4settings">
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_company'];?></div>
+                           <div>
+                              <input <?=($config['company']=='1')?'checked="yes"':'';?> type="checkbox" name="company" value="" size="2" onclick="magic4()"/>
+                           </div>
+                        </div>
+                        <div class="settingsLine admin_cdhide2">
+                           <div><?=$lang['admin_company_count'];?></div>
+                           <div>
+                              <input type="text" name="company_count" value="<?=$config['company_count']; ?>" size="10" />
+                           </div>
+                        </div>
+                        <p align="center" class=""><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_3"></p>
+                      </div>
+                      </form>
+                      <? if($config['company'] == 1 ) { ?>
+                      <br clear=all>
+                      <div class="ui-corner-all ui-widget-content admin_cdhide2" align="center">
+                        <br /><h3><?=$lang['admin_company_add'];?></h3>
+                        <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
+                            <?php for($index=1;$index<=$config['company_count'];$index++){ ?>
+                                <?=$index;?> - <input type="text" value="<?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
+                            <?php } ?>
+                            <p><input type="submit" value="<?=$lang['admin_submit']?>" name="company_names_update"></p>
+                        </form>
+                      </div>
+                      <br clear=all>
+                      <div class="ui-corner-all ui-widget-content admin_cdhide2" align="center">
+                        <br /><h3><?=$lang['admin_company_tabs'];?></h3>
+                        <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
+                            <div style="text-align:left; padding-left: 40%;">
+                            <?php foreach($current_tab as $val){ ?>
+                                <input type="checkbox" value="<?=$val['id'];?>" name="Array[tab][]" <?=in_array($val['id'],$adm_company['tabs'])?'checked="checked"':'';?>/> - <?=$val['name'];?><br />
+                            <?php } ?>
+                            </div>
+                            <p><input type="submit" value="<?=$lang['admin_submit']?>" name="company_tabs_update"></p>
+                        </form>
+                      </div>
+                      <br clear=all>
+                      <? if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members']) and !empty($multiclan_info[$config['clan']]['data'][$config['clan']]['members'])) { ?>
+                      <table cellpadding="4" cellspacing="0" width="100%" class="ui-corner-all ui-widget-content div4settings admin_cdhide2">
+                       <tr>
+                        <td colspan="2" align="center" valign="top"><h3><?=$lang['admin_company_split'];?></h3></td>
+                       </tr>
+                       <tr>
+                        <td colspan="2" align="center" valign="top"><button id="company_button"><?=$lang['admin_company_save'];?></button></td>
+                       </tr>
+                       <tr>
+                        <td align="center" width="50%" valign="top">
+                            <div class="ui-widget-header"><?=$lang['admin_company_clan_list'];?></div>
+                              <div class="ui-widget-content pl_list">
+                                <ul class="connectedSortable droptrue" id="sortable0">
+                                  <? foreach($multiclan_info[$config['clan']]['data'][$config['clan']]['members'] as $val) { ?>
+                                    <? if(!in_array($val['account_id'],$adm_company['in_company'])) { ?>
+                                		<li id="list=<?=$val['account_id'];?>" class="ui-state-default"><?=$val['account_name'];?></li>
+                                    <? } ?>
+                                  <? } ?>
+                                </ul>
+                              </div>
+                        </td>
+                        <td align="center" width="50%" valign="top">
+                          <? for($index=1;$index<=$config['company_count'];$index++){ ?>
+                            <div class="ui-widget-header"><?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?></div>
+                              <div class="ui-widget-content pl_list">
+                                <ul class="connectedSortable droptrue" id="sortable<?=$index;?>">
+                                  <? if(isset($adm_company['list'.$index]) and !empty($adm_company['list'.$index])) { ?>
+                                    <? foreach($adm_company['list'.$index] as $val) { ?>
+                                		<li id="list=<?=$val;?>" class="ui-state-default"><?=$multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val]['account_name'];?></li>
+                                    <? } ?>
+                                  <? } ?>
+                                </ul>
+                              </div>
+                            <br clear=all>
+                          <? } ?>
+                        </td>
+                       </tr>
+                      </table>
+                      <? } else { ?>
+                        <div class="ui-state-error ui-corner-all" align="center">
+                            <?=$lang['admin_company_no_list'];?>
+                        </div>
+                      <? } ?>
+                      <? } ?>
+                    </div>
+<!-- -->
                 </td>
             </tr>
             <?php if($ver['value'] != VER){ ?>

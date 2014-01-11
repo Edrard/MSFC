@@ -161,4 +161,14 @@
     $lang['admin_clean_db_old_cron'] = 'Очистить БД от старых Крон данных';
     $lang['admin_application_id'] = 'ID приложения';
     $lang['admin_top'] = 'Выводить в приветственном табе топ по игрокам';
+
+    $lang['admin_tab_company'] = 'Управление ротами';
+    $lang['admin_company'] = 'Включить отображение рот в модуле';
+    $lang['admin_company_count'] = 'Количество отображаемых рот';
+    $lang['admin_company_add'] = 'Изменить отображаемые названия рот';
+    $lang['admin_company_clan_list'] = 'Игроки в клане без роты';
+    $lang['admin_company_split'] = 'Распределение по ротам';
+    $lang['admin_company_save'] = 'Сохранить изменения';
+    $lang['admin_company_no_list'] = 'Нет информации о составе клана';
+    $lang['admin_company_tabs'] = 'Выбор вкладок для отображения рот';
 ?>

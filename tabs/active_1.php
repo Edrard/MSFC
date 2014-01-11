@@ -22,6 +22,9 @@
                 <thead>
                     <tr>
                         <th><?=$lang['name'];?></th>
+                        <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                            <th><?=$lang['company']; ?></th>
+                        <? } ?>
                         <?php foreach($medal_resort['list'] as $mval) {
                                 foreach(array_keys($mval) as $medals){ ?>
                                 <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./',$medn[$medals]['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$medals],'.</span><br> ',$lang['title_'.$medals],'</td></tr></table>"';?>><?php echo '<img src=\'./',$medn[$medals]['img'],'\' style="width:60px;" /><br>',$lang['medal_'.$medals]; ?></th>
@@ -36,6 +39,9 @@
                         <tr>
                             <td><a href="<?=$config['base'].$roster_id[$id]['account_name'].'/'; ?>"
                                 target="_blank"><?=$roster_id[$id]['account_name']; ?></a></td>
+                            <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                                <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                            <? } ?>
                             <?php
                                 foreach ($medal_resort['list'] as $type => $mval){
                                     foreach(array_keys($mval) as $medals){  ?>

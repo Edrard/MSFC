@@ -442,4 +442,6 @@
     $lang['level'] = 'Tier';
     $lang['teh_anno'] = '*W tabeli wyświetlone czołgi powyżej 20 bitew';
     $lang['avr_eff_ret'] = 'średnia Rw';
+
+    $lang['company'] = 'Company';
 ?>

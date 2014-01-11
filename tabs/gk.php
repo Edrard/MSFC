@@ -89,6 +89,9 @@ $cur_time = time();
       <thead>
          <tr>
             <th><?php echo $lang['name'];?></th>
+            <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                <th><?=$lang['company']; ?></th>
+            <? } ?>
             <?php foreach($gk_blocked_tanks as $column) {?>
             <th style="padding-right:20px;" align="center"><?echo $column;?></th>
             <?}?>
@@ -98,6 +101,9 @@ $cur_time = time();
          <?php foreach($res as $name => $val) {?>
          <tr>
             <td><a href="<?php echo $config['base'],$name,'/';?>" target="_blank"><?=$name;?></a></td>
+            <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+            <? } ?>
                <?php foreach($gk_blocked_tanks as $column) {?>
                   <td align='center' style='padding: 0px !important; vertical-align: middle;'>
                      <?php

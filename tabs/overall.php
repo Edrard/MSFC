@@ -42,7 +42,11 @@ $(document).ready(function() {
     <table id="overall" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
-            <?php echo '<th>'.$lang['name'].'</th>';
+                <th><?=$lang['name']; ?></th>
+                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <th><?=$lang['company']; ?></th>
+                <? } ?>
+            <?php
                   $overall = array ('battles', 'wins', 'losses', 'survived_battles');
                   foreach($overall as $name){ ?>
                     <th class="{sorter: 'digit'} <? if ($name != 'battles') {echo 'overall_value';} ?>"><?=$lang['all_'.$name];?></th>
@@ -125,6 +129,9 @@ $(document).ready(function() {
 
                 <tr>
                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                        <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                    <? } ?>
                     <?php
                     foreach($overall as $column => $namec){?>
                         <td class="<? if($namec != 'battles') {echo 'overall_value';} ?>"><?= $val['data']['statistics']['all'][$namec];?></td>

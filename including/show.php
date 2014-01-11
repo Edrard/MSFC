@@ -117,4 +117,14 @@ $tanks_lvl = tanks_lvl();
 $medn = medn($tanks_nation);
 
 sort($tanks_lvl);
+
+if($config['company'] == 1 ) {
+  $company = $cache->get('company_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
+  if(!isset($company['in_company'])) {
+    $company['in_company'] = array();
+  }
+  if(!isset($company['tabs'])) {
+    $company['tabs'] = array();
+  }
+}
 ?>

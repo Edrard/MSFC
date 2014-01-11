@@ -221,3 +221,17 @@ table .tablesorter { margin: 20px 0 0 0; }
     top:0;
     right:0;
 }
+.droptrue li {
+    border: 1px solid;
+    margin: 4px auto;
+    padding: 2px 4px;
+    width: 180px;
+    text-align: left;
+    cursor: move;
+    overflow: hidden;
+    font-size: 12px;
+}
+.pl_list ul {
+    list-style-type: none;
+    min-height: 120px !important;
+}

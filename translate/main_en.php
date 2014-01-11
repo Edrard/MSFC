@@ -443,4 +443,6 @@
     $lang['level'] = 'Level';
     $lang['teh_anno'] = '*In tables display tanks with more than 20 battles.';
     $lang['avr_eff_ret'] = 'Average ER';
+
+    $lang['company'] = 'Company';
 ?>

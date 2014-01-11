@@ -162,4 +162,14 @@
     $lang['admin_clean_db_old_cron'] = 'Clean DB from old Cron data';
     $lang['admin_application_id'] = 'Application ID';
     $lang['admin_top'] = 'Show in greetings tab top players';
+
+    $lang['admin_tab_company'] = 'Manage display of companies';
+    $lang['admin_company'] = 'Display companies in module';
+    $lang['admin_company_count'] = 'Number of displayed companies';
+    $lang['admin_company_add'] = 'Manage names of displayed companies';
+    $lang['admin_company_clan_list'] = 'Players not assigned to company';
+    $lang['admin_company_split'] = 'Distribution between companies';
+    $lang['admin_company_save'] = 'Save changes';
+    $lang['admin_company_no_list'] = 'No information about clan';
+    $lang['admin_company_tabs'] = 'Select tabs, where display companies';
 ?>

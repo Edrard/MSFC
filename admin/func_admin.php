@@ -54,7 +54,17 @@ function insert_config($config)
             $config['cron_auth'] = 0;
         }
     }      
-    unset($config['consub'],$config['consub_2']);
+    if(isset($config['consub_3'])){
+        if(!isset($config['company'])){
+          $config['company'] = 0;
+        } else {
+          $config['company'] = 1;
+        }
+        if(!is_numeric($config['company_count']) or $config['company_count'] < 1) {
+          $config['company_count'] = 1;
+        }
+    }
+    unset($config['consub'],$config['consub_2'],$config['consub_3']);
     foreach($config as $name => $var){
         $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
         $q = $db->prepare($sql);

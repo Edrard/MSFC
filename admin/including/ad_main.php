@@ -40,6 +40,11 @@
         header ( 'Location: index.php?page=main'.$multi_get.'#tabs-1' );
         exit;
     }
+    if (isset($_POST['consub_3'])){
+        insert_config($_POST);
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-7' );
+        exit;
+    }
     if (isset($_POST['mcsort'])){
         edit_multi_clan($_POST);
     }
@@ -240,5 +245,40 @@
     $adm_avalTanks = get_available_tanks_index();
     if($adm_avalTanks['count'] > 1) {
       $adm_avalTanks['names'] = $cache->get('available_tanks_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
+    }
+
+    //Список рот
+    if($config['company'] == 1 ) {
+      if(isset($_POST['company_names_update'])){
+        $company_names = array();
+        $tmp = $cache->get('company_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
+        unset($tmp['company_names']);
+        foreach($_POST['Array']['title'] as $index => $value) {
+          if(isset($value)) {
+            $company_names[$index] = mb_substr($value,0,10,'utf-8');
+          } else {
+            $company_names[$index] = $index;
+          }
+        }
+        $tmp['company_names'] = $company_names;
+        $cache->clear('company_'.$config['clan'], ROOT_DIR.'/cache/other/');
+        $cache->set('company_'.$config['clan'],$tmp, ROOT_DIR.'/cache/other/');
+        unset($company_names,$tmp);
+      }
+
+      if(isset($_POST['company_tabs_update'])) {
+        $tmp = $cache->get('company_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
+        unset($tmp['tabs']);
+        $tmp['tabs'] = $_POST['Array']['tab'];
+
+        $cache->clear('company_'.$config['clan'], ROOT_DIR.'/cache/other/');
+        $cache->set('company_'.$config['clan'],$tmp, ROOT_DIR.'/cache/other/');
+        unset($tmp);
+      }
+
+      $adm_company = $cache->get('company_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
+      if(!isset($adm_company['tabs'])) {
+        $adm_company['tabs'] = array();
+      }
     }
 ?>

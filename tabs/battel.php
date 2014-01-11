@@ -20,6 +20,9 @@
         <thead> 
             <tr>
             <?php echo '<th>'.$lang['name'].'</th>';
+                  if($config['company'] == 1 and in_array($key,$company['tabs'])) {
+                    echo '<th>',$lang['company'],'</th>';
+                  }
                   $exp = array ('xp', 'battle_avg_xp', 'max_xp');
                   foreach($exp as $name){ ?>
                     <th class="{sorter: 'digit'}"><?php if ($name =='max_xp') {echo $lang[$name];} else {echo $lang['all_'.$name];} ?></th>
@@ -30,6 +33,9 @@
             <?php foreach($res as $name => $val){ ?>
                 <tr> 
                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                        <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                    <? } ?>
                     <?php foreach($exp as $column => $cat){
                              echo '<td>';
                              if ($cat=='max_xp') {

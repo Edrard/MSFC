@@ -54,8 +54,11 @@ $(document).ready(function() {
   <table id="rating_all" cellspacing="1" style="width: 100%;" class="table-id-<?=$key;?>">
     <thead>
       <tr>
-         <?php echo '<th>'.$lang['name'].'</th>';
-               $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
+          <th><?=$lang['name']; ?></th>
+          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+              <th><?=$lang['company']; ?></th>
+          <? } ?>
+               <? $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
                              'cpt' => 'ctf_points', 'dmg' => 'damage_dealt', 'dpt' => 'dropped_ctf_points', 'frg' => 'frags', 'spt' => 'spotted', 'exp' => 'xp');
 
                foreach($exp as $column =>$name){
@@ -65,10 +68,13 @@ $(document).ready(function() {
                } ?>
       </tr>
     </thead>
-    <tbody><?php
-       foreach($res as $name => $val){
-          echo '<tr><td><a href="'.$config['base'].$name.'/'.'" target="_blank">'.$name.'</a></td>';
-          foreach($exp as $cat) {
+    <tbody>
+      <?php foreach($res as $name => $val){ ?>
+          <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+              <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+          <? } ?>
+          <? foreach($exp as $cat) {
              echo '<td class="ratingplace">';
              if (isset($val['data']['ratings'][$cat]['place']) && ($val['data']['ratings'][$cat]['place'] <>'')) {
                  echo $val['data']['ratings'][$cat]['place'];

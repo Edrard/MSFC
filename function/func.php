@@ -20,9 +20,9 @@ if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
     exit;
 }
 function echop ($param = '') {
-    echo '<pre>';
+    echo '<div align="left"><pre>';
     print_r($param);
-    echo '</pre>';
+    echo '</pre></div>';
 }
 function array_resort($array,$param){
     foreach($array as $val){
@@ -313,7 +313,16 @@ function get_config()
         foreach($q->fetchAll() as $val){
             $new[$val['name']] = $val['value'];
         }
-
+      //Временная мера для добавления нового параметра
+      if(!isset($new['company'])) {
+        $sql = "INSERT INTO `config` (`name`, `value`) VALUES ('company', '0'), ('company_count', '1');";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        $new['company'] = 0;
+        $new['company_count'] = 1;
+      }
     } else {
         //print_r($q->errorInfo());
         $new['lang'] = 'en';
