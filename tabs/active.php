@@ -67,7 +67,7 @@
                          <th class="{sorter: 'digit'} all_progress_hide average_progress"><?=$lang['all_'.$val];?></th>
                   <? }
                   } ?>
-                </tr>  
+                </tr>
             </thead>
             <tbody>
             <?php foreach ($roster_id as $acc_id =>$val2) {
@@ -75,7 +75,7 @@
                      echo '<td><a href="',$config['base'],$roster_id[$acc_id]['account_name'],'/','" target="_blank">',$roster_id[$acc_id]['account_name'],'</a></td>';
                      if($config['company'] == 1 and in_array($key,$company['tabs'])) {
                        echo '<td>';
-                       echo in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';
+                       echo in_array($acc_id,$company['in_company'])?$company['company_names'][$company['by_id'][$acc_id]]:'';
                        echo '</td>';
                      }
                      echo '<td>';

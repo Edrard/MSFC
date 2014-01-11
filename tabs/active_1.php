@@ -40,7 +40,7 @@
                             <td><a href="<?=$config['base'].$roster_id[$id]['account_name'].'/'; ?>"
                                 target="_blank"><?=$roster_id[$id]['account_name']; ?></a></td>
                             <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
-                                <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                                <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>
                             <? } ?>
                             <?php
                                 foreach ($medal_resort['list'] as $type => $mval){
