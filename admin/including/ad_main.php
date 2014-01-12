@@ -255,7 +255,7 @@
         unset($tmp['company_names']);
         foreach($_POST['Array']['title'] as $index => $value) {
           if(isset($value)) {
-            $company_names[$index] = mb_substr($value,0,10,'utf-8');
+            $company_names[$index] = utf8_substr($value,0,14);
           } else {
             $company_names[$index] = $index;
           }

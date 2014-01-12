@@ -760,4 +760,36 @@ function clean_db_old_cron($date) {
         }
     }
 }
+function utf8_substr($str, $offset, $length = null)
+{
+    #в начале пробуем найти стандартные функции
+    if (function_exists('iconv_substr'))
+    {
+        #(PHP 5)
+        return iconv_substr($str, $offset, $length, 'utf-8');
+    }
+    if (function_exists('mb_substr'))
+    {
+        #(PHP 4 >= 4.0.6, PHP 5)
+        return mb_substr($str, $offset, $length, 'utf-8');
+    }
+    preg_match_all('~[\x09\x0A\x0D\x20-\x7E]             # ASCII
+                     | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+                     |  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
+                     | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
+                     |  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
+                     |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+                     | [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
+                     |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+                    ~xs', $str, $m);
+    if ($length !== null)
+    {
+        $a = array_slice($m[0], $offset, $length);
+    }
+    else
+    {
+        $a = array_slice($m[0], $offset);
+    }
+    return implode('', $a);
+}
 ?>
