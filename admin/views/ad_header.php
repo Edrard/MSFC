@@ -92,7 +92,19 @@
                   connectWith: "ul",
                   cursor: "move",
                   appendTo: ".pl_list",
-                  dropOnEmpty: true
+                  dropOnEmpty: true,
+                  receive: function(e, ui) {
+                      var receiver = ui.item.closest('ul').attr('id');
+                      $('#'+receiver+' li').sort(function(a, b){
+                        console.log(a, b);
+                         return $(a).text().toLowerCase() > $(b).text().toLowerCase();
+                      }).appendTo('ul#'+receiver);
+                  },
+                  create: function( event, ui ) {
+                      $('#sortable0 li').sort(function(a, b){
+                         return $(a).text().toLowerCase() > $(b).text().toLowerCase();
+                      }).appendTo('ul#sortable0');
+                  }
               });
               $( ".droptrue" ).disableSelection();
               $('#company_button').button().click( function() {
