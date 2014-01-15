@@ -38,6 +38,7 @@ $message = '<i>ОШИБКА:</i> <strong>php-pdo_mysql</strong> расширен
 */
 
 /* Обьявляем функцию вывода сообщений о ошибках */
+
 function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) {
     echo '<center><div align="center" class="ui-state-error ui-corner-all">';
     if(isset($message)) {
