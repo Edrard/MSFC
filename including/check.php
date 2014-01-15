@@ -184,5 +184,5 @@ if(!file_exists(ROOT_DIR.'/cache/other/') || !is_writable(ROOT_DIR.'/cache/other
     show_message($lang['d_chmod_off']);
 }
 
-define("VER",'3.0.2');
+define("VER",'3.0.3');
 ?>
