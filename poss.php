@@ -27,35 +27,35 @@
     $begin_time = microtime(true);
 
     //Checker
-    include_once(ROOT_DIR.'/including/check.php');
+    include(ROOT_DIR.'/including/check.php');
 
     //MYSQL
-    include_once(ROOT_DIR.'/function/mysql.php');
+    include(ROOT_DIR.'/function/mysql.php');
 
     //Multiget CURL
-    include_once(ROOT_DIR.'/function/curl.php');
-    include_once(ROOT_DIR.'/function/mcurl.php');
+    require(ROOT_DIR.'/function/curl.php');
+    require(ROOT_DIR.'/function/mcurl.php');
 
     // Include Module functions
-    include_once(ROOT_DIR.'/function/func.php');
-    include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/func_get.php');
+    require(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/func_main.php');
+    require(ROOT_DIR.'/function/func_get.php');
 
     // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+    include(ROOT_DIR.'/function/config.php');
+    require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
     //Loding language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
-            include_once(ROOT_DIR.'/translate/'.$files);
+            require(ROOT_DIR.'/translate/'.$files);
         }
     }
     $poss = array();
     if (is_valid_url($config['td']) == true){
         $poss = get_clan_v2($config['clan'], 'provinces', $config);
     }
-    //include_once(ROOT_DIR.'/views/header.php');
+    //include(ROOT_DIR.'/views/header.php');
 ?>
 <script type="text/javascript" id="js">
    $(document).ready(function()
@@ -65,7 +65,7 @@
 </script>
 <div align="center">
     <table id="poss" cellspacing="1" cellpadding="2" width="100%">
-        <thead> 
+        <thead>
             <tr>
                 <th width="40"><?=$lang['type']; ?></th>
                 <th><?=$lang['title_name']; ?></th>

@@ -27,16 +27,16 @@
     //Checker
 
     //MYSQL
-    include_once(ROOT_DIR.'/function/mysql.php');
+    include(ROOT_DIR.'/function/mysql.php');
     
     //Multiget CURL
-    include_once(ROOT_DIR.'/function/curl.php');
-    include_once(ROOT_DIR.'/function/mcurl.php');
+    require(ROOT_DIR.'/function/curl.php');
+    require(ROOT_DIR.'/function/mcurl.php');
 
     // Include Module functions
-    include_once(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/func.php');
     // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
+    include(ROOT_DIR.'/function/config.php');
     //Loding language pack
     $config['align'] = '';
     $lang['error_1'] = '';

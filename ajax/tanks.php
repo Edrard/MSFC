@@ -20,32 +20,29 @@
     ini_set("display_errors", 1);
     if (file_exists(dirname(__FILE__).'/func_ajax.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
-        include_once (LOCAL_DIR.'/func_ajax.php');
-
+        require(LOCAL_DIR.'/func_ajax.php');
         define('ROOT_DIR', base_dir('ajax'));
 
     }else{
         define('LOCAL_DIR', '.');
-        include_once (LOCAL_DIR.'/func_ajax.php');
-
         define('ROOT_DIR', '..');
 
     }
-    include_once(ROOT_DIR.'/including/check.php');
-    include_once(ROOT_DIR.'/function/auth.php');
-    include_once(ROOT_DIR.'/function/mysql.php');
+    include(ROOT_DIR.'/including/check.php');
+    require(ROOT_DIR.'/function/auth.php');
+    include(ROOT_DIR.'/function/mysql.php');
     $db->change_prefix($_POST['db_pref']);
-    include_once(ROOT_DIR.'/function/func.php');
-    include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');                      
+    require(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/func_main.php');
+    include(ROOT_DIR.'/function/config.php');
+    require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
-            include_once(ROOT_DIR.'/translate/'.$files);
+            require(ROOT_DIR.'/translate/'.$files);
         }
     } 
-    include_once(ROOT_DIR.'/function/cache.php');
+    require(ROOT_DIR.'/function/cache.php');
 
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');

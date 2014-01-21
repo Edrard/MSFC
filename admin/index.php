@@ -20,31 +20,31 @@
     if (file_exists(dirname(__FILE__).'/func_admin.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
 
-        include_once(LOCAL_DIR.'/func_admin.php');
-        include_once(LOCAL_DIR.'/translate/tabs.php');
+        require(LOCAL_DIR.'/func_admin.php');
+        require(LOCAL_DIR.'/translate/tabs.php');
 
         define('ROOT_DIR', base_dir('admin'));
 
         //Cheker
-        include_once(ROOT_DIR.'/including/check.php');
+        include(ROOT_DIR.'/including/check.php');
 
         //Multiget CURL
-        include_once(ROOT_DIR.'/function/curl.php');
-        include_once(ROOT_DIR.'/function/mcurl.php');
+        require(ROOT_DIR.'/function/curl.php');
+        require(ROOT_DIR.'/function/mcurl.php');
 
-        include_once(ROOT_DIR.'/function/auth.php');
-        include_once(ROOT_DIR.'/function/cache.php');
-        include_once(ROOT_DIR.'/function/mysql.php');
+        require(ROOT_DIR.'/function/auth.php');
+        require(ROOT_DIR.'/function/cache.php');
+        include(ROOT_DIR.'/function/mysql.php');
 
-        include_once(ROOT_DIR.'/function/func.php');  
-        include_once(ROOT_DIR.'/function/func_get.php');
-        include_once(ROOT_DIR.'/function/func_main.php');
-        include_once (ROOT_DIR.'/function/config.php');   
-        include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');                      
+        require(ROOT_DIR.'/function/func.php');
+        require(ROOT_DIR.'/function/func_get.php');
+        require(ROOT_DIR.'/function/func_main.php');
+        include(ROOT_DIR.'/function/config.php');
+        require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
         foreach(scandir(LOCAL_DIR.'/translate/') as $files){
             if (preg_match ("/_".$config['lang'].".php/", $files)){
-                include_once(LOCAL_DIR.'/translate/'.$files);
+                require(LOCAL_DIR.'/translate/'.$files);
             }
         }
     }else{
@@ -52,27 +52,27 @@
         define('ROOT_DIR', '..');
 
         //Cheker
-        include_once(ROOT_DIR.'/including/check.php');
+        include(ROOT_DIR.'/including/check.php');
 
         //Multiget CURL
-        include_once(ROOT_DIR.'/function/curl.php');
-        include_once(ROOT_DIR.'/function/mcurl.php');
+        require(ROOT_DIR.'/function/curl.php');
+        require(ROOT_DIR.'/function/mcurl.php');
 
-        include_once(LOCAL_DIR.'/func_admin.php');
-        include_once(LOCAL_DIR.'/translate/tabs.php');
+        require(LOCAL_DIR.'/func_admin.php');
+        require(LOCAL_DIR.'/translate/tabs.php');
 
-        include_once(ROOT_DIR.'/function/auth.php');
-        include_once(ROOT_DIR.'/function/cache.php');
-        include_once(ROOT_DIR.'/function/mysql.php');
-        include_once(ROOT_DIR.'/function/func.php');
-        include_once(ROOT_DIR.'/function/func_get.php');
-        include_once(ROOT_DIR.'/function/func_main.php');
-        include_once (ROOT_DIR.'/function/config.php');
-        include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');                      
+        require(ROOT_DIR.'/function/auth.php');
+        require(ROOT_DIR.'/function/cache.php');
+        include(ROOT_DIR.'/function/mysql.php');
+        require(ROOT_DIR.'/function/func.php');
+        require(ROOT_DIR.'/function/func_get.php');
+        require(ROOT_DIR.'/function/func_main.php');
+        include(ROOT_DIR.'/function/config.php');
+        require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
         foreach(scandir(LOCAL_DIR.'/translate/') as $files){
             if (preg_match ("/_".$config['lang'].".php/", $files)){
-                include_once(LOCAL_DIR.'/translate/'.$files);
+                require(LOCAL_DIR.'/translate/'.$files);
             }
         } 
     }
@@ -112,6 +112,9 @@
     if(empty($dbhost) and empty($dbuser) and empty($dbpass) and empty($dbname) and $config['error'] == '2') {
       $page = 'mysql';
     }
+    if(!file_exists(ROOT_DIR.'/mysql.config.php')) {
+      $page = 'mysql';
+    }
 
     switch ($page) {
 
@@ -121,9 +124,9 @@
                 exit;
             }
 
-            include_once(LOCAL_DIR.'/views/ad_header.php');
-            include_once(LOCAL_DIR.'/views/ad_login.php');
-            include_once(LOCAL_DIR.'/views/ad_footer.php');
+            include(LOCAL_DIR.'/views/ad_header.php');
+            include(LOCAL_DIR.'/views/ad_login.php');
+            include(LOCAL_DIR.'/views/ad_footer.php');
             break;
 
         case 'main':
@@ -135,11 +138,11 @@
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller
-            include_once(LOCAL_DIR.'/including/ad_main.php');
+            include(LOCAL_DIR.'/including/ad_main.php');
             //Viewing
-            include_once(LOCAL_DIR.'/views/ad_header.php');
-            include_once(LOCAL_DIR.'/views/ad_main.php');
-            include_once(LOCAL_DIR.'/views/ad_footer.php');
+            include(LOCAL_DIR.'/views/ad_header.php');
+            include(LOCAL_DIR.'/views/ad_main.php');
+            include(LOCAL_DIR.'/views/ad_footer.php');
             break;
 
         case 'install':
@@ -150,11 +153,11 @@
             //cache
             $cache = new Cache(ROOT_DIR.'/cache/');
             //Controller
-            include_once(LOCAL_DIR.'/including/ad_install.php');
+            include(LOCAL_DIR.'/including/ad_install.php');
             //Viewing
-            include_once(LOCAL_DIR.'/views/ad_header.php');
-            include_once(LOCAL_DIR.'/views/ad_install.php');
-            include_once(LOCAL_DIR.'/views/ad_footer.php');
+            include(LOCAL_DIR.'/views/ad_header.php');
+            include(LOCAL_DIR.'/views/ad_install.php');
+            include(LOCAL_DIR.'/views/ad_footer.php');
             break;
 
         case 'mysql':

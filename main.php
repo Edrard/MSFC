@@ -29,38 +29,38 @@
     define('MAIN', '');
 
     //Checker
-    include_once(ROOT_DIR.'/including/check.php');
+    include(ROOT_DIR.'/including/check.php');
 
     //MYSQL
-    include_once(ROOT_DIR.'/function/mysql.php');
+    include(ROOT_DIR.'/function/mysql.php');
 
     //Multiget CURL
-    include_once(ROOT_DIR.'/function/curl.php');
-    include_once(ROOT_DIR.'/function/mcurl.php');
+    require(ROOT_DIR.'/function/curl.php');
+    require(ROOT_DIR.'/function/mcurl.php');
 
     // Include Module functions
-    include_once(ROOT_DIR.'/function/auth.php');
-    include_once(ROOT_DIR.'/function/rating.php');
-    include_once(ROOT_DIR.'/function/func.php');
-    include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/func_get.php');
-    include_once(ROOT_DIR.'/function/func_gk.php');
-    include_once(ROOT_DIR.'/function/func_time.php');
-    include_once(ROOT_DIR.'/function/cache.php');
+    require(ROOT_DIR.'/function/auth.php');
+    require(ROOT_DIR.'/function/rating.php');
+    require(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/func_main.php');
+    require(ROOT_DIR.'/function/func_get.php');
+    require(ROOT_DIR.'/function/func_gk.php');
+    require(ROOT_DIR.'/function/func_time.php');
+    require(ROOT_DIR.'/function/cache.php');
 
     // Including main config files
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+    include(ROOT_DIR.'/function/config.php');
+    require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
     if(!isset($config['clan'])){
         header ( 'Location: admin/index.php' );
     }
     //Loding language pack
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
-            include_once(ROOT_DIR.'/translate/'.$files);
+            require(ROOT_DIR.'/translate/'.$files);
         }
     }
-    include_once(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
+    require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
     //cache
     $cache = new Cache(ROOT_DIR.'/cache/');
     //Authentication
@@ -94,13 +94,13 @@
         $multi_url_param = '';
     }
 
-    include_once(ROOT_DIR.'/function/tabs.php');
-    include_once(ROOT_DIR.'/including/show.php');
-    include_once(ROOT_DIR.'/including/gk.php');
+    include(ROOT_DIR.'/function/tabs.php');
+    include(ROOT_DIR.'/including/show.php');
+    include(ROOT_DIR.'/including/gk.php');
     if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($res) > 0) {
-        include_once(ROOT_DIR.'/views/index.php');
+        require(ROOT_DIR.'/views/index.php');
     } else {
-        include_once(ROOT_DIR.'/views/header.php');
+        include(ROOT_DIR.'/views/header.php');
         if(count($res) > 0 ){
             if($config['cron'] == 1 && $col_check > 2){
                 $medal_progress = medal_progress($roster_id, $medn,(now() - $config['medal_progress']),now());
@@ -113,11 +113,11 @@
                 $best_main_progress = best_player_progress_main($main_progress['delta']);
                 $new_tanks = new_tanks($roster_id,$col_tables,(now() - $config['new_tanks']),now());
             }
-            include_once(ROOT_DIR.'/views/body.php');
+            include(ROOT_DIR.'/views/body.php');
         }else{
-            include_once(ROOT_DIR.'/views/error.php');
+            include(ROOT_DIR.'/views/error.php');
         }
-        include_once(ROOT_DIR.'/views/footer.php');
+        include(ROOT_DIR.'/views/footer.php');
     }
 ?>
 

@@ -19,8 +19,15 @@
         //header ("Location: /index.php");
         exit;
     }
-    
-    include_once(ROOT_DIR.'/mysql.config.php');      
+
+    if(file_exists(ROOT_DIR.'/mysql.config.php')) {
+      include(ROOT_DIR.'/mysql.config.php');
+    } else {
+      $dbhost  ='';
+      $dbuser  ='';
+      $dbpass  ='';
+      $dbname  ='';
+    }
     
     $dbprefix = '';
     $sqlchar = 'utf8';
@@ -124,7 +131,7 @@
         if(defined('MAIN')){
             header ( 'Location: admin/index.php' );
         }
-        //echo show_message($e->getMessage());
+        echo show_message($e->getMessage());
         include(ROOT_DIR.'/admin/including/ad_mysql.php');
         include(ROOT_DIR.'/admin/views/ad_mysql.php');
 

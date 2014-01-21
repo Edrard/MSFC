@@ -22,11 +22,10 @@
     if (!defined('ROOT_DIR')) {
     if (file_exists(dirname(__FILE__).'/func_ajax.php')) {
         define('LOCAL_DIR', dirname(__FILE__));
-        include_once (LOCAL_DIR.'/func_ajax.php');
+        require(LOCAL_DIR.'/func_ajax.php');
         define('ROOT_DIR', base_dir('ajax'));
     }else{
         define('LOCAL_DIR', '.');
-        include_once (LOCAL_DIR.'/func_ajax.php');
         define('ROOT_DIR', '..');
     };
     }
@@ -41,23 +40,23 @@
     if ($nickname == '') {
         die('Player Id Undefined!');
     }
-    include_once(ROOT_DIR.'/function/auth.php');
-    include_once(ROOT_DIR.'/function/mysql.php');
-    include_once(ROOT_DIR.'/function/func.php');
-    include_once(ROOT_DIR.'/function/rating.php');
-    include_once(ROOT_DIR.'/function/func_main.php');
-    include_once(ROOT_DIR.'/function/func_get.php');
-    include_once(ROOT_DIR.'/function/func_time.php');
-    include_once(ROOT_DIR.'/function/config.php');
-    include_once(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+    require(ROOT_DIR.'/function/auth.php');
+    include(ROOT_DIR.'/function/mysql.php');
+    require(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/rating.php');
+    require(ROOT_DIR.'/function/func_main.php');
+    require(ROOT_DIR.'/function/func_get.php');
+    require(ROOT_DIR.'/function/func_time.php');
+    include(ROOT_DIR.'/function/config.php');
+    require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
     foreach(scandir(ROOT_DIR.'/translate/') as $files){
         if (preg_match ("/_".$config['lang'].".php/", $files)){
-            include_once(ROOT_DIR.'/translate/'.$files);
+            require(ROOT_DIR.'/translate/'.$files);
         }
     } 
     //cache
-    include_once(ROOT_DIR.'/function/cache.php');
+    require(ROOT_DIR.'/function/cache.php');
     $cache = new Cache(ROOT_DIR.'/cache/');
 
 function p_info($res, $t) {

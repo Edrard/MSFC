@@ -39,8 +39,6 @@
     <body>
         <div align="center"style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
         class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
-        <?php if(is_writable(ROOT_DIR.'/mysql.config.php')){
-            ?>
             <div style="height: 25%; "></div>
             <div class="adinsider">
                 <form action="./index.php" method="post">
@@ -116,11 +114,8 @@
                         });
 
                     </script>
-                </form>   
+                </form>
             </div>
-            <?php }else{  
-                echo show_message('File /mysql.config.php isn\'t writeble, pls change his permission to 777 to setup mysql connection/Нет доступа на запись файла /mysql.config.php, пожалуйста сменить его права доступа на 777 для настройки MySQL соединения');
-        } ?>
         </div>
     </body>
 </html>

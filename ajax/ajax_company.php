@@ -8,16 +8,15 @@ error_reporting(E_ALL & ~E_STRICT);
 ini_set("display_errors", 1);
 if (file_exists(dirname(__FILE__).'/func_ajax.php')) {
     define('LOCAL_DIR', dirname(__FILE__));
-    include_once (LOCAL_DIR.'/func_ajax.php');
+    require(LOCAL_DIR.'/func_ajax.php');
     define('ROOT_DIR', base_dir('ajax'));
 }   else{
     define('LOCAL_DIR', '.');
-    include_once (LOCAL_DIR.'/func_ajax.php');
     define('ROOT_DIR', '..');
 }
 
 include(ROOT_DIR.'/including/check.php');
-include(ROOT_DIR.'/function/cache.php');
+require(ROOT_DIR.'/function/cache.php');
 
 $tmp = $t = array();
 $t['list'] = array();
@@ -28,11 +27,14 @@ $cache = new Cache(ROOT_DIR.'/cache/other/');
 
 $t = $cache->get('company_'.$_POST['id'],0);
 
-if(isset($t['in_company']) and !empty($t['in_company'])) {
+if(!isset($t['in_company']) or empty($t['in_company'])) {
   $t['in_company'] = array();
 }
-if(isset($t['by_id']) and !empty($t['by_id'])) {
+if(!isset($t['by_id']) or empty($t['by_id'])) {
   $t['by_id'] = array();
+}
+if(!isset($t['company_names']) or empty($t['company_names'])) {
+  $t['company_names'] = array();
 }
 
 for($i=1;$i<=$_POST['company'];$i++) {
