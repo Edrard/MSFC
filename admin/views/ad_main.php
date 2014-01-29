@@ -822,7 +822,9 @@
                                 <ul class="connectedSortable droptrue" id="sortable<?=$index;?>">
                                   <? if(isset($adm_company['list'.$index]) and !empty($adm_company['list'.$index])) { ?>
                                     <? foreach($adm_company['list'.$index] as $val) { ?>
+                                      <? if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val])) { ?>
                                 		<li id="list=<?=$val;?>" class="ui-state-default"><?=$multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val]['account_name'];?></li>
+                                      <? } ?>
                                     <? } ?>
                                   <? } ?>
                                 </ul>

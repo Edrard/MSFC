@@ -26,6 +26,7 @@
         $config['theme'] = 'ui-lightness'; } ?>
     <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />
     <link rel="stylesheet" href="./theme/style.css" type="text/css" media="print, projection, screen" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jquery.metadata.js"></script>
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
