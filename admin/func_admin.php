@@ -192,34 +192,37 @@ function delete_multi($get){
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 //print_r($status_clan);
-                $sql = "SHOW TABLES LIKE '".$status_clan['0']['prefix']."%';";
-                echo $sql;
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $list = $q->fetchAll(PDO :: FETCH_ASSOC);
-                }else{
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-                //print_r($list);
-                foreach($list as $val){
-                    foreach($val as $v){
-                        $sql = "DROP TABLE IF EXISTS ".$v.";";
-                        //echo $sql;
-                        $q = $db->prepare($sql);
-                        if ($q->execute() != TRUE) {
-                            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                        }
-                    }
-                }
-                if(!empty($status_clan)){
-
-                    $sql = "DELETE FROM multiclan WHERE id = '".$get['clan']."';";
+                if(isset($status_clan['0']['prefix']) and !empty($status_clan))
+                {
+                    $sql = "SHOW TABLES LIKE '".$status_clan['0']['prefix']."%';";
+                    echo $sql;
                     $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
+                    if ($q->execute() == TRUE) {
+                        $list = $q->fetchAll(PDO :: FETCH_ASSOC);
+                    }else{
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
+                    //print_r($list);
+                    if(!empty($list)) {
+                      foreach($list as $val){
+                          foreach($val as $v){
+                              $sql = "DROP TABLE IF EXISTS ".$v.";";
+                              //echo $sql;
+                              $q = $db->prepare($sql);
+                              if ($q->execute() != TRUE) {
+                                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                              }
+                          }
+                      }
+
+                      $sql = "DELETE FROM multiclan WHERE id = '".$get['clan']."';";
+                      $q = $db->prepare($sql);
+                      if ($q->execute() != TRUE) {
+                          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                      }
+                    }
+                    $cache->clear('get_last_roster_'.$get['clan']);
                 }
-                $cache->clear('get_last_roster_'.$get['clan']);
             }
         }
     }
