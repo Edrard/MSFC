@@ -172,6 +172,7 @@
                                   <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
                                   <option value="pl" <?php if($config['lang'] == 'pl'){ echo 'selected="selected"';} ?>>Polski</option>
                                   <option value="en" <?php if($config['lang'] == 'en'){ echo 'selected="selected"';} ?>>English</option>
+																	<option value="sk" <?php if($config['lang'] == 'sk'){ echo 'selected="selected"';} ?>>Slovenčina</option>
                               </select>
                            </div>
                         </div>
