@@ -36,7 +36,7 @@
     $lang['max_xp'] = 'Najwiecej doświadczenia na bitwę';
     $lang['page_title'] = 'Lista klanu';
     $lang['winp'] = 'Zwyciestw %';
-
+    /*
     $lang['r_integrated_rating'] = 'Ogólny ranking';
     $lang['r_battle_avg_performance'] = 'Procent zwycięstw';
     $lang['r_battle_avg_xp'] = 'Średnie Doświadczenie';
@@ -48,6 +48,16 @@
     $lang['r_frags'] = 'Zniszczono przeciwników';
     $lang['r_spotted'] = 'Wykryto wrogów';
     $lang['r_xp'] = 'Doświadczenie ogólne';
+    */
+    $lang['r_battles_count'] = 'Stoczone bitwy';
+    $lang['r_wins_ratio'] = 'Zwycięstw';
+    $lang['r_frags_count'] = 'Zniszczono przeciwników';
+    $lang['r_damage_dealt'] = 'Zadane uszkodzenia';
+    $lang['r_spotted_count'] = 'Wykryto wrogów';
+    $lang['r_survived_ratio'] = 'Przeżył w bitwach';
+    $lang['r_xp_max'] = 'Najwiecej doświadczenia na bitwę';
+    $lang['r_xp_avg'] = 'Srednie doświadczenie na bitwę';
+    $lang['r_hits_ratio'] = 'Procent trafień';
 //checked use until here
     $lang['gr_p'] = 'Pozycja w rankingu ogólny ranking';
     $lang['wb_p'] = 'Pozycja w rankingu Procent zwycięstw';

@@ -37,17 +37,15 @@
     $lang['page_title'] = 'Список клана';
     $lang['winp'] = 'Побед %';
 
-    $lang['r_integrated_rating'] = 'Общий рейтинг';
-    $lang['r_battle_avg_performance'] = 'Процент побед';
-    $lang['r_battle_avg_xp'] = 'Средний опыт';
-    $lang['r_battle_wins'] = 'Победы';
-    $lang['r_battles'] = 'Проведено боёв';
-    $lang['r_ctf_points'] = 'Захват базы';
+    $lang['r_battles_count'] = 'Проведено боёв';
+    $lang['r_wins_ratio'] = 'Процент побед';
+    $lang['r_frags_count'] = 'Уничтожено врагов';
     $lang['r_damage_dealt'] = 'Нанесенные повреждения';
-    $lang['r_dropped_ctf_points'] = 'Защита базы';
-    $lang['r_frags'] = 'Уничтожено врагов';
-    $lang['r_spotted'] = 'Обнаружено врагов';
-    $lang['r_xp'] = 'Общий опыт';
+    $lang['r_spotted_count'] = 'Обнаружено врагов';
+    $lang['r_survived_ratio'] = 'Выжил в битвах';
+    $lang['r_xp_max'] = 'Максимальный опыт';
+    $lang['r_xp_avg'] = 'Средний опыт';
+    $lang['r_hits_ratio'] = 'Процент попадания';
 
     $lang['gr_p'] = 'Позиция в рейтинге общий рейтинг';
     $lang['wb_p'] = 'Позиция в рейтинге процент побед';

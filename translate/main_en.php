@@ -37,17 +37,15 @@
     $lang['page_title'] = 'Clan Roster';
     $lang['winp'] = 'Victories %';
 
-    $lang['r_integrated_rating'] = 'Global Rating';
-    $lang['r_battle_avg_performance'] = 'Wins/Battles';
-    $lang['r_battle_avg_xp'] = 'Average Experience per Battle';
-    $lang['r_battle_wins'] = 'Victories';
-    $lang['r_battles'] = 'Games Played';
-    $lang['r_ctf_points'] = 'Capture Points';
-    $lang['r_damage_dealt'] = 'Damage';
-    $lang['r_dropped_ctf_points'] = 'Defense Points';
-    $lang['r_frags'] = 'Targets Destroyed';
-    $lang['r_spotted'] = 'Targets Spotted';
-    $lang['r_xp'] = 'Total Experience';
+    $lang['r_battles_count'] = 'Games Played';
+    $lang['r_wins_ratio'] = 'Victories/Battles';
+    $lang['r_frags_count'] = 'Vehicles Destroyed';
+    $lang['r_damage_dealt'] = 'Damage Caused';
+    $lang['r_spotted_count'] = 'Detected';
+    $lang['r_survived_ratio'] = 'Battles Survived';
+    $lang['r_xp_max'] = 'Max. Experience';
+    $lang['r_xp_avg'] = 'Avg. Experience';
+    $lang['r_hits_ratio'] = 'Hit Ratio';
 
     $lang['gr_p'] = 'Position in rating global Rating';
     $lang['wb_p'] = 'Position in rating wins/Battles';

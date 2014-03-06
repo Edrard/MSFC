@@ -68,13 +68,13 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         foreach($links as $urls){
             $res_base['info'] = multiget_v2($urls, 'account/info', $config);
             $res_base['tanks'] = multiget_v2($urls, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-            $res_base['ratings'] = multiget_v2($urls, 'account/ratings', $config);
+            $res_base['ratings'] = multiget_v2($urls, 'ratings/accounts', $config);
 
             foreach ($res_base['info'] as $key => $val) {
                 if ((isset ($val['status'])) && ($val['status'] == 'ok')) {
                      if ((isset ($res_base['tanks'][$key]['status'])) && ($res_base['tanks'][$key]['status'] == 'ok')) {
                           $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
-                          if (isset ($res_base['ratings'][$key]['data'])){ 
+                          if (isset ($res_base['ratings'][$key]['data'])){
                               $val['data']['ratings'] = $res_base['ratings'][$key]['data'];
                           }
                           $cache->set($key, $val, ROOT_DIR.'/cache/players/');

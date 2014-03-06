@@ -20,7 +20,6 @@
     $config['base'] = 'http://worldoftanks.kr/uc/accounts/named/';
     $config['base_direct'] = 'http://worldoftanks.kr/community/accounts/';
     $config['clan_img'] = 'http://worldoftanks.kr/dcont/clans/emblems/';
-    $config['rating_link'] = 'http://worldoftanks.kr/media/3.0.9.2/common/img/ratings/small/';
     $config['clan_link'] = 'http://worldoftanks.kr/uc/clanwars/';
     $config['gm_url'] = 'worldoftanks.kr';
     $config['td'] = 'http://api.worldoftanks.kr';

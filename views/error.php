@@ -15,7 +15,7 @@
     *
     */
 if (isset ($multiclan_info[$config['clan']]['error'])) {
-    echo error_rep($multiclan_info[$config['clan']]['error'],$lang)
+    echo error_rep($multiclan_info[$config['clan']]['error'],$lang);
 }   else {
     echo $lang['error_1'];
 }

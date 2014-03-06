@@ -143,6 +143,8 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $r
         $second[0] .= '_id';
     }    elseif ($second[0] == 'encyclopedia') {
         $second[0] = 'tank_id';
+    }    elseif ($second[0] == 'ratings') {
+        $second[0] = 'type=all&account_id';
     }
     $urls = $res = array();
     foreach($clids as $arrid => $ids){

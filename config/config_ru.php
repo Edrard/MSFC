@@ -20,7 +20,6 @@
     $config['base'] = 'http://worldoftanks.ru/uc/accounts/named/';
     $config['clan_img'] = 'http://worldoftanks.ru/dcont/clans/emblems/';
     $config['base_direct'] = 'http://worldoftanks.ru/community/accounts/';
-    $config['rating_link'] = 'http://worldoftanks.ru/static/3.0.9.1a/common/img/ratings/small/';
     $config['clan_link'] = 'http://worldoftanks.ru/uc/clanwars/';
     $config['gm_url'] = 'worldoftanks.ru';
     $config['td'] = 'http://api.worldoftanks.ru';

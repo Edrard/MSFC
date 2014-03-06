@@ -235,3 +235,62 @@ table .tablesorter { margin: 20px 0 0 0; }
     list-style-type: none;
     min-height: 120px !important;
 }
+.rating_ico {
+    background: url(../images/ratings_ico.png) no-repeat scroll 100% 0 transparent;
+    display: inline-block;
+    height: 34px;
+    opacity: 0.9;
+    vertical-align: middle;
+}
+.rating_ico_fb {
+    background-position: 100% 0;
+    width: 46px;
+}
+.rating_ico_survived_ratio {
+    background-position: 100% -34px;
+    width: 31px;
+}
+.rating_ico_wins_ratio {
+    background-position: 100% -68px;
+    width: 23px;
+}
+.rating_ico_frags_count {
+    background-position: 100% -102px;
+    width: 34px;
+}
+.rating_ico_db {
+    background-position: 100% -136px;
+    width: 41px;
+}
+.rating_ico_xp_avg {
+    background-position: 100% -170px;
+    width: 37px;
+}
+.rating_ico_hits_ratio {
+    background-position: 100% -204px;
+    width: 24px;
+}
+.rating_ico_spotted_count {
+    background-position: 100% -238px;
+    width: 26px;
+}
+.rating_ico_xp_max {
+    background-position: 100% -272px;
+    width: 23px;
+}
+.rating_ico_damage_dealt {
+    background-position: 100% -306px;
+    width: 28px;
+}
+.rating_ico_sb {
+    background-position: 100% -340px;
+    width: 40px;
+}
+.rating_ico_exp {
+    background-position: 100% -374px;
+    width: 24px;
+}
+.rating_ico_battles_count {
+    background-position: 100% -408px;
+    width: 20px;
+}

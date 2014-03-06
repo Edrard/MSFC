@@ -58,40 +58,46 @@ $(document).ready(function() {
           <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
               <th><?=$lang['company']; ?></th>
           <? } ?>
-               <? $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
+               <?  /* Старые рейтинги
+                   $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
                              'cpt' => 'ctf_points', 'dmg' => 'damage_dealt', 'dpt' => 'dropped_ctf_points', 'frg' => 'frags', 'spt' => 'spotted', 'exp' => 'xp');
+                   */
+                   $exp = array (
+                   'battles_count',
+                   'wins_ratio',
+                   'frags_count',
+                   'damage_dealt',
+                   'spotted_count',
+                   'survived_ratio',
+                   'xp_avg',
+                   'xp_max',
+                   'hits_ratio'
+                   );
 
-               foreach($exp as $column =>$name){
-                  $rname = $lang['r_'.$name];
-                  echo "<th align='center' class=\"{sorter: 'digit'} bb ratingplace\" title='<font color=\"royalblue\">{$name}</font><br>{$rname}'><img src='".$config['rating_link'].$column.'.png'."' /><br>$rname</th>";
-                  echo "<th align='center' class=\"{sorter: 'digit'} bb ratingvalue\" title='<font color=\"royalblue\">{$name}</font><br>{$rname}'><img src='".$config['rating_link'].$column.'.png'."' /><br>$rname</th>";
-               } ?>
+               foreach($exp as $column){
+               ?>
+                  <th align='center' valign='top' class="{sorter: 'digit'} ratingplace"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><?=$lang['r_'.$column];?></th>
+                  <th align='center' valign='top' class="{sorter: 'digit'} ratingvalue"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><?=$lang['r_'.$column];?></th>
+               <? } ?>
       </tr>
     </thead>
     <tbody>
       <?php foreach($res as $name => $val){ ?>
-          <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+          <tr>
+             <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
           <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
-              <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+             <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
           <? } ?>
-          <? foreach($exp as $cat) {
-             echo '<td class="ratingplace">';
-             if (isset($val['data']['ratings'][$cat]['place']) && ($val['data']['ratings'][$cat]['place'] <>'')) {
-                 echo $val['data']['ratings'][$cat]['place'];
-             }   else {
-                 echo '-';
-             }
-             echo '</td>';
-             echo '<td class="ratingvalue">';
-             if (isset($val['data']['ratings'][$cat]['value'])){
-                 echo $val['data']['ratings'][$cat]['value'];
-             }   else {
-                 echo '-';
-             }
-             echo '</td>';
-          }
-          echo '</tr>';
-       } ?>
+          <? foreach($exp as $cat) { ?>
+             <td class="ratingplace">
+               <? echo (isset($val['data']['ratings'][$cat]['rank']) && ($val['data']['ratings'][$cat]['rank'] <>''))?$val['data']['ratings'][$cat]['rank']:'-'; ?>
+             </td>
+             <td class="ratingvalue">
+               <?=(isset($val['data']['ratings'][$cat]['value']))?$val['data']['ratings'][$cat]['value']:'-';?>
+             </td>
+          <? } ?>
+          </tr>
+      <? } ?>
     </tbody>
   </table>
 </div>
