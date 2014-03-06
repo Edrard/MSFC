@@ -19,20 +19,14 @@ include(ROOT_DIR.'/including/check.php');
 require(ROOT_DIR.'/function/cache.php');
 
 $tmp = $t = array();
-$t['list'] = array();
-$t['in_company'] = array();
-$t['by_id'] = array();
 
 $cache = new Cache(ROOT_DIR.'/cache/other/');
 
 $t = $cache->get('company_'.$_POST['id'],0);
 
-if(!isset($t['in_company']) or empty($t['in_company'])) {
-  $t['in_company'] = array();
-}
-if(!isset($t['by_id']) or empty($t['by_id'])) {
-  $t['by_id'] = array();
-}
+$t['in_company'] = array();
+$t['by_id'] = array();
+
 if(!isset($t['company_names']) or empty($t['company_names'])) {
   $t['company_names'] = array();
 }
