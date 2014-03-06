@@ -213,8 +213,7 @@ switch ($eff_ratpl[$nickname]['brone']+1) {
 $statmain   = array('wins', 'losses', 'draws', 'survived_battles');
 $statbattle = array('spotted', 'frags', 'hits_percents', 'damage_dealt', 'damage_received', 'capture_points', 'dropped_capture_points');
 $statexp    = array('xp', 'battle_avg_xp');
-$statrat    = array( 'integrated_rating', 'battle_wins', 'battle_avg_xp', 'battle_avg_performance',
-                     'battles', 'damage_dealt', 'ctf_points', 'dropped_ctf_points', 'frags', 'xp', 'spotted');
+$statrat    = array('battles_count', 'wins_ratio', 'frags_count', 'damage_dealt', 'spotted_count', 'survived_ratio', 'xp_avg', 'xp_max', 'hits_ratio');
 
 $statacc = array('all', 'clan', 'company');
 foreach ($statacc as $val) {
@@ -385,7 +384,7 @@ foreach ($statacc as $val) {
            <tr>
              <td><?=$lang['r_'.$val]; ?>:</td>
              <td><?=$pres['data']['ratings'][$val]['value']; ?></td>
-             <td><?=$pres['data']['ratings'][$val]['place']; ?></td>
+             <td><?=$pres['data']['ratings'][$val]['rank']; ?></td>
            </tr>
            <?php } ?>
          </tbody>
