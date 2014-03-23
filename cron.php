@@ -184,7 +184,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             foreach($toload as $links){
                                 $res1 = array_special_merge($res1,multiget_v2($links, 'account/info', $config));
                                 $res2 = array_special_merge($res2,multiget_v2($links, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins'))); //loading only approved fields
-                                $res3 = array_special_merge($res3,multiget_v2($links, 'account/ratings', $config));  
+                                //$res3 = array_special_merge($res3,multiget_v2($links, 'account/ratings', $config));
                             }
                             foreach ($res1 as $key => $val) {
                                 if (!isset($res2[$key]['status'])) {
@@ -209,7 +209,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                     if (isset($res3[$key]['data'])) $val['data']['ratings'] = $res3[$key]['data'];
                                     $val['data']['role'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['role'];
                                     $val['data']['created_at'] = $new2['data'][$config['clan']]['members'][$val['data']['account_id']]['created_at'];
-                                    $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                                    //$cache->set($key, $val, ROOT_DIR.'/cache/players/');
                                     if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $plc).": ".$val['data']['nickname']."\n"); }
                                     cron_insert_pars_data($val, $medals, $tanks, $nations, $time);
                                 }   else {
