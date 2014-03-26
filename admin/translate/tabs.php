@@ -11,7 +11,8 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.3 $
+		* @translation [sk] relic242
     *
     */
 
@@ -19,7 +20,9 @@
     $lang['en'] = 'English';
     $lang['pl'] = 'Polski';
     $lang['ru'] = 'Русский';
-
+		$lang['sk'] = 'Slovenčina';
+		
+		//ru
     $tabs_lang['ru']['active'] =  'Активность общая';
     $tabs_lang['ru']['active_1'] =  'Активность награды';
     $tabs_lang['ru']['ajax_activity'] =  'Активность игроков';
@@ -67,7 +70,7 @@
     $tabs_lang['en']['poss'] =  'Clan possession'; 
     $tabs_lang['en']['attack'] =  'Planning attacks';  
 
-//PL
+    //PL
     $tabs_lang['pl']['active'] =  'Aktywność ogólna';
     $tabs_lang['pl']['active_1'] =  'Aktywność nagrody';
     $tabs_lang['pl']['ajax_activity'] =  'Aktywność graczy';
@@ -90,4 +93,28 @@
 
     $tabs_lang['pl']['poss'] =  'Własność klanu'; 
     $tabs_lang['pl']['attack'] =  'Zaplanowane ataki'; 
+		
+    //sk
+		$tabs_lang['sk']['active'] =  'Celková aktivita';
+    $tabs_lang['sk']['active_1'] =  'Ocenenia';
+    $tabs_lang['sk']['ajax_activity'] =  'Aktivita hráčov';
+    $tabs_lang['sk']['ajax_general_activity'] = 'Celkovo aktivita za dobu';
+    $tabs_lang['ak']['ajax_player'] = 'Detaily hráčov';
+    $tabs_lang['sk']['ajaxstat'] = 'Detaily vozidiel';
+    $tabs_lang['sk']['ajaxtank'] =  'Vozidlá';
+    $tabs_lang['sk']['available_tanks'] =  'Vozidlá k dispozícii';
+    $tabs_lang['sk']['avt'] = 'Hlavná stránka';
+    $tabs_lang['sk']['battel'] =  'Bojové skúsenosti';  
+    $tabs_lang['sk']['best'] =  'Najlepšie výsledky';
+    $tabs_lang['sk']['gk'] =  'Zamknuté vozidlá';
+    $tabs_lang['sk']['medals_all'] =  'Úspechy';
+    $tabs_lang['sk']['overall'] =  'Celkové výsledky';
+    $tabs_lang['sk']['perform_all'] =  'Bojové výsledky';
+    $tabs_lang['sk']['player'] =  'Dont use';
+    $tabs_lang['sk']['rating_all'] =  'Rebríčky';
+    $tabs_lang['sk']['roster'] =  'Vedenie'; 
+    $tabs_lang['sk']['topteh'] =  'Najlepšie vozidlá';
+		
+    $tabs_lang['sk']['poss'] =  'Obsadené územia'; 
+    $tabs_lang['sk']['attack'] =  'Plánované útoky'; 
 ?>
