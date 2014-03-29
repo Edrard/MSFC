@@ -99,9 +99,8 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
     $stats2 = array('spotted', 'hits', 'battle_avg_xp', 'draws', 'wins', 'losses', 'capture_points',
         'battles', 'damage_dealt', 'hits_percents', 'damage_received', 'shots', 'xp', 'frags',
         'survived_battles', 'dropped_capture_points');
-    $stats4 = array ('place', 'value');
-    $stats5 = array ('spotted', 'dropped_ctf_points', 'battle_avg_xp', 'battles', 'damage_dealt', 'frags',
-        'ctf_points', 'integrated_rating', 'xp', 'battle_avg_performance', 'battle_wins');
+    $stats4 = array ('rank', 'value');
+    $stats5 = array ('battles_count','wins_ratio','frags_count','damage_dealt','spotted_count','survived_ratio','xp_avg','xp_max','hits_ratio');
      if ((isset($data['status'])) && ($data['status'] == 'ok')) {
         $data = $data['data'];
         $col_pl['account_id'] = $col_med['account_id'] = $col_rat['account_id'] = $data['account_id'];

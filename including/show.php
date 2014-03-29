@@ -76,8 +76,8 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
                           $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
                           if (isset ($res_base['ratings'][$key]['data'])){
                               $val['data']['ratings'] = $res_base['ratings'][$key]['data'];
+                              $cache->set($key, $val, ROOT_DIR.'/cache/players/');
                           }
-                          $cache->set($key, $val, ROOT_DIR.'/cache/players/');
                      }    else {
                           $message = "Can't load data on ".$key." (tank info)";
                      }
