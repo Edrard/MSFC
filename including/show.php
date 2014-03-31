@@ -60,7 +60,10 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         if( ($tmp === FALSE) || (empty($tmp)) || ((isset($tmp['status'])) && ($tmp['status']<>'ok')) ) {
             $cache->clear($pldata['account_id'],ROOT_DIR.'/cache/players/');
             $links[] = $pldata['account_id'];
+        } else {
+          $res[$name] = $tmp;
         }
+        unset($tmp);
     }
     $links = array_chunk($links,$config['multiget']*5);
     unset($pldata,$tmp);
@@ -68,7 +71,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         foreach($links as $urls){
             $res_base['info'] = multiget_v2($urls, 'account/info', $config);
             $res_base['tanks'] = multiget_v2($urls, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-            $res_base['ratings'] = multiget_v2($urls, 'ratings/accounts', $config);
+            $res_base['ratings'] = multiget_v2($urls, 'ratings/accounts', $config, array(), array('type'=>'all'));
 
             foreach ($res_base['info'] as $key => $val) {
                 if ((isset ($val['status'])) && ($val['status'] == 'ok')) {
@@ -77,6 +80,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
                           if (isset ($res_base['ratings'][$key]['data'])){
                               $val['data']['ratings'] = $res_base['ratings'][$key]['data'];
                               $cache->set($key, $val, ROOT_DIR.'/cache/players/');
+                              $res[$val['data']['nickname']] = $val;
                           }
                      }    else {
                           $message = "Can't load data on ".$key." (tank info)";
@@ -89,15 +93,6 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         unset($links, $res_base);
 
     }
-    foreach($roster as $name => $pldata){
-        $tmp = $cache->get($pldata['account_id'], $config['cache']*3600+1, ROOT_DIR.'/cache/players/');
-        if( ($tmp === FALSE) || (empty($tmp)) || ((isset($tmp['status'])) && ($tmp['status']<>'ok')) ) {
-            $res[$name] = $pldata;
-        }    else {
-            $res[$name] = $tmp;
-        }
-    }
-    unset($tmp);
 }
 
 //Autocleaner
@@ -125,6 +120,11 @@ if($config['company'] == 1 ) {
   }
   if(!isset($company['tabs'])) {
     $company['tabs'] = array();
+  }
+  if(!isset($company['company_names']) or empty($company['company_names'])) {
+    for($i=1;$i<=$config['company_count'];$i++) {
+      $company['company_names'][$i] = $i;
+    }
   }
 }
 ?>

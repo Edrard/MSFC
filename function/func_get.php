@@ -25,6 +25,16 @@ function checkfield($a) {
     }
 }
 
+function checkparam($p) {
+  $return = '';
+  if(!empty($p)) {
+    foreach($p as $k => $v) {
+      $return .= '&'.$k.'='.$v;
+    }
+  }
+  return $return;
+}
+
 function get_clan_v2($clanid, $whattoload, $config, $fields_array = array()) {
     //whattoload accept 'info', 'provinces', 'battles'
     $fields = checkfield($fields_array);
@@ -130,9 +140,10 @@ function get_tankinfo_v2($tankid, $config, $fields_array = array()) {
 
 //------------------------------------------------------------------------------
 
-function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $result = array()) {
+function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $param_array = array(), $result = array()) {
     //whattoload accept 'clan/info', 'clan/provinces', 'clan/battles', 'account/info', 'account/ratings', 'account/tanks', 'encyclopedia/tankinfo'
     $fields = checkfield($fields_array);
+    $param = checkparam($param_array);
     $timeout = 100;
     $tcurl = $config['pars'];
     $num = $config['multiget'];
@@ -144,13 +155,13 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $r
     }    elseif ($second[0] == 'encyclopedia') {
         $second[0] = 'tank_id';
     }    elseif ($second[0] == 'ratings') {
-        $second[0] = 'type=all&account_id';
+        $second[0] = 'account_id';
     }
     $urls = $res = array();
     foreach($clids as $arrid => $ids){
         $toload = implode(',',$ids).',';
         $toload = substr($toload, 0, strlen($toload)-1);
-        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id']."&".$second[0]."=".$toload.$fields;
+        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.'&'.$second[0]."=".$toload.$fields;
     }
     unset ($fields_array, $clids, $toload);
     if ($tcurl == 'curl'){

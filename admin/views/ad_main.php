@@ -777,7 +777,7 @@
                         <br /><h3><?=$lang['admin_company_add'];?></h3>
                         <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-7" method="post">
                             <?php for($index=1;$index<=$config['company_count'];$index++){ ?>
-                                <?=$index;?> - <input type="text" value="<?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
+                                <?=$index;?> - <input type="text" value="<?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:'';?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
                             <?php } ?>
                             <p><input type="submit" value="<?=$lang['admin_submit']?>" name="company_names_update"></p>
                         </form>

@@ -63,7 +63,9 @@ if(!empty($prefix)) {
     $db->change_prefix($t);
     $config = get_config();
 
-    //На всякий случай, проверки для ротного функционала
+    /****************begin*****************/
+    /* Конфиги для рот (на всякий случай) */
+    /*************************************/
     if(!isset($config['company'])) {
       $sql = "INSERT INTO `config` (`name`, `value`) VALUES ('company', '0'), ('company_count', '1');";
       $q = $db->prepare($sql);
@@ -74,6 +76,18 @@ if(!empty($prefix)) {
       $config['company_count'] = 1;
 
       echo 'Config table (`company` value) for prefix:',$t,' - updated.<br>';
+    }
+
+    /****************begin*****************/
+    /*   Меняем версию модуля в конфиге   */
+    /*************************************/
+    if($config['version'] == '3.0.3') {
+      $sql = "UPDATE `config` SET `value` = '3.0.4' WHERE `name` = 'version' LIMIT 1 ;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
     }
 
     /****************begin*****************/
