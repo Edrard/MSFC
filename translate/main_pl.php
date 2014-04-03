@@ -128,11 +128,6 @@
     $lang['mspo'] = 'średnia ilość wyświetleń';
     $lang['mcap'] = 'średnia ilość opanowania';
     $lang['mdef'] = 'średnia ilość obrony';
-    $lang['eff_ret'] = 'Ranking wydajności';
-    $lang['wn6_ret'] = 'WN6 Ranking';
-    $lang['brone_ret'] = 'site Armor Ranking';
-    $lang['xvm_eff_ret'] = 'XVM wydajności Ranking';
-    $lang['xvm_wn6_ret'] = 'XVM WN6 Ranking';
     $lang['average_perform_title'] = 'średnia wydajność';
     $lang['gk_blocked'] = 'Zablokowana technika';
 

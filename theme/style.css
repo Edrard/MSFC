@@ -294,3 +294,21 @@ table .tablesorter { margin: 20px 0 0 0; }
     background-position: 100% -408px;
     width: 20px;
 }
+/* overall tab - ratings table*/
+table.ratings_table td {
+  border: 1px solid #444444;
+  padding: 4px;
+  vertical-align: middle;
+  width: 100px;
+}
+table.ratings_table tr {
+  font-weight: bold;
+  text-align: center;
+  height: 30px;
+}
+table.ratings_table {
+  border-collapse: collapse;
+}
+table.ratings_table tbody {
+  color: black;
+}

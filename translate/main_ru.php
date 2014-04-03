@@ -110,11 +110,6 @@
     $lang['mspo'] = 'Средний засвет';
     $lang['mcap'] = 'Средняя захват';
     $lang['mdef'] = 'Средняя защита';
-    $lang['eff_ret'] = 'Рейтинг Эффективности';
-    $lang['wn6_ret'] = 'WN6 рейтинг';
-    $lang['brone_ret'] = 'Рейтинг Бронесайта';
-    $lang['xvm_eff_ret'] = 'XVM Рейтинг Эффективности';
-    $lang['xvm_wn6_ret'] = 'XVM WN6 рейтинг';
     $lang['average_perform_title'] = 'Средняя производительность';
     $lang['gk_blocked'] = 'Заблокированная техника';
     $lang['version'] = 'версия';

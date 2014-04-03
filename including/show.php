@@ -105,7 +105,22 @@ if (empty($tanks)) {
     $tanks = tanks();
 }
 
-$eff_rating = eff_rating($res);
+/* code for wn8 */
+$wn8 = $cache->get('wn8', 7*24*60*60, ROOT_DIR.'/cache/other/'); //once in 7 days
+if(($wn8 === FALSE) or !isset($wn8['data']) or empty($wn8['data'])) {
+  $wn8_get = get_wn8();
+  if(isset($wn8_get['header']['version']) and isset($wn8_get['data'])) {
+    $wn8 = array_resort($wn8_get['data'],'IDNum');
+    $cache->clear('wn8',ROOT_DIR.'/cache/other/');
+    $cache->set('wn8', $wn8, ROOT_DIR.'/cache/other/');
+  } else {
+    $wn8 = array();
+  }
+  unset($wn8_get);
+}
+/* end wn8 */
+
+$eff_rating = eff_rating($res,$wn8);
 $tanks_nation = tanks_nations();
 $tanks_types = tanks_types();
 $tanks_lvl = tanks_lvl();
@@ -127,4 +142,6 @@ if($config['company'] == 1 ) {
     }
   }
 }
+
+
 ?>

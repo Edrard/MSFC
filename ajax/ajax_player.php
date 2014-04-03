@@ -160,26 +160,6 @@ $temp[$nickname] = $pres;
 $eff_ratpl = eff_rating($temp);
 unset($temp);
 
-switch ($eff_ratpl[$nickname]['eff']+1) {
-  case ($eff_ratpl[$nickname]['eff'] > 1725):
-    $color = '#FF8000';
-    break;
-  case ($eff_ratpl[$nickname]['eff'] > 1465):
-    $color = 'purple';
-    break;
-  case ($eff_ratpl[$nickname]['eff'] > 1150):
-    $color = 'royalblue';
-    break;
-  case ($eff_ratpl[$nickname]['eff'] > 870):
-    $color = 'green';
-    break;
-  case ($eff_ratpl[$nickname]['eff'] > 645):
-    $color = 'slategray';
-    break;
-  default:
-    $color = 'red';
-    break;
-}
 switch ($eff_ratpl[$nickname]['brone']+1) {
   case ($eff_ratpl[$nickname]['brone'] > 7294):
     $textt = $lang['classVf'];$imgg='classVf.png';
@@ -261,7 +241,7 @@ foreach ($statacc as $val) {
          </thead>
          <tbody>
            <tr>
-             <td align="center"><font color="<?=$color; ?>"><?=$eff_ratpl[$nickname]['eff']; ?></font></td>
+             <td align="center"><font color="<?=$eff_ratpl[$nickname]['eff_color']; ?>"><?=$eff_ratpl[$nickname]['eff']; ?></font></td>
            </tr>
          </tbody>
        </table>

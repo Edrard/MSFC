@@ -238,4 +238,28 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $p
     }
     return $res;
 }
+
+function get_wn8() {
+    $url = 'http://www.wnefficiency.net/exp/expected_tank_values_latest.json';
+    $ch = curl_init();
+    $timeout = 10;
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "X-Requested-With: XMLHttpRequest",
+        "Accept: text/html, */*",
+        "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+        "Connection: Keep-Alive",
+    ));
+    $data = curl_exec($ch);
+    if ($data === false or curl_errno($ch)) {
+        $return = array('status' => 'error', 'error' => array('message' => curl_error($ch)) );
+        curl_close($ch);
+        return $return;
+    }   else {
+        curl_close($ch);
+        return (json_decode(trim($data), true));
+    }
+}
 ?>

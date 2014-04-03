@@ -117,12 +117,6 @@
     $lang['mspo'] = 'Priemer - odhalenie';
     $lang['mcap'] = 'Priemer - obsadenie';
     $lang['mdef'] = 'Priemer - obrana';
-    $lang['eff_ret'] = 'Efektivita - eff';
-    $lang['wn6_ret'] = 'WN6';
-		$lang['wn7_ret'] = 'WN7';
-    $lang['brone_ret'] = 'Armor site rating';
-    $lang['xvm_eff_ret'] = 'XVM eff';
-    $lang['xvm_wn6_ret'] = 'XVM WN6';
     $lang['average_perform_title'] = 'Priemerné výsledky';
     $lang['gk_blocked'] = 'Zamknuté vozidlá';
     $lang['version'] = 'verzia';
