@@ -543,7 +543,7 @@ function update_tanks_db() {
         } 
         $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/',7200);   
     }
-    $tmp = get_tank_v2($config); 
+    $tmp = get_tank_v2($config);
     $tmp_tanks = tanks();
     if(!empty($tmp_tanks)){
         $current = array_resort($tmp_tanks,'tank_id');
@@ -560,12 +560,10 @@ function update_tanks_db() {
                 $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
                 $updatearr [$tank_id]['level']       = $val['level'];
                 $updatearr [$tank_id]['nation']      = $val['nation'];
-                if($tank_id == 52225){
-                    $updatearr [$tank_id]['name_i18n']     = 'БТ-СВ';
-                    $updatearr [$tank_id]['image']         = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/ussr-bt-sv.png';
-                    $updatearr [$tank_id]['contour_image'] = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/small/ussr-bt-sv.png';
-                    $updatearr [$tank_id]['image_small']   = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/contour/ussr-bt-sv.png';    
-                } 
+
+                $pieces = explode(':', $val['name']);
+                $updatearr [$tank_id]['title']      = $pieces['1'];
+
                 if ($val['is_premium']== true) {
                     $updatearr [$val['tank_id']]['is_premium']      = 1;
                 }   else {
@@ -592,19 +590,13 @@ function update_tanks_db() {
             $updatearr [$tank_id]['image']         = $val['data']['image'];
             $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
             $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
-            if($tank_id == 52225){
-                $updatearr [$tank_id]['name_i18n']     = 'БТ-СВ';
-                $updatearr [$tank_id]['image']         = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/ussr-bt-sv.png';
-                $updatearr [$tank_id]['contour_image'] = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/small/ussr-bt-sv.png';
-                $updatearr [$tank_id]['image_small']   = 'http://worldoftanks.ru/static/3.16.0.3.1/encyclopedia/tankopedia/vehicle/contour/ussr-bt-sv.png';    
-            } 
         }
 
         unset($tmp);
         if(!empty($updatearr)){
-            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
             foreach ($updatearr as $tank_id => $val) {
-                $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+                $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
             }
             $sql = substr($sql, 0, strlen($sql)-2);
             $sql .= ';';

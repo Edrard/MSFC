@@ -212,6 +212,7 @@ CREATE TABLE IF NOT EXISTS `tanks` (
   `level` tinyint(2) NOT NULL,
   `nation` varchar(20) NOT NULL,
   `is_premium` tinyint(1) NOT NULL DEFAULT '0',
+  `title` varchar(40) NOT NULL,   
   `name_i18n` varchar(40) NOT NULL,
   `type` varchar(15) NOT NULL,
   `image` text NOT NULL,

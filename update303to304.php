@@ -32,10 +32,17 @@ include(ROOT_DIR.'/including/check.php');
 //MYSQL
 include(ROOT_DIR.'/function/mysql.php');
 
+//Multiget CURL
+require(ROOT_DIR.'/function/curl.php');
+require(ROOT_DIR.'/function/mcurl.php');
+
 // Including main config files
 include(ROOT_DIR.'/function/func.php');
+include(ROOT_DIR.'/function/func_get.php');
+include(ROOT_DIR.'/function/func_main.php');
 include(ROOT_DIR.'/function/config.php');
 include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
+require(ROOT_DIR.'/function/cache.php');
 
 //Loading language pack
 foreach(scandir(ROOT_DIR.'/translate/') as $files){
@@ -44,7 +51,47 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
     }
 }
 require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
-require(ROOT_DIR.'/function/cache.php');
+
+$cache = new Cache(ROOT_DIR.'/cache/');
+
+//Изменения вносимые в уникальные таблицы (без префикса для клана)
+
+/****************begin*****************/
+/*    Изменения в таблице `tanks`    */
+/*************************************/
+
+//Получаем структуру таблицы
+$sql = "SHOW COLUMNS FROM `tanks` ;";
+$q = $db->prepare($sql);
+if ($q->execute() != TRUE) {
+    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+}
+
+$ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+
+if(!isset($ratings_structure['title'])) {
+  //это таблица старого формата, будем переделывать.
+
+  //Изменяем таблицу
+  $sql = "ALTER TABLE `tanks` ADD `title` VARCHAR( 40 ) NOT NULL AFTER `is_premium`;";
+  $q = $db->prepare($sql);
+  if ($q->execute() != TRUE) {
+      die(show_message($q->errorInfo(),__line__,__file__,$sql));
+  }
+
+  //Очищаем таблицу
+  $sql = "TRUNCATE TABLE `tanks`;";
+  $q = $db->prepare($sql);
+  if ($q->execute() != TRUE) {
+      die(show_message($q->errorInfo(),__line__,__file__,$sql));
+  }
+
+  update_tanks_db();
+  echo 'Table `tanks` - updated.<br>';
+}
+/*************************************/
+/*    Изменения в таблице `tanks`    */
+/****************end******************/
 
 //Получаем список префиксов из таблицы multiclan
 $sql = "SELECT prefix FROM multiclan;";
@@ -147,8 +194,7 @@ if(!empty($prefix)) {
     /*************************************/
     /* Изменения в таблице `col_ratings` */
     /****************end******************/
-
-
   }
 }
+
 ?>

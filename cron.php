@@ -51,7 +51,6 @@ require(ROOT_DIR.'/function/func.php');
 require(ROOT_DIR.'/function/func_main.php');
 require(ROOT_DIR.'/function/func_cron.php');
 require(ROOT_DIR.'/function/func_get.php');
-require(ROOT_DIR.'/function/func_gk.php');
 
 // Including main config files
 include(ROOT_DIR.'/function/config.php');
