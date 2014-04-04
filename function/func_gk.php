@@ -31,13 +31,14 @@
     }
     function gk_tanks($gk_block,$db) // Получаем список танков в клане, с данными о времени блокировки
     {
-        $sql = "SELECT `title`, `lvl`, `type` FROM `tanks`;";
+        $sql = "SELECT `title`, `level`, `type` FROM `tanks`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tresult = $q->fetchAll(PDO :: FETCH_ASSOC);
             foreach($tresult as $tvalue) {
-              if(isset($gk_block[$tvalue['type']][$tvalue['lvl']])) {
-                $r[$tvalue['title']] = $gk_block[$tvalue['type']][$tvalue['lvl']];
+              if($tvalue['title'] == 'Bat_Chatillon155') { $tvalue['title'] = 'Bat_Chatillon155_58'; }
+              if(isset($gk_block[$tvalue['type']][$tvalue['level']])) {
+                $r[$tvalue['title']] = $gk_block[$tvalue['type']][$tvalue['level']];
               } else {
                 $r[$tvalue['title']] = 0;
               }
@@ -155,6 +156,7 @@
       }
 
       foreach($teams as $name => $value) {
+        if(!isset($gk_time[$value['vehicleType']])) {$gk_time[$value['vehicleType']] = 168;}
           $eb = $data['2']['0']['common']['arenaCreateTime']+round($data['2']['0']['common']['duration'],0)+(($gk_time[$value['vehicleType']])/$reduce*60*60);
           gk_insert_tanks($value,$eb);  // запись в бд
       }
