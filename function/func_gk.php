@@ -112,7 +112,7 @@
           if($check_time['error_count'] == 0) {
             $battle_time = mktime($check_time['hour'],$check_time['minute'],$check_time['second'],$check_time['month'],$check_time['day'],$check_time['year']);
           } else {
-            return array('error' => $lang['gk_error_4'].':-( :\'(';);
+            return array('error' => $lang['gk_error_4'].":-( :\ :'(");
           }
 
           $r['error'] = $lang['gk_error_4'].$lang['gk_error_10'];
