@@ -31,7 +31,7 @@
     }
     function gk_tanks($gk_block,$db) // Получаем список танков в клане, с данными о времени блокировки
     {
-        $sql = "SELECT `title`, `level`, `type` FROM `tanks`;";
+        $sql = "SELECT `title`, `level`, `type`, `tank_id` FROM `tanks`;";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $tresult = $q->fetchAll(PDO :: FETCH_ASSOC);
@@ -39,8 +39,12 @@
               if($tvalue['title'] == 'Bat_Chatillon155') { $tvalue['title'] = 'Bat_Chatillon155_58'; }
               if(isset($gk_block[$tvalue['type']][$tvalue['level']])) {
                 $r[$tvalue['title']] = $gk_block[$tvalue['type']][$tvalue['level']];
+                $r['by_id'][$tvalue['tank_id']]['time'] = $gk_block[$tvalue['type']][$tvalue['level']];
+                $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
               } else {
                 $r[$tvalue['title']] = 0;
+                $r['by_id'][$tvalue['tank_id']]['time'] = 0;
+                $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
               }
             }
             return $r;
@@ -85,7 +89,7 @@
         fclose($replay);
 
        if(!isset($data['1']) or empty($data['1'])) {
-            return array('error' => $lang['gk_error_3']);
+         return array('error' => $lang['gk_error_3']);
        }
 
       if(!in_array($data['1']['playerName'],$res)) {
@@ -147,17 +151,16 @@
         }
       }
 
-      foreach($data['2']['1'] as $val) {
+      foreach($data['2']['1'] as $id => $val) {
         if($val['team'] == $team_id and !$val['isAlive'] and in_array($val['name'], $res)) {
-          $pieces = explode(':', $val['vehicleType']);
-          $teams[$val['name']]['vehicleType'] = $pieces['1'];
+          $teams[$val['name']]['vehicleId'] = $data['2']['0']['vehicles'][$id]['typeCompDescr'];
+          $teams[$val['name']]['vehicleType'] = $gk_time['by_id'][$teams[$val['name']]['vehicleId']]['title'];
           $teams[$val['name']]['name'] = $val['name'];
         }
       }
 
       foreach($teams as $name => $value) {
-        if(!isset($gk_time[$value['vehicleType']])) {$gk_time[$value['vehicleType']] = 168;}
-          $eb = $data['2']['0']['common']['arenaCreateTime']+round($data['2']['0']['common']['duration'],0)+(($gk_time[$value['vehicleType']])/$reduce*60*60);
+          $eb = $data['2']['0']['common']['arenaCreateTime']+round($data['2']['0']['common']['duration'],0)+(($gk_time['by_id'][$value['vehicleId']]['time'])/$reduce*60*60);
           gk_insert_tanks($value,$eb);  // запись в бд
       }
 
