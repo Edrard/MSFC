@@ -192,8 +192,8 @@ function check_tables($medals, $nations, $tanks) {
     }   else {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
+
     if (count($tmp)==0) {
-        $tsql = '';
         $sql = "CREATE TABLE IF NOT EXISTS `col_medals` (
         `account_id` INT(12),
         `updated_at` INT( 12 ) NOT NULL,
@@ -202,21 +202,35 @@ function check_tables($medals, $nations, $tanks) {
         if ($q->execute() !== TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        foreach ($medals as $key => $val) {
-            $tmp2 = substr($key, 0, 6);
-
-            if ($tmp2 == 'mechan' || $tmp2 == 'tank_e') {
-                $size = 'tinyint(1)';
-            }   else {
-                $size = 'smallint(12)';
-            }
-            $tsql .= "ALTER TABLE `col_medals` ADD `".$key."` ".$size." UNSIGNED NOT NULL DEFAULT 0;";
-        }
-        if ($tsql != '') {
-            $q = $db->prepare($tsql);
-            if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
-        }
     }
+
+    //Получаем структуру таблицы
+    $sql = "SHOW COLUMNS FROM `col_medals` ;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+
+    $medals_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+    $tsql = '';
+
+    foreach ($medals as $key => $val) {
+      if(!isset($medals_structure[$key])) {
+        $tmp2 = substr($key, 0, 6);
+
+        if ($tmp2 == 'mechan' || $tmp2 == 'tank_e') {
+            $size = 'tinyint(1)';
+        }   else {
+            $size = 'smallint(12)';
+        }
+        $tsql .= "ALTER TABLE `col_medals` ADD `".$key."` ".$size." UNSIGNED NOT NULL DEFAULT 0;";
+      }
+    }
+    if ($tsql != '') {
+        $q = $db->prepare($tsql);
+        if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+    }
+
     foreach ($tanks as $tank_id => $val3) {
         $ntanks[$val3['nation']][$tank_id] = $tank_id;
     }
@@ -230,7 +244,6 @@ function check_tables($medals, $nations, $tanks) {
         }   else {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
-        $sqlarr = array();
         if (count($tmp)==0) {
             $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val."` (
             `account_id` INT(12),
@@ -240,7 +253,7 @@ function check_tables($medals, $nations, $tanks) {
             if ($q->execute() !== TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
-
+            $sqlarr = array();
             foreach ($ntanks[$val] as $tank_id => $val4 ) {
                 $sqlarr[] = "ALTER TABLE `col_tank_".$val."`
                 ADD `".$tank_id."_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
@@ -253,29 +266,29 @@ function check_tables($medals, $nations, $tanks) {
                     if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
                 }
             }
-        }   else {
-            $sql = "select * from `col_tank_".$val."` LIMIT 0 , 1;";
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $sel = $q->fetchAll();
-            }   else {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+
+        $sqlarr = $tanks_structure = array();
+        //Получаем структуру таблицы
+        $sql = "SHOW COLUMNS FROM `col_tank_".$val."`;";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+
+        $tanks_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+        foreach ($ntanks[$val] as $tank_id => $val4 ) {
+            if (!isset($tanks_structure[$tank_id.'_battles'])) {
+                $sqlarr[] = "ALTER TABLE `col_tank_".$val."`
+                ADD `".$tank_id."_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
+                ADD `".$tank_id."_wins` smallint( 12 ) NOT NULL DEFAULT 0,
+                ADD `".$tank_id."_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;";
             }
-            if (count($sel) <> 0) {
-                foreach ($ntanks[$val] as $tank_id => $val4 ) {
-                    if (!isset($sel[0][$tank_id.'_battles'])) {
-                        $sqlarr[] = "ALTER TABLE `col_tank_".$val."`
-                        ADD `".$tank_id."_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
-                        ADD `".$tank_id."_wins` smallint( 12 ) NOT NULL DEFAULT 0,
-                        ADD `".$tank_id."_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;";
-                    }
-                }
-            }
-            if (!empty($sqlarr)) {
-                foreach ($sqlarr as $tsql) {
-                    $q = $db->prepare($tsql);
-                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
-                }
+        }
+        if (!empty($sqlarr)) {
+            foreach ($sqlarr as $tsql) {
+                $q = $db->prepare($tsql);
+                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
             }
         }
     }
