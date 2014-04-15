@@ -33,15 +33,10 @@
         </thead>
         <tbody>
             <?php foreach($multiclan_info[$config['clan']]['data'][$config['clan']]['members'] as $id => $val){
-                    if($val['created_at'] == ''){
-                        $val['created_at'] = 'Н/Д';
-                        $date = $val['created_at'];
-                    } else {
-                        $date = date('Y.m.d',$val['created_at']);
-                    }
-                    if (isset($res[$val['account_name']]['data']['updated_at']) && ($res[$val['account_name']]['data']['updated_at'] <>0)) {
-                        $roster_local_num = $res[$val['account_name']]['data']['updated_at'];
-                        $diff_date = round(((time() - $roster_local_num) / 86400),0);
+
+                    if ($res[$val['account_name']]['data']['logout_at'] > 0) {
+
+                        $diff_date = round(((time() - $res[$val['account_name']]['data']['logout_at']) / 86400),0);
 
                         switch ($diff_date+1) { // Ну вот глючит switch при 0-м значении, хоть убей его. Кто в курсе решения проблемы, сообщите
                         case ($diff_date <= 3):
@@ -61,7 +56,6 @@
                         break;
                         }
                     }   else {
-                        $roster_local_num = 'Н/Д';
                         $color = 'col_black';
                     }
                 ?>
@@ -75,16 +69,10 @@
                         <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>
                     <? } ?>
                     <td><?=$val['account_id']; ?></td>
-                    <td><?=$date; ?></td>
-                    <td><?php If (is_numeric($val['created_at'])){
-                                       echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24));
-                              } else { echo $val['created_at']; }; ?></td>
+                    <td><?=($val['created_at'] == '')?'Н/Д':date('Y.m.d',$val['created_at']); ?></td>
+                    <td><?=(is_numeric($val['created_at']))?floor((time() - $val['created_at'])/(86400)):'Н/Д'; ?></td>
                     <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $val['role_i18n']; ?></td>
-                    <td>
-                        <?php if (is_numeric($roster_local_num)){ ?>
-                                 <span class="hidden"><?php echo $roster_local_num; ?></span>
-                                 <?php echo date('Y.m.d (H:i)',$roster_local_num);
-                              } else {echo $roster_local_num;}; ?></td>
+                    <td><?=($res[$val['account_name']]['data']['logout_at']>0)?date('Y.m.d (H:i)',$res[$val['account_name']]['data']['logout_at']):'Н/Д';?></td>
                 </tr>
                 <?php } ?>
         </tbody>  

@@ -159,22 +159,26 @@ function eff_rating($res, $wn8_exp = array()) {
                   $wn8['expected']['expFRAG'] = 0;
                   $wn8['expected']['expDEF'] = 0;
                   $wn8['expected']['expWIN'] = 0;
+                  $wn8['battles'] = 0;
 
                   foreach($per_stat['tanks'] as $val) {
+                    if(isset($wn8_exp[$val['tank_id']])) {
                       $wn8['expected']['expDAMAGE'] += (float)$wn8_exp[$val['tank_id']]['expDamage'] * $val['statistics']['battles'];
                       $wn8['expected']['expSPOT']   += (float)$wn8_exp[$val['tank_id']]['expSpot']   * $val['statistics']['battles'];
                       $wn8['expected']['expFRAG']   += (float)$wn8_exp[$val['tank_id']]['expFrag']   * $val['statistics']['battles'];
                       $wn8['expected']['expDEF']    += (float)$wn8_exp[$val['tank_id']]['expDef']    * $val['statistics']['battles'];
                       $wn8['expected']['expWIN']    += (float)$wn8_exp[$val['tank_id']]['expWinRate']* $val['statistics']['battles'];
+                      $wn8['battles'] += $val['statistics']['battles'];
+                    }
                   }
 
-                  $wn8['expected']['expWIN'] = $wn8['expected']['expWIN'] / $effect['battles'];
+                  $wn8['expected']['expWIN'] = $wn8['expected']['expWIN'] / $wn8['battles'];
 
                   $wn8['rDAMAGE']   = $per_stat['statistics']['all']['damage_dealt']/$wn8['expected']['expDAMAGE'];
                   $wn8['rSPOT']     = $per_stat['statistics']['all']['spotted']/$wn8['expected']['expSPOT'];
                   $wn8['rFRAG']     = $per_stat['statistics']['all']['frags']/$wn8['expected']['expFRAG'];
                   $wn8['rDEF']      = $per_stat['statistics']['all']['dropped_capture_points']/$wn8['expected']['expDEF'];
-                  $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$effect['battles']*100)/$wn8['expected']['expWIN'];
+                  $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$wn8['battles']*100)/$wn8['expected']['expWIN'];
 
                   $wn8['rWINc']      = max(0,                             ($wn8['rWIN']    - 0.71) / (1 - 0.71));
                   $wn8['rDAMAGEc']   = max(0,                             ($wn8['rDAMAGE'] - 0.22) / (1 - 0.22));

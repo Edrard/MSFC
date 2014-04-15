@@ -77,7 +77,7 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
         // Этот код ошибки не включен в error_reporting
         return;
     }
-
+    
     $code = NULL;
     if(file_exists($errfile) and is_readable($errfile)) {
         $f = file($errfile);

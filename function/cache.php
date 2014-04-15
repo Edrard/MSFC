@@ -58,26 +58,26 @@ class Cache {
 
         if (!$fp = @fopen($cache_path, 'rb'))  
         {  
-            return FALSE;  
+            return FALSE;
         }  
 
         flock($fp, LOCK_SH);  
 
         $cache = '';  
 
-        if (filesize($cache_path) > 0)  
-        {  
-            $cache = unserialize(fread($fp, filesize($cache_path)));  
-        }  
-        else  
-        {  
-            $cache = NULL;  
+        if (filesize($cache_path) > 0)
+        {
+            $cache = @unserialize(fread($fp, filesize($cache_path)));
+        }
+        else
+        {
+            $cache = FALSE;
         }  
 
         flock($fp, LOCK_UN);  
         fclose($fp);  
 
-        return $cache;  
+        return $cache;
     }  
 
     public function set($key, $data, $dir = FALSE)  
