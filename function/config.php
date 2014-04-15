@@ -28,6 +28,7 @@
     {
         if(isset($config['time']) and $config['time'] !='none' ) {
           //date_default_timezone_set($timezones_sys[$config['time']]);
+          if(isset($config['dst'])) {$config['time'] += $config['dst'];}
           $tz = floor($config['time']);
           if ( $tz ==  0 )
           {

@@ -126,6 +126,20 @@ if(!empty($prefix)) {
     }
 
     /****************begin*****************/
+    /*  Добавляем параметр DST в конфиг  */
+    /*************************************/
+    if(!isset($config['dst'])) {
+      $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('dst', '0');";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      $config['dst'] = 0;
+
+      echo 'Config table (`dst` value) for prefix:',$t,' - updated.<br>';
+    }
+
+    /****************begin*****************/
     /*   Меняем версию модуля в конфиге   */
     /*************************************/
     if($config['version'] == '3.0.3') {

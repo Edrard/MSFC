@@ -42,6 +42,9 @@ function insert_config($config)
         if(!isset($config['news'])){
             $config['news'] = 0;
         }
+        if(!isset($config['dst'])){
+            $config['dst'] = 0;
+        }
     }
     if(isset($config['consub_2'])){
         if(!isset($config['cron'])){

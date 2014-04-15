@@ -172,7 +172,7 @@
                                   <option value="ru" <?php if($config['lang'] == 'ru'){ echo 'selected="selected"';} ?>>Русский</option>
                                   <option value="pl" <?php if($config['lang'] == 'pl'){ echo 'selected="selected"';} ?>>Polski</option>
                                   <option value="en" <?php if($config['lang'] == 'en'){ echo 'selected="selected"';} ?>>English</option>
-																	<option value="sk" <?php if($config['lang'] == 'sk'){ echo 'selected="selected"';} ?>>Slovenčina</option>
+								  <option value="sk" <?php if($config['lang'] == 'sk'){ echo 'selected="selected"';} ?>>Slovenčina</option>
                               </select>
                            </div>
                         </div>
@@ -242,6 +242,12 @@
                                  $american_pm = $tz_current->format('H') > 12 ? ' ('. $tz_current->format('g:i a'). ')' : '';
                                  echo $lang['cur_timezone'].$tz_current->format('d.m.Y H:i:s').$american_pm;
                               ?>
+                           </div>
+                        </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['dst'];?></div>
+                           <div>
+                              <input <?=($config['dst']=='1')?'checked="checked"':'';?> type="checkbox" name="dst" value="1" size="2" />
                            </div>
                         </div>
                         <?php if($config['lang'] == 'ru'){?>
