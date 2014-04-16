@@ -62,7 +62,7 @@ $(document).ready(function() {
                    $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
                              'cpt' => 'ctf_points', 'dmg' => 'damage_dealt', 'dpt' => 'dropped_ctf_points', 'frg' => 'frags', 'spt' => 'spotted', 'exp' => 'xp');
                    */
-                   $exp = array ('global_rating','battles_count','wins_ratio','frags_count','damage_dealt','xp_avg','xp_max','hits_ratio');
+                   $exp = array ('global_rating','battles_count','wins_ratio','survived_ratio','frags_count','damage_dealt','xp_avg','xp_max','hits_ratio');
 
                foreach($exp as $column){
                ?>

@@ -99,6 +99,8 @@ CREATE TABLE IF NOT EXISTS `col_ratings` (
   `xp_avg_value` int(12) NOT NULL,
   `xp_max_value` int(12) NOT NULL,
   `hits_ratio_value` int(12) NOT NULL,
+  `survived_ratio_rank` int(12) NOT NULL,
+  `survived_ratio_value` int(12) NOT NULL,
   `global_rating_rank` int(12) NOT NULL,
   `global_rating_value` int(12) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;

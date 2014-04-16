@@ -227,19 +227,30 @@ if(!empty($prefix)) {
 
     $ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
 
-    if(isset($ratings_structure['spotted_count_rank']) and isset($ratings_structure['survived_ratio_rank'])) {
+    if(isset($ratings_structure['spotted_count_rank'])) {
 
       $sql = "ALTER TABLE `col_ratings`
                   DROP `spotted_count_rank`,
-                  DROP `survived_ratio_rank`,
-                  DROP `spotted_count_value`,
-                  DROP `survived_ratio_value`;";
+                  DROP `spotted_count_value`;";
       $q = $db->prepare($sql);
       if ($q->execute() != TRUE) {
           die(show_message($q->errorInfo(),__line__,__file__,$sql));
       }
 
-      echo 'Table `col_ratings` for prefix:',$t,' - updated v3 (remove spotted_count and survived_ratio).<br>';
+      echo 'Table `col_ratings` for prefix:',$t,' - updated v3 (remove spotted_count).<br>';
+    }
+
+    if(!isset($ratings_structure['survived_ratio_rank'])) {
+
+      $sql = "ALTER TABLE `col_ratings`
+                ADD `survived_ratio_rank` int(12) NOT NULL,
+                ADD `survived_ratio_value` int(12) NOT NULL;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      echo 'Table `col_ratings` for prefix:',$t,' - updated v4 (add survived_ratio).<br>';
     }
 
     /*************************************/
