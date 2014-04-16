@@ -12,7 +12,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.2 $
+* @version     $Rev: 3.0.4 $
 *
 */
 
@@ -205,10 +205,58 @@ if(!empty($prefix)) {
       echo 'Table `col_ratings` for prefix:',$t,' - updated.<br>';
     }
 
+    if(!isset($ratings_structure['global_rating_rank'])) {
+
+      $sql = "ALTER TABLE `col_ratings`
+                ADD `global_rating_rank` int(12) NOT NULL,
+                ADD `global_rating_value` int(12) NOT NULL;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      echo 'Table `col_ratings` for prefix:',$t,' - updated v2 (global_rating).<br>';
+    }
+
+    //Получаем структуру таблицы
+    $sql = "SHOW COLUMNS FROM `col_ratings` ;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+
+    $ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+
+    if(isset($ratings_structure['spotted_count_rank']) and isset($ratings_structure['survived_ratio_rank'])) {
+
+      $sql = "ALTER TABLE `col_ratings`
+                  DROP `spotted_count_rank`,
+                  DROP `survived_ratio_rank`,
+                  DROP `spotted_count_value`,
+                  DROP `survived_ratio_value`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      echo 'Table `col_ratings` for prefix:',$t,' - updated v3 (remove spotted_count and survived_ratio).<br>';
+    }
+
     /*************************************/
     /* Изменения в таблице `col_ratings` */
     /****************end******************/
   }
+}
+
+    /****************begin*****************/
+    /*     Удаляем старые lang файлы     */
+    /*************************************/
+
+foreach(scandir(ROOT_DIR.'/translate/') as $files){
+    if (preg_match ("/overall_[a-zA-Z]*.php/", $files)){
+        echo 'File ',$files,' - removed.<br>';
+        unlink(ROOT_DIR.'/translate/'.$files);
+    }
 }
 
 ?>

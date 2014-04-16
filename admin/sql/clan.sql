@@ -88,21 +88,19 @@ CREATE TABLE IF NOT EXISTS `col_ratings` (
   `battles_count_rank` int(12) NOT NULL,
   `wins_ratio_rank` int(12) NOT NULL,
   `frags_count_rank` int(12) NOT NULL,
-  `spotted_count_rank` int(12) NOT NULL,
   `damage_dealt_rank` int(12) NOT NULL,
-  `survived_ratio_rank` int(12) NOT NULL,
   `xp_avg_rank` int(12) NOT NULL,
   `xp_max_rank` int(12) NOT NULL,
   `hits_ratio_rank` int(12) NOT NULL,
   `battles_count_value` int(12) NOT NULL,
   `wins_ratio_value` int(12) NOT NULL,
   `frags_count_value` int(12) NOT NULL,
-  `spotted_count_value` int(12) NOT NULL,
   `damage_dealt_value` int(12) NOT NULL,
-  `survived_ratio_value` int(12) NOT NULL,
   `xp_avg_value` int(12) NOT NULL,
   `xp_max_value` int(12) NOT NULL,
-  `hits_ratio_value` int(12) NOT NULL
+  `hits_ratio_value` int(12) NOT NULL,
+  `global_rating_rank` int(12) NOT NULL,
+  `global_rating_value` int(12) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -212,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `tanks` (
   `level` tinyint(2) NOT NULL,
   `nation` varchar(20) NOT NULL,
   `is_premium` tinyint(1) NOT NULL DEFAULT '0',
-  `title` varchar(40) NOT NULL,   
+  `title` varchar(40) NOT NULL,
   `name_i18n` varchar(40) NOT NULL,
   `type` varchar(15) NOT NULL,
   `image` text NOT NULL,

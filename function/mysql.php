@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.4 $
     *
     */
     if (preg_match ("/mysql.php/", $_SERVER['PHP_SELF']))

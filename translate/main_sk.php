@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.3 $
+    * @version     $Rev: 3.0.4 $
 		* @translation [sk] relic242
     *
     */
@@ -37,17 +37,6 @@
     $lang['max_xp'] = 'Maximum skúseností';
     $lang['page_title'] = 'Bojová efektivita klanu';
     $lang['winp'] = 'Víťazstiev %';
-    $lang['r_integrated_rating'] = 'Globálna efektivita Rating';
-    $lang['r_battle_avg_performance'] = 'Výhier/Bitiek';
-    $lang['r_battle_avg_xp'] = 'Priemer skúseností na bitku';
-    $lang['r_battle_wins'] = 'Víťazstiev';
-    $lang['r_battles'] = 'Bitiek';
-    $lang['r_ctf_points'] = 'Obsadenie';
-    $lang['r_damage_dealt'] = 'Poškodenie';
-    $lang['r_dropped_ctf_points'] = 'Obrana';
-    $lang['r_frags'] = 'Zničených';
-    $lang['r_spotted'] = 'Odhalených';
-    $lang['r_xp'] = 'Spolu skúseností';
     $lang['gr_p'] = 'Pozícia v rebríčku globálna efektivita';
     $lang['wb_p'] = 'Pozícia v rebríčku výhier/bitiek';
     $lang['eb_p'] = 'Pozícia v rebríčku priemer skúseností na bitku';

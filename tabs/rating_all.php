@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.4 $
     *
     */
 ?>
@@ -62,22 +62,12 @@ $(document).ready(function() {
                    $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
                              'cpt' => 'ctf_points', 'dmg' => 'damage_dealt', 'dpt' => 'dropped_ctf_points', 'frg' => 'frags', 'spt' => 'spotted', 'exp' => 'xp');
                    */
-                   $exp = array (
-                   'battles_count',
-                   'wins_ratio',
-                   'frags_count',
-                   'damage_dealt',
-                   'spotted_count',
-                   'survived_ratio',
-                   'xp_avg',
-                   'xp_max',
-                   'hits_ratio'
-                   );
+                   $exp = array ('global_rating','battles_count','wins_ratio','frags_count','damage_dealt','xp_avg','xp_max','hits_ratio');
 
                foreach($exp as $column){
                ?>
-                  <th align='center' valign='top' class="{sorter: 'digit'} ratingplace"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><?=$lang['r_'.$column];?></th>
-                  <th align='center' valign='top' class="{sorter: 'digit'} ratingvalue"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><?=$lang['r_'.$column];?></th>
+                  <th align='center' valign='top' class="{sorter: 'digit'} ratingplace"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><br><?=$lang['r_'.$column];?></th>
+                  <th align='center' valign='top' class="{sorter: 'digit'} ratingvalue"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><br><?=$lang['r_'.$column];?></th>
                <? } ?>
       </tr>
     </thead>

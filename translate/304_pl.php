@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.4 $
     *
     */
   $lang['eff_ret'] = 'Ranking wydajności';
@@ -24,4 +24,15 @@
   $lang['overall_average'] = 'Procentowe znaczenia';
   $lang['overall_value'] = 'Pełne znaczenia';
   $lang['value_ret_decr'] = 'Table of efficiency ratings values'; //eng
+
+  $lang['r_battles_count'] = 'Stoczone bitwy';
+  $lang['r_wins_ratio'] = 'Zwycięstw';
+  $lang['r_frags_count'] = 'Zniszczono przeciwników';
+  $lang['r_damage_dealt'] = 'Zadane uszkodzenia';
+  $lang['r_spotted_count'] = 'Wykryto wrogów';
+  $lang['r_survived_ratio'] = 'Przeżył w bitwach';
+  $lang['r_xp_max'] = 'Najwiecej doświadczenia na bitwę';
+  $lang['r_xp_avg'] = 'Srednie doświadczenie na bitwę';
+  $lang['r_hits_ratio'] = 'Procent trafień';
+  $lang['r_global_rating'] = 'Personal Rating';
 ?>

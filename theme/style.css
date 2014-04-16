@@ -294,6 +294,26 @@ table .tablesorter { margin: 20px 0 0 0; }
     background-position: 100% -408px;
     width: 20px;
 }
+.rating_ico_tlm {
+    background-position: 100% -442px;
+    width: 36px;
+}
+.rating_ico_global_rating {
+    background-position: 100% -476px;
+    width: 29px;
+}
+.rating_ico_cr {
+    background-position: 100% -510px;
+    width: 25px;
+}
+.rating_ico_eur {
+    background-position: 100% -544px;
+    width: 28px;
+}
+.rating_ico_egk {
+    background-position: 100% -578px;
+    width: 26px;
+}
 /* overall tab - ratings table*/
 table.ratings_table td {
   border: 1px solid #444444;

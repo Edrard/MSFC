@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.4 $
     *
     */
 
@@ -193,7 +193,7 @@ switch ($eff_ratpl[$nickname]['brone']+1) {
 $statmain   = array('wins', 'losses', 'draws', 'survived_battles');
 $statbattle = array('spotted', 'frags', 'hits_percents', 'damage_dealt', 'damage_received', 'capture_points', 'dropped_capture_points');
 $statexp    = array('xp', 'battle_avg_xp');
-$statrat    = array('battles_count', 'wins_ratio', 'frags_count', 'damage_dealt', 'spotted_count', 'survived_ratio', 'xp_avg', 'xp_max', 'hits_ratio');
+$statrat    = array('global_rating','battles_count','wins_ratio','frags_count','damage_dealt','xp_avg','xp_max','hits_ratio');
 
 $statacc = array('all', 'clan', 'company');
 foreach ($statacc as $val) {

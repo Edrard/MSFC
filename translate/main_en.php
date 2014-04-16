@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.0.2 $
+    * @version     $Rev: 3.0.4 $
     *
     */
 
@@ -36,16 +36,6 @@
     $lang['max_xp'] = 'Maximum Experience per Battle';
     $lang['page_title'] = 'Clan Roster';
     $lang['winp'] = 'Victories %';
-
-    $lang['r_battles_count'] = 'Games Played';
-    $lang['r_wins_ratio'] = 'Victories/Battles';
-    $lang['r_frags_count'] = 'Vehicles Destroyed';
-    $lang['r_damage_dealt'] = 'Damage Caused';
-    $lang['r_spotted_count'] = 'Detected';
-    $lang['r_survived_ratio'] = 'Battles Survived';
-    $lang['r_xp_max'] = 'Max. Experience';
-    $lang['r_xp_avg'] = 'Avg. Experience';
-    $lang['r_hits_ratio'] = 'Hit Ratio';
 
     $lang['gr_p'] = 'Position in rating global Rating';
     $lang['wb_p'] = 'Position in rating wins/Battles';

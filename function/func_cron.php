@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.2 $
+* @version     $Rev: 3.0.4 $
 *
 */
 
@@ -98,7 +98,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
         'battles', 'damage_dealt', 'hits_percents', 'damage_received', 'shots', 'xp', 'frags',
         'survived_battles', 'dropped_capture_points');
     $stats4 = array ('rank', 'value');
-    $stats5 = array ('battles_count','wins_ratio','frags_count','damage_dealt','spotted_count','survived_ratio','xp_avg','xp_max','hits_ratio');
+    $stats5 = array ('global_rating','battles_count','wins_ratio','frags_count','damage_dealt','xp_avg','xp_max','hits_ratio');
      if ((isset($data['status'])) && ($data['status'] == 'ok')) {
         $data = $data['data'];
         $col_pl['account_id'] = $col_med['account_id'] = $col_rat['account_id'] = $data['account_id'];
