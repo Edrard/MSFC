@@ -95,12 +95,7 @@
 
     //Update information about tanks in db
     if(isset($_POST['update_tanks_db'])) {
-        //Очищаем таблицу
-        $sql = "TRUNCATE TABLE `tanks`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
         update_tanks_db();
     }
 
