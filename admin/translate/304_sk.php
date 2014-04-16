@@ -16,5 +16,5 @@
     */
 
 
-    $lang['dst'] = 'Daylight saving time: ';
+    $lang['dst'] = 'Letný čas: ';
 ?>
