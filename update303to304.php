@@ -263,10 +263,20 @@ if(!empty($prefix)) {
     /*     Удаляем старые lang файлы     */
     /*************************************/
 
+if(!is_writable(ROOT_DIR.'/translate/')) {
+  if(!@chmod(ROOT_DIR.'/translate/', 0777)) {
+    echo '<b>Directory are not writable, delete files overall_*.php manually</b><br>';
+  }
+}
+
 foreach(scandir(ROOT_DIR.'/translate/') as $files){
     if (preg_match ("/overall_[a-zA-Z]*.php/", $files)){
-        echo 'File ',$files,' - removed.<br>';
-        unlink(ROOT_DIR.'/translate/'.$files);
+        if(@unlink(ROOT_DIR.'/translate/'.$files)) {
+          echo 'File ',$files,' - removed.<br>';
+        } else {
+          echo 'Failed to remove ',$files,' - delete it manually.<br>';
+        }
+
     }
 }
 
