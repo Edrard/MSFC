@@ -36,4 +36,7 @@
   $lang['r_xp_avg'] = 'Средний опыт';
   $lang['r_hits_ratio'] = 'Процент попадания';
   $lang['r_global_rating'] = 'Личный рейтинг';
+
+  $lang['na'] = 'Н/Д';
+  $lang['last_battle_time'] = 'Дата последнего боя';
 ?>

@@ -51,4 +51,7 @@
   $lang['r_xp_avg'] = 'Avg. Experience';
   $lang['r_hits_ratio'] = 'Hit Ratio';
   $lang['r_global_rating'] = 'Personal Rating';
+
+  $lang['na'] = 'n/a';
+  $lang['last_battle_time'] = 'Last battle time';
 ?>

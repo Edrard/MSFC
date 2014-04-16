@@ -35,4 +35,7 @@
   $lang['r_xp_avg'] = 'Srednie doświadczenie na bitwę';
   $lang['r_hits_ratio'] = 'Procent trafień';
   $lang['r_global_rating'] = 'Personal Rating';
+
+  $lang['na'] = 'n/a';
+  $lang['last_battle_time'] = 'Last battle time';
 ?>

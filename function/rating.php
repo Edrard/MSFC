@@ -178,7 +178,7 @@ function eff_rating($res, $wn8_exp = array()) {
                   $wn8['rSPOT']     = $per_stat['statistics']['all']['spotted']/$wn8['expected']['expSPOT'];
                   $wn8['rFRAG']     = $per_stat['statistics']['all']['frags']/$wn8['expected']['expFRAG'];
                   $wn8['rDEF']      = $per_stat['statistics']['all']['dropped_capture_points']/$wn8['expected']['expDEF'];
-                  $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$wn8['battles']*100)/$wn8['expected']['expWIN'];
+                  $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$per_stat['statistics']['all']['battles']*100)/$wn8['expected']['expWIN'];
 
                   $wn8['rWINc']      = max(0,                             ($wn8['rWIN']    - 0.71) / (1 - 0.71));
                   $wn8['rDAMAGEc']   = max(0,                             ($wn8['rDAMAGE'] - 0.22) / (1 - 0.22));
