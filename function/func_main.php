@@ -556,7 +556,7 @@ function update_tanks_db() {
         }
         $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
     }
-    $tmp = get_tank_v2($config);
+    $tmp = get_api('encyclopedia/tanks');
     $tmp_tanks = tanks();
     if(!empty($tmp_tanks)){
         $current = array_resort($tmp_tanks,'tank_id');
@@ -626,5 +626,29 @@ function update_tanks_db() {
         }
         die ('Some error with getting data from WG'.$message);  
     }
+}
+
+function update_tanks_single($tank_id) {
+  $tmp = get_api('encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
+
+  if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
+    global $db;
+    $tmp = $tmp['data'][$tank_id];
+
+    $pieces = explode(':', $tmp['name']);
+    $tmp['title'] = $pieces['1'];
+    unset($tmp['name']);
+
+    if ($tmp['is_premium']== true) {
+        $tmp['is_premium'] = 1;
+    }   else {
+        $tmp['is_premium'] = 0;
+    }
+
+    $sql = 'INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");';
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
+
+  }
 }
 ?>

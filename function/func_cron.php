@@ -31,7 +31,7 @@ function cron_update_tanks_db() {
         $tanks[$val['tank_id']] = $val['tank_id'];
     }
     unset($sel);
-    $tmp = get_tank_v2($config);
+    $tmp = get_api('encyclopedia/tanks');
     if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
         $updatearr = $toload = array ();
         foreach ($tmp['data'] as $tank_id => $val) {

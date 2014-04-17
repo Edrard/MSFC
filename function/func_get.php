@@ -29,8 +29,23 @@ function checkparam($p) {
   $return = '';
   if(!empty($p)) {
     foreach($p as $k => $v) {
-      $return .= '&'.$k.'='.$v;
+      if(is_array($v)) {
+        $return .= '&'.$k.'='.implode(",", $v);
+      } else {
+        $return .= '&'.$k.'='.$v;
+      }
     }
+  }
+  return $return;
+}
+
+function checklang($p) {
+  $return = '';
+  $lang_api = array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko');
+  if(in_array($p,$lang_api)) {
+    $return = '&language='.$p;
+  } else {
+    $return = '&language=en';
   }
   return $return;
 }
@@ -61,61 +76,13 @@ function get_clan_v2($clanid, $whattoload, $config, $fields_array = array()) {
     }
 }
 
-function get_player_v2($plid, $whattoload, $config, $fields_array = array()) {
-    //whattoload accept 'info', 'ratings', 'tanks'
-    $fields = checkfield($fields_array);
-    $url = $config['td']."/wot/account/".$whattoload."/?application_id=".$config['application_id']."&account_id=".$plid.$fields;
-    $ch = curl_init();
-    $timeout = 10;
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "X-Requested-With: XMLHttpRequest",
-        "Accept: text/html, */*",
-        "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
-        "Connection: Keep-Alive",
-    ));
-    $data = curl_exec($ch);
-    if ($data === false or curl_errno($ch)) {
-        $return = array('status' => 'error', 'error' => array('message' => curl_error($ch)) );
-        curl_close($ch);
-        return $return;
-    }   else {
-        curl_close($ch);
-        $ret = json_decode(trim($data), true);
-        return ($ret);
-    }
-}
+function get_api($method, $param_array = array(), $fields_array = array()) {
+    global $config;
 
-function get_tank_v2($config, $fields_array = array()) {
+    $api_lang = checklang($config['lang']);
+    $param = checkparam($param_array);
     $fields = checkfield($fields_array);
-    $url = $config['td']."/wot/encyclopedia/tanks/?application_id=".$config['application_id'].$fields;
-    $ch = curl_init();
-    $timeout = 10;
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "X-Requested-With: XMLHttpRequest",
-        "Accept: text/html, */*",
-        "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
-        "Connection: Keep-Alive",
-    ));
-    $data = curl_exec($ch);
-    if ($data === false or curl_errno($ch)) {
-        $return = array('status' => 'error', 'error' => array('message' => curl_error($ch)) );
-        curl_close($ch);
-        return $return;
-    }   else {
-        curl_close($ch);
-        return (json_decode(trim($data), true));
-    }
-}
-
-function get_tankinfo_v2($tankid, $config, $fields_array = array()) {
-    $fields = checkfield($fields_array);
-    $url = $config['td']."/wot/encyclopedia/tanks/?application_id=".$config['application_id']."&tank_id=".$tankid.$fields;
+    $url = $config['td'].'/wot/'.$method.'/?application_id='.$config['application_id'].$api_lang.$param.$fields;
     $ch = curl_init();
     $timeout = 10;
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -144,6 +111,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $p
     //whattoload accept 'clan/info', 'clan/provinces', 'clan/battles', 'account/info', 'account/ratings', 'account/tanks', 'encyclopedia/tankinfo'
     $fields = checkfield($fields_array);
     $param = checkparam($param_array);
+    $api_lang = checklang($config['lang']);
     $timeout = 100;
     $tcurl = $config['pars'];
     $num = $config['multiget'];
@@ -161,7 +129,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $p
     foreach($clids as $arrid => $ids){
         $toload = implode(',',$ids).',';
         $toload = substr($toload, 0, strlen($toload)-1);
-        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.'&'.$second[0]."=".$toload.$fields;
+        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.$api_lang.'&'.$second[0]."=".$toload.$fields;
     }
     unset ($fields_array, $clids, $toload);
     if ($tcurl == 'curl'){

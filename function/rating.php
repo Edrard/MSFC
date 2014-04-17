@@ -110,6 +110,10 @@ function middel_tank_lvl($array){
         if(!isset($tanks[$val['tank_id']])){
             update_tanks_db();
             $tanks = tanks();
+            if(!isset($tanks[$val['tank_id']])){
+                update_tanks_single($val['tank_id']);
+                $tanks = tanks();
+            }
         }
         $data[$tanks[$val['tank_id']]['level']]['total'] +=  $val['statistics']['battles'];
         $data[$tanks[$val['tank_id']]['level']]['win']   +=  $val['statistics']['wins'];
