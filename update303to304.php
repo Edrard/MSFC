@@ -1,4 +1,3 @@
-<pre>
 <?php
 /*
 * Project:     Clan Stat

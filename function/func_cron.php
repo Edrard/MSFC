@@ -55,10 +55,9 @@ function cron_update_tanks_db() {
         }
         unset($tmp);
         if (!empty($toload)) {
-            $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n'));
+            $tmp = multiget_v2($toload, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small'));
             if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
                 foreach ($tmp as $tank_id => $val) {
-                    $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
                     $updatearr [$tank_id]['image']         = $val['data']['image'];
                     $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
                     $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];

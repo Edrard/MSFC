@@ -553,8 +553,8 @@ function update_tanks_db() {
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        } 
-        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/',7200);   
+        }
+        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
     }
     $tmp = get_tank_v2($config);
     $tmp_tanks = tanks();
@@ -566,7 +566,7 @@ function update_tanks_db() {
         $updatearr = $toload = array ();
         foreach ($tmp['data'] as $tank_id => $val) {
             if(!isset($current[$val['tank_id']])){
-                $cache_tanks = $cache->get($val['tank_id'], 0, ROOT_DIR.'/cache/tanks/');
+                $cache_tanks = $cache->get($val['tank_id'], 24*60*60, ROOT_DIR.'/cache/tanks/');
                 $updatearr [$tank_id] = $cache_tanks['data'];
                 $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
                 $updatearr [$tank_id]['type']        = $val['type'];
@@ -591,7 +591,7 @@ function update_tanks_db() {
         $toload = array_chunk($toload,$config['multiget']*5);
         $tmp = array();
         foreach($toload as $urls){
-            $tmp = array_special_merge($tmp,multiget_v2($urls, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small', 'name_i18n')));
+            $tmp = array_special_merge($tmp,multiget_v2($urls, 'encyclopedia/tankinfo', $config, array ('contour_image', 'image', 'image_small')));
             foreach($tmp as $tank_id => $val){
                 if ((isset($val['status'])) && ($val['status'] == 'ok')) {
                     $cache->set($tank_id, $val, ROOT_DIR.'/cache/tanks/');
@@ -599,7 +599,6 @@ function update_tanks_db() {
             }
         }
         foreach ($tmp as $tank_id => $val) {
-            $updatearr [$tank_id]['name_i18n']     = $val['data']['name_i18n'];
             $updatearr [$tank_id]['image']         = $val['data']['image'];
             $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
             $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];

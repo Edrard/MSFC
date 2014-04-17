@@ -95,7 +95,6 @@
 
     //Update information about tanks in db
     if(isset($_POST['update_tanks_db'])) {
-        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
         update_tanks_db();
     }
 
