@@ -41,6 +41,7 @@ function cron_update_tanks_db() {
                 $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
                 $updatearr [$tank_id]['level']       = $val['level'];
                 $updatearr [$tank_id]['nation']      = $val['nation'];
+                $updatearr [$tank_id]['name_i18n']   = $val['name_i18n'];
 
                 $pieces = explode(':', $val['name']);
                 $updatearr [$tank_id]['title']      = $pieces['1'];
