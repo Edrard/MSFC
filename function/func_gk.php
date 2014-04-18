@@ -77,7 +77,7 @@ function gk_parse_file($file,$res,$gk_time,$lang,$db,$reducer = '') // Обра�
     $replay = fopen($file['filename']['tmp_name'],'r');
 
     $blocksInfo=unpack("Lsignature/LblocksCount", fread($replay,8));
-    if($blocksInfo['blocksCount'] and $blocksInfo['blocksCount'] >= 1){
+    if($blocksInfo['blocksCount'] and $blocksInfo['blocksCount'] >= 1 and $blocksInfo['blocksCount'] <= 3){
             for($i = 1; $i <= $blocksInfo['blocksCount']; $i++){
                     $blockSize=unpack('L',fread($replay,4));
                     //echo $blockSize['1'].' - '.$files.'<br>';
