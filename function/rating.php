@@ -200,7 +200,7 @@ function eff_rating($res, $wn8_exp = array()) {
 
                 $feff[$name]['eff'] = number_format(($effect['damage_dealt']*(10/($effect['lvl'] + 2))*(0.23+2*$effect['lvl']/100) + $effect['frags']*0.25*1000 + $effect['spotted']*0.15*1000 + log($effect['capture_points']+1,1.732)*0.15*1000 + $effect['dropped_capture_points']*0.15*1000),2, '.', '');
                 $feff[$name]['wn7'] = number_format(((1240-1040/(pow($min6,0.164)))*$effect['frags']+$effect['damage_dealt']*530/(184*exp(0.24*$effect['lvl'])+130)+$effect['spotted']*125*$min3/3+$min2*100+((185/(0.17+exp((($effect['wins']*100)-35)*-0.134)))-500)*0.45-(((5 - $min5)*125)/(1 + exp(($effect['lvl']-pow($effect['battles']/220,(3/$effect['lvl'])))*1.5)))),2, '.', '');
-                $feff[$name]['wn7'] = ($feff[$name]['eff']>0) ? $feff[$name]['eff'] : 0;
+                $feff[$name]['wn7'] = ($feff[$name]['wn7']>0) ? $feff[$name]['wn7'] : 0;
                 $feff[$name]['brone'] = round((log($effbrone['battles'])/10)*(($effbrone['xp']*1)+($effbrone['damage_dealt']*($effbrone['wins']*2+$effbrone['frags']*0.9+$effbrone['spotted']*0.5+$effbrone['dropped_capture_points']*0.5+$effbrone['capture_points']*0.5))),0);
 
                 $feff[$name]['xvm_eff'] = ($feff[$name]['eff']<440) ? 0 : round(max(min($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*(0.00000000000000004787*$feff[$name]['eff'] - 0.00000000000035544) + 0.00000000102606) - 0.0000014665) + 0.0010827) - 0.3133) + 20.49, 100), 0),0);
