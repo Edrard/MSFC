@@ -36,8 +36,8 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
         <thead>
           <tr>
             <th><?=$lang['name'];?></th>
-            <th>Очки</th>
-            <th>Место</th>
+            <th><?=$lang['famepoints_points'];?></th>
+            <th><?=$lang['famepoints_position'];?></th>
           </tr>
         </thead>
         <tbody>
