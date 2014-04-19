@@ -38,6 +38,7 @@
   $lang['r_global_rating'] = 'Личный рейтинг';
 
   $lang['na'] = 'Н/Д';
+  $lang['last_battle_time'] = 'Дата последнего боя';
   $lang['famepoints_points'] = 'Очки славы';
   $lang['famepoints_position'] = 'Позиция в Аллее славы';
 ?>
