@@ -53,6 +53,7 @@
               $("#roster").tablesorter({sortList:[<?=$roster_sortlist;?>], headers:{ 0: { sorter: false}}});
 
               $("#best_main")
+              .add("#famepoints")
               .add("#best_medal")
               .add("#active_main")
               .add("#active_medal_1")

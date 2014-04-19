@@ -31,13 +31,8 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
   $fame = array();
 }
 ?>
-<script type="text/javascript">
-$(document).ready(function() {
-  $("#table<?=$key;?>").tablesorter();
-});
-</script>
 <div align="center">
-    <table id="table<?=$key;?>" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
+    <table id="famepoints" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
         <thead>
           <tr>
             <th><?=$lang['name'];?></th>
