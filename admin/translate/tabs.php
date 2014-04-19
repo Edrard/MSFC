@@ -43,7 +43,7 @@
     $tabs_lang['ru']['roster'] =  'Состав';
     $tabs_lang['ru']['topteh'] =  'Топ-техника';
 
-    $tabs_lang['ru']['poss'] =  'Собственность клана'; 
+    $tabs_lang['ru']['poss'] =  'Собственность клана';
     $tabs_lang['ru']['attack'] =  'Запланированные атаки'; 
 
     //Eng
@@ -95,11 +95,11 @@
     $tabs_lang['pl']['attack'] =  'Zaplanowane ataki'; 
 		
     //sk
-		$tabs_lang['sk']['active'] =  'Celková aktivita';
+	$tabs_lang['sk']['active'] =  'Celková aktivita';
     $tabs_lang['sk']['active_1'] =  'Ocenenia';
     $tabs_lang['sk']['ajax_activity'] =  'Aktivita hráčov';
     $tabs_lang['sk']['ajax_general_activity'] = 'Celkovo aktivita za dobu';
-    $tabs_lang['ak']['ajax_player'] = 'Detaily hráčov';
+    $tabs_lang['sk']['ajax_player'] = 'Detaily hráčov';
     $tabs_lang['sk']['ajaxstat'] = 'Detaily vozidiel';
     $tabs_lang['sk']['ajaxtank'] =  'Vozidlá';
     $tabs_lang['sk']['available_tanks'] =  'Vozidlá k dispozícii';
@@ -116,5 +116,10 @@
     $tabs_lang['sk']['topteh'] =  'Najlepšie vozidlá';
 		
     $tabs_lang['sk']['poss'] =  'Obsadené územia'; 
-    $tabs_lang['sk']['attack'] =  'Plánované útoky'; 
+    $tabs_lang['sk']['attack'] =  'Plánované útoky';
+
+    $tabs_lang['en']['famepoints'] =  'Fame Points';
+    $tabs_lang['ru']['famepoints'] =  'Очки славы';
+    $tabs_lang['pl']['famepoints'] =  'Fame Points';
+    $tabs_lang['sk']['famepoints'] =  'Fame Points'; 
 ?>
