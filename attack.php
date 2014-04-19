@@ -96,7 +96,7 @@ if (is_valid_url($config['td']) == true){
                       <tr>
                           <td align="center"><?=$type; ?></td>
                           <td><?=$date; ?></td>
-                          <td><a href="<?=$config['clan_link']; ?>maps/globalmap/?province=<?=$val['provinces'][0]; ?>" target="_blank"><?=$val['arenas'][0]['name']; ?></a></td>
+                          <td><a href="<?=$config['clan_link']; ?>maps/globalmap/?province=<?=$val['provinces'][0]; ?>" target="_blank"><?=$val['arenas'][0]['name_i18n']; ?></a></td>
                       </tr>
                       <?php
                       };
