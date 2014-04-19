@@ -98,6 +98,16 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
     echo '<link rel="stylesheet" href="./theme/'.$config['theme'].'/jquery-ui.css" type="text/css" media="print, projection, screen" />';
     show_message($errstr,$errline,$errfile,$code);
 
+    //add errors to cron.log when running cron.php
+    if(defined('IS_CRON')){
+      global $log;
+      if($log == 1) {
+        global $fh,$date;
+        fwrite($fh, $date.": (Err) Error while running cron.php: ".htmlspecialchars(trim($errstr)).",on line: ".htmlspecialchars(trim($errline))."\n");
+        fwrite($fh, $date.": (Err) Error code: ".htmlspecialchars(trim($code))."\n");
+      }
+    }
+
     /* Не запускаем внутренний обработчик ошибок PHP */
     return true;
 }

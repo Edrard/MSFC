@@ -24,6 +24,8 @@ if (file_exists(dirname(__FILE__).'/function/mysql.php')) {
 }else{
     define('ROOT_DIR', '.');    
 }
+// IS_CRON - this parametr show us thats we running cron.php, to write errors to cron.log. Code for writing errors in including/check.php
+define('IS_CRON', '1');
 //Starting script time execution timer
 $begin_time = microtime(true);
 
@@ -76,6 +78,8 @@ if($fh = fopen($myFile, 'a')){
     fwrite($fh, $date.": (Info) Loging Started\n");
     fwrite($fh, $date.": (Info) Authentication: ".$config['cron_auth']."\n");
     cron_current_run($fh, $date);
+} else {
+    $log = 0;
 }
 
 //cache
