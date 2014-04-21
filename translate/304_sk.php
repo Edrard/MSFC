@@ -40,6 +40,6 @@
 
   $lang['na'] = 'n/a';
   $lang['last_battle_time'] = 'Čas poslednej bitky';
-  $lang['famepoints_points'] = 'Fame Points';
-  $lang['famepoints_position'] = 'Position on the Alley of Fame';
+  $lang['famepoints_points'] = 'Body slávy';
+  $lang['famepoints_position'] = 'Pozícia v Sieni slávy';
 ?>
