@@ -103,8 +103,8 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
       global $log;
       if($log == 1) {
         global $fh,$date;
-        fwrite($fh, $date.": (Err) Error while running cron.php: ".htmlspecialchars(trim($errstr)).",on line: ".htmlspecialchars(trim($errline))."\n");
-        fwrite($fh, $date.": (Err) Error code: ".htmlspecialchars(trim($code))."\n");
+        fwrite($fh, $date.": (Err) Error while running cron.php: ".trim($errstr).",on line: ".trim($errline)."\n");
+        fwrite($fh, $date.": (Err) Error code: ".trim($code)."\n");
       }
     }
 

@@ -198,7 +198,7 @@ function delete_multi($get){
                 if(isset($status_clan['0']['prefix']) and !empty($status_clan))
                 {
                     $sql = "SHOW TABLES LIKE '".$status_clan['0']['prefix']."%';";
-                    echo $sql;
+                    //echo $sql;
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $list = $q->fetchAll(PDO :: FETCH_ASSOC);

@@ -67,6 +67,7 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
 require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
 require(ROOT_DIR.'/function/cache.php');
 
+register_shutdown_function('shutdown_cron');
 $myFile = ROOT_DIR."/cron.log";
 $log = 0;
 $links = array();
