@@ -110,7 +110,7 @@ foreach($maps_active as $maps_id) {
                     <tr>
                         <td align="center"><img src="./images/<?=$val['type'];?>.png"></td>
                         <td align="center"><?=($val['time'] > 1)?date('H:i',$val['time']).' +':'--:--'; ?></td>
-                        <td align="center"><?=is_numeric($p_info[$val['provinces']['0']]['prime_time'])?$p_info[$val['provinces']['0']]['prime_time']+$config['time'].':00':'--:--'; ?></td>
+                        <td align="center"><?=is_numeric($p_info[$val['provinces']['0']]['prime_time'])?date('H',mktime($p_info[$val['provinces']['0']]['prime_time']+$config['time'])).':00':'--:--'; ?></td>
                         <td align="center">
                           <a href="<?=$config['clan_link']; ?>maps/<?=$maps_link[$maps_id];?>/?province=<?=$val['provinces']['0']; ?>" target="_blank"><?=$p_info[$val['provinces']['0']]['province_i18n']; ?></a>
                             <? if(count($val['provinces'])>1) { ?>
