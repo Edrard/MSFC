@@ -64,19 +64,30 @@ if(isset($maps['status']) and $maps['status'] == 'ok') {
 }
 
 foreach($maps_active as $maps_id) {
-    $prov = $p_info = array();
+    $prov = $p_info = $owner = $owner_info = array();
     $battel = get_api('clan/battles',array('map_id' => $maps_id, 'clan_id' => $config['clan']));
     if(isset($battel['status']) and $battel['status'] == 'ok' and !empty($battel['data'][$config['clan']])) {
       foreach($battel['data'][$config['clan']] as $val) {
         $prov = array_merge($prov, $val['provinces']);
       }
-      $provinces = get_api('globalwar/provinces',array('map_id' => $maps_id, 'province_id' => $prov, 'fields' => 'province_i18n,prime_time'));
+      $provinces = get_api('globalwar/provinces',array('map_id' => $maps_id, 'province_id' => $prov, 'fields' => 'province_i18n,prime_time,clan_id,revenue'));
       if(isset($provinces['status']) and $provinces['status'] == 'ok') {
         $p_info = $provinces['data'];
+        foreach($p_info as $val) {
+          if(!in_array($val['clan_id'],$owner)) {
+            $owner[] = $val['clan_id'];
+          }
+        }
+        $tmp = get_api('clan/info',array('clan_id' => $owner, 'fields' => 'emblems.small,clan_color,abbreviation'));
+        if(isset($tmp['status']) and $tmp['status'] == 'ok') {
+          $owner_info = $tmp['data'];
+        }
       } else {
-        foreach($prov as $p) {
-          $p_info[$p]['province_i18n'] = '***';
-          $p_info[$p]['prime_time'] = '***';
+        foreach ($battel['data'][$config['clan']] as $val) {
+          foreach($val['provinces'] as $p) {
+            $p_info[$p]['province_i18n'] = '***';
+            $p_info[$p]['prime_time'] = '***';
+          }
         }
       }
     }
@@ -96,15 +107,17 @@ foreach($maps_active as $maps_id) {
                     <th width="40"><?=$lang['type']; ?></th>
                     <th width="100"><?=$lang['time']; ?></th>
                     <th width="100"><?=$lang['prime_time']; ?></th>
-                    <th width="35%"><?=$lang['title_name']; ?></th>
-                    <th><?=$lang['map']; ?></th>
+                    <th width="25%"><?=$lang['title_name']; ?></th>
+                    <th width="25%"><?=$lang['map']; ?></th>
+                    <th width="100"><?=$lang['income']; ?></th>
+                    <th width="150" class="sorter-false"><?=$lang['global_map_owner'];?></th>
                 </tr>
             </thead>
             <tbody>
             <? if(!isset($maps_id) or !isset($battel['data'])) { ?>
-                <tr><td colspan="5" align="center"><?=$lang['error_1'].(isset($battel['error']['message'])?' ('.$battel['error']['message'].')':'');?></td></tr>
+                <tr><td colspan="7" align="center"><?=$lang['error_1'].(isset($battel['error']['message'])?' ('.$battel['error']['message'].')':'');?></td></tr>
             <? } elseif(empty($battel['data'][$config['clan']])) { ?>
-                <tr><td colspan="5" align="center"><?=$lang['no_war'];?></td></tr>
+                <tr><td colspan="7" align="center"><?=$lang['no_war'];?></td></tr>
             <? } else { ?>
                 <? foreach($battel['data'][$config['clan']] as $val){ ?>
                     <tr>
@@ -123,6 +136,12 @@ foreach($maps_active as $maps_id) {
                             &nbsp;x&nbsp;<?=$val['arenas']['1']['name_i18n']; ?>
                           <? } ?>
                         </td>
+                        <td align="center" style="color: #ba904d;"><?=isset($p_info[$val['provinces']['0']]['revenue'])?$p_info[$val['provinces']['0']]['revenue']:0;?> <img src="./images/currency-gold.png" border="0"></td>
+                        <? if(!empty($owner_info)) { ?>
+                          <td align="center" valign="middle"><img style="height: 16px; vertical-align: middle; width: 16px;" src="<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['emblems']['small'];?>" border="0"> <a href="http://worldoftanks.ru/community/clans/<?=$p_info[$val['provinces']['0']]['clan_id'];?>/" target="_blank" style="color: <?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['clan_color'];?>;">[<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['abbreviation'];?>]</a></td>
+                        <? } else { ?>
+                          <td align="center" valign="middle" >---</td>
+                        <? } ?>
                     </tr>
                 <? } ?>
             <? } ?>

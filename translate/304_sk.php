@@ -44,4 +44,5 @@
   $lang['famepoints_position'] = 'Pozícia v Sieni slávy';
   $lang['global_map_n'] = 'Global map #';
   $lang['global_map_frozen'] = 'All Global maps are frozen.';
+  $lang['global_map_owner'] = 'Province owner';
 ?>

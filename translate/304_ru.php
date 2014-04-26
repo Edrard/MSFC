@@ -43,4 +43,5 @@
   $lang['famepoints_position'] = 'Позиция в Аллее славы';
   $lang['global_map_n'] = 'Глобальная карта №';
   $lang['global_map_frozen'] = 'В данный момент все Глобальные карты заморожены.';
+  $lang['global_map_owner'] = 'Владелец провинции';
 ?>
