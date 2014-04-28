@@ -199,19 +199,4 @@ function cron_current_run($fh,$date) {
     }
     fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
 }
-
-function shutdown_cron() {
-    global $log,$db;
-    $last = end($db->sqls);
-
-    if($log == 1 and !empty($last) and defined('IS_CRON')) {
-      global $fh,$date;
-      $q = $db->prepare($last);
-      $q->execute();
-      $err = $q->errorInfo();
-
-      fwrite($fh, $date.": (Err) Error in MySQL while running cron.php: ".($err['2'])."\n");
-      fwrite($fh, $date.": (Err) Code: ".$last." \n");
-    }
-}
 ?>

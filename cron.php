@@ -67,7 +67,6 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
 require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
 require(ROOT_DIR.'/function/cache.php');
 
-register_shutdown_function('shutdown_cron');
 $myFile = ROOT_DIR."/cron.log";
 $log = 0;
 $links = array();
@@ -79,8 +78,6 @@ if($fh = fopen($myFile, 'a')){
     fwrite($fh, $date.": (Info) Loging Started\n");
     fwrite($fh, $date.": (Info) Authentication: ".$config['cron_auth']."\n");
     cron_current_run($fh, $date);
-} else {
-    $log = 0;
 }
 
 //cache
@@ -270,5 +267,3 @@ if ($log == 1){
     fwrite($fh, $date.": (Info) End cron job\n");
 }
 ?>
-
-

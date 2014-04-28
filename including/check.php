@@ -65,6 +65,22 @@ function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) 
         }
     }
     echo '</div></center>';
+
+    //add errors to cron.log when running cron.php
+    if(defined('IS_CRON')){
+      global $log;
+      if($log == 1) {
+        global $fh,$date;
+        fwrite($fh, $date.": (Err) Error while running cron.php, on line: ".$line."\n");
+        if(isset($message) and !empty($message) and is_array($message)) {
+          fwrite($fh, $date.": (Err) Error message: ".trim($message['2'])."\n");
+        } elseif (isset($message) and !empty($message)) {
+          fwrite($fh, $date.": (Err) Error message: ".trim($message)."\n");
+        }
+        if(isset($footer) and !empty($footer) and !is_array($footer))
+        fwrite($fh, $date.": (Err) Error code: ".trim($footer)."\n");
+      }
+    }
 }
 
 /* Создаем функцию подменяющую стандартное отображение ошибок, в ней мы добавим вывод ошибок через функцию show_message,
@@ -97,16 +113,6 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
     if (!isset($config['theme'])) { $config['theme'] = 'ui-lightness'; }
     echo '<link rel="stylesheet" href="./theme/'.$config['theme'].'/jquery-ui.css" type="text/css" media="print, projection, screen" />';
     show_message($errstr,$errline,$errfile,$code);
-
-    //add errors to cron.log when running cron.php
-    if(defined('IS_CRON')){
-      global $log;
-      if($log == 1) {
-        global $fh,$date;
-        fwrite($fh, $date.": (Err) Error while running cron.php: ".trim($errstr).",on line: ".trim($errline)."\n");
-        fwrite($fh, $date.": (Err) Error code: ".trim($code)."\n");
-      }
-    }
 
     /* Не запускаем внутренний обработчик ошибок PHP */
     return true;
