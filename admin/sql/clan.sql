@@ -153,7 +153,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '3.0.3'),
+('version', '304.0'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
 ('company', '0'),
