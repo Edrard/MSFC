@@ -53,7 +53,7 @@ require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
 
 $cache = new Cache(ROOT_DIR.'/cache/');
 
-if($config['version'] < 304.0) {
+if( (304.0 - (float) $config['version']) > 0 ) {
     //Изменения вносимые в уникальные таблицы (без префикса для клана)
 
     /****************begin*****************/
@@ -142,8 +142,8 @@ if($config['version'] < 304.0) {
         /****************begin*****************/
         /*   Меняем версию модуля в конфиге   */
         /*************************************/
-        if(!is_numeric($config['version']) or $config['version'] < 304.0) {
-          $sql = "UPDATE `config` SET `value` = '304.1' WHERE `name` = 'version' LIMIT 1 ;";
+        if(!is_numeric($config['version']) or (304.0 - (float) $config['version']) > 0 ) {
+          $sql = "UPDATE `config` SET `value` = '304.0' WHERE `name` = 'version' LIMIT 1 ;";
           $q = $db->prepare($sql);
           if ($q->execute() != TRUE) {
               die(show_message($q->errorInfo(),__line__,__file__,$sql));
