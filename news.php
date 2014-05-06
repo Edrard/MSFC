@@ -25,7 +25,8 @@
     }
 
     //Checker
-
+    include(ROOT_DIR.'/including/check.php');
+    
     //MYSQL
     include(ROOT_DIR.'/function/mysql.php');
     

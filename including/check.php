@@ -122,6 +122,19 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
 /* Применяем созданную функцию */
 set_error_handler("myErrorHandler");
 
+/* Создаем функцию закрывающей конект к БД по завершению работы скрипта */
+/* Функция сработает и при успешном завершении скрипта, и при вызове die*/
+
+function msfc_end_script() {
+  global $db,$q;
+
+  $q = null;
+  $db = null;
+}
+
+/* Применяем функцию */
+register_shutdown_function('msfc_end_script');
+
 /* Создаем папки для кэша */
 
 if(is_writable(ROOT_DIR)) {

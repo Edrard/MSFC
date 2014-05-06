@@ -74,7 +74,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement); 
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::prepare($statement, $driver_options);
             }
@@ -82,7 +82,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement); 
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 $args = func_get_args();
 
