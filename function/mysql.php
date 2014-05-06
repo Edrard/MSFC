@@ -28,10 +28,19 @@
       $dbpass  ='';
       $dbname  ='';
     }
-    
+
     $dbprefix = '';
     $sqlchar = 'utf8';
 
+    //Проверяем заданы ли переменные для доступа к БД
+    if( empty($dbhost) and empty($dbuser) and empty($dbpass) and empty($dbname) ) {
+        if(defined('MAIN')){
+            header ( 'Location: admin/index.php' );
+        }
+        include(ROOT_DIR.'/admin/including/ad_mysql.php');
+        include(ROOT_DIR.'/admin/views/ad_mysql.php');
+        die;
+    }
 
     //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
     if (!class_exists('MyPDO')) {
@@ -87,7 +96,7 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement); 
+                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::exec($statement);
             }
@@ -128,14 +137,7 @@
     try {
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
     } catch (PDOException $e) {
-        if(defined('MAIN')){
-            header ( 'Location: admin/index.php' );
-        }
-        echo show_message($e->getMessage());
-        include(ROOT_DIR.'/admin/including/ad_mysql.php');
-        include(ROOT_DIR.'/admin/views/ad_mysql.php');
-
-        die;
+        die(show_message($e->getMessage()));
     }
     $db->query ( 'SET character_set_connection = '.$sqlchar );
     $db->query ( 'SET character_set_client = '.$sqlchar );
