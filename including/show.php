@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.4 $
+* @version     $Rev: 3.1.0 $
 *
 */
 $col_tables = get_tables_like_col_tank($dbname);  

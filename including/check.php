@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.0.4 $
+* @version     $Rev: 3.1.0 $
 *
 */
 
@@ -227,5 +227,5 @@ if(!file_exists(ROOT_DIR.'/cache/other/') || !is_writable(ROOT_DIR.'/cache/other
 if(!is_writable(ROOT_DIR) and !file_exists(ROOT_DIR.'/mysql.config.php')) {
   show_message($lang['e_chmod_off']);
 }
-define("VER",'3.0.3');
+define("VER",'3.1.0');
 ?>
