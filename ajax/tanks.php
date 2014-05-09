@@ -98,7 +98,7 @@
                 <th><?=$lang['company']; ?></th>
             <? } ?>
             <?php
-            foreach ($tanks as $key => $val) {
+            foreach ($tanks as $val) {
                echo '<th>',$val['name_i18n'],'</th>';
             } ?>
         </tr>
@@ -114,14 +114,11 @@
                 foreach ($tanks as $key => $stat) {
                    echo '<td>';
                    $present = 0;
-                   foreach ($val['data']['tanks'] as $key => $val2) {
-                      if ($val2['tank_id'] == $stat['tank_id'] ) {
-                          if ($val2['statistics']['battles'] > 0) {
-                              $percent = round($val2['statistics']['wins']/$val2['statistics']['battles']*100,2);
-                              echo $percent.'% ('.$val2['statistics']['wins'].'/'.$val2['statistics']['battles'].')';
-                              $present++;
-                          }
-                      }
+                   if( isset($val['data']['tanks'][$key]) ) {
+                      $val2 = $val['data']['tanks'][$key]['statistics'];
+                      $percent = round($val2['wins']/$val2['battles']*100,2);
+                      echo $percent.'% ('.$val2['wins'].'/'.$val2['battles'].')';
+                      $present++;
                    }
                    if ($present==0) echo '<span style="display: none;">-1</span>';
                    echo '</td>';

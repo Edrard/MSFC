@@ -65,33 +65,38 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         }
         unset($tmp);
     }
-    $links = array_chunk($links,$config['multiget']*5);
-    unset($pldata,$tmp);
-    if (!empty($links)) {
-        foreach($links as $urls){
-            $res_base['info'] = multiget_v2($urls, 'account/info', $config);
-            $res_base['tanks'] = multiget_v2($urls, 'account/tanks', $config, array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-            $res_base['ratings'] = multiget_v2($urls, 'ratings/accounts', $config, array(), array('type'=>'all'));
 
-            foreach ($res_base['info'] as $key => $val) {
-                if ((isset ($val['status'])) && ($val['status'] == 'ok')) {
-                     if ((isset ($res_base['tanks'][$key]['status'])) && ($res_base['tanks'][$key]['status'] == 'ok')) {
-                          $val['data']['tanks'] = $res_base['tanks'][$key]['data'];
-                          if (isset ($res_base['ratings'][$key]['data'])){
-                              $val['data']['ratings'] = $res_base['ratings'][$key]['data'];
-                              $cache->set($key, $val, ROOT_DIR.'/cache/players/');
-                              $res[$val['data']['nickname']] = $val;
-                          }
-                     }    else {
-                          $message = "Can't load data on ".$key." (tank info)";
-                     }
-                }  else {
-                   $message = "Can't load data on ".$key." (main player info)";
-                }
-            } 
+    if(!empty($links)) {
+      $res_base['info'] = multiget_v2('account_id', $links, 'account/info');
+      $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+      $res_base['ratings'] = multiget_v2('account_id', $links, 'ratings/accounts', array(), array('type'=>'all'));
+
+      foreach($links as $p_id) {
+        //info
+        if( !isset($res_base['info'][$p_id]['status']) or $res_base['info'][$p_id]['status'] != 'ok' or empty($res_base['info'][$p_id]['data']) ) {
+          $message .= "Can't load data on ".$p_id." (main player info)<br>";
+          continue;
         }
-        unset($links, $res_base);
+        //tanks
+        if( !isset($res_base['tanks'][$p_id]['status']) or $res_base['tanks'][$p_id]['status'] != 'ok' ) {
+          $message .= "Can't load data on ".$p_id." (tank info)<br>";
+          continue;
+        }
+        //ratings
+        if( !isset($res_base['ratings'][$p_id]['status']) or $res_base['ratings'][$p_id]['status'] != 'ok' ) {
+          $message .= "Can't load data on ".$p_id." (ratings info)<br>";
+          continue;
+        }
 
+        $to_cache = array();
+        $to_cache = $res_base['info'][$p_id];
+        $to_cache['data']['tanks'] = array_resort($res_base['tanks'][$p_id]['data'],'tank_id');
+        $to_cache['data']['ratings'] = $res_base['ratings'][$p_id]['data'];
+
+        $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
+        $res[$res_base['info'][$p_id]['data']['nickname']] = $to_cache;
+
+      }
     }
 }
 

@@ -35,7 +35,7 @@
         <tbody>
             <?php foreach($multiclan_info[$config['clan']]['data'][$config['clan']]['members'] as $id => $val){
 
-                    if ($res[$val['account_name']]['data']['logout_at'] > 0) {
+                    if (isset($res[$val['account_name']]['data']['logout_at']) && $res[$val['account_name']]['data']['logout_at'] > 0) {
 
                         $diff_date = round(((time() - $res[$val['account_name']]['data']['logout_at']) / 86400),0);
 
@@ -73,8 +73,8 @@
                     <td><?=($val['created_at'] == '')?$lang['na']:date('Y.m.d',$val['created_at']); ?></td>
                     <td><?=(is_numeric($val['created_at']))?floor((time() - $val['created_at'])/(86400)):$lang['na']; ?></td>
                     <td><span class="hidden"><?php echo roster_num($val['role']); ?></span><?php echo $val['role_i18n']; ?></td>
-                    <td><?=($res[$val['account_name']]['data']['logout_at']>0)?'<span class="hidden">'.$res[$val['account_name']]['data']['logout_at'].'</span>'.date('Y.m.d (H:i)',$res[$val['account_name']]['data']['logout_at']):$lang['na'];?></td>
-                    <td><?=($res[$val['account_name']]['data']['last_battle_time']>0)?'<span class="hidden">'.$res[$val['account_name']]['data']['last_battle_time'].'</span>'.date('Y.m.d (H:i)',$res[$val['account_name']]['data']['last_battle_time']):$lang['na'];?></td>
+                    <td><?=(isset($res[$val['account_name']]['data']['logout_at'])&&$res[$val['account_name']]['data']['logout_at']>0)?'<span class="hidden">'.$res[$val['account_name']]['data']['logout_at'].'</span>'.date('Y.m.d (H:i)',$res[$val['account_name']]['data']['logout_at']):$lang['na'];?></td>
+                    <td><?=(isset($res[$val['account_name']]['data']['last_battle_time'])&&$res[$val['account_name']]['data']['last_battle_time']>0)?'<span class="hidden">'.$res[$val['account_name']]['data']['last_battle_time'].'</span>'.date('Y.m.d (H:i)',$res[$val['account_name']]['data']['last_battle_time']):$lang['na'];?></td>
                 </tr>
                 <?php } ?>
         </tbody>  

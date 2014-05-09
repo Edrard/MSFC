@@ -96,6 +96,7 @@
     //Update information about tanks in db
     if(isset($_POST['update_tanks_db'])) {
         update_tanks_db();
+        $tanks = tanks();
     }
 
     //DB

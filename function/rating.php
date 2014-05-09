@@ -115,9 +115,11 @@ function middel_tank_lvl($array){
                 $tanks = tanks();
             }
         }
-        $data[$tanks[$val['tank_id']]['level']]['total'] +=  $val['statistics']['battles'];
-        $data[$tanks[$val['tank_id']]['level']]['win']   +=  $val['statistics']['wins'];
-        $total += $val['statistics']['battles'];
+        if(isset($tanks[$val['tank_id']])) {
+          $data[$tanks[$val['tank_id']]['level']]['total'] +=  $val['statistics']['battles'];
+          $data[$tanks[$val['tank_id']]['level']]['win']   +=  $val['statistics']['wins'];
+          $total += $val['statistics']['battles'];
+        }
     }
     if ($total != 0){
         foreach ($data as $key => $val){

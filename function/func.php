@@ -25,6 +25,7 @@ function echop ($param = '') {
     echo '</pre></div>';
 }
 function array_resort($array,$param){
+    $new = array();
     foreach($array as $val){
         $new[$val[$param]] = $val;
     }

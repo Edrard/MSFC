@@ -107,75 +107,71 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
 
 //------------------------------------------------------------------------------
 
-function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $param_array = array(), $result = array()) {
-    //whattoload accept 'clan/info', 'clan/provinces', 'clan/battles', 'account/info', 'account/ratings', 'account/tanks', 'encyclopedia/tankinfo'
+function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(), $param_array = array(), $result = array()) {
+
+    global $config;
+
     $fields = checkfield($fields_array);
     $param = checkparam($param_array);
     $api_lang = checklang($config['lang']);
     $timeout = 100;
-    $tcurl = $config['pars'];
-    $num = $config['multiget'];
-
-    $clids = array_chunk($clanids, $num, TRUE);
-    $second = explode('/',$whattoload);
-    if (($second[0] == 'clan') || ($second[0] == 'account')) {
-        $second[0] .= '_id';
-    }    elseif ($second[0] == 'encyclopedia') {
-        $second[0] = 'tank_id';
-    }    elseif ($second[0] == 'ratings') {
-        $second[0] = 'account_id';
-    }
     $urls = $res = array();
+
+    $clids = array_chunk($clanids, $config['multiget'], TRUE);
     foreach($clids as $arrid => $ids){
-        $toload = implode(',',$ids).',';
-        $toload = substr($toload, 0, strlen($toload)-1);
-        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.$api_lang.'&'.$second[0]."=".$toload.$fields;
+        $toload = checkparam(array($paramtoload => $ids));
+        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.$api_lang.$toload.$fields;
     }
-    unset ($fields_array, $clids, $toload);
-    if ($tcurl == 'curl'){
+    unset ($fields_array,$toload,$param_array);
+    if ($config['pars'] == 'curl'){
         $curl = new CURL();
         $curl->retry = 2;
         $opts = array(CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => $timeout
         );
-        usleep(5); 
-        foreach($urls as $key => $url) $curl->addSession($url, $key, $opts);
-        $result = array_special_merge($curl->exec(),$result);
-        $curl->clear();
-
-    }   elseif($tcurl == 'mcurl') {
+        usleep(5);
+        $url_chunk = array_chunk($urls, 10, TRUE);
+        foreach($url_chunk as $chunk) {
+          foreach($chunk as $key => $url) $curl->addSession($url, $key, $opts);
+          $result = array_special_merge($curl->exec(),$result);
+          $curl->clear();
+        }
+    }   elseif($config['pars'] == 'mcurl') {
         $curl = new MCurl;
-        $curl->threads = 100;
+        $curl->threads = 10;
         $curl->timeout = 15;
         $curl->sec_multiget($urls, $result);
     }   else {
-        foreach($urls as $key => $url) {
-            $ch[$key] = curl_init();
-            curl_setopt($ch[$key], CURLOPT_URL, $url);
-            curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
-            curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
-                "X-Requested-With: XMLHttpRequest",
-                "Accept: text/html, */*",
-                "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
-                "Connection: Keep-Alive",
-            ));
+        $url_chunk = array_chunk($urls, 10, TRUE);
+        foreach($url_chunk as $chunk) {
+          foreach($chunk as $key => $url) {
+              $ch[$key] = curl_init();
+              curl_setopt($ch[$key], CURLOPT_URL, $url);
+              curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
+              curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
+              curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
+              curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
+                  "X-Requested-With: XMLHttpRequest",
+                  "Accept: text/html, */*",
+                  "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+                  "Connection: Keep-Alive",
+              ));
+          }
+          $mh = curl_multi_init();
+          foreach($ch as $key => $h) curl_multi_add_handle($mh,$h);
+          $running = null;
+          do {curl_multi_exec($mh, $running);} while($running > 0);
+          foreach($ch as $key => $h){
+              $result[$key] = curl_multi_getcontent( $h );
+          }
+          foreach($ch as $clanid => $h){
+              curl_multi_remove_handle($mh, $h);
+          }
+          curl_multi_close($mh);
+          unset($ch, $mh);
         }
-        $mh = curl_multi_init();
-        foreach($ch as $key => $h) curl_multi_add_handle($mh,$h);
-        $running = null;
-        do {curl_multi_exec($mh, $running);} while($running > 0);
-        foreach($ch as $key => $h){
-            $result[$key] = curl_multi_getcontent( $h );
-        }
-        foreach($ch as $clanid => $h){
-            curl_multi_remove_handle($mh, $h);
-        }
-        curl_multi_close($mh);
-        unset($ch, $mh);
     }
-    unset($urls);   
+    unset($urls,$url_chunk,$chunk);
     if (isset($result)) {
         foreach ($result as $key => $val) {
             $json = json_decode($val,TRUE);
@@ -186,7 +182,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $p
                     $res[$clanid]['data'] = $data;
                 }
             }   else {
-                foreach ($clanids as $id) {
+                foreach ($clids[$key] as $id) {
                     if (isset($json['error']['message'])) {
                         $message = 'Get current error from WG: ('.$json['error']['message'].')';
                     }   else {
@@ -196,7 +192,7 @@ function multiget_v2($clanids, $whattoload, $config, $fields_array = array(), $p
                     $res[$id]['error']['message'] = $message;
                 }
             }
-            unset ($result[$key], $json, $val);
+            unset ($result[$key], $json, $val, $data);
         }
     }   else {
         foreach ($clanids as $id) {
