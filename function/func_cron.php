@@ -51,22 +51,30 @@ function cron_update_tanks_db() {
                 }   else {
                     $updatearr [$val['tank_id']]['is_premium']      = 0;
                 }
-                $toload[] = $val['tank_id'];
+                $toload[$val['tank_id']] = $val['tank_id'];
             }
         }
         unset($tmp);
-        if (!empty($toload)) {
-            $tmp = multiget_v2('tank_id', $toload, 'encyclopedia/tankinfo', array ('contour_image', 'image', 'image_small'));
-            foreach($tmp as $tank_id => $val){
-                if ((isset($val['status'])) && ($val['status'] == 'ok') && !empty($val['data'])) {
-                    $updatearr [$tank_id]['image']         = $val['data']['image'];
-                    $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
-                    $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
-                } else {
-                  die('Problem with getting tank info. Tank id:'.$tank_id);
-                }
-            }
+        if (!empty($toload)) { $try = 0;
+            do {
+              $tmp = array();
+              $tmp = multiget_v2('tank_id', $toload, 'encyclopedia/tankinfo', array ('contour_image', 'image', 'image_small'));
+              foreach($tmp as $tank_id => $val){
+                  if ((isset($val['status'])) && ($val['status'] == 'ok') && !empty($val['data'])) {
+                      $updatearr [$tank_id]['image']         = $val['data']['image'];
+                      $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
+                      $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
+
+                      $try++;
+                      unset($toload[$tank_id]);
+                  }
+              }
+            }  while ( !empty($toload) and $try < $config['try_count'] );
             unset($tmp);
+            //some tanks not loaded
+            if(!empty($toload)) {
+              die('Problem with getting tank info. Tank id:'.implode(",", $toload));
+            }
             $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
             foreach ($updatearr as $tank_id => $val) {
                 $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";

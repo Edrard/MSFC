@@ -21,21 +21,8 @@ if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
     header ("Location: /index.php");
     exit;
 }
-/*
-if ( !extension_loaded('pdo') ) {
-if($language == 'en'){
-$message = '<i>ERROR:</i> <strong>php-pdo</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
-}else{
-$message = '<i>ОШИБКА:</i> <strong>php-pdo</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
-}
-}elseif ( !extension_loaded('pdo_mysql') ) {
-if($language == 'en'){
-$message = '<i>ERROR:</i> <strong>php-pdo_mysql</strong> extention do not loaded, without it you cant use MySQL. Turn off Mysql in config.php or get extention load';
-}else{
-$message = '<i>ОШИБКА:</i> <strong>php-pdo_mysql</strong> расширение не загружено, без него MySQL не будет работать. Выключите MySQL в config.php или зпгрузите модуль';
-}
-}
-*/
+/* Подключаем информацию о языках доступных через апи */
+require(ROOT_DIR.'/admin/translate/api_lang.php');
 
 /* Обьявляем функцию вывода сообщений о ошибках */
 function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) {

@@ -177,6 +177,16 @@
                            </div>
                         </div>
                         <div class="settingsLine">
+                           <div><?=$lang['admin_lang'];?> API</div>
+                           <div>
+                              <select name="api_lang">
+                                 <? foreach($api_langs as $t => $i) { ?>
+                                  <option value="<?=$t;?>" <?php if($config['api_lang'] == $t){ echo 'selected="selected"';} ?>><?=$i;?></option>
+                                 <? } ?>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="settingsLine">
                            <div><?=$lang['admin_server'];?></div>
                            <div>
                               <select id="iserver" name="server">
@@ -214,6 +224,12 @@
                            <div><?=$lang['admin_multiget'];?></div>
                            <div>
                               <input type="text" name="multiget" value="<?=$config['multiget']; ?>" size="2" />
+                           </div>
+                        </div>
+                        <div class="settingsLine">
+                           <div><?=$lang['admin_try_count'];?></div>
+                           <div>
+                              <input type="text" name="try_count" value="<?=$config['try_count']; ?>" size="2" />
                            </div>
                         </div>
                         <div class="settingsLine">

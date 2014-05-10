@@ -40,8 +40,9 @@ function checkparam($p) {
 }
 
 function checklang($p) {
+  global $api_langs;
   $return = '';
-  $lang_api = array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko');
+  $lang_api = array_keys($api_langs);
   if(in_array($p,$lang_api)) {
     $return = '&language='.$p;
   } else {
@@ -79,7 +80,7 @@ function get_clan_v2($clanid, $whattoload, $config, $fields_array = array()) {
 function get_api($method, $param_array = array(), $fields_array = array()) {
     global $config;
 
-    $api_lang = checklang($config['lang']);
+    $api_lang = checklang($config['api_lang']);
     $param = checkparam($param_array);
     $fields = checkfield($fields_array);
     $url = $config['td'].'/wot/'.$method.'/?application_id='.$config['application_id'].$api_lang.$param.$fields;
@@ -113,7 +114,7 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
 
     $fields = checkfield($fields_array);
     $param = checkparam($param_array);
-    $api_lang = checklang($config['lang']);
+    $api_lang = checklang($config['api_lang']);
     $timeout = 100;
     $urls = $res = array();
 

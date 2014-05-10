@@ -281,6 +281,64 @@ if( (304.0 - (float) $config['version']) > 0 ) {
     }
 } //if($config['version'] < 304.0)
 
+if( (310.1 - (float) $config['version']) > 0 ) {
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM multiclan;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+       $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+       $prefix = array();
+    }
+
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+      foreach($prefix as $t) {
+        $db->change_prefix($t);
+        $config = get_config();
+        /****************begin*****************/
+        /*Добавляем параметр api_lang в конфиг*/
+        /*************************************/
+        if(!isset($config['api_lang'])) {
+          if(in_array($config['lang'],array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko'))) {
+            $lang = $config['lang'];
+          } else {
+            $lang = 'en';
+          }
+          $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('api_lang', '".$lang."');";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`api_lang` value) for prefix:',$t,' - updated.<br>';
+        }
+        /*****************begin******************/
+        /*Добавляем параметр try_count в конфиг*/
+        /***************************************/
+        if(!isset($config['try_count'])) {
+          $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('try_count', '5');";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`try_count` value) for prefix:',$t,' - updated.<br>';
+        }
+        /****************begin*****************/
+        /*   Меняем версию модуля в конфиге   */
+        /*************************************/
+        if(!is_numeric($config['version']) or (310.1 - (float) $config['version']) > 0 ) {
+          $sql = "UPDATE `config` SET `value` = '310.1' WHERE `name` = 'version' LIMIT 1 ;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+      }
+    }
+} //if( (310.1 - (float) $config['version']) > 0 )
 if($config['lang'] == 'ru') { ?>
 <br><br><br>
 Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>

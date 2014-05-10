@@ -180,67 +180,56 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             if ($plc > 0){
                                if ($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
                             }
-                            $res1 = $res2 = $res3 = array();
-                            $plc = 0;
-                            $res1 = multiget_v2('account_id', $toload, 'account/info');
-                            $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-                            $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'));
+                            $plc = $try = 0;
+                            $error_messages = array();
+                            do {
+                              $res1 = $res2 = $res3 = array();
+                              $res1 = multiget_v2('account_id', $toload, 'account/info');
+                              $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+                              $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'));
 
-                            foreach($toload as $p_id) {
-                              $plc++;
-
-                              //info
-                              if( !isset($res1[$p_id]['status']) or $res1[$p_id]['status'] != 'ok' or empty($res1[$p_id]['data']) ) {
-                                if($log == 1) {
-                                  if (isset($res1[$p_id]['error']['message'])) {
-                                     $message = ' ( '.$res1[$p_id]['error']['message'].' )';
-                                  } elseif(empty($res1[$p_id]['data'])) {
-                                     $message = ' ("info" are empty)';
-                                  } else {
-                                     $message = '';
-                                  }
-                                  fwrite($fh, $date.": (Err) Not correct data for player ".sprintf("%03d", $plc)." with ID : ".$p_id.$message."\n");
+                              foreach($toload as $link_id => $p_id) {
+                                //info
+                                if( !isset($res1[$p_id]['status']) or $res1[$p_id]['status'] != 'ok' or empty($res1[$p_id]['data']) ) {
+                                  if(isset($res1[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res1[$p_id]['error']['message'].' )';}
+                                  continue;
                                 }
-                                continue;
-                              }
-                              //tanks
-                              if( !isset($res2[$p_id]['status']) or $res2[$p_id]['status'] != 'ok' ) {
-                                if($log == 1) {
-                                  if (isset($res2[$p_id]['error']['message'])) {
-                                     $message = ' ( '.$res2[$p_id]['error']['message'].' )';
-                                  }  else {
-                                     $message = '';
-                                  }
-                                  fwrite($fh, $date.": (Err) Not correct data for player ".sprintf("%03d", $plc)." with ID : ".$p_id.$message."\n");
+                                //tanks
+                                if( !isset($res2[$p_id]['status']) or $res2[$p_id]['status'] != 'ok' ) {
+                                  if(isset($res2[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res2[$p_id]['error']['message'].' )';}
+                                  continue;
                                 }
-                                continue;
-                              }
-                              //ratings
-                              if( !isset($res3[$p_id]['status']) or $res3[$p_id]['status'] != 'ok') {
-                                if($log == 1) {
-                                  if (isset($res3[$p_id]['error']['message'])) {
-                                     $message = ' ( '.$res3[$p_id]['error']['message'].' )';
-                                  } else {
-                                     $message = '';
-                                  }
-                                  fwrite($fh, $date.": (Err) Not correct data for player ".sprintf("%03d", $plc)." with ID : ".$p_id.$message."\n");
+                                //ratings
+                                if( !isset($res3[$p_id]['status']) or $res3[$p_id]['status'] != 'ok') {
+                                  if(isset($res3[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res3[$p_id]['error']['message'].' )';}
+                                  continue;
                                 }
-                                continue;
+
+                                $plc++;
+                                $to_cache = array();
+                                $to_cache = $res1[$p_id];
+                                if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
+                                if(isset($res3[$p_id]['data'])) { $to_cache['data']['ratings'] = $res3[$p_id]['data']; }
+                                $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
+                                $to_cache['data']['created_at'] = $new2['data'][$config['clan']]['members'][$p_id]['created_at'];
+
+                                $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
+                                if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $plc).": ".$res1[$p_id]['data']['nickname']."\n"); }
+                                cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
+
+                                unset($toload[$link_id]);
+                                $try++;
+
                               }
-
-                              $to_cache = array();
-                              $to_cache = $res1[$p_id];
-                              if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
-                              if(isset($res3[$p_id]['data'])) { $to_cache['data']['ratings'] = $res3[$p_id]['data']; }
-                              $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
-                              $to_cache['data']['created_at'] = $new2['data'][$config['clan']]['members'][$p_id]['created_at'];
-
-                              $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
-                              if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $plc).": ".$res1[$p_id]['data']['nickname']."\n"); }
-                              cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
-
+                            }  while ( !empty($toload) and $try < $config['try_count'] );
+                            //if some players are still not loaded
+                            if (!empty($toload) and $log == 1) {
+                              foreach($toload as $p_id) {
+                                $plc++;
+                                if(isset($error_messages[$p_id])) {$message = $error_messages[$p_id];} else {$message = '';}
+                                fwrite($fh, $date.": (Err) No correct data for player ".sprintf("%03d", $plc)." with ID : ".$p_id.$message."\n");
+                              }
                             }
-
                             unset($toload, $res1, $res2, $res3,$to_cache);
                             update_multi_cron($dbprefix);
                             if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
