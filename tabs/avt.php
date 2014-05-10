@@ -349,7 +349,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                         foreach($we_loosed as $val){ ?>
                            <tr>
                               <td align="left"><a href="<?php echo $config['base'],$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
-                              <td align="center"><?=$lang[$val['role']];?></td>
+                              <td align="center"><?=(isset($lang[$val['role']]))?$lang[$val['role']]:'--';?></td>
                               <td align="center"><?php echo floor(($val['updated_at'] - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)),$lang['days'];?></td>
                               <td align="center"><span class="hidden"><?=$val['updated_at'];?></span><?php echo date('d.m.Y',$val['updated_at']);?></td>
                            </tr>
