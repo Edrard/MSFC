@@ -218,9 +218,8 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                 cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
 
                                 unset($toload[$link_id]);
-                                $try++;
-
                               }
+                              $try++;
                             }  while ( !empty($toload) and $try < $config['try_count'] );
                             //if some players are still not loaded
                             if (!empty($toload) and $log == 1) {

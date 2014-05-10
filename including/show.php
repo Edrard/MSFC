@@ -96,8 +96,8 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
           $res[$res_base['info'][$p_id]['data']['nickname']] = $to_cache;
 
           unset($links[$i]);
-          $try++;
         }
+        $try++;
       }  while ( !empty($links) and $try < $config['try_count'] );
     }
 }

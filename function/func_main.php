@@ -602,10 +602,10 @@ function update_tanks_db() {
                     $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
                     $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
 
-                    $try++;
                     unset($toload[$tank_id]);
                 }
             }
+          $try++;  
           }  while ( !empty($toload) and $try < $config['try_count'] );
 
         }
