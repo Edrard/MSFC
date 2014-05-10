@@ -605,7 +605,7 @@ function update_tanks_db() {
                     unset($toload[$tank_id]);
                 }
             }
-          $try++;  
+          $try++;
           }  while ( !empty($toload) and $try < $config['try_count'] );
 
         }
@@ -617,8 +617,6 @@ function update_tanks_db() {
         }
         unset($tmp);
         if(!empty($updatearr)){
-          echop(array_keys($updatearr));
-          die();
             $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
             foreach ($updatearr as $tank_id => $val) {
                 $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
