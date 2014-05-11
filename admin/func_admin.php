@@ -635,22 +635,39 @@ function get_top_tanks_list() {
 
 function update_top_tanks($array) {
     global $db;
-    $sql = "delete from `top_tanks`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-    foreach ($array as $index =>$misc) {
-        foreach ($misc as $tank_id => $val) {
-            $val['show'] = isset($val['show']) ? 1 : 0;
-            $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
-            VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+    $prefix = array();
+
+    if(isset($array['all_multiclans'])){
+        //Получаем список префиксов из таблицы multiclan
+        $sql = "SELECT prefix FROM multiclan;";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+           $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
         }
-        unset($q);
+    }
+    if(empty($prefix)) { $prefix = array($db->prefix); }
+
+    $array = $array['Array'];
+
+    foreach($prefix as $t) {
+      $db->change_prefix($t);
+      $sql = "delete from `top_tanks`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      foreach ($array as $index =>$misc) {
+          foreach ($misc as $tank_id => $val) {
+              $val['show'] = isset($val['show']) ? 1 : 0;
+              $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
+              VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
+              $q = $db->prepare($sql);
+              if ($q->execute() != TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+              }
+          }
+          unset($q);
+      }
     }
 }
 
@@ -690,7 +707,7 @@ function add_top_tanks($lvl,$type) {
         $j = 1;
         $sql = 'INSERT INTO `top_tanks` (`tank_id`, `index`,  `order`) VALUES ';
         foreach($tanks as $val) {
-            $sql .= "('{$val['tank_id']}', '".($index)."', '".$j."')";
+            $sql .= "('{$val['tank_id']}', '".($index)."', '".($j*10)."')";
             if($i != $j) { $sql .= ', '; $j++; } else { $sql .= ';'; }
         }
         //echo $sql;

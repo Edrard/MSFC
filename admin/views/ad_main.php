@@ -87,7 +87,10 @@
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
                                     <?php foreach($adm_avalTanks['index'] as $index){ ?>
                                         <?=$index;?> - <input type="text" value="<?echo isset($adm_avalTanks['names'][$index])?$adm_avalTanks['names'][$index]:$index;?>" name="Array[title][<?=$index;?>]" style="width: 100px;"><br />
-                                        <?php } ?>
+                                    <?php } ?>
+                                    <?php if(count($multiclan) > 1){ ?>
+                                      <p align="center"><?=$lang['for_all_clans'];?>&nbsp;<input class="iall_multiclans" type="checkbox" name="all_multiclans" value="1" size="2" /></p>
+                                    <?php } ?>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="available_tanks_add_index"></p>
                                 </form>
                               </div><br clear=all>
@@ -128,6 +131,9 @@
                                               } ?>
                                         </tbody>
                                     </table>
+                                    <?php if(count($multiclan) > 1){ ?>
+                                      <p align="center"><?=$lang['for_all_clans'];?>&nbsp;<input class="iall_multiclans" type="checkbox" name="all_multiclans" value="1" size="2" /></p>
+                                    <?php } ?>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
                                 </form>
                             <?php } else {

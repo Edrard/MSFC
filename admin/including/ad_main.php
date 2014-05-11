@@ -175,7 +175,7 @@
     /*-----------------------------------*/
     //Update top tanks tab info
     if(isset($_POST['toptanksupd'])) {
-        update_top_tanks($_POST['Array']);
+        update_top_tanks($_POST);
     }
     if(isset($_POST['toptanksadd'])) {
 
@@ -232,8 +232,19 @@
             $index_list[$index] = $index;
           }
         }
-        $cache->clear('available_tanks_'.$config['clan'], ROOT_DIR.'/cache/other/');
-        $cache->set('available_tanks_'.$config['clan'],$index_list, ROOT_DIR.'/cache/other/');
+
+        $prefix = array();
+        if(isset($_POST['all_multiclans']) and count($multiclan) > 1){
+            foreach($multiclan as $t) {
+              $prefix[] = $t['id'];
+            }
+        }
+        if(empty($prefix)) { $prefix = array($config['clan']); }
+
+        foreach($prefix as $t) {
+          $cache->clear('available_tanks_'.$t, ROOT_DIR.'/cache/other/');
+          $cache->set('available_tanks_'.$t,$index_list, ROOT_DIR.'/cache/other/');
+        }
         unset($index_list);
     }
     //Get top tanks for Tab
