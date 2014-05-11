@@ -35,14 +35,9 @@
         header ( 'Location: index.php?page=main'.$multi_get.'#tabs-8' );
         exit;
     }
-    if (isset($_POST['consub']) || isset($_POST['consub_2'])){
+    if (isset($_POST['consub']) || isset($_POST['consub_2']) || isset($_POST['consub_3'])){
         insert_config($_POST);
-        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-1' );
-        exit;
-    }
-    if (isset($_POST['consub_3'])){
-        insert_config($_POST);
-        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-7' );
+        header ( 'Location: index.php?page=main'.$multi_get.'#tabs-'.$_POST['tab_redirect_id'] );
         exit;
     }
     if (isset($_POST['mcsort'])){

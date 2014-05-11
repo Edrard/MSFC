@@ -62,6 +62,20 @@
                     }
                 });
             <?php } ?>
+            <?php if(count($multiclan) > 1) { ?>
+                $('.iall_multiclans[type=checkbox]').prop('checked', false);
+            <?php } ?>
+            <?php if(count($multiclan) > 1 and !isset($_GET['multi']) ) { ?>
+                $("#iall_multiclans").change(function() {
+                  if($("#iall_multiclans").is(':checked')) {
+                    $("#iserver").prop('disabled', true);
+                    $("#iclan").prop('disabled', true);
+                  } else {
+                    $("#iserver").prop('disabled', false);
+                    $("#iclan").prop('disabled', false);
+                  }
+                });
+            <?php } ?>
             <?php if(isset($_GET['multi'])){ ?>
                 $("#iserver").prop('disabled', true);
                 $("#iclan").prop('disabled', true);

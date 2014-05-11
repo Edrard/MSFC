@@ -67,20 +67,35 @@ function insert_config($config)
           $config['company_count'] = 1;
         }
     }
-    unset($config['consub'],$config['consub_2'],$config['consub_3']);
-    foreach($config as $name => $var){
-        $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
+    $prefix = array();
+    if(isset($config['all_multiclans'])){
+        //Получаем список префиксов из таблицы multiclan
+        $sql = "SELECT prefix FROM multiclan;";
         $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        if ($q->execute() == TRUE) {
+           $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
         }
-        if($name == 'clan'){
-            $sql = "UPDATE multiclan SET id = '".$var."' WHERE main = '1';";
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-        }
+    }
+    if(empty($prefix)) { $prefix = array($db->prefix); }
+
+    unset($config['consub'],$config['consub_2'],$config['consub_3'],$config['all_multiclans'],$config['tab_redirect_id']);
+
+    foreach($prefix as $t) {
+      $db->change_prefix($t);
+      foreach($config as $name => $var){
+          $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          if($name == 'clan'){
+              $sql = "UPDATE multiclan SET id = '".$var."' WHERE main = '1';";
+              $q = $db->prepare($sql);
+              if ($q->execute() != TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+              }
+          }
+      }
     }
 }
 function new_user($post)

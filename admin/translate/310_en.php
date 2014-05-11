@@ -17,4 +17,5 @@
 
 
     $lang['admin_try_count'] = 'Number of retries to obtain data: ';
+    $lang['for_all_clans'] = 'For all clans:';
 ?>
