@@ -16,6 +16,6 @@
     */
 
 
-    $lang['admin_try_count'] = 'Number of retries to obtain data: ';
-    $lang['for_all_clans'] = 'For all clans:';
+    $lang['admin_try_count'] = 'Počet opakovaní pre získanie údajov: ';
+    $lang['for_all_clans'] = 'Pre všetky klany:';
 ?>
