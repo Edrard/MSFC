@@ -23,7 +23,7 @@ function marks() {
 
 function medn($nations) {
     $medn = array();
-    $nations_id = array('ussr' => 0,  'germany' => 1, 'usa' => 2, 'china' => 3, 'france' => 4, 'uk' => 5); //, 'japan' => 6
+    $nations_id = array('ussr' => 0,  'germany' => 1, 'usa' => 2, 'china' => 3, 'france' => 4, 'uk' => 5, 'japan' => 6); //
     $tename = 'tank_expert';
     $mename = 'mechanic_engineer';
     foreach ($nations as $val2) {

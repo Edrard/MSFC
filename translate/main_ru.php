@@ -164,7 +164,7 @@
     $lang['medal_mechanic_engineer_china'] = '«Инженер-механик» Китай';
     $lang['medal_mechanic_engineer_uk'] = '«Инженер-механик» Великобритания';
     $lang['medal_mechanic_engineer_germany'] = '«Инженер-механик» Германия';
-    $lang['medal_mechanic_engineer_germany'] = '«Инженер-механик» Япония';
+    $lang['medal_mechanic_engineer_japan'] = '«Инженер-механик» Япония';
     $lang['medal_mechanic_engineer'] = 'Инженер-механик';
 
     $lang['medal_sinai'] = 'Лев Синая';

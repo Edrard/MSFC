@@ -36,16 +36,16 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
         <thead>
           <tr>
             <th><?=$lang['name'];?></th>
-            <th><?=$lang['famepoints_points'];?></th>
-            <th><?=$lang['famepoints_position'];?></th>
+            <th class="empty-bottom"><?=$lang['famepoints_points'];?></th>
+            <th class="empty-bottom"><?=$lang['famepoints_position'];?></th>
           </tr>
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
                 <tr>
                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                    <td><?=(isset($fame[$val['data']['account_id']]['fame_points']))?$fame[$val['data']['account_id']]['fame_points']:0;?></td>
-                    <td><?=(isset($fame[$val['data']['account_id']]['position']))?$fame[$val['data']['account_id']]['position']:0;?></td>
+                    <td><?=(isset($fame['data'][$val['data']['account_id']]['fame_points']))?$fame['data'][$val['data']['account_id']]['fame_points']:'';?></td>
+                    <td><?=(isset($fame['data'][$val['data']['account_id']]['position']))?$fame['data'][$val['data']['account_id']]['position']:'';?></td>
                 </tr>
                 <?php } ?>
         </tbody>
