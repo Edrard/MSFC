@@ -137,7 +137,7 @@ foreach($maps_active as $maps_id) {
                           <? } ?>
                         </td>
                         <td align="center" style="color: #ba904d;"><?=isset($p_info[$val['provinces']['0']]['revenue'])?$p_info[$val['provinces']['0']]['revenue']:0;?> <img src="./images/currency-gold.png" border="0"></td>
-                        <? if(!empty($owner_info)) { ?>
+                        <? if(!empty($owner_info[$p_info[$val['provinces']['0']]['clan_id']])) { ?>
                           <td align="center" valign="middle"><img style="height: 16px; vertical-align: middle; width: 16px;" src="<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['emblems']['small'];?>" border="0"> <a href="http://worldoftanks.ru/community/clans/<?=$p_info[$val['provinces']['0']]['clan_id'];?>/" target="_blank" style="color: <?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['clan_color'];?>;">[<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['abbreviation'];?>]</a></td>
                         <? } else { ?>
                           <td align="center" valign="middle" >---</td>
