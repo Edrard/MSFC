@@ -77,10 +77,17 @@
     }else{
         $lvl = array('1','2','3','4','5','6','7','8','9','10');
     }
+    $tank = $_POST['tank'];
     $tanks = tanks();
     foreach ($tanks as $key => $val) {
-       if (!in_array ($val['level'], $lvl) || !in_array ($val['nation'], $nation) || !in_array ($val['type'], $type) ){
-           unset($tanks[$key]);
+       if ($tank != 'all'){
+           if ($val['name_i18n'] != $tank){
+               unset($tanks[$key]);
+           }
+       }else{
+           if (!in_array ($val['level'], $lvl) || !in_array ($val['nation'], $nation) || !in_array ($val['type'], $type) ){
+               unset($tanks[$key]);
+           }
        }
     }
     //print_r($res);
