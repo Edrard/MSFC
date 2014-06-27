@@ -14,6 +14,40 @@
 * @version     $Rev: 3.1.0 $
 *
 */
+/*
+//Получаем информацио о апи
+$api_api = get_api('encyclopedia/info');
+$api_cache = $cache->get('api_info', 0, ROOT_DIR.'/cache/other/');
+
+//В кэше пусто и данные не получены
+if( ( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) and ( !isset($api_api['status']) or $api_api['status'] != 'ok' or empty($api_api['data']) ) ) {
+  die('No information about API version.');
+}
+//Данные о апи успешно получены
+if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api['data'])) {
+  //Данных в кэше нет
+  if( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) {
+      $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
+      $api_cache = $api_api;
+  }
+  //Сравниваем данные о АПИ в кэше и полученные
+  //Если не совпадают - обновляем информацию о танках и медалях.
+  if($api_api['data']['game_updated_at'] != $api_cache['data']['game_updated_at'] or $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
+    //обновляем кэш
+    $cache->clear('api_info', ROOT_DIR.'/cache/other/');
+    $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
+    //удаляем данные о танках
+    $sql = "TRUNCATE TABLE `tanks`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
+    //Получаем информацию о танках
+    update_tanks_db();
+  }
+}
+*/
 $col_tables = get_tables_like_col_tank($dbname);  
 $col_check = get_updated_at();
 

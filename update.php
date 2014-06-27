@@ -94,7 +94,7 @@ if( (304.0 - (float) $config['version']) > 0 ) {
     /****************end******************/
 
     //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM multiclan;";
+    $sql = "SELECT prefix FROM `multiclan`;";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
@@ -283,7 +283,7 @@ if( (304.0 - (float) $config['version']) > 0 ) {
 
 if( (310.1 - (float) $config['version']) > 0 ) {
     //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM multiclan;";
+    $sql = "SELECT prefix FROM `multiclan`;";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
@@ -339,6 +339,89 @@ if( (310.1 - (float) $config['version']) > 0 ) {
       }
     }
 } //if( (310.1 - (float) $config['version']) > 0 )
+
+if( (310.2 - (float) $config['version']) > 0 ) {
+    /****************begin*********************/
+    /*Меняем структуру таблиц до универсальной*/
+    /******************************************/
+
+    //Обнуляем подключение к БД
+    $q = null;
+    $db = null;
+
+    //Создаем чистое подключение
+    try {
+        $db_2 = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
+    } catch (PDOException $e) {
+        die(show_message($e->getMessage()));
+    }
+
+    $sql = 'RENAME TABLE `tanks` TO `msfcmt_tanks`; RENAME TABLE `multiclan` TO `msfcmt_multiclan`;';
+    $q = $db_2->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    } else {
+      echo 'Table tanks & multiclan - renamed.<br>';
+    }
+
+    //Обнуляем подключение к БД
+    $q = null;
+    $db_2 = null;
+    //MYSQL заново
+    include(ROOT_DIR.'/function/mysql.php');
+
+    $sql = 'CREATE TABLE IF NOT EXISTS `achievements` (
+              `name` varchar(40) NOT NULL,
+              `section` varchar(20) NOT NULL,
+              `section_i18n` varchar(20) NOT NULL,
+              `options` text NOT NULL,
+              `section_order` tinyint(2) NOT NULL,
+              `image` varchar(150) NOT NULL,
+              `name_i18n` varchar(20) NOT NULL,
+              `type` varchar(20) NOT NULL,
+              `order` smallint(10) NOT NULL,
+              `description` varchar(250) NOT NULL,
+              `condition` varchar(500) NOT NULL,
+              `hero_info` varchar(250) NOT NULL,
+              KEY `name` (`name`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;';
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    } else {
+      echo 'Table achievements - created.<br>';
+    }
+
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM `multiclan`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+       $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+       $prefix = array();
+    }
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+      foreach($prefix as $t) {
+        $db->change_prefix($t);
+        $config = get_config();
+        /****************begin*****************/
+        /*   Меняем версию модуля в конфиге   */
+        /*************************************/
+        if(!is_numeric($config['version']) or (310.2 - (float) $config['version']) > 0 ) {
+          $sql = "UPDATE `config` SET `value` = '310.2' WHERE `name` = 'version' LIMIT 1 ;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+      }
+    }
+} //if( (310.2 - (float) $config['version']) > 0 )
+
 if($config['lang'] == 'ru') { ?>
 <br><br><br>
 Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>

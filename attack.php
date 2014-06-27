@@ -65,7 +65,7 @@ if(isset($maps['status']) and $maps['status'] == 'ok') {
 
 foreach($maps_active as $maps_id) {
     $prov = $p_info = $owner = $owner_info = array();
-    $battel = get_api('clan/battles',array('map_id' => $maps_id, 'clan_id' => $config['clan']));
+    $battel = get_api('globalwar/battles',array('map_id' => $maps_id, 'clan_id' => $config['clan']));
     if(isset($battel['status']) and $battel['status'] == 'ok' and !empty($battel['data'][$config['clan']])) {
       foreach($battel['data'][$config['clan']] as $val) {
         $prov = array_merge($prov, $val['provinces']);

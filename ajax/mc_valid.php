@@ -57,7 +57,7 @@ if ($_GET['multiadd'] == 1){
                         $_GET['prefix'] = $_GET['prefix'].'_';
                     }
 
-                    $sql = "SELECT COUNT(id) FROM multiclan WHERE id = '".$_GET['id']."';";
+                    $sql = "SELECT COUNT(id) FROM `multiclan` WHERE id = '".$_GET['id']."';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $status_clan = $q->fetchColumn();
@@ -65,7 +65,7 @@ if ($_GET['multiadd'] == 1){
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
 
-                    $sql = "SELECT COUNT(id) FROM multiclan WHERE prefix = '".$_GET['prefix']."';";
+                    $sql = "SELECT COUNT(id) FROM `multiclan` WHERE prefix = '".$_GET['prefix']."';";
                     $q = $db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $status_prefix = $q->fetchColumn();

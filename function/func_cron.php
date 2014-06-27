@@ -169,7 +169,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
 
 function update_multi_cron($dbprefix) {
     global $db;
-    $sql = "UPDATE multiclan SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
+    $sql = "UPDATE `multiclan` SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
     $q = $db->prepare($sql);
     if ($q->execute() != TRUE) {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));

@@ -275,6 +275,24 @@ INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`, `replays
 (1, 'admin', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'admin@local.com', 'admin', '1'),
 (2, 'user', '20ccbe71c69cb25e4e0095483cb63bd394a12b23', 'user@local.com', 'user', '0');
 
+-- --------------------------------------------------------
+-- Структура таблицы `achievements`
+
+CREATE TABLE IF NOT EXISTS `achievements` (
+  `name` varchar(40) NOT NULL,
+  `section` varchar(20) NOT NULL,
+  `section_i18n` varchar(20) NOT NULL,
+  `options` text NOT NULL,
+  `section_order` tinyint(2) NOT NULL,
+  `image` varchar(150) NOT NULL,
+  `name_i18n` varchar(20) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `order` smallint(10) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `condition` varchar(500) NOT NULL,
+  `hero_info` varchar(250) NOT NULL,
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

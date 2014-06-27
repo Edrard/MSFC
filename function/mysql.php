@@ -53,7 +53,7 @@
             private $pattern = '';
             private $pattern2 = '';
             private $replacement = '';
-            private $replacement2 = '$1msfcst_$2$3';
+            private $replacement2 = '$1msfcmt_$2$3';
             private $matches;
 
             public function __construct($dsn, $user = null, $password = null, $driver_options = array(),$dbprefix = null)
@@ -67,7 +67,7 @@
                     $this->prefix = 'msfc_';
                 }
                 $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
-                $this->pattern2 = '/([`\'"])(medals|users2|multiclan2|tanks2)([`\'"])/';
+                $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks)([`\'"])/';
                 $this->replacement = '$1'.$this->prefix.'$2$3';
 
                 parent::__construct($dsn, $user, $password, $driver_options);
@@ -77,7 +77,6 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::prepare($statement, $driver_options);
@@ -86,7 +85,6 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
                 $this->sqls[$this->count] = $statement;
                 $args = func_get_args();
@@ -101,7 +99,6 @@
             {
                 $this->count += 1;
                 $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace('/`users`/', '`msfcmt_users`', $statement);
                 $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
                 $this->sqls[$this->count] = $statement;
                 return parent::exec($statement);
@@ -138,7 +135,7 @@
                 }
             }
         }
-    }                 
+    }
 
     try {
         $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
@@ -154,7 +151,7 @@
 
         $tmp_prefix = $_GET['multi'].'_';
 
-        $sql = "SELECT COUNT(id) FROM multiclan WHERE prefix = '".$tmp_prefix."';";
+        $sql = "SELECT COUNT(id) FROM `multiclan` WHERE prefix = '".$tmp_prefix."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $multi = $q->fetchColumn();

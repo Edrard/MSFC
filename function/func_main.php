@@ -473,16 +473,16 @@ function read_multiclan($dbprefix = FALSE)
 {
     global $db;
     if($dbprefix == FALSE){
-        $sql = "SELECT * FROM multiclan ORDER BY sort ASC;";
+        $sql = "SELECT * FROM `multiclan` ORDER BY sort ASC;";
     }else{
-        $sql = "SELECT * FROM multiclan WHERE prefix = '".$dbprefix."' ORDER BY sort ASC;";
+        $sql = "SELECT * FROM `multiclan` WHERE prefix = '".$dbprefix."' ORDER BY sort ASC;";
     }
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
         return $q->fetchAll(PDO::FETCH_ASSOC);
-    }else{ 
+    }else{
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }     
+    }
 }
 
 function autoclean($time,$multi,$config,$directory)
