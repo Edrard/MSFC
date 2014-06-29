@@ -58,7 +58,7 @@ function show_message($message = NULL,$line = NULL,$file = NULL,$footer = NULL) 
       global $log;
       if($log == 1) {
         global $fh,$date;
-        fwrite($fh, $date.": (Err) Error while running cron.php, on line: ".$line."\n");
+        fwrite($fh, $date.": (Err) Error while running cron task, in file: ".$file." on line: ".$line."\n");
         if(isset($message) and !empty($message) and is_array($message)) {
           fwrite($fh, $date.": (Err) Error message: ".trim($message['2'])."\n");
         } elseif (isset($message) and !empty($message)) {

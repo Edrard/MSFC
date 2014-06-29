@@ -75,7 +75,7 @@ $time = time();
 if($fh = fopen($myFile, 'a')){
     $log = 1;
     fwrite($fh, $date."////////////////////////////////////////////--->\n");
-    fwrite($fh, $date.": (Info) Loging Started\n");
+    fwrite($fh, $date.": (Info) Loging Started (v. ".$config['version'].")\n");
     fwrite($fh, $date.": (Info) Authentication: ".$config['cron_auth']."\n");
     cron_current_run($fh, $date);
 }
