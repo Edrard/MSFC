@@ -107,26 +107,6 @@ if(!$dbprefix){
     $dbprefix = 'msfc_';
 }
 if($log == 1)  fwrite($fh, $date.": (Info) Current db prefix: ".$dbprefix.", clain ID: ".$config['clan']."\n");
-//Authentication
-if($config['cron_auth'] == 1){
-
-    $auth = new Auth($db);
-
-    if(($user) && ($pass)){
-        $auth->login($user, $pass); // This order: User/Email Password True/False (if you want to use email as auth
-    }
-    $logged = 0;
-    if($auth->isLoggedIn(1)){
-        $logged = 1;
-    }    
-    if($auth->isLoggedInAdmin(1)){
-        $logged = 2;
-    }
-    if($logged != 2){
-        if($log == 1){ fwrite($fh, $date.": (Err) ".$lang['log_to_cron']."\n"); }
-        die($lang['log_to_cron']);
-    }    
-}
 
 if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
     if ($config['cron'] == 1){
@@ -176,12 +156,14 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             //break; //leave for testing purpose
                         }
                         if (!empty($toload)) {
-                            $plc = count($toload);
-                            if ($plc > 0){
-                               if ($log == 1) fwrite($fh, $date.": (WG) Try to load info on ".$plc." players"."\n");
+                            //prepare some data
+                            $counter = $error_messages = array();
+                            $counter['total'] = count($toload);
+                            $counter['get'] = $try = 0;
+
+                            if ($counter['total'] > 0 and $log == 1){
+                               fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
                             }
-                            $plc = $try = 0;
-                            $error_messages = array();
                             do {
                               $res1 = $res2 = $res3 = array();
                               $res1 = multiget_v2('account_id', $toload, 'account/info');
@@ -205,7 +187,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                   continue;
                                 }
 
-                                $plc++;
+                                $counter['get']++;
                                 $to_cache = array();
                                 $to_cache = $res1[$p_id];
                                 if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
@@ -214,19 +196,21 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                 $to_cache['data']['created_at'] = $new2['data'][$config['clan']]['members'][$p_id]['created_at'];
 
                                 $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
-                                if($log == 1){ fwrite($fh, $date.": (Info) Writing player ".sprintf("%03d", $plc).": ".$res1[$p_id]['data']['nickname']."\n"); }
                                 cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
 
                                 unset($toload[$link_id]);
                               }
                               $try++;
                             }  while ( !empty($toload) and $try < $config['try_count'] );
+                            //log how many players are added to db
+                            if($log == 1) {
+                              fwrite($fh, $date.": (Info) Successfully added information about ".$counter['get']." players out of ".$counter['total']."\n");
+                            }
                             //if some players are still not loaded
                             if (!empty($toload) and $log == 1) {
                               foreach($toload as $p_id) {
-                                $plc++;
                                 if(isset($error_messages[$p_id])) {$message = $error_messages[$p_id];} else {$message = '';}
-                                fwrite($fh, $date.": (Err) No correct data for player ".sprintf("%03d", $plc)." with ID : ".$p_id.$message."\n");
+                                fwrite($fh, $date.": (Err) No correct data for player ".$new2['data'][$config['clan']]['members'][$p_id]['account_name']." with ID : ".$p_id.$message."\n");
                               }
                             }
                             unset($toload, $res1, $res2, $res3,$to_cache);
@@ -260,11 +244,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
 //write some data for debug
 if ($log == 1){
     $end_time = microtime(true);
-    if (isset($toload)) {
-        fwrite($fh, $date.": (Info) ".count($toload)." players processed in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
-    }   else {
-        fwrite($fh, $date.": (Info) Cron finished  in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
-    }
+    fwrite($fh, $date.": (Info) Cron finished  in ".(round($end_time - $begin_time,4).' '.$lang['sec'])."\n");
     if(is_numeric($db->count)) {
         fwrite($fh, $date.": (Info) Number of MySQL queries - ".($db->count)."\n");
     }
