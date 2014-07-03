@@ -281,7 +281,7 @@ INSERT IGNORE INTO `users` (`id`, `user`, `password`, `email`, `group`, `replays
 CREATE TABLE IF NOT EXISTS `achievements` (
   `name` varchar(40) NOT NULL,
   `section` varchar(20) NOT NULL,
-  `section_i18n` varchar(20) NOT NULL,
+  `section_i18n` varchar(40) NOT NULL,
   `options` text NOT NULL,
   `section_order` tinyint(2) NOT NULL,
   `image` varchar(150) NOT NULL,

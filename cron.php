@@ -114,7 +114,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
         //check table tanks
         cron_update_tanks_db();
         $nations = tanks_nations();
-        $medals = medn($nations);
+        $medals = achievements();
         $tanks = tanks();
         //check other tables
         check_tables($medals, $nations, $tanks);
@@ -165,10 +165,11 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
                             }
                             do {
-                              $res1 = $res2 = $res3 = array();
+                              $res1 = $res2 = $res3 = $res4 = array();
                               $res1 = multiget_v2('account_id', $toload, 'account/info');
                               $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
                               $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'));
+                              $res4 = multiget_v2('account_id', $toload, 'account/achievements');
 
                               foreach($toload as $link_id => $p_id) {
                                 //info
@@ -186,12 +187,21 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                   if(isset($res3[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res3[$p_id]['error']['message'].' )';}
                                   continue;
                                 }
+                                //achievements
+                                if( !isset($res4[$p_id]['status']) or $res4[$p_id]['status'] != 'ok') {
+                                  if(isset($res4[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res4[$p_id]['error']['message'].' )';}
+                                  continue;
+                                }
 
                                 $counter['get']++;
                                 $to_cache = array();
                                 $to_cache = $res1[$p_id];
                                 if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
                                 if(isset($res3[$p_id]['data'])) { $to_cache['data']['ratings'] = $res3[$p_id]['data']; }
+                                if(isset($to_cache['data']['achievements'])) {
+                                  unset($to_cache['data']['achievements']);
+                                }
+                                $to_cache['data']['achievements'] = $res4[$p_id]['data']['achievements'];
                                 $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
                                 $to_cache['data']['created_at'] = $new2['data'][$config['clan']]['members'][$p_id]['created_at'];
 

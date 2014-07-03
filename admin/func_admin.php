@@ -52,10 +52,7 @@ function insert_config($config)
         if(!isset($config['cron_multi'])){
             $config['cron_multi'] = 0;
         }
-        if(!isset($config['cron_auth'])){
-            $config['cron_auth'] = 0;
-        }
-    }      
+    }
     if(isset($config['consub_3'])){
         if(!isset($config['company'])){
           $config['company'] = 0;

@@ -661,4 +661,158 @@ function update_tanks_single($tank_id) {
 
   }
 }
+
+function achievements() {
+    global $db;
+    $sql = " SELECT * FROM `achievements` ORDER BY `section_order` ASC, `order` ASC;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $tmp = $q->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    $ret = array();
+    foreach ($tmp as $val) {
+        //unserialize options
+        if(!empty($val['options'])) {
+          $val['options'] = unserialize($val['options']);
+        }
+        $ret[$val['name']] = $val;
+    }
+    return $ret;
+}
+
+function update_achievements_db($ach = array()) {
+  global $db,$config,$lang;
+
+  if(empty($ach)) {
+    $ach = achievements();
+  }
+
+  $try = 0;
+  do {
+    $ach_res = array();
+    $ach_res = get_api('encyclopedia/achievements');
+    $try++;
+  }  while ( isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data']) and $try < $config['try_count'] );
+
+  if(isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data'])) {
+
+    $updatearr = array();
+    foreach($ach_res['data'] as $val) {
+      if(!isset($ach[$val['name']])) {
+        $updatearr[] = $val;
+      }
+    }
+    //echop($updatearr);
+    if(!empty($updatearr)) {
+      $sql = 'INSERT INTO `achievements`
+      (`name`, `section`, `section_i18n`, `options`, `section_order`, `image`, `name_i18n`, `type`, `order`, `description`, `condition`, `hero_info`)
+      VALUES  ';
+
+      foreach($updatearr as $val) {
+        if(!empty($val['name'])) {
+          if(empty($val['options'])) {
+            $options = '';
+          } else {
+            $options = serialize($val['options']);
+          }
+          //add more categories
+          if(preg_match('/tankExpert/',$val['name'])) {
+            $val['section'] = 'expert';
+            $val['section_i18n'] = $lang['ach_section_expert'];
+            $val['section_order'] += 20;
+          }
+          if(preg_match('/mechanicEngineer/',$val['name'])) {
+            $val['section'] = 'mechanic';
+            $val['section_i18n'] = $lang['ach_section_mechanic'];
+            $val['section_order'] += 20;
+          }
+          if(preg_match('/histBattle/',$val['name'])) {
+            $val['section'] = 'hist';
+            $val['section_i18n'] = $lang['ach_section_hist'];
+            $val['section_order'] += 10;
+          }
+          //fix links for medals
+          if(empty($val['image'])) {
+            $val['image'] = $val['options']['0']['image'];
+          }
+          $sql .= "(".$db->quote($val['name']).",
+                    '{$val['section']}',
+                    ".$db->quote($val['section_i18n']).",
+                    ".$db->quote($options).",
+                    '{$val['section_order']}',
+                    '{$val['image']}',
+                    ".$db->quote($val['name_i18n']).",
+                    '{$val['type']}',
+                    '{$val['order']}',
+                    ".$db->quote($val['description']).",
+                    ".$db->quote($val['condition']).",
+                    ".$db->quote($val['hero_info'])."), ";
+       }
+      }
+
+      $sql = substr($sql, 0, strlen($sql)-2);
+      $sql .= ';';
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+    }
+  }
+}
+
+function achievements_split($res,$ach) {
+  $ret = array('sections' => array(), 'split' => array());
+  $counter = array('id' => array(), 'split' => array());
+
+  //list of ach. in clan
+  //except 'class' section
+  foreach($res as $val) {
+    foreach($val['data']['achievements'] as $id => $t) {
+      if(!in_array($id,$counter['id']) and isset($ach[$id]) and $ach[$id]['section'] != 'class') {
+        $counter['id'][] = $id;
+        if(isset($counter['count'][$ach[$id]['section']])) { $counter['count'][$ach[$id]['section']] += 1; } else { $counter['count'][$ach[$id]['section']] = 1;}
+      }
+    }
+  }
+
+  foreach($ach as $val) {
+    //list of sections to display
+    if(!isset($ret['sections'][$val['section']]) and in_array($val['name'],$counter['id'])) {
+      $ret['sections'][$val['section']] = $val['section_i18n'];
+    }
+    //list of ach. to display
+    if(in_array($val['name'],$counter['id'])) {
+      $counter['split'][$val['section']][] = $val['name'];
+    }
+  }
+  //how many ach. in one section
+  $num = count($counter['split']['expert']);
+  if(count($counter['split']['mechanic']) > $num) { $num = count($counter['split']['mechanic']); }
+
+  //chunk ach. to sections
+  foreach($counter['count'] as $id => $n) {
+    if($n > $num) {
+      $ret['split'][$id] = array_chunk($counter['split'][$id], round($n/ceil($n/$num),0));
+    } else {
+      $ret['split'][$id]['0'] = $counter['split'][$id];
+    }
+  }
+
+  return $ret;
+}
+
+function achievements_ajax_player($ach) {
+  $ret = array('sections' => array(), 'split' => array());
+
+  foreach($ach as $val) {
+    if(!isset($ret[$val['section']])) {
+      $ret['sections'][$val['section']] = $val['section_i18n'];
+    }
+    $ret['split'][$val['section']][] = $val['name'];
+  }
+
+  return $ret;
+}
 ?>

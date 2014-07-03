@@ -559,6 +559,14 @@
                            </div>
                         </div>
                         <div class="settingsLine">
+                           <div><?=$lang['admin_achievements_db_up'];?></div>
+                           <div>
+                              <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
+                                  <input type="submit" value="<?=$lang['admin_db_up_but'];?>" name="update_achievements_db">
+                              </form>
+                           </div>
+                        </div>
+                        <div class="settingsLine">
                            <div><?=$lang['admin_clean_db_left_players'];?></div>
                            <div>
                               <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-4" method="post">
@@ -711,12 +719,6 @@
                            <div>
                               <input type="text" name="cron_time" value="<?=$config['cron_time']; ?>" size="2" /> <?=$lang['admin_hour'];?>
                               <div class="ui-state-highlight ui-corner-all" style="display:inline-block;" align="center"><?=$lang['admin_cron_time_warning'];?></div>
-                           </div>
-                        </div>
-                        <div class="settingsLine admin_cdhide">
-                           <div><?=$lang['admin_cron_auth'];?></div>
-                           <div>
-                              <input <?=($config['cron_auth']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_auth" value="1" size="2" />
                            </div>
                         </div>
                         <div class="settingsLine admin_cdhide">

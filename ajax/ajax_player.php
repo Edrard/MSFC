@@ -149,7 +149,8 @@ return false;
 $pres = $cache->get($nickname, 0, ROOT_DIR.'/cache/players/');
 $tanks = tanks();
 $tanks_nation = tanks_nations();
-$medn = medn($tanks_nation);
+$achievements = achievements();
+$achievements_sorted = achievements_ajax_player($achievements);
 
 if (isset($pres['data']['tanks'])) {
     $info = p_info($pres['data']['tanks'], $tanks);
@@ -522,16 +523,16 @@ if (isset($result)) {
                        echo $lang['unknown'];
                   }
               } ?>
-        <?php 
-        
+        <?php
+
         $t1 = date_parse($val['member_sinces']);
-        
+
         if ((isset($end['member_sinces'])) && $val['member_sinces'] == $end['member_sinces'] && $val['member_untils'] == 'undef') {
              $t2 = date_parse(date('d.m.Y'));
         }    else {
              $t2 = date_parse($val['member_untils']);
         }
-        
+
             if($t1['error_count'] == 0 and $t2['error_count'] == 0) {
 
             $d1 = mktime(0,0,0,$t1['month'],$t1['day'],$t1['year']);
@@ -550,13 +551,9 @@ if (isset($result)) {
 </table>
 <?php } //clans
 } // if result
-      foreach ($medn as $medname => $val) {
-         $medtypes[$val['type']][] = $medname;
-         if($val['type'] == 'major') {
-           $medn[$medname]['img'] = $medn[$medname][$pres['data']['achievements'][$medname]]['img'];
-         }
-      }
-      ksort($medtypes); ?>
+?>
+<? $data = $pres['data']['achievements'];?>
+<br>
 <table cellspacing="1" cellpadding="1" width="100%" id="player9">
   <thead>
     <tr>
@@ -564,230 +561,40 @@ if (isset($result)) {
     </tr>
   </thead>
   <tbody>
-    <?php $i=1; $lvlup = 0; foreach($medtypes as $type =>$medarr) { ?>
+  <? $i=1; foreach($achievements_sorted['sections'] as $cat => $name) { ?>
     <tr class="ui-widget-content">
-      <td align="center">
-          <?php echo '<span class="hidden">'.$i.'</span>';
-                if ($type[strlen($type)-1]== '2') {
-                    $out = substr($type, 0, strlen($type)-1);
-                    echo $lang[$out].' - 2';
-                }   else {
-                    echo $lang[$type];
-                }   ++$i; ?>
-      </td>
+      <td align="center"><span class="hidden"><?=10*$i;?></span><?=$name;?></td>
     </tr>
     <tr>
-      <td class="medalContainer"><span class="hidden"><?=$i;?>'</span>
-<?php
-    foreach($medarr as $mdn) {
-      if ($mdn <> 'lumberjack') {
-          if ($mdn == 'diehard') {
-              if ($pres['data']['achievements'][$mdn] == 0) {
-                  $val['value'] = '0 ('.$pres ['data']['achievements']['max_diehard_series'].' <span style="color:red;">**</span>)';
-              }   else {
-                  $val['value'] = $pres['data']['achievements'][$mdn];
-              }
-          }   elseif ($mdn == 'handOfDeath'){
-              $val['value'] = $pres['data']['achievements']['max_killing_series'];
-          }   elseif ($mdn == 'invincible'){
-              if ($pres['data']['achievements'][$mdn] == 0) {
-                  $val['value'] = '0 ('.$pres['data']['achievements']['max_invincible_series'].' <span style="color:red;">*</span>)';
-              }   else {
-                  $val['value'] = $pres['data']['achievements'][$mdn];
-              }
-          }   elseif ($mdn == 'armor_piercer'){
-              $val['value'] = $pres['data']['achievements']['max_piercing_series'];
-          }   elseif ($mdn == 'title_sniper'){
-              $val['value'] = $pres['data']['achievements']['max_sniper_series'];
-          }   elseif (!isset($val['type'])){
-              //print_R($val);
-          }   else {
-              $val['value'] = $pres['data']['achievements'][$mdn];
-          }
-
-if($type == "major"){
-$lvlup_title = '';
-$lvluparr = array (0=>'IV', 2=>'I', 3 =>'II', 4=> 'III');
-
-switch ($mdn) {
-//
-case ('medal_abrams'):
-$number = $pres['data']['statistics']['all']['survived_battles'];
-$lvlup = 1;
-
-if ($val['value'] == 0) {
-    $left = 5-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 5000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 500-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 50-$number;
-}
-if ($lvlup && $number>0 && $left>0){
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_abr'].$left.$lang['lvl_ali'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];}
-break;
-//
-case ('medal_ekins'):
-$lvlup = 0;
-break;
-//
-case ('medal_knispel'):
-$number = $pres['data']['statistics']['all']['damage_dealt']+ $pres['data']['statistics']['all']['damage_received'];
-$lvlup = 0;
-
-if ($val['value'] == 0) {
-    $left = 10000-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 10000000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 1000000-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 100000-$number;
-}
-if ($lvlup && $number>0 && $left>0) {
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_kni'].$left.$lang['lvl_dd'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];
-}
-break;
-//
-case ('medal_kay'):
-$number = 0;
-$lvlup = 1;
-
-foreach($pres['data']['achievements'] as $t => $vl) {
-   if ($t == 'hero') $number += $vl['value'];
-}
-if ($val['value'] == 0) {
-    $left = 1;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 1000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 100-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 10-$number;
-}
-if ($lvlup && $number>0 && $left>0) {
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_kay'].$left.$lang['lvl_heroes'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];
-}
-break;
-//
-case ('medal_carius'):
-$number = $pres['data']['statistics']['all']['frags'];
-$lvlup = 1;
-
-if ($val['value'] == 0) {
-    $left = 10-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 10000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 1000-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 100-$number;
-}
-if ($lvlup && $number>0 && $left>0){
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_car'].$left.$lang['lvl_heroes'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];}
-break;
-//
-case ('medal_le_clerc'):
-$number = $pres['data']['statistics']['all']['capture_points'];
-$lvlup = 1;
-
-if ($val['value'] == 0) {
-    $left = 30-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 30000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 3000-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 300-$number;
-}
-if ($lvlup && $number>0 && $left>0){
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_lac'].$left.$lang['lvl_cap'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];}
-break;
-//
-
-case ('medal_poppel'):
-$number = $pres['data']['statistics']['all']['spotted'];
-$lvlup = 1;
-
-if ($val['value'] == 0) {
-    $left = 20-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 20000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 2000-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 200-$number;
-}
-if ($lvlup && $number>0 && $left>0){
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_pop'].$left.$lang['lvl_spo'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];}
-break;
-//
-case ('medal_lavrinenko'):
-$number = $pres['data']['statistics']['all']['dropped_capture_points'];
-$lvlup = 1;
-
-if ($val['value'] == 0) {
-    $left = 30-$number;
-}   elseif ($val['value'] == 1) {
-    $lvlup = 0;
-}   elseif ($val['value'] == 2) {
-    $left = 30000-$number;
-}   elseif ($val['value'] == 3) {
-    $left = 3000-$number;
-}   elseif ($val['value'] == 4) {
-    $left = 300-$number;
-}
-if ($lvlup && $number>0 && $left>0){
-    $lvlup_title .= $lang['lvl_up1'].$lvluparr[$val['value']].$lang['lvl_lav'].$left.$lang['lvl_def'];
-    $lvlup_title .= $lang['lvl_up2'].ceil(($pres['data']['statistics']['all']['battles']/$number)*$left).$lang['lvl_b'];}
-break;
-
-default:
-$lvlup = 0;
-break;
-}//switch
-
-} //major?>
-         <div class="medalDiv">
-            <img width="67" height="71" title="<?php echo '<center>'.$lang['medal_'.$mdn].'</center>'.$lang['title_'.$mdn]; ?>" class="bb <?php if($val['value'] == 0) {echo 'faded';} ?>" alt="<?=$lang['medal_'.$mdn]; ?>" src="<?=$medn[$mdn]['img']; ?>">
-            <div class="a_num ui-state-highlight ui-widget-content"><?=$val['value']; ?></div>
-<? if($lvlup) { ?>
-            <div class="bb levelup" title="<?php echo $lvlup_title; ?>"></div>
-<? } ?>
-        </div>
-<?php
-$lvlup = 0; }} ?>
-    </td>
-</tr>
-<?php } ?>
-</tbody>
+      <td class="medalContainer"><span class="hidden"><?=10*$i+1;?></span>
+      <? foreach($achievements_sorted['split'][$cat] as $id) { ?>
+           <? $val = $achievements[$id];
+           if(!empty($val['options'])) {
+             if(isset($data[$id])) {
+               $ach_name = $val['options'][$data[$id]-1]['name_i18n'];
+               $ach_img  = $val['options'][$data[$id]-1]['image'];
+             } else {
+               $ach_name = $val['options'][(count($val['options'])-1)]['name_i18n'];
+               $ach_img  = $val['options'][(count($val['options'])-1)]['image'];
+             }
+           } else {
+             $ach_name = $val['name_i18n'];
+             $ach_img  = $val['image'];
+           }
+           ?>
+           <div class="medalDiv">
+              <img width="67" height="71" title="<div style='min-width:400px;'><center><?=$ach_name;?></center><br><?=str_replace('"',"'",$val['description']),(!empty($val['condition'])?'<div style=\'padding:0px;margin:10px 0 0 15px\'>'.nl2br($val['condition']).'</div>':'');?></div>" class="bb <?=(isset($data[$id]))?'':'faded';?>" src="<?=$ach_img;?>">
+              <? if(isset($data[$id])) { ?>
+                <div class="a_num ui-state-highlight ui-widget-content"><?=$data[$id],(($val['type']=='series')?'&nbsp;<span style="color:red;">*</span>':'');?></div>
+              <? } ?>
+          </div>
+      <? } ?>
+      </td>
+    </tr>
+  <? ++$i;} ?>
+  </tbody>
 </table>
-</div>
-<div align="left">
-    <span style="color:red;">*</span> <?=$lang['medal_max2']; ?><br />
-    <span style="color:red;">**</span> <?=$lang['medal_max']; ?><br /><br />
-
-
-
+<br>
 <?php
 $i=13;
 $arsd = array('table2', 'table5');

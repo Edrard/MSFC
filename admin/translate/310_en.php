@@ -18,4 +18,8 @@
 
     $lang['admin_try_count'] = 'Number of retries to obtain data: ';
     $lang['for_all_clans'] = 'For all clans:';
+    $lang['admin_achievements_db_up'] = 'Update information about achievements in database';
+    $lang['ach_section_hist'] = 'Historical Battles';
+    $lang['ach_section_expert'] = 'Expert';
+    $lang['ach_section_mechanic'] = 'Technical Engineer';
 ?>

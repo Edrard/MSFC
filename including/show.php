@@ -14,7 +14,7 @@
 * @version     $Rev: 3.1.0 $
 *
 */
-/*
+
 //Получаем информацио о апи
 $api_api = get_api('encyclopedia/info');
 $api_cache = $cache->get('api_info', 0, ROOT_DIR.'/cache/other/');
@@ -31,8 +31,8 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
       $api_cache = $api_api;
   }
   //Сравниваем данные о АПИ в кэше и полученные
-  //Если не совпадают - обновляем информацию о танках и медалях.
-  if($api_api['data']['game_updated_at'] != $api_cache['data']['game_updated_at'] or $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
+  //Если версии отличаются, и с момента апдейта прошло больше двух дней - обновляем
+  if((now() - $api_api['data']['game_updated_at'] >= 2*24*60*60) and $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
     //обновляем кэш
     $cache->clear('api_info', ROOT_DIR.'/cache/other/');
     $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
@@ -45,10 +45,31 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
     $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
     //Получаем информацию о танках
     update_tanks_db();
+    //удаляем данные о наградах
+    $sql = "TRUNCATE TABLE `achievements`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    //Получаем информацию о наградах
+    update_achievements_db();
   }
 }
-*/
-$col_tables = get_tables_like_col_tank($dbname);  
+
+$tanks = tanks();
+$achievements = achievements();
+// update list of all tanks in game from api if need
+if (empty($tanks)) {
+    update_tanks_db();
+    $tanks = tanks();
+}
+// update list of all achievements in game from api if need
+if (empty($achievements)) {
+    update_achievements_db($achievements);
+    $achievements = achievements();
+}
+
+$col_tables = get_tables_like_col_tank($dbname);
 $col_check = get_updated_at();
 
 $multiclan = read_multiclan();
@@ -106,6 +127,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         $res_base['info'] = multiget_v2('account_id', $links, 'account/info');
         $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
         $res_base['ratings'] = multiget_v2('account_id', $links, 'ratings/accounts', array(), array('type'=>'all'));
+        $res_base['achievements'] = multiget_v2('account_id', $links, 'account/achievements');
 
         foreach($links as $i => $p_id) {
           //info
@@ -120,9 +142,17 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
           if( !isset($res_base['ratings'][$p_id]['status']) or $res_base['ratings'][$p_id]['status'] != 'ok' ) {
             continue;
           }
+          //achievements
+          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' ) {
+            continue;
+          }
 
           $to_cache = array();
           $to_cache = $res_base['info'][$p_id];
+          if(isset($to_cache['data']['achievements'])) {
+            unset($to_cache['data']['achievements']);
+          }
+          $to_cache['data']['achievements'] = $res_base['achievements'][$p_id]['data']['achievements'];
           $to_cache['data']['tanks'] = array_resort($res_base['tanks'][$p_id]['data'],'tank_id');
           $to_cache['data']['ratings'] = $res_base['ratings'][$p_id]['data'];
 
@@ -138,13 +168,6 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
 
 //Autocleaner
 autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
-
-$tanks = tanks();
-// update list of all tanks in game from api if need
-if (empty($tanks)) {
-    update_tanks_db();
-    $tanks = tanks();
-}
 
 /* code for wn8 */
 $wn8 = $cache->get('wn8', 7*24*60*60, ROOT_DIR.'/cache/other/'); //once in 7 days
@@ -166,7 +189,6 @@ $tanks_nation = tanks_nations();
 $tanks_types = tanks_types();
 $tanks_lvl = tanks_lvl();
 $medn = medn($tanks_nation);
-
 sort($tanks_lvl);
 
 if($config['company'] == 1 ) {

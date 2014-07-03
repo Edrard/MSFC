@@ -422,6 +422,55 @@ if( (310.2 - (float) $config['version']) > 0 ) {
     }
 } //if( (310.2 - (float) $config['version']) > 0 )
 
+if( (310.3 - (float) $config['version']) > 0 ) {
+
+    $sql = 'ALTER TABLE `achievements` CHANGE `name_i18n` `name_i18n` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;';
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    } else {
+      echo 'Table achievements - updated (name_i18n).<br>';
+    }
+
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM `multiclan`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+       $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+       $prefix = array();
+    }
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+      foreach($prefix as $t) {
+        $db->change_prefix($t);
+        $config = get_config();
+        //Удаляем параметр cron_auth
+        if(isset($config['cron_auth'])) {
+          $sql = "DELETE FROM `config` WHERE `name` = 'cron_auth' LIMIT 1;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`cron_auth` value) for prefix:',$t,' - removed.<br>';
+        }
+        /****************begin*****************/
+        /*   Меняем версию модуля в конфиге   */
+        /*************************************/
+        if(!is_numeric($config['version']) or (310.3 - (float) $config['version']) > 0 ) {
+          $sql = "UPDATE `config` SET `value` = '310.3' WHERE `name` = 'version' LIMIT 1 ;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+      }
+    }
+} //if( (310.3 - (float) $config['version']) > 0 )
+
 if($config['lang'] == 'ru') { ?>
 <br><br><br>
 Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>

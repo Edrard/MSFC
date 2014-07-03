@@ -94,6 +94,16 @@
         $tanks = tanks();
     }
 
+    //Update information about achievements in db
+    if(isset($_POST['update_achievements_db'])) {
+        $sql = "TRUNCATE TABLE `achievements`;";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        update_achievements_db();
+    }
+
     //DB
     if (isset($_POST['recdb'])){
         recreat_db();

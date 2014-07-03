@@ -15,11 +15,7 @@
     *
     */
 
-
-    $lang['admin_try_count'] = 'Počet opakovaní pre získanie údajov: ';
-    $lang['for_all_clans'] = 'Pre všetky klany:';
-    $lang['admin_achievements_db_up'] = 'Update information about achievements in database';
-    $lang['ach_section_hist'] = 'Historical Battles';
-    $lang['ach_section_expert'] = 'Expert';
-    $lang['ach_section_mechanic'] = 'Technical Engineer';    
+  $lang['ach_section_hist'] = 'Historical Battles';
+  $lang['ach_section_expert'] = 'Expert';
+  $lang['ach_section_mechanic'] = 'Technický inžinier';
 ?>
