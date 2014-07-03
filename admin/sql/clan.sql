@@ -148,7 +148,6 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('cron_time', '23'),
 ('multiget', '20'),
 ('autoclean', '0'),
-('cron_auth', '0'),
 ('cron_multi', '0'),
 ('a_rights', '2'),
 ('we_loosed', '172800'),
