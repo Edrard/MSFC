@@ -651,7 +651,7 @@ function achievements_split($res,$ach) {
   //chunk ach. to sections
   foreach($counter['count'] as $id => $n) {
     if($n > $num) {
-      $ret['split'][$id] = array_chunk($counter['split'][$id], round($n/ceil($n/$num),0));
+      $ret['split'][$id] = array_chunk($counter['split'][$id], ceil($n/ceil($n/$num)));
     } else {
       $ret['split'][$id]['0'] = $counter['split'][$id];
     }

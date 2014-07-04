@@ -472,7 +472,7 @@ if( (310.3 - (float) $config['version']) > 0 ) {
 } //if( (310.3 - (float) $config['version']) > 0 )
 
 if( (310.4 - (float) $config['version']) > 0 ) {
-
+      require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
   $achievements = achievements();
   // update list of all achievements in game from api if need
   if (empty($achievements)) {
