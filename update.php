@@ -540,6 +540,11 @@ if( (310.4 - (float) $config['version']) > 0 ) {
     }
   }
 } //if( (310.3 - (float) $config['version']) > 0 )
+
+//Clear cache
+$cache->clear_all(array(), ROOT_DIR.'/cache/');
+$cache->clear_all(array(), ROOT_DIR.'/cache/players/');
+
 if($config['lang'] == 'ru') { ?>
 <br><br><br>
 Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>
