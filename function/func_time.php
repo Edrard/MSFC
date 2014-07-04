@@ -240,7 +240,7 @@ function medal_progress($rosterid = null, $medals, $start = 0,$end = -1){
        foreach($dlast as $vals){
           if (isset($dfirst_new[$vals['account_id']])){
               foreach($vals as $key => $val){
-                 if(!is_numeric($key) && $key != 'account_id' && $key != 'updated_at' && $key != 'max_diehard_series' && $key != 'max_invincible_series' && $key != 'max_killing_series' && $key != 'max_piercing_series' && $key != 'max_sniper_series'){
+                 if(isset($medals[$key]['section']) && !is_numeric($key) && $key != 'account_id' && $medals[$key]['section'] != 'class'){
                      $diff['unsort'][$vals['account_id']][$key] = abs($val - $dfirst_new[$vals['account_id']][$key]);
                  }
               }
@@ -250,7 +250,7 @@ function medal_progress($rosterid = null, $medals, $start = 0,$end = -1){
    }
    foreach($diff['unsort'] as $id => $vals){
       foreach($vals as $key => $val){
-         $diff['sorted'][$medals[$key]['type']][$id][$key] = $val;
+         $diff['sorted'][$medals[$key]['section']][$id][$key] = $val;
       }
    }
    return $diff;

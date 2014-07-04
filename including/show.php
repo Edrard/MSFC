@@ -188,7 +188,6 @@ $eff_rating = eff_rating($res,$wn8);
 $tanks_nation = tanks_nations();
 $tanks_types = tanks_types();
 $tanks_lvl = tanks_lvl();
-$medn = medn($tanks_nation);
 sort($tanks_lvl);
 
 if($config['company'] == 1 ) {

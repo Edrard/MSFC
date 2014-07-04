@@ -53,6 +53,9 @@ $(document).ready(function() {
       delay: 0,
       fade: 250,
       items: "[title]",
+      open: function (event, ui) {
+          ui.tooltip.css("min-width", "400px");
+      },
       content: function() {
           var element = $( this );
           if ( element.is( "[title]" ) ) {

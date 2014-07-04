@@ -66,11 +66,11 @@
                                     </tr>  
                                 </thead>
                                 <tbody>
-                                    <?php foreach($best_medal_progress as $name => $val){ ?>  
+                                    <?php foreach($best_medal_progress as $name => $val){ ?>
                                         <?php if($val['value'] != 0){ ?>
                                             <tr>
-                                                <td align="center" class="bb" <?php echo 'title="<table width=\'100%\' border=\'0\'  class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'',$medn[$name]['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$name],'.</span><br> ',$lang['title_'.$name],'</td></tr></table>"';?>><img height="25px" src='<?=$medn[$name]['img'];?>' /></td>
-                                                <td valign="middle"><?=$lang['medal_'.$name];?></td>
+                                                <td align="center"><img height="25px" src='<?=$achievements[$name]['image'];?>' /></td>
+                                                <td valign="middle"><?=$achievements[$name]['name_i18n'];?></td>
                                                 <td valign="middle"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank">
                                                     <?php echo $roster_id[$val['account_id']]['account_name']; ?></a></td>
                                                 <td valign="middle"><?=$val['value'];?></td>

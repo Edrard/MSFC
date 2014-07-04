@@ -26,8 +26,8 @@
                             <th><?=$lang['company']; ?></th>
                         <? } ?>
                         <?php foreach($medal_resort['list'] as $mval) {
-                                foreach(array_keys($mval) as $medals){ ?>
-                                <th align='center' class="{sorter: 'digit'} bb" <?php echo 'title="<table width=\'100%\' border=\'0\' class=\'ui-widget-content\' cellspacing=\'0\' cellpadding=\'0\'><tr><td><img src=\'./',$medn[$medals]['img'],'\' /></td><td><span align=\'center\' style=\'font-weight: bold;\'>',$lang['medal_'.$medals],'.</span><br> ',$lang['title_'.$medals],'</td></tr></table>"';?>><?php echo '<img src=\'./',$medn[$medals]['img'],'\' style="width:60px;" /><br>',$lang['medal_'.$medals]; ?></th>
+                                foreach(array_keys($mval) as $medals){  $ach = $achievements[$medals]; ?>
+                                <th align='center' class="{sorter: 'digit'} bb" title="<div><?=str_replace('"',"'",$ach['description']),(!empty($ach['condition'])?'<div style=\'padding:0px;margin:10px 0 0 15px\'>'.nl2br($ach['condition']).'</div>':'');?></div>"><img src="<?=$ach['image'];?>" style="width:60px;" /><br><?=$ach['name_i18n'];?></th>
                                 <?php  } ?>
                             <?php  } ?>
 

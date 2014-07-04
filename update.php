@@ -471,6 +471,75 @@ if( (310.3 - (float) $config['version']) > 0 ) {
     }
 } //if( (310.3 - (float) $config['version']) > 0 )
 
+if( (310.4 - (float) $config['version']) > 0 ) {
+
+  $achievements = achievements();
+  // update list of all achievements in game from api if need
+  if (empty($achievements)) {
+      update_achievements_db($achievements);
+      $achievements = achievements();
+  }
+
+  //Получаем список префиксов из таблицы multiclan
+  $sql = "SELECT prefix FROM `multiclan`;";
+  $q = $db->prepare($sql);
+  if ($q->execute() == TRUE) {
+     $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+  }   else {
+     $prefix = array();
+  }
+  //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+  //Для внесения изменений в БД всех мультикланов.
+  if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+  if(!empty($prefix)) {
+    foreach($prefix as $t) {
+      $db->change_prefix($t);
+      $config = get_config();
+
+      if(!empty($achievements)) {
+        $sql = "show tables like 'col_medals';";
+        $q = $db->prepare($sql);
+        if ($q->execute() == TRUE) {
+            $tmp = $q->fetchAll();
+        }   else {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+
+        if($tmp > 0) {
+          $sql = "SHOW COLUMNS FROM `col_medals` ;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+
+          $structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+
+          foreach($structure as $id => $val) {
+            if(!isset($achievements[$id]) && $id != 'account_id' && $id != 'updated_at') {
+              $sql = "ALTER TABLE `col_medals` DROP `{$id}`;";
+              $q = $db->prepare($sql);
+              if ($q->execute() != TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+              }
+            }
+          }
+          echo 'col_medals table for prefix:',$t,' - updated.<br>';
+        }
+      }
+      /****************begin*****************/
+      /*   Меняем версию модуля в конфиге   */
+      /*************************************/
+      if(!is_numeric($config['version']) or (310.4 - (float) $config['version']) > 0 ) {
+        $sql = "UPDATE `config` SET `value` = '310.4' WHERE `name` = 'version' LIMIT 1 ;";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+      }
+    }
+  }
+} //if( (310.3 - (float) $config['version']) > 0 )
 if($config['lang'] == 'ru') { ?>
 <br><br><br>
 Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>

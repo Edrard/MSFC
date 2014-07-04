@@ -103,7 +103,7 @@
         include(ROOT_DIR.'/views/header.php');
         if(count($res) > 0 ){
             if($config['cron'] == 1 && $col_check > 2){
-                $medal_progress = medal_progress($roster_id, $medn,(now() - $config['medal_progress']),now());
+                $medal_progress = medal_progress($roster_id, $achievements,(now() - $config['medal_progress']),now());
                 $medal_resort = medals_resort($medal_progress,$roster_id);
                 $best_medal_progress = best_medal_progress($medal_progress['unsort']);
                 unset($medal_progress);
