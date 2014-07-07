@@ -775,9 +775,7 @@
                         <div class="settingsLine">
                           <h3><?=$lang['current_cron'];?></h3>
                           <?php if(file_exists(ROOT_DIR.'/cron.log') || is_readable(ROOT_DIR.'/cron.log')){ ?>
-                              <textarea rows="10" cols="85" name="text">
-                                  <?=file_get_contents(ROOT_DIR.'/cron.log'); ?>
-                              </textarea>
+                              <textarea rows="10" cols="85" name="text"><?=file_get_contents(ROOT_DIR.'/cron.log'); ?></textarea>
                           <?php } ?>
                         </div>
                         <div class="settingsLine">
