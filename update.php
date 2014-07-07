@@ -505,7 +505,7 @@ if( (310.4 - (float) $config['version']) > 0 ) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
         }
 
-        if($tmp > 0) {
+        if(count($tmp) > 0) {
           $sql = "SHOW COLUMNS FROM `col_medals` ;";
           $q = $db->prepare($sql);
           if ($q->execute() != TRUE) {
