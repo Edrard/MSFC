@@ -53,6 +53,10 @@ require(ROOT_DIR.'/admin/translate/login_'.$config['lang'].'.php');
 
 $cache = new Cache(ROOT_DIR.'/cache/');
 
+if(!isset($config['version']) or !is_numeric($config['version'])) {
+  $config['version'] = (float) 300.0;
+}
+
 if( (304.0 - (float) $config['version']) > 0 ) {
     //Изменения вносимые в уникальные таблицы (без префикса для клана)
 
@@ -355,13 +359,34 @@ if( (310.2 - (float) $config['version']) > 0 ) {
     } catch (PDOException $e) {
         die(show_message($e->getMessage()));
     }
-
-    $sql = 'RENAME TABLE `tanks` TO `msfcmt_tanks`; RENAME TABLE `multiclan` TO `msfcmt_multiclan`;';
+    $sql = 'SHOW TABLES;';
     $q = $db_2->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    if ($q->execute() == TRUE) {
+      $tables = $q->fetchAll(PDO::FETCH_COLUMN);
+
+      foreach($tables as $val) {
+        if($val == 'tanks') {
+          $sql = 'RENAME TABLE `tanks` TO `msfcmt_tanks`;';
+          $q = $db_2->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          } else {
+            echo 'Table tanks - renamed.<br>';
+          }
+        }
+        if($val == 'multiclan') {
+          $sql = 'RENAME TABLE `multiclan` TO `msfcmt_multiclan`;';
+          $q = $db_2->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          } else {
+            echo 'Table multiclan - renamed.<br>';
+          }
+        }
+      }
+
     } else {
-      echo 'Table tanks & multiclan - renamed.<br>';
+      die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 
     //Обнуляем подключение к БД
