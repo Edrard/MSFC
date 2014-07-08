@@ -242,6 +242,9 @@ function medal_progress($rosterid = null, $medals, $start = 0,$end = -1){
               foreach($vals as $key => $val){
                  if(isset($medals[$key]['section']) && !is_numeric($key) && $key != 'account_id' && $medals[$key]['section'] != 'class'){
                      $diff['unsort'][$vals['account_id']][$key] = abs($val - $dfirst_new[$vals['account_id']][$key]);
+                     if($medals[$key]['type'] == 'series' and $diff['unsort'][$vals['account_id']][$key] > 0) {
+                       $diff['unsort'][$vals['account_id']][$key] = abs($val);
+                     }
                  }
               }
           }

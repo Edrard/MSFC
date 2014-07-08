@@ -27,7 +27,7 @@
                         <? } ?>
                         <?php foreach($medal_resort['list'] as $mval) {
                                 foreach(array_keys($mval) as $medals){  $ach = $achievements[$medals]; ?>
-                                <th align='center' class="{sorter: 'digit'} bb" title="<div><?=str_replace('"',"'",$ach['description']),(!empty($ach['condition'])?'<div style=\'padding:0px;margin:10px 0 0 15px\'>'.nl2br($ach['condition']).'</div>':'');?></div>"><img src="<?=$ach['image'];?>" style="width:60px;" /><br><?=$ach['name_i18n'];?></th>
+                                <th align='center' class="{sorter: 'digit'} bb" title="<div><?=str_replace('"',"'",$ach['description']),(!empty($ach['condition'])?'<div style=\'padding:0px;margin:10px 0 0 15px\'>'.nl2br($ach['condition']).'</div>':'');?></div>"><img src="<?=$ach['image'];?>" style="width:60px;" /><br><?=$ach['name_i18n'],(($ach['type']=='series')?'&nbsp;<span style="color:red;">*</span>':'');?></th>
                                 <?php  } ?>
                             <?php  } ?>
 

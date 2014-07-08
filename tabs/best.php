@@ -70,7 +70,7 @@
                                         <?php if($val['value'] != 0){ ?>
                                             <tr>
                                                 <td align="center"><img height="25px" src='<?=$achievements[$name]['image'];?>' /></td>
-                                                <td valign="middle"><?=$achievements[$name]['name_i18n'];?></td>
+                                                <td valign="middle"><?=$achievements[$name]['name_i18n'],(($achievements[$name]['type']=='series')?'&nbsp;<span style="color:red;">*</span>':'');?></td>
                                                 <td valign="middle"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank">
                                                     <?php echo $roster_id[$val['account_id']]['account_name']; ?></a></td>
                                                 <td valign="middle"><?=$val['value'];?></td>
