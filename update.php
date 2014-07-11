@@ -57,57 +57,46 @@ if(!isset($config['version']) or !is_numeric($config['version'])) {
   $config['version'] = (float) 300.0;
 }
 
-/****************begin*********************/
-/*Меняем структуру таблиц до универсальной*/
-/******************************************/
-
-//Обнуляем подключение к БД
-$q = null;
-$db = null;
-
-//Создаем чистое подключение
-try {
-    $db_2 = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
-} catch (PDOException $e) {
-    die(show_message($e->getMessage()));
-}
-$sql = 'SHOW TABLES;';
-$q = $db_2->prepare($sql);
-if ($q->execute() == TRUE) {
-  $tables = $q->fetchAll(PDO::FETCH_COLUMN);
-
-  foreach($tables as $val) {
-    if($val == 'tanks') {
-      $sql = 'RENAME TABLE `tanks` TO `msfcmt_tanks`;';
-      $q = $db_2->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      } else {
-        echo 'Table tanks - renamed.<br>';
-      }
-    }
-    if($val == 'multiclan') {
-      $sql = 'RENAME TABLE `multiclan` TO `msfcmt_multiclan`;';
-      $q = $db_2->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      } else {
-        echo 'Table multiclan - renamed.<br>';
-      }
-    }
-  }
-
-} else {
-  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-}
-
-//Обнуляем подключение к БД
-$q = null;
-$db_2 = null;
-//MYSQL заново
-include(ROOT_DIR.'/function/mysql.php');
-
 if( (304.0 - (float) $config['version']) > 0 ) {
+    //Изменения вносимые в уникальные таблицы (без префикса для клана)
+
+    /****************begin*****************/
+    /*    Изменения в таблице `tanks`    */
+    /*************************************/
+
+    //Получаем структуру таблицы
+    $sql = "SHOW COLUMNS FROM `tanks` ;";
+    $q = $db->prepare($sql);
+    if ($q->execute() != TRUE) {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+
+    $ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+
+    if(!isset($ratings_structure['title'])) {
+      //это таблица старого формата, будем переделывать.
+
+      //Изменяем таблицу
+      $sql = "ALTER TABLE `tanks` ADD `title` VARCHAR( 40 ) NOT NULL AFTER `is_premium`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      //Очищаем таблицу
+      $sql = "TRUNCATE TABLE `tanks`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      update_tanks_db();
+      echo 'Table `tanks` - updated.<br>';
+    }
+    /*************************************/
+    /*    Изменения в таблице `tanks`    */
+    /****************end******************/
+
     //Получаем список префиксов из таблицы multiclan
     $sql = "SELECT prefix FROM `multiclan`;";
     $q = $db->prepare($sql);
@@ -116,29 +105,15 @@ if( (304.0 - (float) $config['version']) > 0 ) {
     }   else {
        $prefix = array();
     }
+
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
     if(!empty($prefix)) {
       foreach($prefix as $t) {
         $db->change_prefix($t);
         $config = get_config();
-        /****************begin*****************/
-        /*Добавляем параметр api_lang в конфиг*/
-        /*************************************/
-        if(!isset($config['api_lang'])) {
-          if(in_array($config['lang'],array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko'))) {
-            $lang = $config['lang'];
-          } else {
-            $lang = 'en';
-          }
-          $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('api_lang', '".$lang."');";
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
-          echo 'Config table (`api_lang` value) for prefix:',$t,' - updated.<br>';
-          $config['api_lang'] = $lang;
-        }
+
         /****************begin*****************/
         /* Конфиги для рот (на всякий случай) */
         /*************************************/
@@ -166,6 +141,18 @@ if( (304.0 - (float) $config['version']) > 0 ) {
           $config['dst'] = 0;
 
           echo 'Config table (`dst` value) for prefix:',$t,' - updated.<br>';
+        }
+
+        /****************begin*****************/
+        /*   Меняем версию модуля в конфиге   */
+        /*************************************/
+        if(!is_numeric($config['version']) or (304.0 - (float) $config['version']) > 0 ) {
+          $sql = "UPDATE `config` SET `value` = '304.0' WHERE `name` = 'version' LIMIT 1 ;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
         }
 
         /****************begin*****************/
@@ -276,48 +263,9 @@ if( (304.0 - (float) $config['version']) > 0 ) {
       }
     }
 
-    //Изменения вносимые в уникальные таблицы (без префикса для клана)
-
-    /****************begin*****************/
-    /*    Изменения в таблице `tanks`    */
-    /*************************************/
-
-    //Получаем структуру таблицы
-    $sql = "SHOW COLUMNS FROM `tanks` ;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
-    $ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
-
-    if(!isset($ratings_structure['title'])) {
-      //это таблица старого формата, будем переделывать.
-
-      //Изменяем таблицу
-      $sql = "ALTER TABLE `tanks` ADD `title` VARCHAR( 40 ) NOT NULL AFTER `is_premium`;";
-      $q = $db->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
-
-      //Очищаем таблицу
-      $sql = "TRUNCATE TABLE `tanks`;";
-      $q = $db->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
-      include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
-      update_tanks_db();
-      echo 'Table `tanks` - updated.<br>';
-    }
-    /*************************************/
-    /*    Изменения в таблице `tanks`    */
-    /****************end******************/
-
-    /****************begin*****************/
-    /*     Удаляем старые lang файлы     */
-    /*************************************/
+        /****************begin*****************/
+        /*     Удаляем старые lang файлы     */
+        /*************************************/
 
     if(!is_writable(ROOT_DIR.'/translate/')) {
       if(!@chmod(ROOT_DIR.'/translate/', 0777)) {
@@ -334,24 +282,6 @@ if( (304.0 - (float) $config['version']) > 0 ) {
             }
 
         }
-    }
-    if(!empty($prefix)) {
-      foreach($prefix as $t) {
-        $db->change_prefix($t);
-        $config = get_config();
-
-        /****************begin*****************/
-        /*   Меняем версию модуля в конфиге   */
-        /*************************************/
-        if(!is_numeric($config['version']) or (304.0 - (float) $config['version']) > 0 ) {
-          $sql = "UPDATE `config` SET `value` = '304.0' WHERE `name` = 'version' LIMIT 1 ;";
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
-          echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
-        }
-      }
     }
 } //if($config['version'] < 304.0)
 
@@ -372,6 +302,22 @@ if( (310.1 - (float) $config['version']) > 0 ) {
       foreach($prefix as $t) {
         $db->change_prefix($t);
         $config = get_config();
+        /****************begin*****************/
+        /*Добавляем параметр api_lang в конфиг*/
+        /*************************************/
+        if(!isset($config['api_lang'])) {
+          if(in_array($config['lang'],array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko'))) {
+            $lang = $config['lang'];
+          } else {
+            $lang = 'en';
+          }
+          $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('api_lang', '".$lang."');";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+          echo 'Config table (`api_lang` value) for prefix:',$t,' - updated.<br>';
+        }
         /*****************begin******************/
         /*Добавляем параметр try_count в конфиг*/
         /***************************************/
@@ -399,6 +345,55 @@ if( (310.1 - (float) $config['version']) > 0 ) {
 } //if( (310.1 - (float) $config['version']) > 0 )
 
 if( (310.2 - (float) $config['version']) > 0 ) {
+    /****************begin*********************/
+    /*Меняем структуру таблиц до универсальной*/
+    /******************************************/
+
+    //Обнуляем подключение к БД
+    $q = null;
+    $db = null;
+
+    //Создаем чистое подключение
+    try {
+        $db_2 = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
+    } catch (PDOException $e) {
+        die(show_message($e->getMessage()));
+    }
+    $sql = 'SHOW TABLES;';
+    $q = $db_2->prepare($sql);
+    if ($q->execute() == TRUE) {
+      $tables = $q->fetchAll(PDO::FETCH_COLUMN);
+
+      foreach($tables as $val) {
+        if($val == 'tanks') {
+          $sql = 'RENAME TABLE `tanks` TO `msfcmt_tanks`;';
+          $q = $db_2->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          } else {
+            echo 'Table tanks - renamed.<br>';
+          }
+        }
+        if($val == 'multiclan') {
+          $sql = 'RENAME TABLE `multiclan` TO `msfcmt_multiclan`;';
+          $q = $db_2->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          } else {
+            echo 'Table multiclan - renamed.<br>';
+          }
+        }
+      }
+
+    } else {
+      die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+
+    //Обнуляем подключение к БД
+    $q = null;
+    $db_2 = null;
+    //MYSQL заново
+    include(ROOT_DIR.'/function/mysql.php');
 
     $sql = 'CREATE TABLE IF NOT EXISTS `achievements` (
               `name` varchar(40) NOT NULL,
