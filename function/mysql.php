@@ -23,13 +23,12 @@
     if(file_exists(ROOT_DIR.'/mysql.config.php')) {
       include(ROOT_DIR.'/mysql.config.php');
     } else {
-      $dbhost  ='';
-      $dbuser  ='';
-      $dbpass  ='';
-      $dbname  ='';
+      $dbhost = $dbuser = $dbpass = $dbname = $dbprefix = '';
     }
 
-    $dbprefix = '';
+    if(!isset($dbprefix)) {
+      $dbprefix = 'msfc_';
+    }
     $sqlchar = 'utf8';
 
     //Проверяем заданы ли переменные для доступа к БД
@@ -53,7 +52,7 @@
             private $pattern = '';
             private $pattern2 = '';
             private $replacement = '';
-            private $replacement2 = '$1msfcmt_$2$3';
+            public  $replacement2 = '$1msfcmt_$2$3';
             private $matches;
 
             public function __construct($dsn, $user = null, $password = null, $driver_options = array(),$dbprefix = null)

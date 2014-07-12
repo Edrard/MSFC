@@ -57,6 +57,44 @@ if(!isset($config['version']) or !is_numeric($config['version'])) {
   $config['version'] = (float) 300.0;
 }
 
+$db->replacement2 = '$1$2$3';
+
+if(!isset($config['api_lang'])) {
+
+  //Получаем список префиксов из таблицы multiclan
+  $sql = "SELECT prefix FROM `multiclan`;";
+  $q = $db->prepare($sql);
+  if ($q->execute() == TRUE) {
+     $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+  }   else {
+     $prefix = array();
+  }
+
+  if(!empty($prefix)) {
+    foreach($prefix as $t) {
+      $db->change_prefix($t);
+      $config = get_config();
+
+      if(!isset($config['api_lang'])) {
+
+        if(in_array($config['lang'],array('en','ru','pl','de','fr','es','zh-cn','tr','cs','th','vi','ko'))) {
+          $lang = $config['lang'];
+        } else {
+          $lang = 'en';
+        }
+
+        $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('api_lang', '".$lang."');";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        echo 'Config table (`api_lang` value) for prefix:',$t,' - updated.<br>';
+        $config['api_lang'] = $lang;
+      }
+    }
+  }
+}
+
 if( (304.0 - (float) $config['version']) > 0 ) {
     //Изменения вносимые в уникальные таблицы (без префикса для клана)
 
@@ -89,7 +127,7 @@ if( (304.0 - (float) $config['version']) > 0 ) {
       if ($q->execute() != TRUE) {
           die(show_message($q->errorInfo(),__line__,__file__,$sql));
       }
-
+      include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
       update_tanks_db();
       echo 'Table `tanks` - updated.<br>';
     }
@@ -343,6 +381,8 @@ if( (310.1 - (float) $config['version']) > 0 ) {
       }
     }
 } //if( (310.1 - (float) $config['version']) > 0 )
+
+$db->replacement2 = '$1msfcmt_$2$3';
 
 if( (310.2 - (float) $config['version']) > 0 ) {
     /****************begin*********************/

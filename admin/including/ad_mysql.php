@@ -44,10 +44,11 @@
         exit;
         }
 
-        \$dbhost  ='".$_POST['host']."';
-        \$dbuser  ='".$_POST['user']."';
-        \$dbpass  ='".$_POST['pass']."';
-        \$dbname  ='".$_POST['dbname']."';
+        \$dbhost    =   '".$_POST['host']."';
+        \$dbuser    =   '".$_POST['user']."';
+        \$dbpass    =   '".$_POST['pass']."';
+        \$dbname    =   '".$_POST['dbname']."';
+        \$dbprefix  =   'msfc_';
         ?>";
         $fh = fopen(ROOT_DIR.'/mysql.config.php', 'w+') or die("can't open file");
         fwrite($fh, $text);
