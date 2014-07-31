@@ -350,30 +350,30 @@ function autoclean($time,$multi,$config,$directory)
         $map = directory_map($directory);
         foreach($multi as $val){
             $new = $cache->get('get_last_roster_'.$val['id'],0);
-            if($new === FALSE) 
-            { 
+            if($new === FALSE)
+            {
                 $new = get_clan_v2($config['clan'], 'info', $config);
-            }else{
-                $cache->clear('get_last_roster_'.$val['id']);
-                $cache->set('get_last_roster_'.$val['id'], $new);
             }
             //print_r($new); die;
-            foreach($new['data']['members'] as $player){
-                foreach($map as $key => $file){
-                    if(sha1($player['account_name']) == $file){
-                        unset($map[$key]);
-                    }
-                }
-            } 
-            $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            if(isset($new['data']['members']) and !empty($new['data']['members']))
+            {
+              foreach($new['data']['members'] as $player){
+                  foreach($map as $key => $file){
+                      if(sha1($player['account_name']) == $file){
+                          unset($map[$key]);
+                      }
+                  }
+              }
+              $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
+              $q = $db->prepare($sql);
+              if ($q->execute() != TRUE) {
+                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
+              }
             }
         }              
-        foreach($map as $file){ 
+        foreach($map as $file){
             unlink($directory.$file);   
-        }      
+        }
     }
 }
 function multi_main($multi){

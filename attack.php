@@ -53,7 +53,7 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
 }
 
 //Определяем активную карту на ГК
-$maps_link = array( 1 => 'globalmap', 2 => 'eventmap' );
+$maps_link = array( 'globalmap' => 1, 'eventmap' => 2 );
 $maps_active = array();
 $maps = get_api('globalwar/maps');
 
@@ -100,7 +100,7 @@ foreach($maps_active as $maps_id) {
        });
     </script>
     <div align="center">
-        <?=$lang['global_map_n'],$maps_id;?>
+        <?=$lang['global_map_n'],$maps_link[$maps_id];?>
         <table id="attack<?=$maps_id;?>" cellspacing="1" cellpadding="2" width="100%">
             <thead>
                 <tr>
@@ -125,9 +125,9 @@ foreach($maps_active as $maps_id) {
                         <td align="center"><?=($val['time'] > 1)?date('H:i',$val['time']).' +':'--:--'; ?></td>
                         <td align="center"><?=is_numeric($p_info[$val['provinces']['0']]['prime_time'])?date('H',mktime($p_info[$val['provinces']['0']]['prime_time']+$config['time'])).':00':'--:--'; ?></td>
                         <td align="center">
-                          <a href="<?=$config['clan_link']; ?>maps/<?=$maps_link[$maps_id];?>/?province=<?=$val['provinces']['0']; ?>" target="_blank"><?=$p_info[$val['provinces']['0']]['province_i18n']; ?></a>
+                          <a href="<?=$config['clan_link']; ?>maps/<?=$maps_id;?>/?province=<?=$val['provinces']['0']; ?>" target="_blank"><?=$p_info[$val['provinces']['0']]['province_i18n']; ?></a>
                             <? if(count($val['provinces'])>1) { ?>
-                            &nbsp;x&nbsp;<a href="<?=$config['clan_link']; ?>maps/<?=$maps_link[$maps_id];?>/?province=<?=$val['provinces']['1']; ?>" target="_blank"><?=$p_info[$val['provinces']['1']]['province_i18n']; ?></a>
+                            &nbsp;x&nbsp;<a href="<?=$config['clan_link']; ?>maps/<?=$maps_id;?>/?province=<?=$val['provinces']['1']; ?>" target="_blank"><?=$p_info[$val['provinces']['1']]['province_i18n']; ?></a>
                             <? } ?>
                         </td>
                         <td align="center">

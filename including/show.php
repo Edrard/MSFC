@@ -205,5 +205,4 @@ if($config['company'] == 1 ) {
   }
 }
 
-
 ?>
