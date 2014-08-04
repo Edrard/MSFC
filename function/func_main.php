@@ -345,7 +345,7 @@ function read_multiclan($dbprefix = FALSE)
 function autoclean($time,$multi,$config,$directory)
 {
     global $cache,$db;
-    //$global = array(); 
+    //$global = array();
     if(($config['autoclean'] + $time) <= now()){
         $map = directory_map($directory);
         foreach($multi as $val){
@@ -355,24 +355,26 @@ function autoclean($time,$multi,$config,$directory)
                 $new = get_clan_v2($config['clan'], 'info', $config);
             }
             //print_r($new); die;
-            if(isset($new['data']['members']) and !empty($new['data']['members']))
+            if(isset($new['data'][$val['id']]['members']) and !empty($new['data'][$val['id']]['members']))
             {
-              foreach($new['data']['members'] as $player){
+              foreach($new['data'][$val['id']]['members'] as $player){
                   foreach($map as $key => $file){
-                      if(sha1($player['account_name']) == $file){
+                      if(sha1($player['account_id']) == $file){
                           unset($map[$key]);
                       }
                   }
               }
-              $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
-              $q = $db->prepare($sql);
-              if ($q->execute() != TRUE) {
-                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-              }
             }
-        }              
-        foreach($map as $file){
-            unlink($directory.$file);   
+            $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+        }
+        if(!empty($map)) {
+          foreach($map as $file){
+              unlink($directory.$file);
+          }
         }
     }
 }
