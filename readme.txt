@@ -47,5 +47,3 @@ php-pdo_mysql
 После установки продукта, не забудьте выставить права 777 на папки cache/ и /admin/sql и файлы cron.log и mysql.config.php
 
 Подробную инструкцию по установке вы можете прочесть здесь - https://docs.google.com/document/d/1PWj81jEnCduP538RihEu3tImB18DaamBnyhxWC_bL7U/edit
-
-Если вам необходимо указать Application ID - вводите следующий: 2d177718a1fc6fc8fa0a6a4c5d6c753b
