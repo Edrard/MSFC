@@ -138,7 +138,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                 $new['data'][$config['clan']]['updated_at'] = 0;
             }
             if($new2['status'] == 'error'){
-                $new2 = $new;   
+                $new2 = $new;
             }    
             //$new2 = $new; //leave for testing purpose
             if ((isset($new2['status'])) && ($new2['status'] == 'ok')) {
@@ -148,18 +148,35 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                     $cache->set('get_last_roster_'.$config['clan'], $new2);
                     //Sorting roster
                     $roster = roster_sort($new2['data'][$config['clan']]['members']);
+                    //prepare some data
+                    $counter = $error_messages = array();
+                    //get list of members in DB, if some of theme already there from previous unsucessfull runs
+                    $sql = 'SELECT account_id FROM `col_players` WHERE updated_at >= "'.(now()-$config['cron_time']*60*60).'" ORDER BY updated_at DESC;';
+                    $q = $db->prepare($sql);
+                    if ($q->execute() == TRUE) {
+                       $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+                       $counter['old'] = array_flip($counter['old']);
+                    }   else {
+                       $counter['old'] = array();
+                    }
                     //Starting geting data
                     if (count($new2['data'][$config['clan']]['members']) > 0){
                         foreach ($new2['data'][$config['clan']]['members'] as $val){
+                          if(!isset($counter['old'][$val['account_id']])) {
                             $toload[] = $val['account_id'];
                             //break; //leave for testing purpose
+                          }
                         }
                         if (!empty($toload)) {
                             //prepare some data
-                            $counter = $error_messages = array();
                             $counter['total'] = count($toload);
+                            $counter['total_members'] = count($new2['data'][$config['clan']]['members']);
+                            $counter['old_count'] = count($counter['old']);
                             $counter['get'] = $try = 0;
 
+                            if ($counter['old_count'] > 0 and $log == 1){
+                               fwrite($fh, $date.": (Info) Found info about ".$counter['old_count']." players in database"."\n");
+                            }
                             if ($counter['total'] > 0 and $log == 1){
                                fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
                             }
@@ -223,8 +240,12 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                               }
                             }
                             unset($toload, $res1, $res2, $res3,$to_cache);
-                            update_multi_cron($dbprefix);
-                            if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
+                            if( ($counter['old_count']+$counter['get']) == $counter['total_members'] ) {
+                              update_multi_cron($dbprefix);
+                              if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
+                            } else {
+                              if($log == 1) fwrite($fh, $date.": (Err) ".$lang['cron_done']."\n");
+                            }
                             echo $lang['cron_done'];
                         }
                     }   else {//count($new2['data']['members'] <=0
