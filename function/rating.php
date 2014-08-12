@@ -177,23 +177,27 @@ function eff_rating($res, $wn8_exp = array()) {
                       $wn8['battles'] += $val['statistics']['battles'];
                     }
                   }
+                  if($wn8['battles'] > 0 ) {
+                    $wn8['expected']['expWIN'] = $wn8['expected']['expWIN'] / $wn8['battles'];
 
-                  $wn8['expected']['expWIN'] = $wn8['expected']['expWIN'] / $wn8['battles'];
+                    $wn8['rDAMAGE']   = $per_stat['statistics']['all']['damage_dealt']/$wn8['expected']['expDAMAGE'];
+                    $wn8['rSPOT']     = $per_stat['statistics']['all']['spotted']/$wn8['expected']['expSPOT'];
+                    $wn8['rFRAG']     = $per_stat['statistics']['all']['frags']/$wn8['expected']['expFRAG'];
+                    $wn8['rDEF']      = $per_stat['statistics']['all']['dropped_capture_points']/$wn8['expected']['expDEF'];
+                    $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$per_stat['statistics']['all']['battles']*100)/$wn8['expected']['expWIN'];
 
-                  $wn8['rDAMAGE']   = $per_stat['statistics']['all']['damage_dealt']/$wn8['expected']['expDAMAGE'];
-                  $wn8['rSPOT']     = $per_stat['statistics']['all']['spotted']/$wn8['expected']['expSPOT'];
-                  $wn8['rFRAG']     = $per_stat['statistics']['all']['frags']/$wn8['expected']['expFRAG'];
-                  $wn8['rDEF']      = $per_stat['statistics']['all']['dropped_capture_points']/$wn8['expected']['expDEF'];
-                  $wn8['rWIN']      = ($per_stat['statistics']['all']['wins']/$per_stat['statistics']['all']['battles']*100)/$wn8['expected']['expWIN'];
+                    $wn8['rWINc']      = max(0,                             ($wn8['rWIN']    - 0.71) / (1 - 0.71));
+                    $wn8['rDAMAGEc']   = max(0,                             ($wn8['rDAMAGE'] - 0.22) / (1 - 0.22));
+                    $wn8['rFRAGc']     = max(0, min($wn8['rDAMAGEc'] + 0.2, ($wn8['rFRAG']   - 0.12) / (1 - 0.12)));
+                    $wn8['rSPOTc']     = max(0, min($wn8['rDAMAGEc'] + 0.1, ($wn8['rSPOT']   - 0.38) / (1 - 0.38)));
+                    $wn8['rDEFc']      = max(0, min($wn8['rDAMAGEc'] + 0.1, ($wn8['rDEF']    - 0.10) / (1 - 0.10)));
 
-                  $wn8['rWINc']      = max(0,                             ($wn8['rWIN']    - 0.71) / (1 - 0.71));
-                  $wn8['rDAMAGEc']   = max(0,                             ($wn8['rDAMAGE'] - 0.22) / (1 - 0.22));
-                  $wn8['rFRAGc']     = max(0, min($wn8['rDAMAGEc'] + 0.2, ($wn8['rFRAG']   - 0.12) / (1 - 0.12)));
-                  $wn8['rSPOTc']     = max(0, min($wn8['rDAMAGEc'] + 0.1, ($wn8['rSPOT']   - 0.38) / (1 - 0.38)));
-                  $wn8['rDEFc']      = max(0, min($wn8['rDAMAGEc'] + 0.1, ($wn8['rDEF']    - 0.10) / (1 - 0.10)));
-
-                  $feff[$name]['wn8'] = number_format(980*$wn8['rDAMAGEc'] + 210*$wn8['rDAMAGEc']*$wn8['rFRAGc'] + 155*$wn8['rFRAGc']*$wn8['rSPOTc'] + 75*$wn8['rDEFc']*$wn8['rFRAGc'] + 145*MIN(1.8,$wn8['rWINc']),2, '.', '');
-                  $feff[$name]['xvm_wn8'] = $feff[$name]['wn8']>3250 ? 100 : max(min( $feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*(0.0000000000000000000812*$feff[$name]['wn8'] + 0.0000000000000001616) - 0.000000000006736) + 0.000000028057) - 0.00004536) + 0.06563) - 0.01, 100), 0);
+                    $feff[$name]['wn8'] = number_format(980*$wn8['rDAMAGEc'] + 210*$wn8['rDAMAGEc']*$wn8['rFRAGc'] + 155*$wn8['rFRAGc']*$wn8['rSPOTc'] + 75*$wn8['rDEFc']*$wn8['rFRAGc'] + 145*MIN(1.8,$wn8['rWINc']),2, '.', '');
+                    $feff[$name]['xvm_wn8'] = $feff[$name]['wn8']>3250 ? 100 : max(min( $feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*(0.0000000000000000000812*$feff[$name]['wn8'] + 0.0000000000000001616) - 0.000000000006736) + 0.000000028057) - 0.00004536) + 0.06563) - 0.01, 100), 0);
+                  } else {
+                    $feff[$name]['wn8'] = 0;
+                    $feff[$name]['xvm_wn8'] = 0;
+                  }
 
                 } else {
                   $feff[$name]['wn8'] = 0;
