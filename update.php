@@ -606,6 +606,64 @@ if( (310.4 - (float) $config['version']) > 0 ) {
   }
 } //if( (310.3 - (float) $config['version']) > 0 )
 
+if( (310.5 - (float) $config['version']) > 0 ) {
+
+  //Получаем список префиксов из таблицы multiclan
+  $sql = "SELECT prefix FROM `multiclan`;";
+  $q = $db->prepare($sql);
+  if ($q->execute() == TRUE) {
+     $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+  }   else {
+     $prefix = array();
+  }
+  //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+  //Для внесения изменений в БД всех мультикланов.
+  if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+  if(!empty($prefix)) {
+    foreach($prefix as $t) {
+      $db->change_prefix($t);
+      $config = get_config();
+
+      //Получаем структуру таблицы
+      $sql = "SHOW COLUMNS FROM `col_ratings` ;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      $ratings_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+
+      foreach($ratings_structure as $id => $tmp) {
+        if(preg_match('/(_rank|_value)$/',$id))  {
+          $sql = 'ALTER TABLE `col_ratings` MODIFY `'.$id.'` int(12) NOT NULL DEFAULT "0";';
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+        }
+      }
+
+      $sql = 'ALTER TABLE `col_ratings` ADD INDEX `index` ( `account_id` );';
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+      echo 'Table col_ratings for prefix:',$t,' - updated.<br>';
+      /****************begin*****************/
+      /*   Меняем версию модуля в конфиге   */
+      /*************************************/
+      if(!is_numeric($config['version']) or (310.5 - (float) $config['version']) > 0 ) {
+        $sql = "UPDATE `config` SET `value` = '310.5' WHERE `name` = 'version' LIMIT 1 ;";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+      }
+    }
+  }
+} //if( (310.5 - (float) $config['version']) > 0 )
+
 //Clear cache
 $cache->clear_all(array(), ROOT_DIR.'/cache/');
 $cache->clear_all(array(), ROOT_DIR.'/cache/players/');
