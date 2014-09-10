@@ -135,6 +135,10 @@
                   });
                   return false;
               });
+              $('.company_collapse').click(function() {
+                $("#company_collapse_target" + $(this).attr('company')).toggle();
+                return false;
+              });
             <? } ?>
         });
         function magic(elem){

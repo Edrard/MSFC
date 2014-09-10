@@ -187,7 +187,7 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
                     if (isset($json['error']['message'])) {
                         $message = 'Get current error from WG: ('.$json['error']['message'].')';
                     }   else {
-                        $message = 'Param config[multiget] too big!';
+                        $message = 'No connection to WG API';
                     }
                     $res[$id]['status'] = 'error';
                     $res[$id]['error']['message'] = $message;

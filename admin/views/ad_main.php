@@ -855,8 +855,9 @@
                         </td>
                         <td align="center" width="50%" valign="top">
                           <? for($index=1;$index<=$config['company_count'];$index++){ ?>
-                            <div class="ui-widget-header"><?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?></div>
-                              <div class="ui-widget-content pl_list">
+                            <div class="ui-widget-header">
+                             <span style="float:right;margin-right:10px;" class="company_collapse" company="<?=$index;?>"><span class="ui-icon ui-icon-carat-2-n-s"></span></span><?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?></div>
+                              <div class="ui-widget-content pl_list" id="company_collapse_target<?=$index;?>">
                                 <ul class="connectedSortable droptrue" id="sortable<?=$index;?>">
                                   <? if(isset($adm_company['list'.$index]) and !empty($adm_company['list'.$index])) { ?>
                                     <? foreach($adm_company['list'.$index] as $val) { ?>
