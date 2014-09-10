@@ -231,7 +231,7 @@ function build_ratings_tables($eff = array()) {
   $rating['eff']    = array(-1,609,849,1144,1474,1774,9999);
   $rating['wn7']    = array(-1,449,814,1184,1589,1924,9999);
   $rating['wn8']    = array(-1,314,759,1324,1979,2569,9999);
-  $rating['brone']  = array(-1,2080.77,2733.38,3849.62,5570.97,7296.96,99999);
+  $rating['brone']  = array(-1,2049.96,2771.26,4027.73,6001.84,8070.96,99999);
 
   $help['win']      = array(-1,46,48,51,56,64,100);
   $help['colors']   = array('red','#FF7E00','grey','#489928','royalblue','#D042F3');
