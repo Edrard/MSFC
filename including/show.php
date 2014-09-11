@@ -18,6 +18,12 @@
 //Получаем информацио о апи
 $api_api = get_api('encyclopedia/info');
 $api_cache = $cache->get('api_info', 0, ROOT_DIR.'/cache/other/');
+//Временный фикс, для тех кто использует промежуточную github версию модуля
+//Фикс необходим т.к. в версии 3.1.0 нет этого в кэше, а в промежуточных github версиях есть, но данные старые, без этого параметра
+//Через релиз после 3.1.0 можно удалять
+if(isset($api_cache['status']) and !isset($api_cache['data']['tanks_updated_at'])) {
+  $api_cache['data']['tanks_updated_at'] = 0;
+}
 
 //В кэше пусто и данные не получены
 if( ( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) and ( !isset($api_api['status']) or $api_api['status'] != 'ok' or empty($api_api['data']) ) ) {
@@ -31,8 +37,9 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
       $api_cache = $api_api;
   }
   //Сравниваем данные о АПИ в кэше и полученные
-  //Если версии отличаются, и с момента апдейта прошло больше двух дней - обновляем
-  if((now() - $api_api['data']['game_updated_at'] >= 2*24*60*60) and $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
+  //Если версии отличаются, и дата обновления данных о технике не совпадает
+  //TODO: если добавится дата обновления информации о наградах, добавить и ее
+  if($api_api['data']['tanks_updated_at'] != $api_cache['data']['tanks_updated_at'] and $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
     //обновляем кэш
     $cache->clear('api_info', ROOT_DIR.'/cache/other/');
     $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
