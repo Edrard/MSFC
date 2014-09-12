@@ -376,6 +376,19 @@ function autoclean($time,$multi,$config,$directory)
               unlink($directory.$file);
           }
         }
+
+        //clean db from cron data
+        if($config['cron_autoclean'] == 1) {
+          require(ROOT_DIR.'/admin/func_admin.php');
+
+          if($config['cron_cleanleft'] == 1) {
+            clean_db_left_players();
+          }
+
+          if($config['cron_cleanold'] == 1) {
+            clean_db_old_cron($config['cron_cleanold_d']);
+          }
+        }
     }
 }
 function multi_main($multi){

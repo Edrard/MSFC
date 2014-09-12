@@ -730,6 +730,32 @@
                         <div class="settingsLine admin_cdhide">
                            <div>&nbsp;</div>
                            <div>
+                              <b><?=$lang['admin_cron_autoclean'];?></b>
+                           </div>
+                        </div>
+                        <div class="settingsLine admin_cdhide">
+                           <div><?=$lang['admin_cron_autoclean_enable'];?></div>
+                           <div>
+                              <input <?=($config['cron_autoclean']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_autoclean" value="1" size="2" />
+                           </div>
+                        </div>
+                        <div class="settingsLine admin_cdhide">
+                           <div><?=$lang['admin_clean_db_left_players'];?></div>
+                           <div>
+                              <input <?=($config['cron_cleanleft']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_cleanleft" value="1" size="2" />
+                           </div>
+                        </div>
+                        <div class="settingsLine admin_cdhide">
+                           <div><?=$lang['admin_clean_db_old_cron'];?></div>
+                           <div>
+                              <input <?=($config['cron_cleanold']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_cleanold" value="1" size="2" />
+                              <?=$lang['clear_old_cron_date_1'];?><input type="text" size="1" name="cron_cleanold_d" value="<?=$config['cron_cleanold_d'];?>" /><?=$lang['clear_old_cron_date_2'];?>
+                           </div>
+                        </div>
+
+                        <div class="settingsLine admin_cdhide">
+                           <div>&nbsp;</div>
+                           <div>
                               <b><?=$lang['admin_cron_period']?></b>
                            </div>
                         </div>

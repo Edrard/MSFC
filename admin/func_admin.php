@@ -52,6 +52,15 @@ function insert_config($config)
         if(!isset($config['cron_multi'])){
             $config['cron_multi'] = 0;
         }
+        if(!isset($config['cron_autoclean'])){
+            $config['cron_autoclean'] = 0;
+        }
+        if(!isset($config['cron_cleanleft'])){
+            $config['cron_cleanleft'] = 0;
+        }
+        if(!isset($config['cron_cleanold'])){
+            $config['cron_cleanold'] = 0;
+        }
     }
     if(isset($config['consub_3'])){
         if(!isset($config['company'])){

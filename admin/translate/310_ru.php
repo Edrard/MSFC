@@ -22,4 +22,8 @@
     $lang['ach_section_hist'] = 'Исторические бои';
     $lang['ach_section_expert'] = 'Эксперт';
     $lang['ach_section_mechanic'] = 'Инженер-механик';
+    $lang['clear_old_cron_date_1'] = 'Удалить Крон данные старше ';
+    $lang['clear_old_cron_date_2'] = ' дней.';
+    $lang['admin_cron_autoclean'] = 'Автоматическая очистка Базы Данных';
+    $lang['admin_cron_autoclean_enable'] = 'Включить автоматическую очистку БД';
 ?>

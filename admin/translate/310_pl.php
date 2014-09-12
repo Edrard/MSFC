@@ -21,5 +21,9 @@
     $lang['admin_achievements_db_up'] = 'Update information about achievements in database';
     $lang['ach_section_hist'] = 'Historical Battles';
     $lang['ach_section_expert'] = 'Expert';
-    $lang['ach_section_mechanic'] = 'Technical Engineer';    
+    $lang['ach_section_mechanic'] = 'Technical Engineer';
+    $lang['clear_old_cron_date_1'] = 'Delete Cron data older than ';
+    $lang['clear_old_cron_date_2'] = ' days.';
+    $lang['admin_cron_autoclean'] = 'Automatic cleaning of the database';
+    $lang['admin_cron_autoclean_enable'] = 'Enable automatic cleaning of the database';            
 ?>
