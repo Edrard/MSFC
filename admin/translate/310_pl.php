@@ -25,5 +25,6 @@
     $lang['clear_old_cron_date_1'] = 'Delete Cron data older than ';
     $lang['clear_old_cron_date_2'] = ' days.';
     $lang['admin_cron_autoclean'] = 'Automatic cleaning of the database';
-    $lang['admin_cron_autoclean_enable'] = 'Enable automatic cleaning of the database';            
+    $lang['admin_cron_autoclean_enable'] = 'Enable automatic cleaning of the database';
+    $lang['admin_cron_autoclean_log'] = 'Automatic cleaning of cron log file';            
 ?>

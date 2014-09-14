@@ -388,6 +388,10 @@ function autoclean($time,$multi,$config,$directory)
           if($config['cron_cleanold'] == 1) {
             clean_db_old_cron($config['cron_cleanold_d']);
           }
+
+          if($config['cron_clean_log'] == 1) {
+            cron_file_recreat();
+          }
         }
     }
 }

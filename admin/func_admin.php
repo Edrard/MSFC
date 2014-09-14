@@ -61,6 +61,9 @@ function insert_config($config)
         if(!isset($config['cron_cleanold'])){
             $config['cron_cleanold'] = 0;
         }
+        if(!isset($config['cron_clean_log'])){
+            $config['cron_clean_log'] = 0;
+        }
     }
     if(isset($config['consub_3'])){
         if(!isset($config['company'])){

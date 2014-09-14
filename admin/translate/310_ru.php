@@ -26,4 +26,5 @@
     $lang['clear_old_cron_date_2'] = ' дней.';
     $lang['admin_cron_autoclean'] = 'Автоматическая очистка Базы Данных';
     $lang['admin_cron_autoclean_enable'] = 'Включить автоматическую очистку БД';
+    $lang['admin_cron_autoclean_log'] = 'Автоматическая очистка лога крона';
 ?>

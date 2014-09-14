@@ -752,7 +752,12 @@
                               <?=$lang['clear_old_cron_date_1'];?><input type="text" size="1" name="cron_cleanold_d" value="<?=$config['cron_cleanold_d'];?>" /><?=$lang['clear_old_cron_date_2'];?>
                            </div>
                         </div>
-
+                        <div class="settingsLine admin_cdhide">
+                           <div><?=$lang['admin_cron_autoclean_log'];?></div>
+                           <div>
+                              <input <?=($config['cron_clean_log']=='1')?'checked="yes"':'';?> type="checkbox" name="cron_clean_log" value="1" size="2" />
+                           </div>
+                        </div>
                         <div class="settingsLine admin_cdhide">
                            <div>&nbsp;</div>
                            <div>
