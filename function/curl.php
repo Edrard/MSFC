@@ -142,13 +142,32 @@ class CURL
 
         while ( $active && $mrc == CURLM_OK )
         {
+          /*
+          https://bugs.php.net/bug.php?id=63411
+          https://bugs.php.net/bug.php?id=63842
+          curl_multi_select() для PHP 5.3.18 и выше всегда вернет -1
+
+          От разработчиков libcurl http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
+          "When libcurl returns -1 in max_fd, it is because libcurl currently does something that isn't possible for your application to monitor
+          with a socket and unfortunately you can then not know exactly when the current action is completed using select().
+          When max_fd returns with -1, you need to wait a while and then proceed and call curl_multi_perform anyway.
+          How long to wait? I would suggest 100 milliseconds at least, but you may want to test it out in your own particular conditions to find a suitable value. "
+
+            Старый код:
             if ( curl_multi_select( $mh ) != -1 )
             {
                 do
                     $mrc = curl_multi_exec( $mh, $active );
                 while ( $mrc == CURLM_CALL_MULTI_PERFORM );
             }
+          */
+            if (curl_multi_select($mh) == -1) { usleep(150); }
+
+            do
+                $mrc = curl_multi_exec( $mh, $active );
+            while ( $mrc == CURLM_CALL_MULTI_PERFORM );
         }
+
         if ( $mrc != CURLM_OK )
             echo "Curl multi read error $mrc\n";
 
