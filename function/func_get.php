@@ -60,6 +60,7 @@ function get_clan_v2($clanid, $whattoload, $config, $fields_array = array()) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "X-Requested-With: XMLHttpRequest",
         "Accept: text/html, */*",
@@ -89,6 +90,7 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "X-Requested-With: XMLHttpRequest",
         "Accept: text/html, */*",
@@ -128,7 +130,8 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
         $curl = new CURL();
         $curl->retry = 2;
         $opts = array(CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => $timeout
+                      CURLOPT_CONNECTTIMEOUT => $timeout,
+                      CURLOPT_FOLLOWLOCATION => false
         );
         usleep(5);
         $url_chunk = array_chunk($urls, 10, TRUE);
@@ -151,6 +154,7 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
               curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
               curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
               curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
+              curl_setopt($ch[$key], CURLOPT_FOLLOWLOCATION, false);
               curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
                   "X-Requested-With: XMLHttpRequest",
                   "Accept: text/html, */*",
@@ -211,6 +215,7 @@ function get_wn8() {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "X-Requested-With: XMLHttpRequest",
         "Accept: text/html, */*",
