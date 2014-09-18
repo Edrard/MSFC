@@ -26,15 +26,12 @@ class CURL
         if(!isset($opts['19913'])){
             $opts['19913'] = 1;
         }
-        if(!isset($opts['52'])){
-            $opts['52'] = 1;
-        }
         if(!isset($opts['13'])){
             $opts['13'] = $this->timeout;
         } 
         if(!isset($opts['78'])){
             $opts['78'] = $this->conn_timeout;
-        } 
+        }
         $this->setOpts( $opts, $name );
     }
 
@@ -66,7 +63,7 @@ class CURL
     public function exec( $key = false )
     {
         $no = count( $this->sessions );
-        $res = $this->execMulti();    
+        $res = $this->execMulti();
         if( $res )
             return $res;
     }
