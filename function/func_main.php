@@ -315,15 +315,18 @@ function get_available_tanks_index() {
 function roster_num($var)
 {
     $data = array();
-    $data['recruit'] = '8';
-    $data['private'] = '7';
-    $data['recruiter'] = '6';    
-    $data['treasurer'] = '5';
-    $data['diplomat'] = '4';
-    $data['commander'] = '3'; 
-    $data['vice_leader'] = '2';  
-    $data['leader'] = '1';
-    return $data[$var];
+    $data['reservist'] = '90';
+    $data['junior_officer'] = '65';
+    $data['personnel_officer'] = '25';
+    $data['recruit'] = '80';
+    $data['private'] = '70';
+    $data['recruiter'] = '60';
+    $data['treasurer'] = '50';
+    $data['diplomat'] = '40';
+    $data['commander'] = '30';
+    $data['vice_leader'] = '20';
+    $data['leader'] = '10';
+    return isset($data[$var])?$data[$var]:100;
 }
 
 function read_multiclan($dbprefix = FALSE)
