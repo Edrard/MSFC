@@ -800,14 +800,23 @@ if( (311.0 - (float) $config['version']) > 0 ) {
   if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
   if(!empty($prefix)) {
 
-    $sql = "DROP INDEX `name_i18n` ON `tanks`;";
+    $sql = "SHOW INDEXES FROM `tanks`;";
     $q = $db->prepare($sql);
     if ($q->execute() != TRUE) {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 
-    echo 'Table `tanks` (`name_i18n` index) - updated.<br>';
+    $structure = $q->fetchAll(PDO::FETCH_ASSOC);
 
+    if(count($structure) > 1) {
+      $sql = "DROP INDEX `name_i18n` ON `tanks`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() != TRUE) {
+          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+      }
+
+      echo 'Table `tanks` (`name_i18n` index) - updated.<br>';
+    }
     foreach($prefix as $t) {
       $db->change_prefix($t);
       $config = get_config();
