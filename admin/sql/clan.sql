@@ -226,8 +226,7 @@ CREATE TABLE IF NOT EXISTS `tanks` (
   `image` text NOT NULL,
   `contour_image` text NOT NULL,
   `image_small` text NOT NULL,
-  PRIMARY KEY (`tank_id`),
-  UNIQUE KEY `name_i18n` (`name_i18n`)
+  PRIMARY KEY (`tank_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

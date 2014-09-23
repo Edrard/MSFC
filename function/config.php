@@ -67,7 +67,7 @@ if($exec_time == 0){
 //Updater
 if (!preg_match ("/update.php/", $_SERVER['PHP_SELF']))
 {
-  if(isset($config['version']) and ( !is_numeric($config['version']) or (310.7 - (float) $config['version']) > 0 ) ) {
+  if(isset($config['version']) and ( !is_numeric($config['version']) or (311.0 - (float) $config['version']) > 0 ) ) {
     if(preg_match ("/\/admin\//", $_SERVER['PHP_SELF'])) { //admin cp
       header ("Location: ../update.php");
       die('Module version are outdated, rediecting to updater: <a href="../update.php" target="_self" title="update">Update</a>');
