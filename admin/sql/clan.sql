@@ -148,6 +148,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('cron_cleanleft', '1'),
 ('cron_cleanold', '1'),
 ('cron_cleanold_d', '90'),
+('cron_clean_log', '0'),
 ('news', '1'),
 ('cron_time', '23'),
 ('multiget', '20'),
