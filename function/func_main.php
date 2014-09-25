@@ -644,6 +644,7 @@ function update_achievements_db($ach = array()) {
 function achievements_split($res,$ach) {
   $ret = array('sections' => array(), 'split' => array());
   $counter = array('id' => array(), 'split' => array());
+  $num = $n = $m = 0;
 
   //list of ach. in clan
   //except 'class' section
@@ -665,10 +666,18 @@ function achievements_split($res,$ach) {
     if(in_array($val['name'],$counter['id'])) {
       $counter['split'][$val['section']][] = $val['name'];
     }
+    //counters
+    if($val['section'] == 'expert') {
+      ++$n;
+    }
+    if($val['section'] == 'mechanic') {
+      ++$m;
+    }
   }
   //how many ach. in one section
-  $num = count($counter['split']['expert']);
-  if(count($counter['split']['mechanic']) > $num) { $num = count($counter['split']['mechanic']); }
+  $num = $n;
+  if($m > $num) { $num = $m; }
+  if($num == 0) { $num = 8; }
 
   //chunk ach. to sections
   foreach($counter['count'] as $id => $n) {
