@@ -159,7 +159,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '311.0'),
+('version', '312.0'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
 ('company', '0'),
@@ -185,7 +185,8 @@ CREATE TABLE IF NOT EXISTS `tabs` (
   `file` varchar(65) NOT NULL,
   `type` tinyint(1) NOT NULL COMMENT '0 -normal, 1-ajax',
   `status` tinyint(1) NOT NULL COMMENT '0 - Off, 1 - On',
-  `auth` varchar(25) NOT NULL COMMENT 'all, admin, user'
+  `auth` varchar(25) NOT NULL COMMENT 'all, admin, user',
+  UNIQUE KEY `file` (`file`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

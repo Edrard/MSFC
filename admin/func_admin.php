@@ -386,7 +386,20 @@ function tabs_info_db($post)
 {
     global $db;
     $error = 0;
+    $old_prefix = $db->prefix;
     unset($post['tabsub']);
+
+    if(isset($post['all_multiclans'])) {
+      unset($post['all_multiclans']);
+      //Получаем список префиксов из таблицы multiclan
+      $sql = "SELECT prefix FROM `multiclan`;";
+      $q = $db->prepare($sql);
+      if ($q->execute() == TRUE) {
+         $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+      }
+    }
+    if(empty($prefix)) { $prefix = array($db->prefix); }
+
     foreach($post as $key => $var){
         $tmp = explode('_',$key);
         $type = array_pop($tmp);
@@ -413,45 +426,26 @@ function tabs_info_db($post)
         }
     }  
     if($error == 0){
+     foreach($prefix as $t) {
+      $db->change_prefix($t);
         foreach($new as $vals){
             //print_r($vals);
-            if(count($vals) == 6){
-                $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$vals['file']."';";
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $num = $q->fetchColumn();
-                }   else {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-                if($num == 0){
-                    $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."');";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                }   else {
-                    $nm = 0;
-                    $insert = '';
-                    foreach($vals as $column => $val){
-                        if($nm == 0){
-                            $insert .= "`".$column."` = '".$val."'";  
-                            $nm++;
-                        }   else {
-                            $insert .= ', `'.$column."` = '".$val."'";
-                        }
-                    }
-                    $sql = "UPDATE `tabs` SET ".$insert." WHERE file = '".$vals['file']."';";
-                    //echo $sql;
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                }
-            }   else {
-                $error = 1;
+            $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."')
+                     ON DUPLICATE KEY UPDATE ";
+            foreach($vals as $column => $val) {
+              $sql .= "`$column` = '$val', ";
+            }
+            $sql = substr($sql, 0, strlen($sql)-2);
+            $sql .= ';';
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
         }
+     }
+     $db->change_prefix($old_prefix);
     }
+    //echop($db->sqls);
     return $error;
 }
 

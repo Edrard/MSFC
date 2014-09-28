@@ -395,6 +395,9 @@
                                       } ?>
                               </tbody>
                             </table>
+                            <?php if(count($multiclan) > 1){ ?>
+                              <p align="center"><?=$lang['for_all_clans'];?>&nbsp;<input id="iall_multiclans" class="iall_multiclans" type="checkbox" name="all_multiclans" value="1" size="2" /></p>
+                            <?php } ?>                            
                             <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="tabsub" /></p>
                           </form>
                           <div class="ui-state-error ui-corner-all"><?=$lang['admin_tab_delete_n'];?></div>
