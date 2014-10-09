@@ -85,7 +85,7 @@ $multiclan_main = multi_main($multiclan);
 foreach($multiclan as $clan){
     $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
     if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($clan['id'] == $config['clan'])) {
-        $multiclan_info[$clan['id']] = get_clan_v2($clan['id'],'info', $config);
+        $multiclan_info[$clan['id']] = get_api('clan/info',array('clan_id' => $clan['id']));
         if ((empty($multiclan_info[$clan['id']])) || (!isset($multiclan_info[$clan['id']]['status']))) {
             $multiclan_info[$clan['id']]['status'] = 'error';
         }

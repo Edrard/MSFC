@@ -355,7 +355,7 @@ function autoclean($time,$multi,$config,$directory)
             $new = $cache->get('get_last_roster_'.$val['id'],0);
             if($new === FALSE)
             {
-                $new = get_clan_v2($config['clan'], 'info', $config);
+                $new = get_api('clan/info',array('clan_id' => $config['clan']));
             }
             //print_r($new); die;
             if(isset($new['data'][$val['id']]['members']) and !empty($new['data'][$val['id']]['members']))
@@ -568,12 +568,7 @@ function update_achievements_db($ach = array()) {
     $ach = achievements();
   }
 
-  $try = 0;
-  do {
-    $ach_res = array();
-    $ach_res = get_api('encyclopedia/achievements');
-    $try++;
-  }  while ( isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data']) and $try < $config['try_count'] );
+  $ach_res = get_api('encyclopedia/achievements');
 
   if(isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data'])) {
 

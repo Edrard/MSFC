@@ -72,7 +72,7 @@ if ($_GET['multiadd'] == 1){
                     }   else {
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
-                    $roster = get_clan_v2($_GET['id'], 'info', $config);
+                    $roster = get_api('clan/info',array('clan_id' => $_GET['id']));
                     if (isset($roster['status']) && ($roster['status']=='ok') && is_null($roster['data'][$_GET['id']])) {
                         $message['id'] = $lang['error_multi_8'];
                     }   elseif ((isset($roster['status']))&&($roster['status'] == 'ok')) {

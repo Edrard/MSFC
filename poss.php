@@ -53,7 +53,7 @@
     }
     $poss = array();
     if (is_valid_url($config['td']) == true){
-        $poss = get_clan_v2($config['clan'], 'provinces', $config);
+        $poss = get_api('clan/provinces',array('clan_id' => $config['clan']));
     }
     //include(ROOT_DIR.'/views/header.php');
 ?>

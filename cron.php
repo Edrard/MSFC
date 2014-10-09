@@ -120,7 +120,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
 
         //Geting clan roster from wargaming.
         $new = $cache->get('get_last_roster_'.$config['clan'],0);
-        $new2 = get_clan_v2($config['clan'], 'info', $config); //dg65tbhjkloinm
+        $new2 = get_api('clan/info',array('clan_id' => $config['clan']));
         //print_r($new2); die;
         if ($new2 === FALSE) {
             if($log == 1)  fwrite($fh, $date.": (Err) No roster from WG!"."\n");
