@@ -40,6 +40,7 @@
     if ($nickname == '') {
         die('Player Id Undefined!');
     }
+    require(ROOT_DIR.'/admin/translate/api_lang.php');
     require(ROOT_DIR.'/function/auth.php');
     include(ROOT_DIR.'/function/mysql.php');
     require(ROOT_DIR.'/function/func.php');
@@ -477,25 +478,16 @@ $result = get_player_clans($pres['data']['nickname'], $config['server']);
 if($result) { $end = end($result);
 if (isset($result)) {
   foreach ($result as $key => $val ) {
-     if (isset ($val['clanids'])) {
-         $new = $cache->get('get_last_roster_'.$val['clanids'],0);
-         if ($new === FALSE) {
-             $new2 = get_api('clan/info',array('clan_id' => $val['clanids']));
-             if (($new2 === FALSE)|| (!isset($new2['status'])) || ((isset($new2['status']))&&($new2['status'] <> 'ok') )) {
-                  $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
-             }    else {
-                  $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
-                  $cache->set('get_last_roster_'.$val['clanids'], $new2);
-             }
-         } else {
-              if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
-                  $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
-              }   else {
-                  $result[$key]['clanlink'] = $config['clan_img'].$val['clanids']."/emblem_64x64.png";
-              }
+     $new = $cache->get('get_last_roster_'.$val['clanids'],0);
+     if ($new === FALSE) {
+         $new2 = get_api('clan/info',array('clan_id' => $val['clanids']),array('emblems.large'));
+         if ($new2 != FALSE and isset($new2['status']) and $new2['status'] == 'ok' and isset($new2['data'][$val['clanids']]['emblems']['large']) and $new2['data'][$val['clanids']]['emblems']['large'] != '') {
+              $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
          }
-     }   else {
-         unset($result[$key]);
+     } else {
+          if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
+              $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
+          }
      }
   }
 ?>
@@ -509,7 +501,7 @@ if (isset($result)) {
       <td class="medalContainer" >
       <?php foreach($result as $val) { ?>
         <div class="clanDiv">
-        <img class="hint_small" src="<?=$val['clanlink']; ?>">
+        <img class="hint_small" src="<?=(isset($val['clanlink'])?$val['clanlink']:'./images/no_logo.png'); ?>">
         <br>
         <a href="http://<?php echo $config['gm_url'].'/community/clans/'.$val['clanids']; ?>/" target="_blank">[<?=$val['clantags']; ?>]</a>
         <br>
