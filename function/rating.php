@@ -193,7 +193,7 @@ function eff_rating($res, $wn8_exp = array()) {
                     $wn8['rDEFc']      = max(0, min($wn8['rDAMAGEc'] + 0.1, ($wn8['rDEF']    - 0.10) / (1 - 0.10)));
 
                     $feff[$name]['wn8'] = number_format(980*$wn8['rDAMAGEc'] + 210*$wn8['rDAMAGEc']*$wn8['rFRAGc'] + 155*$wn8['rFRAGc']*$wn8['rSPOTc'] + 75*$wn8['rDEFc']*$wn8['rFRAGc'] + 145*MIN(1.8,$wn8['rWINc']),2, '.', '');
-                    $feff[$name]['xvm_wn8'] = $feff[$name]['wn8']>3250 ? 100 : max(min( $feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*(0.0000000000000000000812*$feff[$name]['wn8'] + 0.0000000000000001616) - 0.000000000006736) + 0.000000028057) - 0.00004536) + 0.06563) - 0.01, 100), 0);
+                    $feff[$name]['xvm_wn8'] = $feff[$name]['wn8']>3400 ? 100 : max(min( $feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*($feff[$name]['wn8']*(0.00000000000000000009553*$feff[$name]['wn8'] - 0.0000000000000001644) - 0.00000000000426) + 0.0000000197) - 0.00003192) + 0.056265) - 0.157, 100), 0);
                   } else {
                     $feff[$name]['wn8'] = 0;
                     $feff[$name]['xvm_wn8'] = 0;
@@ -230,7 +230,7 @@ function build_ratings_tables($eff = array()) {
 
   $rating['eff']    = array(-1,609,849,1144,1474,1774,9999);
   $rating['wn7']    = array(-1,449,814,1184,1589,1924,9999);
-  $rating['wn8']    = array(-1,314,759,1324,1979,2569,9999);
+  $rating['wn8']    = array(-1,354,819,1369,2019,2619,9999);
   $rating['brone']  = array(-1,2049.96,2771.26,4027.73,6001.84,8070.96,99999);
 
   $help['win']      = array(-1,46,48,51,56,64,100);
