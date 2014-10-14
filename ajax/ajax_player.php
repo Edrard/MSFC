@@ -61,6 +61,7 @@
     $cache = new Cache(ROOT_DIR.'/cache/');
 
 function p_info($res, $t) {
+   $tstat = array();
    foreach($res as $key => $val) {
       @$chart1[$t[$val['tank_id']]['type']]['total'] += $val['statistics']['battles'];
       @$chart1[$t[$val['tank_id']]['type']]['win'] += $val['statistics']['wins'];
