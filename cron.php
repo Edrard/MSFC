@@ -111,7 +111,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
     if ($config['cron'] == 1){
 
         //check table tanks
-        cron_update_tanks_db();
+        update_tanks_db();
         $nations = tanks_nations();
         $medals = achievements();
         $tanks = tanks();
