@@ -425,95 +425,54 @@ function get_tables_like_col_tank($dbname){
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }
 }
-function update_tanks_db() {
+function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
-    if(isset($_POST['update_tanks_db'])){
-        $sql = "DELETE from `tanks` WHERE 1;";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
+
+    if(empty($tanks)) {
+      $tanks = tanks();
     }
-    $tmp = get_api('encyclopedia/tanks');
-    $tmp_tanks = tanks();
-    if(!empty($tmp_tanks)){
-        $current = array_resort($tmp_tanks,'tank_id');
-    }
-    unset($tmp_tanks);
-    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
-        $updatearr = $toload = array ();
-        foreach ($tmp['data'] as $tank_id => $val) {
-            if(!isset($current[$val['tank_id']])){
-                $cache_tanks = $cache->get($val['tank_id'], 24*60*60, ROOT_DIR.'/cache/tanks/');
-                $updatearr [$tank_id] = $cache_tanks['data'];
-                $updatearr [$tank_id]['tank_id']     = $val['tank_id'];
-                $updatearr [$tank_id]['type']        = $val['type'];
-                $updatearr [$tank_id]['nation_i18n'] = $val['nation_i18n'];
-                $updatearr [$tank_id]['level']       = $val['level'];
-                $updatearr [$tank_id]['nation']      = $val['nation'];
-                $updatearr [$tank_id]['name_i18n']   = $val['name_i18n'];
+    $tanks_api = get_api('encyclopedia/tanks');
 
-                $pieces = explode(':', $val['name']);
-                $updatearr [$tank_id]['title']      = $pieces['1'];
+    if ((isset($tanks_api['status'])) && ($tanks_api['status'] == 'ok')) {
+      $updatearr = array();
 
-                if ($val['is_premium']== true) {
-                    $updatearr [$val['tank_id']]['is_premium']      = 1;
-                }   else {
-                    $updatearr [$val['tank_id']]['is_premium']      = 0;
-                }
-                if( ($cache_tanks === FALSE) || (empty($cache_tanks)) || ((isset($cache_tanks['status'])) && ($cache_tanks['status']<>'ok')) ) {
-                    $toload[$val['tank_id']] = $val['tank_id'];
-                }
-            }
-        }
-        unset($tmp);
-
-        $tmp = array();
-        if(!empty($toload)){ $try = 0;
-          do {
-            $tmp = array();
-            $tmp = multiget_v2('tank_id', $toload, 'encyclopedia/tankinfo', array ('contour_image', 'image', 'image_small'));
-            foreach($tmp as $tank_id => $val){
-                if ((isset($val['status'])) && ($val['status'] == 'ok') && !empty($val['data'])) {
-                    $cache->set($tank_id, $val, ROOT_DIR.'/cache/tanks/');
-                    $updatearr [$tank_id]['image']         = $val['data']['image'];
-                    $updatearr [$tank_id]['contour_image'] = $val['data']['contour_image'];
-                    $updatearr [$tank_id]['image_small']   = $val['data']['image_small'];
-
-                    unset($toload[$tank_id]);
-                }
-            }
-          $try++;
-          }  while ( !empty($toload) and $try < $config['try_count'] );
-
-        }
-        //some tanks not loaded
-        if(!empty($toload)) {
-          foreach($toload as $tank_id) {
-            unset($updatearr[$tank_id]);
+      if(isset($_POST['update_tanks_db']) or $force == 1){
+          $sql = "TRUNCATE TABLE `tanks`;";
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
           }
-        }
-        unset($tmp);
-        if(!empty($updatearr)){
-            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
-            foreach ($updatearr as $tank_id => $val) {
-                $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+          $tanks = array();
+      }
+
+      foreach ($tanks_api['data'] as $tank_id => $val) {
+        if(!isset($tanks[$tank_id])){
+            $updatearr [$tank_id] = $val;
+
+            $pieces = explode(':', $val['name']);
+            $updatearr [$tank_id]['title']      = $pieces['1'];
+
+            if ($val['is_premium']== true) {
+                $updatearr [$tank_id]['is_premium']      = 1;
+            }   else {
+                $updatearr [$tank_id]['is_premium']      = 0;
             }
-            $sql = substr($sql, 0, strlen($sql)-2);
-            $sql .= ';';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
         }
-    }   else {
-        if (isset($tmp['error']['message'])) {
-            $message = ' ( '.$tmp['error']['message'].' )';
-        }   else {
-            $message = '';
-        }
-        die ('Some error with getting data from WG'.$message);  
+      }
+
+      if(!empty($updatearr)){
+          $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+          foreach ($updatearr as $tank_id => $val) {
+              $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+          }
+          $sql = substr($sql, 0, strlen($sql)-2);
+          $sql .= ';';
+          $q = $db->prepare($sql);
+          if ($q->execute() != TRUE) {
+              die(show_message($q->errorInfo(),__line__,__file__,$sql));
+          }
+      }
+
     }
 }
 
