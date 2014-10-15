@@ -128,7 +128,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         unset($tmp);
     }
 
-    if(!empty($links)) { $try = 0;
+    if(!empty($links)) { $try = 0; $update_eff = 1;
       do {
         $res_base = array();
         $res_base['info'] = multiget_v2('account_id', $links, 'account/info');
@@ -191,7 +191,15 @@ if(($wn8 === FALSE) or !isset($wn8['data']) or empty($wn8['data'])) {
 }
 /* end wn8 */
 
-$eff_rating = eff_rating($res,$wn8);
+/* code for eff. ratings */
+$eff_rating = $cache->get('eff_ratings_'.$config['clan'], 0, ROOT_DIR.'/cache/other/');
+
+if(isset($update_eff) or $eff_rating == false) {
+  $eff_rating = eff_rating($res,$wn8);
+  $cache->clear('eff_ratings_'.$config['clan'],ROOT_DIR.'/cache/other/');
+  $cache->set('eff_ratings_'.$config['clan'], $eff_rating, ROOT_DIR.'/cache/other/');
+}
+
 $tanks_nation = tanks_nations();
 $tanks_types = tanks_types();
 $tanks_lvl = tanks_lvl();
