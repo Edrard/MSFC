@@ -193,6 +193,13 @@ if(($wn8 === FALSE) or !isset($wn8['data']) or empty($wn8['data'])) {
 
 /* code for eff. ratings */
 $eff_rating = $cache->get('eff_ratings_'.$config['clan'], 0, ROOT_DIR.'/cache/other/');
+build_ratings_tables();
+
+if(is_array($eff_rating)) {
+  $tmp = array_diff(array_keys($roster),array_keys($eff_rating));
+  if(!empty($tmp)) { $update_eff = 1; }
+  unset($tmp);
+}
 
 if(isset($update_eff) or $eff_rating == false) {
   $eff_rating = eff_rating($res,$wn8);
