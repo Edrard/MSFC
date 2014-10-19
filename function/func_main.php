@@ -649,10 +649,12 @@ function achievements_ajax_player($ach) {
   $ret = array('sections' => array(), 'split' => array());
 
   foreach($ach as $val) {
-    if(!isset($ret[$val['section']])) {
-      $ret['sections'][$val['section']] = $val['section_i18n'];
+    if($val['name'] != 'marksOnGun') {
+      if(!isset($ret[$val['section']])) {
+        $ret['sections'][$val['section']] = $val['section_i18n'];
+      }
+      $ret['split'][$val['section']][] = $val['name'];
     }
-    $ret['split'][$val['section']][] = $val['name'];
   }
 
   return $ret;
