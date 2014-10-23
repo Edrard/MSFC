@@ -150,7 +150,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
             continue;
           }
           //achievements
-          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' ) {
+          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' or empty($res_base['achievements'][$p_id]['data']['frags']) or empty($res_base['achievements'][$p_id]['data']['max_series']) ) {
             continue;
           }
 
@@ -159,7 +159,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
           if(isset($to_cache['data']['achievements'])) {
             unset($to_cache['data']['achievements']);
           }
-          $to_cache['data']['achievements'] = $res_base['achievements'][$p_id]['data']['achievements'];
+          $to_cache['data']['achievements'] = array_merge($res_base['achievements'][$p_id]['data']['achievements'],$res_base['achievements'][$p_id]['data']['frags'],$res_base['achievements'][$p_id]['data']['max_series']);
           $to_cache['data']['tanks'] = array_resort($res_base['tanks'][$p_id]['data'],'tank_id');
           $to_cache['data']['ratings'] = $res_base['ratings'][$p_id]['data'];
 
