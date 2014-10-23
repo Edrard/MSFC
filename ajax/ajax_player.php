@@ -40,6 +40,8 @@
     if ($nickname == '') {
         die('Player Id Undefined!');
     }
+
+    include(ROOT_DIR.'/including/check.php');
     require(ROOT_DIR.'/admin/translate/api_lang.php');
     require(ROOT_DIR.'/function/auth.php');
     include(ROOT_DIR.'/function/mysql.php');
@@ -546,6 +548,7 @@ if (isset($result)) {
 } // if result
 ?>
 <? $data = $pres['data']['achievements'];?>
+<? if (!empty($data)) { ?>
 <br>
 <table cellspacing="1" cellpadding="1" width="100%" id="player9">
   <thead>
@@ -587,6 +590,8 @@ if (isset($result)) {
   <? ++$i;} ?>
   </tbody>
 </table>
+<? } //end of medals 
+?> 
 <br>
 <?php
 $i=13;

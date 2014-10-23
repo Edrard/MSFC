@@ -18,4 +18,6 @@
   $lang['ach_section_hist'] = 'Historical Battles';
   $lang['ach_section_expert'] = 'Expert';
   $lang['ach_section_mechanic'] = 'Technický inžinier';
+  $lang['error_no_medals'] = 'Udaje o medailach neboli nacitane.';
+  
 ?>

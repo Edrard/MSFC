@@ -18,4 +18,5 @@
   $lang['ach_section_hist'] = 'Historical Battles';
   $lang['ach_section_expert'] = 'Expert';
   $lang['ach_section_mechanic'] = 'Technical Engineer';
+  $lang['error_no_medals'] = 'Dane o medale nie zostaly zaladowane.';
 ?>

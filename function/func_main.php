@@ -603,12 +603,11 @@ function achievements_split($res,$ach) {
   //list of ach. in clan
   //except 'class' section
   foreach($res as $val) {
-    if(!empty($val['data']['achievements'])) {
-      foreach($val['data']['achievements'] as $id => $t) {
-        if(!in_array($id,$counter['id']) and isset($ach[$id]) and $ach[$id]['section'] != 'class') {
-          $counter['id'][] = $id;
-          if(isset($counter['count'][$ach[$id]['section']])) { $counter['count'][$ach[$id]['section']] += 1; } else { $counter['count'][$ach[$id]['section']] = 1;}
-        }
+    if (!(isset($val['data']['achievements']))) return array(); //fix empty award list
+    foreach($val['data']['achievements'] as $id => $t) {
+      if(!in_array($id,$counter['id']) and isset($ach[$id]) and $ach[$id]['section'] != 'class') {
+        $counter['id'][] = $id;
+        if(isset($counter['count'][$ach[$id]['section']])) { $counter['count'][$ach[$id]['section']] += 1; } else { $counter['count'][$ach[$id]['section']] = 1;}
       }
     }
   }

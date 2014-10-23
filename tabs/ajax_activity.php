@@ -20,8 +20,9 @@ $sql = "SELECT MIN(updated_at) FROM `col_players`;";
 $q = $db->prepare($sql);
      if ($q->execute() == TRUE) {
          $mindate = $q->fetchColumn();
-     }   else {
-         $mindate = 0;
+     }
+     if (!is_numeric($mindate)) {
+          $mindate = 0;
      }
 ?>
 <script type="text/javascript">
