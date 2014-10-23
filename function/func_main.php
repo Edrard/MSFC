@@ -645,16 +645,20 @@ function achievements_split($res,$ach) {
   return $ret;
 }
 
-function achievements_ajax_player($ach) {
+function achievements_ajax_player($ach,$filter = array()) {
   $ret = array('sections' => array(), 'split' => array());
 
   foreach($ach as $val) {
-    if($val['name'] != 'marksOnGun') {
-      if(!isset($ret[$val['section']])) {
-        $ret['sections'][$val['section']] = $val['section_i18n'];
-      }
-      $ret['split'][$val['section']][] = $val['name'];
+    if(!empty($filter) and !isset($filter[$val['name']])) {
+      continue;
     }
+    if(in_array($val['name'], array('marksOnGun','markOfMastery'))) {
+      continue;
+    }
+    if(!isset($ret[$val['section']])) {
+      $ret['sections'][$val['section']] = $val['section_i18n'];
+    }
+    $ret['split'][$val['section']][] = $val['name'];
   }
 
   return $ret;

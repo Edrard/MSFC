@@ -52,9 +52,11 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
           }
         }
         foreach ($data['tanks'] as $key => $val) {
+          if(isset($tanks[$val['tank_id']])) {
             $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_battles'] = $val['statistics']['battles'];
             $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_wins'] = $val['statistics']['wins'];
             $col_tanks[$tanks[$val['tank_id']]['nation']][$val['tank_id'].'_mark_of_mastery'] = $val['mark_of_mastery'];
+          }
         }
         foreach ($stats5 as $val) {
             foreach ($stats4 as $pv) {
