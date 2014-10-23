@@ -62,10 +62,10 @@
                     }
                 });
             <?php } ?>
-            <?php if(count($multiclan) > 1) { ?>
+            <?php if(isset($multiclan) and count($multiclan) > 1) { ?>
                 $('.iall_multiclans[type=checkbox]').prop('checked', false);
             <?php } ?>
-            <?php if(count($multiclan) > 1 and !isset($_GET['multi']) ) { ?>
+            <?php if(isset($multiclan) and count($multiclan) > 1 and !isset($_GET['multi']) ) { ?>
                 $("#iall_multiclans").change(function() {
                   if($("#iall_multiclans").is(':checked')) {
                     $("#iserver").prop('disabled', true);
