@@ -8,7 +8,7 @@
     * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, SHW  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
@@ -50,7 +50,7 @@
            </div>
        </form>
        <br />
-       <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2"  class="table-id-<?=$key;?>">
+       <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2" style="text-align: center;" class="table-id-<?=$key;?>">
            <thead>
                <tr>
                    <th><?=$lang['name']; ?></th>
@@ -72,26 +72,24 @@
                </tr>
            </thead>
            <tbody>
-               <?php foreach($res as $name => $val){ ?>
-                   <tr>
-                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                     <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
-                         <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                     <? } ?>
-                     <?
-                     foreach($achievements_split['split'] as $id => $tmp) {
-                       foreach($tmp as $n => $tmp2){
-                         foreach($tmp2 as $ach_id){
-                           $ach = $achievements[$ach_id];
-                     ?>
-                           <td align="center" class="ach_am ach_<?=$ach['section'],$n;?>"><?=isset($val['data']['achievements'][$ach_id])?$val['data']['achievements'][$ach_id]:'';?></td>
-                     <?
-                         }
-                       }
+               <?php
+                  foreach($res as $name => $val){
+                     echo '<tr>';
+                     echo '<td align="left"><a href="', $config['base'], $name, '/', '" target="_blank">', $name, '</a></td>';
+                     if ($config['company'] == 1 and in_array($key,$company['tabs'])) {
+                          echo '<td>', in_array($val['data']['account_id'], $company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'', '</td>';
                      }
-                     ?>
-                   </tr>
-               <?php } ?>
+                     foreach($achievements_split['split'] as $id => $tmp) {
+                        foreach($tmp as $n => $tmp2){
+                          foreach($tmp2 as $ach_id){
+                            $ach = $achievements[$ach_id];
+                            echo '<td class="ach_am ach_', $ach['section'], $n, '">', isset($val['data']['achievements'][$ach_id])?$val['data']['achievements'][$ach_id]:'', '</td>';
+                          }
+                        }
+                     }
+                     echo '</tr>';
+                  }   
+               ?>
            </tbody>
        </table>
     <? } else {

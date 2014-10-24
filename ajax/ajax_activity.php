@@ -8,7 +8,7 @@
     * Date:        $Date: 2013-11-20 00:00:00 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, SHW  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
@@ -78,55 +78,64 @@ if (isset($_POST['a_from']) and isset($_POST['a_to']) and preg_match('/[0-9]{2}.
 }
 
 $activity = $tmp = $tmp2 = $count = array();
+$count['all'] = $count['clan'] = $count['company'] = $sl_count = 0;
+$showarr = array('all', 'clan', 'company');
 
-$sql = "SELECT * FROM `col_players` WHERE updated_at <= '".$time['to']."' AND updated_at >= '".$time['from']."' ORDER BY updated_at ASC;";
+$sql = "SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= '".$time['to']."' AND updated_at >= '".$time['from']."' ;";
 $q = $db->prepare($sql);
 if ($q->execute() == TRUE) {
-    $tmp = $q->fetchAll();
+    $sl_count = $q->fetch();
 }   else {
     die(show_message($q->errorInfo(),__line__,__file__,$sql));
 }
-
-foreach ($tmp as $key => $val){
-   $tmp2[date('d.m.Y',$val['updated_at'])][$val['account_id']] = $val;
-}
-
-$count['all'] = $count['clan'] = $count['company'] = 0;
-$showarr = array('all', 'clan', 'company');
-
-foreach ($tmp2 as $keydata => $val){
-  foreach ($val as $acc_id => $val2){
-     $next = date('d.m.Y', strtotime($keydata .' +1 day'));
-     if (isset ($tmp2[$next][$acc_id]['all_battles'])) {
-         foreach ($showarr as $keyacc) {
-            if ($keyacc == 'all') {
-                $activity[$keydata][$val2['nickname']]['all_battles'] = $tmp2[$next][$acc_id]['all_battles'] - $val2['all_battles'] +
-                $val2['clan_battles'] - $tmp2[$next][$acc_id]['clan_battles'] +
-                $val2['company_battles'] - $tmp2[$next][$acc_id]['company_battles'];
-            }   else {
-                $activity[$keydata][$val2['nickname']][$keyacc.'_battles'] = $tmp2[$next][$acc_id][$keyacc.'_battles'] - $val2[$keyacc.'_battles'];
-            }
-            if (!isset ($activity[$keydata][$keyacc][$keyacc.'_battles'])) {
-                 $activity[$keydata][$keyacc][$keyacc.'_battles'] = $activity[$keydata][$val2['nickname']][$keyacc.'_battles'];
-            }    else {
-                 $activity[$keydata][$keyacc][$keyacc.'_battles'] += $activity[$keydata][$val2['nickname']][$keyacc.'_battles'];
-            }
+if ($sl_count['count'] >0) {
+    $sql = "SELECT * FROM `col_players` WHERE updated_at <= '".$time['to']."' AND updated_at >= '".$time['from']."' ORDER BY updated_at ASC;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $tmp = $q->fetchAll();
+    }   else {
+        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    }
+    
+    foreach ($tmp as $key => $val){
+       $tmp2[date('d.m.Y',$val['updated_at'])][$val['account_id']] = $val;
+    }
+    
+    
+    foreach ($tmp2 as $keydata => $val){
+      foreach ($val as $acc_id => $val2){
+         $next = date('d.m.Y', strtotime($keydata .' +1 day'));
+         if (isset ($tmp2[$next][$acc_id]['all_battles'])) {
+             foreach ($showarr as $keyacc) {
+                if ($keyacc == 'all') {
+                    $activity[$keydata][$val2['nickname']]['all_battles'] = $tmp2[$next][$acc_id]['all_battles'] - $val2['all_battles'] +
+                    $val2['clan_battles'] - $tmp2[$next][$acc_id]['clan_battles'] +
+                    $val2['company_battles'] - $tmp2[$next][$acc_id]['company_battles'];
+                }   else {
+                    $activity[$keydata][$val2['nickname']][$keyacc.'_battles'] = $tmp2[$next][$acc_id][$keyacc.'_battles'] - $val2[$keyacc.'_battles'];
+                }
+                if (!isset ($activity[$keydata][$keyacc][$keyacc.'_battles'])) {
+                     $activity[$keydata][$keyacc][$keyacc.'_battles'] = $activity[$keydata][$val2['nickname']][$keyacc.'_battles'];
+                }    else {
+                     $activity[$keydata][$keyacc][$keyacc.'_battles'] += $activity[$keydata][$val2['nickname']][$keyacc.'_battles'];
+                }
+             }
+         }   else {
+             $activity[$keydata][$val2['nickname']]['all_battles'] = $activity[$keydata][$val2['nickname']]['clan_battles'] = $activity[$keydata][$val2['nickname']]['company_battles'] = 0;
+              if (!isset ($activity[$keydata]['all']['all_battles'])) {
+                  $activity[$keydata]['all']['all_battles'] = $activity[$keydata]['clan']['clan_battles'] = $activity[$keydata]['company']['company_battles'] = 0;
+              }
          }
-     }   else {
-         $activity[$keydata][$val2['nickname']]['all_battles'] = $activity[$keydata][$val2['nickname']]['clan_battles'] = $activity[$keydata][$val2['nickname']]['company_battles'] = 0;
-          if (!isset ($activity[$keydata]['all']['all_battles'])) {
-              $activity[$keydata]['all']['all_battles'] = $activity[$keydata]['clan']['clan_battles'] = $activity[$keydata]['company']['company_battles'] = 0;
-          }
-     }
-  }
-  foreach ($showarr as $keyacc) {
-     $count[$keyacc] += $activity[$keydata][$keyacc][$keyacc.'_battles'];
-  }
+      }
+      foreach ($showarr as $keyacc) {
+         $count[$keyacc] += $activity[$keydata][$keyacc][$keyacc.'_battles'];
+      }
+    }
+    $time['to'] = $time['to'] - 86400;
+    unset($tmp,$tmp2);
 }
-$time['to'] = $time['to'] - 86400;
-unset($tmp,$tmp2);
 
-if ($count['all'] == 0 and $count['clan'] == 0 and $count['company'] == 0) {
+if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['clan'] == 0 && $count['company'] == 0)) {
     echo '<div align="center" class="ui-state-highlight ui-widget-content">',$lang['activity_error_2'],'</div>';
 }   else {
 ?>

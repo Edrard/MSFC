@@ -8,7 +8,7 @@
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
@@ -43,8 +43,10 @@
         var $replays = 0;
 
         function __construct() {
-            global $config, $lang;
+            global $config, $db;
             require(ROOT_DIR.'/admin/translate/auth_'.$config['lang'].".php");
+            $this->lang = $lang;
+            $this->db = $db;
             if ( $this->type == 'session' ) {
                 session_start();
             }
@@ -52,50 +54,47 @@
         }
 
         public function login($user, $pass) {
-
-            global $db, $lang;
-
             $email = $this->emailAuth;
             $err = false;
             $user = ($user);
             $password = $this->encrypt($pass);
             if ( $email == true ) {
                 if ( !$this->email($user) ) {
-                    $this->errors[] = $lang['login_err_email'];
+                    $this->errors[] = $this->lang['login_err_email'];
                     $err = true;
                 } else {
                     $col = 'email';
                 }
             } else {
                 if ( !$this->name($user) ) {
-                    $this->errors[] = $lang['login_err_ni1']. $this->minval. $lang['login_err_ni2']. $this->maxval;
+                    $this->errors[] = $this->lang['login_err_ni1']. $this->minval. $this->lang['login_err_ni2']. $this->maxval;
                     $err = true;
                 } else {
                     $col = 'user';
                 }
             }
             if ( strlen($pass) < $this->minpass ) {
-                $this->errors[] = $lang['login_err_mpass'];
+                $this->errors[] = $this->lang['login_err_mpass'];
                 $err = true;
             }
 
             if ( $err == false ) {
 
                 $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $user);
-                $q = $db->prepare($sql);
+                $q = $this->db->prepare($sql);
                 if ($q->execute() == TRUE) {
                     $result = $q->fetch();
                 } else {
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 if ( count($result) == 0 ) {
-                    $this->errors[] = ucfirst($col). $lang['login_err_dexist'];
+                    $this->errors[] = ucfirst($col). $this->lang['login_err_dexist'];
                 } else {
                     $row = $result;
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
-                    if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
-                    if ( $row['password'] == $password && $row['prefix'] == $db->prefix ) {
+                    if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
+                    if ( $row['password'] == $password && $row['prefix'] == $this->db->prefix ) {
                         if ( $this->type == 'session' ) {
                             $this->set_session($col, $user);
                             $this->set_session('password', $password);
@@ -114,10 +113,10 @@
                     } else {
                         $this->rights = '';
                         $this->replays = 0;
-                        if($row['prefix'] != $db->prefix) {
-                          $this->errors[] = $lang['login_err_iper'];
+                        if($row['prefix'] != $this->db->prefix) {
+                          $this->errors[] = $this->lang['login_err_iper'];
                         } else {
-                          $this->errors[] = $lang['login_err_ipas'];
+                          $this->errors[] = $this->lang['login_err_ipas'];
                         }
                     }
                 }
@@ -189,9 +188,6 @@
         }
 
         private function check() {
-
-            global $db, $lang;
-
             if ( $this->emailAuth == false ) {
                 $col = 'user';
             } else {
@@ -200,7 +196,7 @@
             if ( $this->type == 'cookie' ) {
                 if ( isset($_COOKIE['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
-                    $q = $db->prepare($sql);
+                    $q = $this->db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();
                     } else {
@@ -209,8 +205,8 @@
                     $row = $result;
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
-                    if($row['prefix'] == 'all') {$row['prefix'] = $db->prefix;}
-                    if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] || $row['prefix'] != $db->prefix ) {
+                    if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
+                    if ( $row[$col] !== $_COOKIE[$col] || $row['password'] !== $_COOKIE['password'] || $row['prefix'] != $this->db->prefix ) {
                         $this->rights = '';
                         $this->replays = 0;
                         $this->logout();
@@ -219,7 +215,7 @@
             } elseif ( $this->type == 'session' ) {
                 if ( isset($_SESSION['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
-                    $q = $db->prepare($sql);
+                    $q = $this->db->prepare($sql);
                     if ($q->execute() == TRUE) {
                         $result = $q->fetch();
                     } else {
@@ -264,7 +260,6 @@
             return $ret;
         }
         public function isLoggedInAdmin($true = 0) {
-            global $lang;
             $ret = false;
             if ( $this->emailAuth == false ) {
                 $col = 'user';
@@ -275,13 +270,13 @@
                 if ( isset($_COOKIE['password']) && $_COOKIE['group'] == 'admin') {
                     $ret = true;
                 }elseif(isset($_COOKIE['password']) && $_COOKIE['group'] != 'admin'){
-                    $this->errors[] = $lang['login_err_plogin'];
+                    $this->errors[] = $this->lang['login_err_plogin'];
                 }
             } elseif ( $this->type == 'session' ) {
                 if ( isset($_SESSION['password']) && $_SESSION['group'] == 'admin') {
                     $ret = true;
                 }elseif(isset($_COOKIE['password']) && $_COOKIE['group'] != 'admin'){
-                    $this->errors[] = $lang['login_err_plogin'];
+                    $this->errors[] = $this->lang['login_err_plogin'];
                 }
             }
             return $ret;

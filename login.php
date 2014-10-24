@@ -8,7 +8,7 @@
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
@@ -16,16 +16,26 @@
     */
 ?>
 <div>
+    <?php 
+        $divo = '<div class="ui-state-error ui-corner-all" align="center">';
+        $divc = '</div><br />';
+        if ($auth->error()) {
+            echo $divo, $auth->error(), $divc;
+        }
+        if (isset($data['msg'])) {
+            echo $divo, '<br />', error($data['msg']), $divc;
+        }
+    ?>
     <div align="center"><?=$lang['log_to_tab'];?></div>
-    <div class="adinsider">  
-        <?php
-            $multi_get = '';
-            if(isset($_GET['multi'])){
-                $multi_get = '&multi='.$_GET['multi'];
-            }
+    <div class="adinsider">
+        <?php 
+           $multi_get = '';
+           if(isset($_GET['multi'])) {
+               $multi_get = '&multi='.$_GET['multi'];
+           }
         ?>
         <form action="<?=$_SERVER['PHP_SELF'];?>?auth<?=$multi_get?>" method="post">
-            <table width="300px" cellspacing="4" cellpadding="0" class="ui-widget-content">
+            <table style="width:100%; border-width: 0; padding: 0 20px; border-radius: 11px;" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>
                     <td colspan="2" align="center">
                         <br>      
@@ -54,16 +64,4 @@
             </table> 
         </form>
     </div>
-    <br>
-    <?php if ($auth->error()){ ?>
-        <div class="ui-state-error ui-corner-all" align="center">
-            <? echo $auth->error(); ?>
-        </div>
-        <?php }?>
-
-    <?php if (isset($data['msg'])){ ?>
-        <div class="ui-state-error ui-corner-all" align="center">
-            <? echo '<br>'.error($data['msg']); ?>
-        </div>
-        <?php }?>
-    </div>
+</div>
