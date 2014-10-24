@@ -43,7 +43,7 @@
         var $replays = 0;
 
         function __construct() {
-            global $config;
+            global $config, $lang;
             require(ROOT_DIR.'/admin/translate/auth_'.$config['lang'].".php");
             if ( $this->type == 'session' ) {
                 session_start();
