@@ -15,7 +15,6 @@
     *
     */
 
-  $lang['ach_section_hist'] = 'Исторические бои';
-  $lang['ach_section_expert'] = 'Эксперт';
-  $lang['ach_section_mechanic'] = 'Инженер-механик';
+  $lang['error_no_medals'] = 'Udaje o medailach neboli nacitane.';
+  
 ?>

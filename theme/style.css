@@ -4,11 +4,11 @@
     width: 340px;
     background-color: transparent;
     margin: 0 auto 15px auto;
-    padding: 5px;
+    padding: 0;
     border: 1px solid;
+    border-radius: 11px;
     -moz-border-radius: 11px;
     -webkit-border-radius: 11px;
-    border-radius: 11px;
 }
 
 .hidden {

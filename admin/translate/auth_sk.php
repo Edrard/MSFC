@@ -8,14 +8,20 @@
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
     *
     */
 
-  $lang['ach_section_hist'] = 'Исторические бои';
-  $lang['ach_section_expert'] = 'Эксперт';
-  $lang['ach_section_mechanic'] = 'Инженер-механик';
+  $lang['login_err_iper'] = 'Insufficient permissions';
+  $lang['login_err_ipas'] = 'Incorrect password';
+  $lang['login_err_email'] = 'Email invalid.';
+  $lang['login_err_ni1'] = 'Name invalid. Min chars: ';
+  $lang['login_err_ni2'] = '. Max chars: ';
+  $lang['login_err_mpass'] = 'Password min value is 6 chars.';
+  $lang['login_err_dexist'] = ' doesn\'t exist.';
+  $lang['login_err_plogin'] = 'Pls login with Admin account';
+  $lang['login_err_ynlog'] = 'You need to login';
 ?>

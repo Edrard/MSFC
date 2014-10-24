@@ -95,7 +95,7 @@
         $auth->login($_POST['user'], $_POST['pass']); // This order: User/Email Password True/False (if you want to use email as auth
     }
     if (isset($_GET['error'])){
-        $data['msg'][] = 'You need to login';
+        $data['msg'][] = $lang['login_err_ynlog'];
     }
     if (isset($config['error'])){
         if($config['error'] == '2'){

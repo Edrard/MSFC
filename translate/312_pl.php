@@ -8,14 +8,12 @@
     * Date:        $Date: 2011-10-24 11:54:02 +0200 $
     * -----------------------------------------------------------------------
     * @author      $Author: Edd, Exinaus, Shw  $
-    * @copyright   2011-2013 Edd - Aleksandr Ustinov
+    * @copyright   2011-2014 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
     * @version     $Rev: 3.1.2 $
     *
     */
 
-  $lang['ach_section_hist'] = 'Исторические бои';
-  $lang['ach_section_expert'] = 'Эксперт';
-  $lang['ach_section_mechanic'] = 'Инженер-механик';
+  $lang['error_no_medals'] = 'Dane o medale nie zostaly zaladowane.';
 ?>

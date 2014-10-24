@@ -43,6 +43,8 @@
         var $replays = 0;
 
         function __construct() {
+            global $config;
+            require(ROOT_DIR.'/admin/translate/auth_'.$config['lang'].".php");
             if ( $this->type == 'session' ) {
                 session_start();
             }
@@ -51,7 +53,7 @@
 
         public function login($user, $pass) {
 
-            global $db;
+            global $db, $lang;
 
             $email = $this->emailAuth;
             $err = false;
@@ -59,21 +61,21 @@
             $password = $this->encrypt($pass);
             if ( $email == true ) {
                 if ( !$this->email($user) ) {
-                    $this->errors[] = 'Email invalid.';
+                    $this->errors[] = $lang['login_err_email'];
                     $err = true;
                 } else {
                     $col = 'email';
                 }
             } else {
                 if ( !$this->name($user) ) {
-                    $this->errors[] = 'Name invalid. Min chars: '.$this->minval.'. Max chars: '.$this->maxval;
+                    $this->errors[] = $lang['login_err_ni1']. $this->minval. $lang['login_err_ni2']. $this->maxval;
                     $err = true;
                 } else {
                     $col = 'user';
                 }
             }
             if ( strlen($pass) < $this->minpass ) {
-                $this->errors[] = 'Password min value is 6 chars.';
+                $this->errors[] = $lang['login_err_mpass'];
                 $err = true;
             }
 
@@ -87,7 +89,7 @@
                     die(show_message($q->errorInfo(),__line__,__file__,$sql));
                 }
                 if ( count($result) == 0 ) {
-                    $this->errors[] = ucfirst($col).' doesn\'t exist.';
+                    $this->errors[] = ucfirst($col). $lang['login_err_dexist'];
                 } else {
                     $row = $result;
                     $this->rights = $row['prefix'];
@@ -113,9 +115,9 @@
                         $this->rights = '';
                         $this->replays = 0;
                         if($row['prefix'] != $db->prefix) {
-                          $this->errors[] = 'Insufficient permissions';
+                          $this->errors[] = $lang['login_err_iper'];
                         } else {
-                          $this->errors[] = 'Incorrect password';
+                          $this->errors[] = $lang['login_err_ipas'];
                         }
                     }
                 }
@@ -188,7 +190,7 @@
 
         private function check() {
 
-            global $db;
+            global $db, $lang;
 
             if ( $this->emailAuth == false ) {
                 $col = 'user';
@@ -262,6 +264,7 @@
             return $ret;
         }
         public function isLoggedInAdmin($true = 0) {
+            global $lang;
             $ret = false;
             if ( $this->emailAuth == false ) {
                 $col = 'user';
@@ -272,13 +275,13 @@
                 if ( isset($_COOKIE['password']) && $_COOKIE['group'] == 'admin') {
                     $ret = true;
                 }elseif(isset($_COOKIE['password']) && $_COOKIE['group'] != 'admin'){
-                    $this->errors[] = 'Pls login with Admin account';
+                    $this->errors[] = $lang['login_err_plogin'];
                 }
             } elseif ( $this->type == 'session' ) {
                 if ( isset($_SESSION['password']) && $_SESSION['group'] == 'admin') {
                     $ret = true;
                 }elseif(isset($_COOKIE['password']) && $_COOKIE['group'] != 'admin'){
-                    $this->errors[] = 'Pls login with Admin account';
+                    $this->errors[] = $lang['login_err_plogin'];
                 }
             }
             return $ret;
