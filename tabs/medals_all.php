@@ -72,24 +72,26 @@
                </tr>
            </thead>
            <tbody>
-               <?php
-                  foreach($res as $name => $val){
-                     echo '<tr>';
-                     echo '<td align="left"><a href="', $config['base'], $name, '/', '" target="_blank">', $name, '</a></td>';
-                     if ($config['company'] == 1 and in_array($key,$company['tabs'])) {
-                          echo '<td>', in_array($val['data']['account_id'], $company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'', '</td>';
+               <?php foreach($res as $name => $val){ ?>
+                   <tr>
+                     <td align="left"><a href="<?php echo $config['base'], $name, '/'; ?>" target="_blank"><?=$name; ?></a></td>
+                     <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                         <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
+                     <? } ?>
+                     <?php
+                      foreach($achievements_split['split'] as $id => $tmp) {
+                       foreach($tmp as $n => $tmp2) {
+                         foreach($tmp2 as $ach_id) {
+                           $ach = $achievements[$ach_id];
+                     ?>
+                           <td class="ach_am ach_<?=$ach['section'],$n;?>"><?=isset($val['data']['achievements'][$ach_id])?$val['data']['achievements'][$ach_id]:'';?></td>
+                     <?php
+                         }
+                       }
                      }
-                     foreach($achievements_split['split'] as $id => $tmp) {
-                        foreach($tmp as $n => $tmp2){
-                          foreach($tmp2 as $ach_id){
-                            $ach = $achievements[$ach_id];
-                            echo '<td class="ach_am ach_', $ach['section'], $n, '">', isset($val['data']['achievements'][$ach_id])?$val['data']['achievements'][$ach_id]:'', '</td>';
-                          }
-                        }
-                     }
-                     echo '</tr>';
-                  }   
-               ?>
+                     ?>
+                   </tr>
+               <?php } ?>
            </tbody>
        </table>
     <? } else {
