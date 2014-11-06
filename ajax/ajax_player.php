@@ -481,6 +481,10 @@ $result = get_player_clans($pres['data']['nickname'], $config['server']);
 if($result) { $end = end($result);
 if (isset($result)) {
   foreach ($result as $key => $val ) {
+     if(!isset($val['clanids'])) {
+       unset($result[$key]);
+       continue;
+     }
      $new = $cache->get('get_last_roster_'.$val['clanids'],0);
      if ($new === FALSE) {
          $new2 = get_api('clan/info',array('clan_id' => $val['clanids']),array('emblems.large'));
