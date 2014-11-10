@@ -85,7 +85,7 @@ $cur_time = time();
 </div>
 <div align="center">
    <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
-      <table id="blocked" cellspacing="1" width="100%" class="table-id-<?=$key;?>">
+      <table id="tabs-sort-<?=$key;?>" cellspacing="1" width="100%" class="table-id-<?=$key;?>">
       <thead>
          <tr>
             <th><?php echo $lang['name'];?></th>

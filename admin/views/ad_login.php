@@ -32,7 +32,7 @@
        <div> 
           <img style="width:500px; height:89px;" src="../images/logo.png" alt="" />
           <div style="min-height: 50px;"></div>
-          <div class="adinsider">
+          <div class="login_insider">
              <?php
                  $multi_get = '';
                  if(isset($_GET['multi'])){

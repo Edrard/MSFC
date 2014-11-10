@@ -21,44 +21,14 @@
     // Второй ключь долженн быть названием закладки
     // Значение - имя файла в папке /tabs, не забываете расширение. Если это ajax, то оставьте пустым
 
-    $current_tab = read_tabs();
+    $tabs = read_tabs('WHERE `status` = "1"');
     //usort($current_tab,'sort_id');
 
-    foreach($current_tab as $curr_tab_val){
-        if($curr_tab_val['auth'] == 'all'){
-            $curr_tab_val['auth'] = 0;
-        }elseif($curr_tab_val['auth'] == 'user'){
-            $curr_tab_val['auth'] = 1;
-        }elseif($curr_tab_val['auth'] == 'admin'){
-            $curr_tab_val['auth'] = 2;
-        }else{
-            $curr_tab_val['auth'] = 0;
-        }
-
-        if($curr_tab_val['status'] == 1){
-            if($logged >= $curr_tab_val['auth']){
-                if($curr_tab_val['type'] == 0){
-                    $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = $curr_tab_val['file'];
-                }elseif($curr_tab_val['type'] == 1){
-                    $tabs[$curr_tab_val['file']][$curr_tab_val['name']]  = '';    
-                }
-            }else{
-                $tabs[$curr_tab_val['id']][$curr_tab_val['name']]  = array();
-            }
-        }
-    }
-
     foreach($tabs as $key => $val) {
-      foreach($val as $link => $file) {
-        if(is_numeric($key)) {
-          if(!is_array($file) and !file_exists(ROOT_DIR.'/tabs/'.$file)) {
-            show_message(sprintf($lang['tab_del'],$link,$file));
-            unset($tabs[$key]);
-          }
-        }
+      if(substr($val['file'],0,2) != './' and !file_exists(ROOT_DIR.'/tabs/'.$val['file'])) {
+        show_message(sprintf($lang['tab_del'],$val['name'],$val['file']));
+        unset($tabs[$key]);
       }
     }
-    //print_r($tabs);
-    unset($curr_tab_val);
 ?>
 

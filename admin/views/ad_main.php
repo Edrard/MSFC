@@ -356,9 +356,9 @@
                                     <td align="center"><input id="<?=str_replace("/", "", str_replace(".", "", $tab_var['file']));?>" type="text" name="<?=str_replace(".", "_", $tab_var['file']);?>_name" value="<?=$tab_var['name'];?>" size="40" /><span class="hidden"><?=$tab_var['name'];?></span></td>
                                     <td align="center">
                                       <select name="<?=str_replace(".", "_", $tab_var['file']);?>_auth">
-                                        <option value="all" <?php if($tab_var['auth'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
-                                        <option value="user" <?php if($tab_var['auth'] == 'user'){ echo 'selected="selected"';} ?>>User</option>
-                                        <option value="admin" <?php if($tab_var['auth'] == 'admin'){ echo 'selected="selected"';} ?>>Admin</option>
+                                        <option value="0" <?php if($tab_var['auth'] == '0'){ echo 'selected="selected"';} ?>>All</option>
+                                        <option value="1" <?php if($tab_var['auth'] == '1'){ echo 'selected="selected"';} ?>>User</option>
+                                        <option value="2" <?php if($tab_var['auth'] == '2'){ echo 'selected="selected"';} ?>>Admin</option>
                                       </select>
                                       <span class="hidden"><?=$tab_var['auth'];?></span>
                                     </td>

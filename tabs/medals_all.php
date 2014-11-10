@@ -50,7 +50,7 @@
            </div>
        </form>
        <br />
-       <table id="all_medals_stat" width="100%" cellspacing="1" cellpadding="2" style="text-align: center;" class="table-id-<?=$key;?>">
+       <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" cellpadding="2" style="text-align: center;" class="table-id-<?=$key;?>">
            <thead>
                <tr>
                    <th><?=$lang['name']; ?></th>

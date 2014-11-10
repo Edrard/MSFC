@@ -46,7 +46,7 @@
         <div align="center"style="min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important; "
         class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-content-active">
             <div style="height: 25%; "></div>
-            <div class="adinsider">
+            <div class="login_insider">
                 <form action="./index.php" method="post">
                     <table width="340px" cellspacing="4" cellpadding="0" class="ui-widget-content">
                         <tr>

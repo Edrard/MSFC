@@ -16,7 +16,7 @@
     */
 ?>
 <div align="center">
-    <table id="battel" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
+    <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
         <thead> 
             <tr>
             <?php echo '<th>'.$lang['name'].'</th>';

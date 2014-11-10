@@ -42,45 +42,23 @@
         $("#allcontainer").css({'height': $(window).height(), 'width': $(window).width(), 'overflow-x': 'hidden', 'overflow-y': 'hidden' });
         $(document).ready(function() {
               <?php
-              $roster_tab_id = 'unset';
-              foreach($current_tab as $t => $val) { if($val['file'] == 'roster.php') { $roster_tab_id = $val['id']; break; } }
-              if($config['company'] == 1 and in_array($roster_tab_id,$company['tabs'])) {
-               $roster_sortlist = '[6,0],[5,1],[1,0]';
-              } else {
-               $roster_sortlist = '[5,0],[4,1],[1,0]';
-              }
+                $tabs_keys = read_tabs('WHERE `status` = "1" AND `type` = "0"');
+                $tmp = array_keys($tabs_keys);
+
+                echo '$("#tabs-sort-'.array_pop($tmp).'")';
+
+                foreach($tmp as $id) {
+                  echo '.add("#tabs-sort-'.$id.'")';
+                }
+
+                echo '.tablesorter();';
+
+                foreach($tabs_keys as $key => $val) {
+                  if(file_exists(ROOT_DIR.'/tabs/header/'.$val['file']) and $logged >= $val['auth']) {
+                    include(ROOT_DIR.'/tabs/header/'.$val['file']);
+                  }
+                }
               ?>
-              $("#roster").tablesorter({sortList:[<?=$roster_sortlist;?>], headers:{ 0: { sorter: false}}});
-
-              $("#best_main")
-              .add("#famepoints")
-              .add("#best_medal")
-              .add("#active_main")
-              .add("#active_medal_1")
-              .add("#overall")
-              .add("#perform")
-              .add("#battel")
-              .add("#achiv_epic")
-              .add("#achiv_major")
-              .add("#achiv_hero")
-              .add("#achiv_special")
-              .add("#rating")
-              .add("#rating1")
-              .add("#rating_all")
-              .add("#average_perform")
-              .add("#blocked")
-              .add("#all_tanks_stat")
-              .add("#perform_all")
-              .add("#all_medals_stat")
-              .add("#available_tanks").tablesorter();
-
-              $("#avt1").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}}, widgetOptions: {uitheme : 'bootstrap'}});
-              <? for ($i=2; $i<=6; $i++) { ?>
-              $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[1,0]], widgetOptions: {uitheme : 'bootstrap'}});
-              <? }
-                 for ($i=7; $i<=9; $i++) { ?>
-              $("#avt<?=$i;?>").tablesorter({headers:{ 0: { sorter: false}, 1: {sorter: false} }, sortList:[[0,0]], widgetOptions: {uitheme : 'bootstrap'}});
-              <? } ?>
 
               $( "#login_dialog" ).dialog({
                   title: "<?php echo $lang['login']; ?>",

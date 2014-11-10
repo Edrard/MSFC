@@ -18,7 +18,7 @@
  if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){  ?>
     <div  id="active_medal_width" align="center">
         <?php if(!empty($medal_resort['list'])){ ?>
-            <table id="active_medal_1" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
+            <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
                 <thead>
                     <tr>
                         <th><?=$lang['name'];?></th>

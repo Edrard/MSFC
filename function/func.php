@@ -323,14 +323,14 @@ function get_config()
     }       
     return $new;
 }      
-function read_tabs()
+function read_tabs($where = '')
 {
     global $db;
-    $sql = "SELECT * FROM `tabs` ORDER BY id ASC;";
+    $sql = "SELECT * FROM `tabs` $where ORDER BY id ASC;";
     $q = $db->prepare($sql);
     if ($q->execute() == TRUE) {
-        return $q->fetchAll();  
-    }else{ 
+        return array_resort($q->fetchAll(PDO::FETCH_ASSOC),'id');
+    }else{
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     }  
 }

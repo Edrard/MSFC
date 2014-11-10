@@ -462,7 +462,7 @@ function check_tabs_db($tabs)
 {
     global $db;
     foreach($tabs as $tab){
-        $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$tab."';";
+        $sql = "SELECT COUNT(`file`) FROM `tabs` WHERE file = '".$tab."';";
         $q = $db->prepare($sql);
         if ($q->execute() == TRUE) {
             $status_tab[$tab] = $q->fetchColumn();

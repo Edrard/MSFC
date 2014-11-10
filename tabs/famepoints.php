@@ -32,7 +32,7 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
 }
 ?>
 <div align="center">
-    <table id="famepoints" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
+    <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" cellpadding="2" class="ui-widget-content table-id-<?=$key;?>">
         <thead>
           <tr>
             <th><?=$lang['name'];?></th>

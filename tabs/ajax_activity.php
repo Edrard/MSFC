@@ -70,7 +70,6 @@ $q = $db->prepare($sql);
             });
             return false;
         });
-        $("#a_show_activity").click();
         $('#id-<?=$key;?>').click(function() {
            $("#activity_table").trigger('applyWidgets');
            return false;

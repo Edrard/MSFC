@@ -39,7 +39,7 @@ $(document).ready(function() {
         <input type="radio" id="change_button_averageshow" name="triggerperform" checked="checked" /><label for="change_button_averageshow"><?=$lang['show_average_perform'];?></label>
     </div>
 </form>
-    <table id="perform_all" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
+    <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>

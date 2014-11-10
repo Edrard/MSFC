@@ -27,26 +27,26 @@
         }
     ?>
     <div align="center"><?=$lang['log_to_tab'];?></div>
-    <div class="adinsider">
+    <div class="login_insider">
         <?php 
            $multi_get = '';
            if(isset($_GET['multi'])) {
                $multi_get = '&multi='.$_GET['multi'];
            }
         ?>
-        <form action="<?=$_SERVER['PHP_SELF'];?>?auth<?=$multi_get?>" method="post">
+        <form action="<?=$_SERVER['PHP_SELF'];?>?auth<?=$multi_get,((isset($key) and is_numeric($key))?'#tabs-'.$key:'')?>" method="post">
             <table style="width:100%; border-width: 0; padding: 0 20px; border-radius: 11px;" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>
                     <td colspan="2" align="center">
                         <br>      
                     </td>
                 </tr>
-                <tr class="adbox">
+                <tr>
                     <td width="80" align="left">&nbsp;&nbsp;<?=$lang['log_login'];?>: </td>
                     <td align="left">
                     <input type="text" name="user" value="" maxlength="40"  />         </td>
                 </tr>
-                <tr class="adbox">
+                <tr>
                     <td width="80" align="left">&nbsp;&nbsp;<?=$lang['log_pass'];?>: </td>
                     <td align="left">
                     <input type="password" name="pass" value="" maxlength="40"  />          </td>

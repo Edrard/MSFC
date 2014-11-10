@@ -51,7 +51,7 @@ $(document).ready(function() {
     </div>
   </form>
 
-  <table id="rating_all" cellspacing="1" style="width: 100%;" class="table-id-<?=$key;?>">
+  <table id="tabs-sort-<?=$key;?>" cellspacing="1" style="width: 100%;" class="table-id-<?=$key;?>">
     <thead>
       <tr>
           <th><?=$lang['name']; ?></th>

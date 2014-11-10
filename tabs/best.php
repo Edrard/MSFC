@@ -32,7 +32,7 @@
                 <tr>
                     <td valign="top" width="50%" align="center">
                         <?php if(time_summer($best_main_progress['all'],'value') != 0){ ?>
-                            <table id="best_main" cellspacing="1" width="100%">
+                            <table id="tabs-sort-<?=$key;?>" cellspacing="1" width="100%">
                                 <thead> 
                                     <tr>
                                         <th></th>
@@ -57,8 +57,8 @@
                     <td valign="top" width="50%" align="center">
                     <?php if(!empty($medal_resort['list'])){
                            if(time_summer($best_medal_progress,'value') != 0){ ?>
-                            <table id="best_medal" cellspacing="1" width="100%">
-                                <thead> 
+                            <table id="tabs-sort-<?=$key;?>_2" cellspacing="1" width="100%">
+                                <thead>
                                     <tr>
                                         <th colspan="2"><?=$lang['achiv']?></th>
                                         <th><?=$lang['name']?></th> 

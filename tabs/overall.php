@@ -40,7 +40,7 @@ $(document).ready(function() {
     </div>
 </form>
 <div align="center">
-    <table id="overall" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
+    <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>

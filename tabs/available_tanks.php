@@ -33,7 +33,7 @@ if (isset($topTanki) and count($topTanki) > 0) {
 </form>
 <? } ?>
 
-<table id="available_tanks" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
+<table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="ui-widget-content table-id-<?=$key;?>">
     <thead>
       <tr>
           <th><?=$lang['name'];?></th>

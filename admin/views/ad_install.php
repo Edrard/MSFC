@@ -21,7 +21,7 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
         && is_writable(ROOT_DIR.'/cache/players/') && is_writable(ROOT_DIR.'/cache/activity/')){
     ?>
     <div style="height: 25%; "></div>
-    <div class="adinsider">
+    <div class="login_insider">
         <form action="./index.php" method="post">
             <table width="340px" cellspacing="4" cellpadding="0" class="ui-widget-content">
                 <tr>

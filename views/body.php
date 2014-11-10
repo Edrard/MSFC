@@ -109,38 +109,25 @@
             <tr>
                 <td valign="top" id="tohide2">
                     <ul id="menu" class="tabsmenu ui-corner-all">
-                        <?php $i=0;
-                            foreach($tabs as $key => $val){
-                                foreach(array_keys($val) as $link){
-                                    if(is_numeric($key)){ ?>
-                                    <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="#tabs-<?=$key; ?>"><?=$link; ?></a></li>
-                                    <?php }else{  ?>
-                                    <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="<?php echo $key; if(substr_count($key, '?') > 0){echo $multi_url_param;}else{echo $multi_url;}?>"><?=$link; ?></a></li>
-                                    <?php  }
-                                    $i++;
-                                }  
-                        } ?>
+                    <? foreach($tabs as $key => $val) { ?>
+                          <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="<?=($val['type'] == 1)?$val['file'].$multi_url:'#tabs-'.$key;?>"><?=$val['name']; ?></a></li>
+                     <? } ?>
                     </ul>
                 </td>
                 <td valign="top" colspan="5">
                     <div>
-                        <?php
-                            foreach($tabs as $key => $val){
-                                foreach($val as $file){    
-                                    if(is_numeric($key)){ 
-                                        if(!is_array($file)){?>
-                                        <div id="tabs-<?=$key; ?>">
-                                            <a href="#tabs-<?=$key; ?>"></a>
-                                            <?php include(ROOT_DIR.'/tabs/'.$file); ?>
-                                        </div>
-                                        <?php  }else{ ?>
-                                        <div id="tabs-<?=$key; ?>">
-                                            <?php include(ROOT_DIR.'/login.php'); ?>
-                                        </div>
-                                        <?php }
+                        <? foreach($tabs as $key => $val) { ?>
+                          <div id="tabs-<?=$key; ?>">
+                              <a href="#tabs-<?=$key; ?>"></a>
+                              <? if($val['type'] != 1) {
+                                    if($logged >= $val['auth']) {
+                                      include(ROOT_DIR.'/tabs/'.$val['file']);
+                                    } else {
+                                      include(ROOT_DIR.'/login.php');
                                     }
-                                }
-                        } ?>
+                                 } ?>
+                          </div>
+                        <? } ?>
                     </div>
                 </td>
             </tr>

@@ -159,7 +159,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '312.0'),
+('version', '312.1'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
 ('company', '0'),
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `tabs` (
   `file` varchar(65) NOT NULL,
   `type` tinyint(1) NOT NULL COMMENT '0 -normal, 1-ajax',
   `status` tinyint(1) NOT NULL COMMENT '0 - Off, 1 - On',
-  `auth` varchar(25) NOT NULL COMMENT 'all, admin, user',
+  `auth` varchar(25) NOT NULL COMMENT '0 - all, 2 - admin, 1 - user',
   UNIQUE KEY `file` (`file`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -194,23 +194,23 @@ CREATE TABLE IF NOT EXISTS `tabs` (
 --
 
 INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
-(150, 'Очки славы', 'famepoints.php', 0, 0, 'all'),
-(130, 'Собственность клана', './poss.php', 1, 1, 'all'),
-(120, 'Запланированные атаки', './attack.php', 1, 1, 'all'),
-(115, 'Активность игроков', 'ajax_activity.php', 0, 1, 'all'),
-(1, 'Приветственное', 'avt.php', 0, 1, 'all'),
-(5, 'Состав', 'roster.php', 0, 1, 'all'),
-(70, 'Рейтинг', 'rating_all.php', 0, 1, 'all'),
-(50, 'Боевая эффективность', 'perform_all.php', 0, 1, 'all'),
-(40, 'Общие результаты', 'overall.php', 0, 1, 'all'),
-(60, 'Награды', 'medals_all.php', 0, 1, 'all'),
-(110, 'Блокированная техника', 'gk.php', 0, 1, 'all'),
-(30, 'Лучшие результаты', 'best.php', 0, 1, 'all'),
-(90, 'Наличие танков', 'available_tanks.php', 0, 1, 'all'),
-(100, 'Боевой опыт', 'battel.php', 0, 1, 'all'),
-(80, 'Техника', 'ajaxtank.php', 0, 1, 'all'),
-(10, 'Активность общая', 'active.php', 0, 1, 'all'),
-(20, 'Активность награды', 'active_1.php', 0, 1, 'all');
+(150, 'Очки славы', 'famepoints.php', 0, 0, '0'),
+(130, 'Собственность клана', './poss.php', 1, 1, '0'),
+(120, 'Запланированные атаки', './attack.php', 1, 1, '0'),
+(115, 'Активность игроков', 'ajax_activity.php', 0, 1, '0'),
+(1, 'Приветственное', 'avt.php', 0, 1, '0'),
+(5, 'Состав', 'roster.php', 0, 1, '0'),
+(70, 'Рейтинг', 'rating_all.php', 0, 1, '0'),
+(50, 'Боевая эффективность', 'perform_all.php', 0, 1, '0'),
+(40, 'Общие результаты', 'overall.php', 0, 1, '0'),
+(60, 'Награды', 'medals_all.php', 0, 1, '0'),
+(110, 'Блокированная техника', 'gk.php', 0, 1, '0'),
+(30, 'Лучшие результаты', 'best.php', 0, 1, '0'),
+(90, 'Наличие танков', 'available_tanks.php', 0, 1, '0'),
+(100, 'Боевой опыт', 'battel.php', 0, 1, '0'),
+(80, 'Техника', 'ajaxtank.php', 0, 1, '0'),
+(10, 'Активность общая', 'active.php', 0, 1, '0'),
+(20, 'Активность награды', 'active_1.php', 0, 1, '0');
 
 -- --------------------------------------------------------
 -- Структура таблицы `tanks`
