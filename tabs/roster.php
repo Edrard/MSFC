@@ -16,6 +16,7 @@
     */
 ?>
 <div align="center">
+    <div id="player_result"></div>
     <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
@@ -61,7 +62,7 @@
                     }
                 ?>
                 <tr>
-                    <td align="center" ><a href="#" onclick="plmagic(this)" target="_self" alt='<?=$val['account_id'];?>'>
+                    <td align="center" ><a href="#tabs-<?=$key;?>" onclick="plmagic(this)" target="_self" alt='<?=$val['account_id'];?>'>
                        <div style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-info">
                           &nbsp;
                         </div></a></td>
@@ -85,5 +86,4 @@
           <span class="col_grey"><?=$lang['roster_grey']?></span><br>
           <span class="col_red"><?=$lang['roster_red']?></span><br>
           <span class="col_black"><?=$lang['roster_black']?></span>
-          <div id="player_result"></div>
 <? unset($date,$color,$roster_local_num,$diff_date); ?>

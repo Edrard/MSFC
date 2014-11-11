@@ -93,53 +93,7 @@ function p_info($res, $t) {
 
    return $tstat;
 }
-?>
-<script type="text/javascript" id="js">
-   $(document).ready(function() {
-   $("#player0")
-      <? for ($i=1; $i<=9; $i++) { ?>
-              .add("#player<?=$i;?>")
-      <? } ;?>
-              .add("#player01")
-      .tablesorter({
-          sortList:[[0,0]],
-          headers:{ 0: { sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false}, 4: {sorter: false},
-                    5: { sorter: false}, 6: {sorter: false}, 7: {sorter: false}, 8: {sorter: false}, 9: {sorter: false}
-                  },
-          theme : 'bootstrap'
-      }); 
-      $("#player10").add("#player11").add("#player12")
-      .tablesorter({
-          headerTemplate : '<div style="padding-right: 12px;">{content}</div>{icon}',
-          sortList:[[1,1]],
-          headers:{ 0: { sorter: false}},
-          theme : 'jui'
-      });
-      $("#player13")
-      <? for ($i=14; $i<=17; $i++) {?>
-              .add("#player<?=$i;?>")
-      <? } ;?>
-      .tablesorter({
-          headerTemplate : '<div style="padding-right: 12px;">{content}</div>{icon}',
-          sortList:[[1,1]],
-          theme : 'jui'
-      });
-      $('.bb[title]').tooltip({
-          track: false,
-          delay: 0,
-          fade: 250,
-          items: "[title]",
-          content: function() {
-              var element = $( this );
-              if ( element.is( "[title]" ) ) {
-                   return element.attr( "title" );
-              }
-          }
-      });
-   });
-</script>
 
-<?php
 $pres = $cache->get($nickname, 0, ROOT_DIR.'/cache/players/');
 $tanks = tanks();
 $tanks_nation = tanks_nations();
@@ -206,7 +160,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player0">
          <thead>
            <tr>
-            <th align="center"><?=$lang['name']; ?></th>
+            <th align="center" class="sorter-false"><?=$lang['name']; ?></th>
            </tr>
          </thead>
          <tbody>
@@ -218,7 +172,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player01">
          <thead>
            <tr>
-            <th align="center"><?=$lang['upd_at'];?></th>
+            <th align="center" class="sorter-false"><?=$lang['upd_at'];?></th>
            </tr>
          </thead>
          <tbody>
@@ -230,7 +184,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player5">
          <thead>
            <tr>
-            <th align="center" class="bb" title="<?=$lang['overall_eff_table'];?>"><?=$lang['eff_ret']; ?> (c)
+            <th align="center" class="bb sorter-false" title="<?=$lang['overall_eff_table'];?>"><?=$lang['eff_ret']; ?> (c)
             <br><a href="http://wot-news.com/" target="_blank">wot-news.com</a></th>
            </tr>
          </thead>
@@ -243,7 +197,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player6">
          <thead>
            <tr>
-            <th align="center" class="bb" title="<?=$lang['brone_anno'];?>"><?=$lang['brone_ret'];?> (c)
+            <th align="center" class="bb sorter-false" title="<?=$lang['brone_anno'];?>"><?=$lang['brone_ret'];?> (c)
                 <br><a href="http://armor.kiev.ua/wot/" target="_blank">armor.kiev.ua/wot</a></th>
            </tr>
          </thead>
@@ -262,7 +216,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player7">
          <thead>
            <tr>
-             <th align="center" colspan="2"><?=$lang['emem'];?> (c) <br><a href="http://emem.ru/" target="_blank">emem.ru</a></th>
+             <th align="center" class="sorter-false" colspan="2"><?=$lang['emem'];?> (c) <br><a href="http://emem.ru/" target="_blank">emem.ru</a></th>
            </tr>
          </thead>
          <tbody>
@@ -293,7 +247,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player1">
          <thead>
            <tr>
-             <th align="center" colspan="3"><?=$lang['overall_title']?></th>
+             <th align="center" class="sorter-false" colspan="3"><?=$lang['overall_title']?></th>
            </tr>
          </thead>
          <tbody>
@@ -311,7 +265,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player2">
          <thead>
            <tr>
-             <th align="center" colspan="3"><?=$lang['perform_title'];?></th>
+             <th align="center" class="sorter-false" colspan="3"><?=$lang['perform_title'];?></th>
            </tr>
          </thead>
          <tbody>
@@ -332,7 +286,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" width="100%" align="center" id="player4">
          <thead>
            <tr>
-             <th align="center" colspan="2"><?= $lang['battel_title'];?></th>
+             <th align="center" class="sorter-false" colspan="2"><?= $lang['battel_title'];?></th>
            </tr>
          </thead>
          <tbody>
@@ -349,9 +303,9 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1"  width="100%" align="center" id="player3">
          <thead>
           <tr>
-            <th align="center"><?=$lang['rating_title'];?></th>
-            <th align="center"><?=$lang['value'];?></th>
-            <th align="center"><?=$lang['place'];?></th>
+            <th align="center" class="sorter-false"><?=$lang['rating_title'];?></th>
+            <th align="center" class="sorter-false"><?=$lang['value'];?></th>
+            <th align="center" class="sorter-false"><?=$lang['place'];?></th>
           </tr>
          </thead>
          <tbody>
@@ -371,7 +325,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" align="center" width="100%" id="player10">
          <thead>
            <tr>
-             <th colspan="4" align="center"><?=$lang['perform_title'],$lang['perform_class'];?></th>
+             <th colspan="4" class="sorter-false" align="center"><?=$lang['perform_title'],$lang['perform_class'];?></th>
            </tr>
            <tr>
              <th align="center"><?=$lang['class'];?></th>
@@ -395,7 +349,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" align="center" width="100%" id="player11">
          <thead>
            <tr>
-             <td colspan="4" align="center"><?=$lang['perform_title'],$lang['perform_nation'];?></td>
+             <td colspan="4" class="sorter-false" align="center"><?=$lang['perform_title'],$lang['perform_nation'];?></td>
            </tr>
            <tr>
              <th align="center"><?=$lang['nation'];?></th>
@@ -423,7 +377,7 @@ foreach ($statacc as $val) {
        <table cellspacing="1" cellpadding="1" align="center" width="100%" id="player12">
          <thead>
            <tr>
-             <th colspan="4" align="center"><?=$lang['perform_title'],$lang['perform_lvl'];?></th>
+             <th colspan="4" class="sorter-false" align="center"><?=$lang['perform_title'],$lang['perform_lvl'];?></th>
            </tr>
            <tr>
              <th align="center"><?=$lang['level'];?></th>

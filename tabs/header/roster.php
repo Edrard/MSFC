@@ -18,7 +18,7 @@ $(document).ready(function() {
         autoOpen: false,
         draggable: false,
         resizable: false,
-        width: 1024,
+        minWidth: 1024,
         closeOnEscape: true,
         modal: true,
         zIndex: 5,
@@ -35,36 +35,53 @@ $(document).ready(function() {
 });
 
 function plmagic(elem){
-   $.ajax({
-        cache: true,
-        type: "POST",
-        data: ({
-          nickname   : $(elem).attr("alt")
-        }),
-        url: "ajax/ajax_player.php",
-        beforeSend : function(data){
-          $("#player_result").dialog('open');
-          $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
-        },
-        success: function(msg){
-            $("#player_result").empty();
-            $("#player_result").html(msg);
-            $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
-        },
-        complete: function() {
-          $('body,html').scrollTop( 0 );
-          updateall();
-        }
-    });
-}
+  $.ajax({
+      cache: true,
+      type: "POST",
+      data: ({
+        nickname   : $(elem).attr("alt")
+      }),
+      url: "ajax/ajax_player.php",
+      beforeSend : function(data){
+        $('body,html').scrollTop( 0 );
+        $("#player_result").dialog('open');
+        $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
+      },
+      success: function(msg){
+        $("#player_result").empty();
+        $("#player_result").html(msg);
+        $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
+      },
+      complete: function() {
+        $('body,html').scrollTop( 0 );
+        $("#player0").add("#player01")
+          <? for ($i=1; $i<=9; $i++) { ?>
+            .add("#player<?=$i;?>")
+          <? } ;?>
+        .tablesorter({sortList:[[0,0]], theme : 'bootstrap'});
+        $("#player10")
+        <? for ($i=11; $i<=17; $i++) {?>
+            .add("#player<?=$i;?>")
+        <? } ;?>
+        .tablesorter({sortList:[[1,1]], theme : 'jui'});
 
-function updateall() {
-$("#player0")
-  <? for ($i=1; $i<=17; $i++) {?>
-  .add("#player<?=$i;?>")
-  <? } ;?>
-  .add("#player01")
-  .trigger('applyWidgetId', ['zebra']).trigger('update');
-return false;
+        $('.bb[title]').tooltip({
+            track: false,
+            delay: 0,
+            fade: 250,
+            items: "[title]",
+            open: function (event, ui) {
+                ui.tooltip.css("min-width", "400px");
+            },
+            content: function() {
+                var element = $( this );
+                if ( element.is( "[title]" ) ) {
+                     return element.attr( "title" );
+                }
+            }
+        });
+      }
+  });
+  return false;
 }
 </script>
