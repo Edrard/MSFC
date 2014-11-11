@@ -6,6 +6,7 @@
   }
 ?>
 <script type="text/javascript">
+var rosterWindow = 0;
 $(document).ready(function() {
   var sorting = <?=$roster_sortlist; ?>;
   $("#tabs-sort-<?=$key;?>").trigger("sorton",[sorting]);
@@ -31,6 +32,7 @@ $(document).ready(function() {
           $("#tabs-sort-<?=$key;?>").tablesorter({sortList: sorting});
           $("#allcontainer").css({'min-height': '100%'});
           location.href = "#tabs-<?=$key;?>";
+          $(window).scrollTop( rosterWindow );
         }
   });
 });
@@ -44,6 +46,7 @@ function plmagic(elem){
       }),
       url: "ajax/ajax_player.php",
       beforeSend : function(data){
+        rosterWindow = $(window).scrollTop();
         $("#player_result").dialog('open');
         $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
       },
