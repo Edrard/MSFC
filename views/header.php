@@ -52,12 +52,6 @@
                 }
 
                 echo '.tablesorter();';
-
-                foreach($tabs_keys as $key => $val) {
-                  if(file_exists(ROOT_DIR.'/tabs/header/'.$val['file']) and $logged >= $val['auth']) {
-                    include(ROOT_DIR.'/tabs/header/'.$val['file']);
-                  }
-                }
               ?>
 
               $( "#login_dialog" ).dialog({
@@ -77,44 +71,13 @@
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-              $("#menu").menu();
-              $("#allcontainer").tabs({
-                  ajaxOptions: {
-                      error: function( xhr, status, index, anchor ) {
-                          $( anchor.hash ).html(
-                              "<?php echo $lang['error_1'];?>");
-                      }
-                  }
-              });
-              $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
-
               if (typeof window.currentTabID === "undefined") {
                  window.currentTabID = getTabID();
               }
               if (typeof window.MenuStatus === "undefined") {
                  window.MenuStatus = 'visible';
               }
-              $( "#player_result" ).dialog({
-                    title: "<?=$lang['st_title'];?>",
-                    appendTo: "#allcontainer",
-                    dialogClass: 'pstat',
-                    position: { my: "center", at: "top", of: "#allcontainer" },
-                    autoOpen: false,
-                    draggable: false,
-                    resizable: false,
-                    width: 1024,
-                    closeOnEscape: true,
-                    modal: true,
-                    zIndex: 5,
-                    open: function( event, ui ) {
-                      $("#roster").trigger("destroy");
-                      $('.pstat').css({'top': '100px'});
-                    },
-                    beforeClose: function( event, ui ) {
-                      $("#roster").tablesorter({sortList:[<?=$roster_sortlist;?>], headers:{ 0: { sorter: false}}});
-                      $("#allcontainer").css({'min-height': '100%'});
-                    }
-              });
+
               $("#allcontainer").css({'height': '100%', 'width': '100%', 'overflow-x': 'visible', 'overflow-y': 'visible' });
         });
 
@@ -182,6 +145,27 @@
             return 'ajax';
           }
         }
+    </script>
+    <?php //including tabs js
+      foreach($tabs_keys as $key => $val) {
+        if(file_exists(ROOT_DIR.'/tabs/header/'.$val['file']) and $logged >= $val['auth']) {
+          include(ROOT_DIR.'/tabs/header/'.$val['file']);
+        }
+      }
+    ?>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#menu").menu();
+      $("#allcontainer").tabs({
+          ajaxOptions: {
+              error: function( xhr, status, index, anchor ) {
+                  $( anchor.hash ).html(
+                      "<?php echo $lang['error_1'];?>");
+              }
+          }
+      });
+      $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
+    });
     </script>
 </head>
 <body>

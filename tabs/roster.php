@@ -19,7 +19,7 @@
     <table id="tabs-sort-<?=$key;?>" width="100%" cellspacing="1" class="table-id-<?=$key;?>">
         <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th class='sorter-false'>&nbsp;</th>
                 <th><?=$lang['name']; ?></th>
                 <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                     <th><?=$lang['company']; ?></th>
