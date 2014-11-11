@@ -1,4 +1,3 @@
-<pre>
 <?
 if(!isset($_POST)) {
   die('No direct access allowed');
@@ -48,13 +47,7 @@ for($i=1;$i<=$_POST['company'];$i++) {
 $cache->clear('company_'.$_POST['id']);
 $cache->set('company_'.$_POST['id'],$t);
 
-/*
-foreach($_POST as $a => $t) {
-  parse_str( $t , $arr );
-  //print_r($arr);
-}
-print_r($_POST);
-*/
-print_r($t);
+sleep(1);
+header("Content-type: application/json; charset=utf-8");
+echo json_encode(array('status'=>'done'));
 ?>
-</pre>

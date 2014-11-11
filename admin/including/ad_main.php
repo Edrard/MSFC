@@ -286,6 +286,7 @@
       if(isset($_POST['company_tabs_update'])) {
         $tmp = $cache->get('company_'.$config['clan'],0, ROOT_DIR.'/cache/other/');
         unset($tmp['tabs']);
+        if(!isset($_POST['Array']['tab'])) { $_POST['Array']['tab'] = array(); }
         $tmp['tabs'] = $_POST['Array']['tab'];
 
         $cache->clear('company_'.$config['clan'], ROOT_DIR.'/cache/other/');

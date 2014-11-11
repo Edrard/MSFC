@@ -120,9 +120,8 @@
                   }
               });
               $( ".droptrue" ).disableSelection();
-              $('#company_button').button().click( function() {
+              $('#company_button').button().css({'width':'200px','height':'35px'}).click( function() {
                   $.ajax({
-                      cache: true,
                       type: "POST",
                       data: {
                           company : <?=$config['company_count']; ?>,
@@ -131,7 +130,16 @@
                               sort<?=$index;?> : $('#sortable<?=$index;?>').sortable('serialize'),
                           <?php } ?>
                       },
-                      url: "../ajax/ajax_company.php"
+                      url: "../ajax/ajax_company.php",
+                      dataType: "json",
+                      beforeSend : function(data){
+                        $('#company_button').html('<img src="../images/ajax-loader.gif">').removeClass("ui-state-focus ui-state-hover").prop('disabled', true);
+                      },
+                      success: function(msg){
+                        if(msg.status == 'done') {
+                          $('#company_button').text("<?=$lang['admin_company_save'];?>").prop('disabled', false);
+                        }
+                      }
                   });
                   return false;
               });
