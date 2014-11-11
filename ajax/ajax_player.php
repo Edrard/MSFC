@@ -95,19 +95,9 @@ function p_info($res, $t) {
 }
 ?>
 <script type="text/javascript" id="js">
-function updateall() {
-$("#player0")
-  <? for ($i=1; $i<=17; $i++) {?>
-  .add("#player<?=$i;?>")
-  <? } ;?>
-  .add("#player01")
-  .trigger('applyWidgetId', ['zebra']).trigger('update');
-return false;
-}
-
    $(document).ready(function() {
    $("#player0")
-      <? for ($i=1; $i<=9; $i++) {?>
+      <? for ($i=1; $i<=9; $i++) { ?>
               .add("#player<?=$i;?>")
       <? } ;?>
               .add("#player01")

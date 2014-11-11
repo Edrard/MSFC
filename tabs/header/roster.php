@@ -7,7 +7,7 @@
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
-  var sorting = <?=$roster_sortlist;?>;
+  var sorting = <?=$roster_sortlist; ?>;
   $("#tabs-sort-<?=$key;?>").trigger("sorton",[sorting]);
 
   $( "#player_result" ).dialog({
@@ -33,4 +33,38 @@ $(document).ready(function() {
         }
   });
 });
+
+function plmagic(elem){
+   $.ajax({
+        cache: true,
+        type: "POST",
+        data: ({
+          nickname   : $(elem).attr("alt")
+        }),
+        url: "ajax/ajax_player.php",
+        beforeSend : function(data){
+          $("#player_result").dialog('open');
+          $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
+        },
+        success: function(msg){
+            $("#player_result").empty();
+            $("#player_result").html(msg);
+            $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
+        },
+        complete: function() {
+          $('body,html').scrollTop( 0 );
+          updateall();
+        }
+    });
+}
+
+function updateall() {
+$("#player0")
+  <? for ($i=1; $i<=17; $i++) {?>
+  .add("#player<?=$i;?>")
+  <? } ;?>
+  .add("#player01")
+  .trigger('applyWidgetId', ['zebra']).trigger('update');
+return false;
+}
 </script>

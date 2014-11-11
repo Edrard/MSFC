@@ -71,13 +71,6 @@
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-              if (typeof window.currentTabID === "undefined") {
-                 window.currentTabID = getTabID();
-              }
-              if (typeof window.MenuStatus === "undefined") {
-                 window.MenuStatus = 'visible';
-              }
-
               $("#allcontainer").css({'height': '100%', 'width': '100%', 'overflow-x': 'visible', 'overflow-y': 'visible' });
         });
 
@@ -88,7 +81,6 @@
               }
            });
            $(elem).parent('li').addClass("ui-state-active");
-           window.currentTabID = getTabID();
         };
 
         function magic2(elem)
@@ -96,55 +88,18 @@
             elem = document.getElementById('tohide');
             if (elem) {
                 if (elem.style.display == 'none'){
-                    $("#tohide").fadeIn("fast");
-                    $("#tohide2").fadeIn("fast");
-                    $("#chan").removeClass("ui-icon-triangle-1-e");
-                    $("#chan").addClass("ui-icon-triangle-1-w");
-                    window.MenuStatus = 'visible';
+                    $("#tohide, #tohide2").fadeIn("fast");
+                    $("#chan").removeClass("ui-icon-triangle-1-e").addClass("ui-icon-triangle-1-w");
                 } else {
-                    $("#tohide").fadeOut("fast");
-                    $("#tohide2").fadeOut("fast");
-                    $("#chan").removeClass("ui-icon-triangle-1-w");
-                    $("#chan").addClass("ui-icon-triangle-1-e");
-                    window.MenuStatus = 'hidden';
+                    $("#tohide, #tohide2").fadeOut("fast");
+                    $("#chan").removeClass("ui-icon-triangle-1-w").addClass("ui-icon-triangle-1-e");
                 }
             }
         };
-        function plmagic(elem){
-           $.ajax({
-                cache: true,
-                type: "POST",
-                data: ({
-                  nickname   : $(elem).attr("alt")
-                }),
-                url: "ajax/ajax_player.php",
-                beforeSend : function(data){
-                  $("#player_result").dialog('open');
-                  $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
-                },
-                success: function(msg){
-                    $("#player_result").empty();
-                    $("#player_result").html(msg);
-                    $("#allcontainer").css({'min-height': ($('.pstat').outerHeight(true) + 200) + 'px'});
-                },
-                complete: function() {
-                  $('body,html').scrollTop( 0 );
-                  updateall();
-                }
-            });
-        }
 
         function is_numeric(input){
           return typeof(input)=='number';
         };
-        function getTabID() {
-          var id = $("#menu .ui-state-active").val();
-          if(is_numeric(id) && (id > 0)) {
-            return id;
-          } else {
-            return 'ajax';
-          }
-        }
     </script>
     <?php //including tabs js
       foreach($tabs_keys as $key => $val) {
