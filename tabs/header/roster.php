@@ -30,6 +30,7 @@ $(document).ready(function() {
         beforeClose: function( event, ui ) {
           $("#tabs-sort-<?=$key;?>").tablesorter({sortList: sorting});
           $("#allcontainer").css({'min-height': '100%'});
+          location.href = "#tabs-<?=$key;?>";
         }
   });
 });
@@ -43,7 +44,6 @@ function plmagic(elem){
       }),
       url: "ajax/ajax_player.php",
       beforeSend : function(data){
-        $('body,html').scrollTop( 0 );
         $("#player_result").dialog('open');
         $("#player_result").html("<center><?=$lang['index_loading'];?><br /><img src='./images/ajax-loader.gif'></center>");
       },
@@ -82,6 +82,6 @@ function plmagic(elem){
         });
       }
   });
-  return false;
+  return true;
 }
 </script>
