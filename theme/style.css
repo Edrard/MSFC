@@ -1,18 +1,18 @@
 /** Admin **/
 
 .login_insider {
-    width: 340px;
-    background-color: transparent;
-    margin: 0 auto 15px auto;
-    padding: 0;
-    border: 1px solid;
-    border-radius: 11px;
-    -moz-border-radius: 11px;
-    -webkit-border-radius: 11px;
+  width: 340px;
+  background-color: transparent;
+  margin: 0 auto 15px auto;
+  padding: 0;
+  border: 1px solid;
+  border-radius: 11px;
+  -moz-border-radius: 11px;
+  -webkit-border-radius: 11px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 /***** Exinaus ******/
@@ -30,34 +30,35 @@
   padding: 0px !important;
 }
 .ui-button {
-    border-radius: 4px 4px 4px 4px !important;
+  border-radius: 4px 4px 4px 4px !important;
 }
 .col_red, .col_red a:link,.col_red a:visited, .col_red a:hover, .col_red a:active {
-    color: #800000 !important;
-    text-decoration:none;
-    opacity: 1; filter:Alpha(Opacity=100);
+  color: #800000 !important;
+  text-decoration:none;
+  opacity: 1; filter:Alpha(Opacity=100);
 }
 .col_grey, .col_grey a:link,.col_grey a:visited, .col_grey a:hover, .col_grey a:active {
-    color: slategray !important;
-    text-decoration:none;
-    opacity: 1; filter:Alpha(Opacity=100);
+  color: slategray !important;
+  text-decoration:none;
+  opacity: 1; filter:Alpha(Opacity=100);
 }
 .col_blue, .col_blue a:link,.col_blue a:visited, .col_blue a:hover, .col_blue a:active {
-    color: royalblue !important;
-    text-decoration:none;
-    opacity: 1; filter:Alpha(Opacity=100);
+  color: royalblue !important;
+  text-decoration:none;
+  opacity: 1; filter:Alpha(Opacity=100);
 }
 .col_green, .col_green a:link,.col_green a:visited, .col_green a:hover, .col_green a:active {
-    color: green !important;
-    text-decoration:none;
-    opacity: 1; filter:Alpha(Opacity=100);
+  color: green !important;
+  text-decoration:none;
+  opacity: 1; filter:Alpha(Opacity=100);
 }
 .col_black, .col_black a:link,.col_black a:visited, .col_black a:hover, .col_black a:active {
-    color: #FF8000 !important;
-    text-decoration:none;
-    opacity: 1; filter:Alpha(Opacity=100);
+  color: #FF8000 !important;
+  text-decoration:none;
+  opacity: 1; filter:Alpha(Opacity=100);
 }
 /* main */
+
 table.tablesorter tbody tr.dark-row td {
   background: #444;
   color: #ddd;
@@ -87,6 +88,7 @@ label.error {
 }
 
 html, body {margin:0; padding:0; width:100%; height:100%;}
+#allcontainer {min-height: 100%; width:100%; padding: 0; margin: 0; border: 0px inset black !important;}
 img { border:0px; }
 
 div { padding: 2px 0 2px 0; }
@@ -149,16 +151,16 @@ table .tablesorter { margin: 20px 0 0 0; }
   vertical-align: middle;
 }
 .gk-gold {
-    background-position: 0 0;
+  background-position: 0 0;
 }
 .gk-start {
-    background-position: -24px 0;
+  background-position: -24px 0;
 }
 .gk-normal {
-    background-position: -48px 0;
+  background-position: -48px 0;
 }
 .gk-def {
-    background-position: -72px 0;
+  background-position: -72px 0;
 }
 .fixed-menu {
   text-align: left;
@@ -177,138 +179,138 @@ table .tablesorter { margin: 20px 0 0 0; }
 
 /* new tab */
 .a_num {
-    position:absolute; 
-    bottom:1px; 
-    padding:0px 3px; 
-    text-align:center; 
-    right:1px; 
-    min-width:18px; 
-    color: black; 
-    border:1px solid black;
-    font-size:10px;
+  position:absolute; 
+  bottom:1px; 
+  padding:0px 3px; 
+  text-align:center; 
+  right:1px; 
+  min-width:18px; 
+  color: black; 
+  border:1px solid black;
+  font-size:10px;
 }
 .medalDiv {
-    text-align:center;
-    width:70px; 
-    height:75px; 
-    *display:inline; 
-    *float:left;
-    display:inline-block; 
-    margin:3px; 
-    position:relative;
+  text-align:center;
+  width:70px; 
+  height:75px; 
+  *display:inline; 
+  *float:left;
+  display:inline-block; 
+  margin:3px; 
+  position:relative;
 }
 .clanDiv {
-    text-align:center;
-    *display:inline; 
-    *float:left;
-    display:inline-block; 
-    margin:5px; 
-    position:relative;
-    vertical-align: top;
+  text-align:center;
+  *display:inline; 
+  *float:left;
+  display:inline-block; 
+  margin:5px; 
+  position:relative;
+  vertical-align: top;
 }
 .faded {
-    opacity:0.4;
-    filter: alpha(opacity=40);
+  opacity:0.4;
+  filter: alpha(opacity=40);
 }
 .medalContainer {
-    border:1px solid #666; text-align:center;
+  border:1px solid #666; text-align:center;
 }
 .levelup {
-    background:url(../images/upgrade.png) center center no-repeat;
-    width:16px;
-    height:16px;
-    position:absolute;
-    top:0;
-    right:0;
+  background:url(../images/upgrade.png) center center no-repeat;
+  width:16px;
+  height:16px;
+  position:absolute;
+  top:0;
+  right:0;
 }
 .droptrue li {
-    border: 1px solid;
-    margin: 4px auto;
-    padding: 2px 4px;
-    width: 180px;
-    text-align: left;
-    cursor: move;
-    overflow: hidden;
-    font-size: 12px;
+  border: 1px solid;
+  margin: 4px auto;
+  padding: 2px 4px;
+  width: 180px;
+  text-align: left;
+  cursor: move;
+  overflow: hidden;
+  font-size: 12px;
 }
 .pl_list ul {
-    list-style-type: none;
-    min-height: 120px !important;
+  list-style-type: none;
+  min-height: 120px !important;
 }
 .rating_ico {
-    background: url(../images/ratings_ico.png) no-repeat scroll 100% 0 transparent;
-    display: inline-block;
-    height: 34px;
-    opacity: 0.9;
-    vertical-align: middle;
+  background: url(../images/ratings_ico.png) no-repeat scroll 100% 0 transparent;
+  display: inline-block;
+  height: 34px;
+  opacity: 0.9;
+  vertical-align: middle;
 }
 .rating_ico_fb {
-    background-position: 100% 0;
-    width: 46px;
+  background-position: 100% 0;
+  width: 46px;
 }
 .rating_ico_survived_ratio {
-    background-position: 100% -34px;
-    width: 31px;
+  background-position: 100% -34px;
+  width: 31px;
 }
 .rating_ico_wins_ratio {
-    background-position: 100% -68px;
-    width: 23px;
+  background-position: 100% -68px;
+  width: 23px;
 }
 .rating_ico_frags_count {
-    background-position: 100% -102px;
-    width: 34px;
+  background-position: 100% -102px;
+  width: 34px;
 }
 .rating_ico_db {
-    background-position: 100% -136px;
-    width: 41px;
+  background-position: 100% -136px;
+  width: 41px;
 }
 .rating_ico_xp_avg {
-    background-position: 100% -170px;
-    width: 37px;
+  background-position: 100% -170px;
+  width: 37px;
 }
 .rating_ico_hits_ratio {
-    background-position: 100% -204px;
-    width: 24px;
+  background-position: 100% -204px;
+  width: 24px;
 }
 .rating_ico_spotted_count {
-    background-position: 100% -238px;
-    width: 26px;
+  background-position: 100% -238px;
+  width: 26px;
 }
 .rating_ico_xp_max {
-    background-position: 100% -272px;
-    width: 23px;
+  background-position: 100% -272px;
+  width: 23px;
 }
 .rating_ico_damage_dealt {
-    background-position: 100% -306px;
-    width: 28px;
+  background-position: 100% -306px;
+  width: 28px;
 }
 .rating_ico_sb {
-    background-position: 100% -340px;
-    width: 40px;
+  background-position: 100% -340px;
+  width: 40px;
 }
 .rating_ico_exp {
-    background-position: 100% -374px;
-    width: 24px;
+  background-position: 100% -374px;
+  width: 24px;
 }
 .rating_ico_battles_count {
-    background-position: 100% -408px;
-    width: 20px;
+  background-position: 100% -408px;
+  width: 20px;
 }
 .rating_ico_tlm {
-    background-position: 100% -442px;
-    width: 36px;
+  background-position: 100% -442px;
+  width: 36px;
 }
 .rating_ico_global_rating {
-    background-position: 100% -476px;
-    width: 29px;
+  background-position: 100% -476px;
+  width: 29px;
 }
 .rating_ico_cr {
-    background-position: 100% -510px;
-    width: 25px;
+  background-position: 100% -510px;
+  width: 25px;
 }
 .rating_ico_eur {
-    background-position: 100% -544px;
-    width: 28px;
+  background-position: 100% -544px;
+  width: 28px;
 }
 .rating_ico_egk {
     background-position: 100% -578px;

@@ -39,7 +39,7 @@
     <script type="text/javascript" src="./js/msfc.shared.js"></script>
 
     <script type="text/javascript">
-        $("#allcontainer").css({'height': $(window).height(), 'width': $(window).width(), 'overflow-x': 'hidden', 'overflow-y': 'hidden' });
+        $("#allcontainer").css({'width': $(window).width(), 'overflow-x': 'hidden'});
         $(document).ready(function() {
               <?php
                 $tabs_keys = read_tabs('WHERE `status` = "1" AND `type` = "0"');
@@ -71,7 +71,7 @@
               });
               $.datepicker.setDefaults($.datepicker.regional["<?php echo $config['lang']; ?>"]);
 
-              $("#allcontainer").css({'height': '100%', 'width': '100%', 'overflow-x': 'visible', 'overflow-y': 'visible' });
+              $("#allcontainer").css({'width': '100%', 'overflow-x': 'visible'});
         });
 
         function magic(elem){
