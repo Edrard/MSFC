@@ -68,7 +68,11 @@ foreach($maps_active as $maps_id) {
     $battel = get_api('globalwar/battles',array('map_id' => $maps_id, 'clan_id' => $config['clan']));
     if(isset($battel['status']) and $battel['status'] == 'ok' and !empty($battel['data'][$config['clan']])) {
       foreach($battel['data'][$config['clan']] as $val) {
-        $prov = array_merge($prov, $val['provinces']);
+        foreach($val['provinces_i18n'] as $v) {
+          if(!in_array($v['province_id'],$prov)) {
+            $prov[] = $v['province_id'];
+          }
+        }
       }
       $provinces = get_api('globalwar/provinces',array('map_id' => $maps_id, 'province_id' => $prov, 'fields' => 'province_i18n,prime_time,clan_id,revenue'));
       if(isset($provinces['status']) and $provinces['status'] == 'ok') {
