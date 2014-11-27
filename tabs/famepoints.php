@@ -24,9 +24,9 @@ if(isset($maps['status']) and $maps['status'] == 'ok') {
   }
 }
 if(empty($maps_id)){
-  $maps_id = 2;
+  $maps_id = 'eventmap';
 }
-$fame = get_api('globalwar/famepoints',array('map_id' => $maps_id, 'account_id' => array_keys($roster_id)));
+$fame = get_api('globalwar/accountpoints',array('map_id' => $maps_id, 'account_id' => array_keys($roster_id)));
 if(!isset($fame['status']) or $fame['status'] != 'ok') {
   $fame = array();
 }
@@ -44,7 +44,7 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
             <?php foreach($res as $name => $val){ ?>
                 <tr>
                     <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                    <td><?=(isset($fame['data'][$val['data']['account_id']]['fame_points']))?$fame['data'][$val['data']['account_id']]['fame_points']:'';?></td>
+                    <td><?=(isset($fame['data'][$val['data']['account_id']]['points']))?$fame['data'][$val['data']['account_id']]['points']:'';?></td>
                     <td><?=(isset($fame['data'][$val['data']['account_id']]['position']))?$fame['data'][$val['data']['account_id']]['position']:'';?></td>
                 </tr>
                 <?php } ?>

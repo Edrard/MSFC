@@ -52,9 +52,8 @@
         }
     }
     $poss = array();
-    if (is_valid_url($config['td']) == true){
-        $poss = get_api('clan/provinces',array('clan_id' => $config['clan']));
-    }
+    $poss = get_api('clan/provinces',array('clan_id' => $config['clan']));
+
     //include(ROOT_DIR.'/views/header.php');
 ?>
 <script type="text/javascript" id="js">
@@ -77,28 +76,24 @@
             </tr> 
         </thead>
         <tbody>
-        <?php if (isset($poss['data'])) {
-                  if (empty($poss['data'])) {
-                      echo '<tr><td colspan="6" align="center">'.$lang['no_province'].'</td></tr>';
-                  }   else {
-                      $total = 0;
-                      foreach($poss['data'] as $misc => $val){
-                          $total += $val['revenue'];
-                          echo '<tr>';
-                          echo '<td><img src="./images/'.$val['type'].'.png"></td>';
-                          echo '<td><a href="'.$config['clan_link'].'maps/globalmap/?province='.$misc.'" target="_blank">'.$val['name'].'</a></td>';
-                          echo '<td>'.$val['arena_name'].'</td>';
-                          echo '<td align="center">'.date('H:i',$val['prime_time']).'</td>';
-                          echo '<td align="center" style="color: #ba904d;">'.$val['revenue'].' <img src="./images/currency-gold.png"></td>';
-                          echo '<td align="center">'.$val['occupancy_time'].' '.$lang['days'].'</td>';
-                          echo '</tr>';
-                      }
-                  }
-              }   else {
-                  $message = $lang['error_1'];
-                  if (isset ($poss['error']['message'])) $message .= ' ('.$poss['error']['message'].')';
-                  echo '<tr><td colspan="6" align="center">'.$message.'</td></tr>';
-              }; ?>
+          <? if (isset($poss['data'])) { ?>
+            <? if (empty($poss['data'])) { ?>
+              <tr><td colspan="6" align="center"><?=$lang['no_province'];?></td></tr>
+            <? } else { $total = 0; ?>
+              <? foreach($poss['data'] as $val) { $total += $val['revenue']; ?>
+                <tr>
+                  <td><img src="./images/<?=$val['type'];?>.png"></td>
+                  <td><a href="<?=$config['clan_link'];?>maps/<?=$val['map_id'];?>/?province=<?=$val['province_id'];?>" target="_blank"><?=$val['name'];?></a></td>
+                  <td><?=$val['arena_i18n'];?></td>
+                  <td align="center"><?=date('H:i',$val['prime_time']);?></td>
+                  <td align="center" style="color: #ba904d;"><?=$val['revenue'];?> <img src="./images/currency-gold.png"></td>
+                  <td align="center"><?=$val['occupancy_time'],' ',$lang['days'];?></td>
+                </tr>
+              <? } ?>
+            <? } ?>
+          <? } else { ?>
+            <tr><td colspan="6" align="center"><?=$lang['error_1'],(isset($poss['error']['message'])?' ('.$poss['error']['message'].')':'');?></td></tr>
+          <? } ?>
         </tbody>
     </table>
     <?php if (isset($total)) {
