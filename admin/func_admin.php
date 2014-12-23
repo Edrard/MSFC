@@ -24,7 +24,7 @@ function base_dir($local = null)
 
     return preg_replace('/'.$local.'[\/\\ ]?$/','',$full);
 } 
-function error($msg) 
+function error($msg)
 {
     $data = '<div align="center" class="ui-state-error ui-corner-all">';
     foreach ( $msg as $value ) {
@@ -32,6 +32,7 @@ function error($msg)
     }
     $data .= '</div>';
     return $data;
+    /*TODO: Нужна ли эта функция, когда есть почти аналогичная show_message()? Посмотреть, может убрать ее.*/
 }
 function insert_config($config)
 {
@@ -78,11 +79,7 @@ function insert_config($config)
     $prefix = array();
     if(isset($config['all_multiclans'])){
         //Получаем список префиксов из таблицы multiclan
-        $sql = "SELECT prefix FROM `multiclan`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-           $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-        }
+        $prefix = $db->select('SELECT prefix FROM `multiclan`;',__line__,__file__,'rows');
     }
     if(empty($prefix)) { $prefix = array($db->prefix); }
 
@@ -91,17 +88,9 @@ function insert_config($config)
     foreach($prefix as $t) {
       $db->change_prefix($t);
       foreach($config as $name => $var){
-          $sql = "UPDATE `config` SET value = '".$var."' WHERE name = '".$name."';";
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
+          $db->insert('UPDATE `config` SET value = "'.$var.'" WHERE name = "'.$name.'";',__line__,__file__);
           if($name == 'clan'){
-              $sql = "UPDATE `multiclan` SET id = '".$var."' WHERE main = '1';";
-              $q = $db->prepare($sql);
-              if ($q->execute() != TRUE) {
-                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-              }
+              $db->insert('UPDATE `multiclan` SET id = "'.$var.'" WHERE main = "1";',__line__,__file__);
           }
       }
     }
@@ -110,23 +99,12 @@ function new_user($post)
 {
     global $db,$auth;
     unset($post['newuser']);
-    $sql = "SELECT COUNT(id) FROM `users` WHERE user = '".$post['user']."';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $status_user = $q->fetchColumn();  
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $status_user = $db->select('SELECT COUNT(id) FROM `users` WHERE user = "'.$post['user'].'";',__line__,__file__,'column');
     if($status_user == 0){
         $post['password'] = $auth->encrypt($post['password']);
         $post['email'] = $post['user'].'@local.com';
         if($auth->rights != 'all') { $post['prefix'] = $db->prefix; }
-        $sql = "INSERT INTO `users` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
-
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        } 
+        $db->insert("INSERT INTO `users` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');",__line__,__file__);
         return FALSE; 
     }   
     return TRUE;
@@ -135,13 +113,7 @@ function edit_user($post)
 {
     global $db,$auth,$lang;
     unset($post['edituser']);
-    $sql = "SELECT COUNT(id) FROM `users` WHERE user = '".$post['oldname']."';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $status_user = $q->fetchColumn();
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $status_user = $db->select('SELECT COUNT(id) FROM `users` WHERE user = "'.$post['oldname'].'";',__line__,__file__,'column');
     if($status_user == 1){
         $oldname = $post['oldname'];
         unset($post['oldname']);
@@ -168,37 +140,18 @@ function edit_user($post)
             }
         }
         $sql = "UPDATE `users` SET ".$insert." WHERE user = '".$oldname."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-
+        $db->insert($sql,__line__,__file__);
     }
     return '';
 }
 function delete_user($get)
 {
     global $db;
-    if($get['userdel'] == 1){
-        if(isset($get['id'])){
-            if(is_numeric($get['id'])){
-                $sql = "SELECT COUNT(id) FROM `users` WHERE id = '".$get['id']."';";
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $status_user = $q->fetchColumn();
-                }else{
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }     
-                if($status_user > 0){
-
-                    $sql = "DELETE FROM `users` WHERE id = '".$get['id']."';";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() != TRUE) {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                    return FALSE; 
-                }
-            }
+    if($get['userdel'] == 1 and isset($get['id']) and is_numeric($get['id'])){
+        $status_user = $db->select('SELECT COUNT(id) FROM `users` WHERE id = "'.$get['id'].'";',__line__,__file__,'column');
+        if($status_user > 0){
+            $db->insert('DELETE FROM `users` WHERE id = "'.$get['id'].'";',__line__,__file__);
+            return FALSE;
         }
     }
     return TRUE;
@@ -209,44 +162,18 @@ function delete_multi($get){
     if($get['removeclan'] == 1){
         if(isset($get['clan'])){
             if(is_numeric($get['clan'])){
-                $sql = "SELECT * FROM `multiclan` WHERE id = '".$get['clan']."';";
-                //echo $sql;      
-                $q = $db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $status_clan = $q->fetchAll(PDO :: FETCH_ASSOC);
-                }else{
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
+                $status_clan = $db->select('SELECT `prefix` FROM `multiclan` WHERE id = "'.$get['clan'].'";',__line__,__file__,'column');
                 //print_r($status_clan);
-                if(isset($status_clan['0']['prefix']) and !empty($status_clan))
+                if(isset($status_clan) and !empty($status_clan))
                 {
-                    $sql = "SHOW TABLES LIKE '".$status_clan['0']['prefix']."%';";
-                    //echo $sql;
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $list = $q->fetchAll(PDO :: FETCH_ASSOC);
-                    }else{
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                    //print_r($list);
-                    if(!empty($list)) {
-                      foreach($list as $val){
-                          foreach($val as $v){
-                              $sql = "DROP TABLE IF EXISTS ".$v.";";
-                              //echo $sql;
-                              $q = $db->prepare($sql);
-                              if ($q->execute() != TRUE) {
-                                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                              }
-                          }
-                      }
+                   $tables = $db->select('SHOW TABLES LIKE "'.substr($status_clan, 0, strlen($status_clan)-1).'\_%";',__line__,__file__,'rows');
 
-                      $sql = "DELETE FROM `multiclan` WHERE id = '".$get['clan']."';";
-                      $q = $db->prepare($sql);
-                      if ($q->execute() != TRUE) {
-                          die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                   if(!empty($tables)) {
+                     foreach($tables as $tab){
+                          $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
                       }
                     }
+                    $db->insert('DELETE FROM `multiclan` WHERE id = "'.$get['clan'].'";',__line__,__file__);
                     $cache->clear('get_last_roster_'.$get['clan']);
                 }
             }
@@ -261,47 +188,16 @@ function add_multiclan($post, $lang){
        if (is_numeric($post['id'])){
            if (preg_match('/^\d/', $post['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$post['prefix'])) <= 5){
                if (ctype_alnum(preg_replace('/(.*)_/','$1',$post['prefix']))){
-                   $sql = "SELECT COUNT(id) FROM `multiclan` WHERE id = '".$post['id']."';";
-                   $q = $db->prepare($sql);
-                   if ($q->execute() == TRUE) {
-                       $status_clan = $q->fetchColumn();
-                   }   else {
-                       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                   }
-
-                   $sql = "SELECT COUNT(id) FROM `multiclan` WHERE prefix = '".$post['prefix']."';";
-                   $q = $db->prepare($sql);
-                   if ($q->execute() == TRUE) {
-                       $status_prefix = $q->fetchColumn();
-                   }   else{
-                       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                   }
-                   if ($status_clan == 0 ){
-                       if ($status_prefix == 0){
-                           $sql = "INSERT INTO `multiclan` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
-                           $q = $db->prepare($sql);
-                           if ($q->execute() != TRUE) {
-                               die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                           }
-                           insert_file(LOCAL_DIR.'/sql/clan.sql');
-                           $sql = "UPDATE `config` SET
-                           value = '".$post['id']."'
-                           WHERE name = 'clan';";
-                           $q = $db->prepare($sql);
-                           if ($q->execute() != TRUE) {
-                               die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                           }
-                           $sql = "UPDATE `config` SET
-                           value = '".$post['server']."'
-                           WHERE name = 'server';";
-                           $q = $db->prepare($sql);
-                           if ($q->execute() != TRUE) {
-                               die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                           }
-                           $multi_get = '';
-                           if (isset($_GET['multi'])){
-                               $multi_get = '&multi='.$_GET['multi'];
-                           }
+                   $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$post['id'].'";',__line__,__file__,'column');
+                   $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$post['prefix'].'";',__line__,__file__,'column');
+                   if ($status_clan == 0 and $status_prefix == 0) {
+                       $db->insert('INSERT INTO `multiclan` (`'.(implode('`,`',array_keys($post))).'`) VALUES ("'.(implode('","',$post)).'");',__line__,__file__);
+                       insert_file(LOCAL_DIR.'/sql/clan.sql');
+                       $db->insert('UPDATE `config` SET value = "'.$post['id'].'" WHERE name = "clan";',__line__,__file__);
+                       $db->insert('UPDATE `config` SET value = "'.$post['server'].'" WHERE name = "server";',__line__,__file__);
+                       $multi_get = '';
+                       if (isset($_GET['multi'])){
+                           $multi_get = '&multi='.$_GET['multi'];
                        }
                    }
                }
@@ -318,21 +214,11 @@ function delete_tab($get)
     global $db;
     if($get['del'] == 1){
         if($get['type'] == 0){
-            $sql = "SELECT * FROM `tabs` WHERE id = '".$get['id']."';";
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $info = $q->fetch();
-            }else{
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+            $info = $db->select('SELECT * FROM `tabs` WHERE id = "'.$get['id'].'";',__line__,__file__,'fecth');
             $target_path = ROOT_DIR.'/tabs/'.$info['file'];
             unlink($target_path);
         }
-        $sql = "DELETE FROM `tabs` WHERE id = '".$get['id']."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        } 
+        $db->insert('DELETE FROM `tabs` WHERE id = "'.$get['id'].'";',__line__,__file__);
     }elseif($get['del'] == 2){
         $file = '';
         $new = explode('php',$get['file']);
@@ -351,31 +237,16 @@ function creat_ajax_tab($post)
     global $db;
     unset($post['ajaxcre']);
     $post['file'] = trim($post['file']);
-    $sql = "SELECT COUNT(*) FROM `tabs` WHERE file = '".$post['file']."';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $status_tab = $q->fetchColumn();  
-    }else{ 
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $status_tab = $db->select('SELECT COUNT(*) FROM `tabs` WHERE file = "'.$post['file'].'";',__line__,__file__,'column');
     if($status_tab == 0){
-        $sql = "SELECT MAX(id) FROM `tabs`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $max = $q->fetchColumn();
-        }   else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        } 
+        $max = $db->select('SELECT MAX(id) FROM `tabs`;',__line__,__file__,'column');
         $max = (int) $max;
         $post['id'] = $max + 10;
         $post['name'] = '...';
         $post['type'] = '1';
         $post['status'] = '0';
         $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($post)))."`) VALUES ('".(implode("','",$post))."');";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert($sql,__line__,__file__);
     }   else {
         return TRUE;
     }
@@ -392,11 +263,7 @@ function tabs_info_db($post)
     if(isset($post['all_multiclans'])) {
       unset($post['all_multiclans']);
       //Получаем список префиксов из таблицы multiclan
-      $sql = "SELECT prefix FROM `multiclan`;";
-      $q = $db->prepare($sql);
-      if ($q->execute() == TRUE) {
-         $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-      }
+      $prefix = $db->select('SELECT prefix FROM `multiclan`;',__line__,__file__,'rows');
     }
     if(empty($prefix)) { $prefix = array($db->prefix); }
 
@@ -437,10 +304,7 @@ function tabs_info_db($post)
             }
             $sql = substr($sql, 0, strlen($sql)-2);
             $sql .= ';';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+            $db->insert($sql,__line__,__file__);
         }
      }
      $db->change_prefix($old_prefix);
@@ -462,28 +326,20 @@ function check_tabs_db($tabs)
 {
     global $db;
     foreach($tabs as $tab){
-        $sql = "SELECT COUNT(`file`) FROM `tabs` WHERE file = '".$tab."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $status_tab[$tab] = $q->fetchColumn();
-        }   else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }  
+        $status_tab[$tab] = $db->select('SELECT COUNT(`file`) FROM `tabs` WHERE file = "'.$tab.'";',__line__,__file__,'column');
     }
     return $status_tab;
+    /*TODO: Не совсем понимаю назначение функции, она проверяет не пытаются ли залить вкладку с одинаковым именем файла? Нужна ли она? Надо бы разобраться.*/
+    /*TODO: Или, возможно, запрос можно и по другому построить?.*/
 }
 function read_users()
 {
     global $db,$auth;
     $where = '';
     if($auth->rights != 'all') { $where = 'WHERE prefix = "'.$db->prefix.'" '; }
-    $sql = "SELECT * FROM `users` $where ORDER BY id ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }  
+    return $db->select('SELECT * FROM `users` '.$where.' ORDER BY id ASC;',__line__,__file__);
+    /*TODO: Проверить нужна ли эта функция одного запроса, и должна ли она быть отдельной,
+    или отнести ее к класу авторизации, что бы вызывать ее через $auth->read_users()*/
 }
 function insert_file($filename)
 {
@@ -497,10 +353,7 @@ function insert_file($filename)
         $templine .= $line;
         if (substr(trim($line), -1, 1) == ';')
         {
-            $q = $db->prepare($templine);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$templine));
-            } 
+            $db->insert($templine,__line__,__file__);
             $templine = '';
         }
     }
@@ -520,61 +373,30 @@ function cron_file_recreat()
 
 function recreat_db()
 {
-    global $db,$config;
+    global $db;
 
-    $sql = "SHOW TABLES LIKE '%multiclan';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $multi_exist = $q->fetchColumn();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $multi_exist = $db->select('SHOW TABLES LIKE "%multiclan";',__line__,__file__,'column');
 
     if($multi_exist == 'msfcmt_multiclan') {
 
-        $sql = "SELECT `prefix` FROM `multiclan`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $all_prefix = $q->fetchAll(PDO::FETCH_ASSOC);
-        }   else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $all_prefix = $db->select('SELECT `prefix` FROM `multiclan`;',__line__,__file__);
 
         foreach($all_prefix as $t) {
-            $sql = "show tables like '".$t['prefix']."%';";
-            $q = $db->prepare($sql);
-            if ($q->execute() == TRUE) {
-                $tables = $q->fetchAll();
-            }   else {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
-            foreach($tables as $tab){
-                $sql = "DROP TABLE IF EXISTS ".$tab[0].";";
-                //echo $sql;
-                $q = $db->prepare($sql);
-                if ($q->execute() != TRUE) {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-            }
+           $tables = $db->select('SHOW TABLES LIKE "'.substr($t, 0, strlen($t)-1).'\_%";',__line__,__file__,'rows');
+
+           if(!empty($tables)) {
+             foreach($tables as $tab){
+                  $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
+             }
+           }
         }
     }
 
-    $sql = "show tables like 'msfcmt_%';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $multi_tables = $q->fetchAll();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $multi_tables = $db->select('show tables like "msfcmt\_%";',__line__,__file__,'rows');
 
     if(!empty($multi_tables)) {
       foreach($multi_tables as $tab){
-          $sql = "DROP TABLE IF EXISTS ".end($tab).";";
-          //echo $sql;
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
+          $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
       }
     }
 }
@@ -591,25 +413,16 @@ function insert_multicaln($id_clan,$server,$dbprefix)
         'sort' => 0,
         'server' => $server
     );
-    $sqlt = "INSERT INTO `multiclan` (".(implode(",",array_keys($insert))).") VALUES ('".(implode("','",$insert))."');";
-    $q = $db->prepare($sqlt);
-    if ($q->execute() !== TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sqlt));
-    }
+    $db->insert('INSERT INTO `multiclan` ('.(implode(',',array_keys($insert))).') VALUES ("'.(implode('","',$insert)).'");',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 function edit_multi_clan($post)
 {
     global $db;
     foreach($post['Array'] as $id => $val){
-        $sql = 'UPDATE `multiclan`
-        SET
-        `sort` = "'.$val['order'].'"
-        WHERE id = "'.$id.'";';
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert('UPDATE `multiclan` SET `sort` = "'.$val['order'].'" WHERE id = "'.$id.'";',__line__,__file__);
     }
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 /***** Exinaus *****/
 function get_top_tanks_list() {
@@ -619,12 +432,8 @@ function get_top_tanks_list() {
     $sql='SELECT t.level, t.type, t.name_i18n, t.tank_id, tt.show, tt.order, tt.shortname, tt.index
     FROM `top_tanks` tt, `tanks` t
     WHERE t.tank_id = tt.tank_id;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $top_tanks_unsorted = $q->fetchAll();
-    }   else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+
+    $top_tanks_unsorted = $db->select($sql,__line__,__file__);
 
     foreach($top_tanks_unsorted as $val) {
         $top_tanks[$val['index']][$val['tank_id']]['tank_id'] = $val['tank_id'];
@@ -644,12 +453,7 @@ function update_top_tanks($array) {
     $prefix = array();
 
     if(isset($array['all_multiclans'])){
-        //Получаем список префиксов из таблицы multiclan
-        $sql = "SELECT prefix FROM `multiclan`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-           $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-        }
+        $prefix = $db->select('SELECT prefix FROM `multiclan`;',__line__,__file__,'rows');
     }
     if(empty($prefix)) { $prefix = array($db->prefix); }
 
@@ -657,47 +461,29 @@ function update_top_tanks($array) {
 
     foreach($prefix as $t) {
       $db->change_prefix($t);
-      $sql = "delete from `top_tanks`;";
-      $q = $db->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
+      $db->insert('delete from `top_tanks`;',__line__,__file__);
       foreach ($array as $index =>$misc) {
-          foreach ($misc as $tank_id => $val) {
-              $val['show'] = isset($val['show']) ? 1 : 0;
-              $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
-              VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
-              $q = $db->prepare($sql);
-              if ($q->execute() != TRUE) {
-                  die(show_message($q->errorInfo(),__line__,__file__,$sql));
-              }
-          }
-          unset($q);
+        foreach ($misc as $tank_id => $val) {
+            $val['show'] = isset($val['show']) ? 1 : 0;
+            $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
+            VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
+            $db->insert($sql,__line__,__file__);
+            /*TODO: Пересмотреть формирование запроса, возможно вместо множества запросов сделать один с кучей VALUES */
+        }
       }
     }
 }
 
 function delete_top_tank($tank_id, $index) {
     global $db;
-    $sql = 'DELETE FROM `top_tanks`
-    WHERE tank_id = '.$tank_id.' AND `index` = '.$index.';';
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert('DELETE FROM `top_tanks` WHERE tank_id = '.$tank_id.' AND `index` = '.$index.';',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function add_top_tanks($lvl,$type) {
     global $db;
 
-    $sql = 'SELECT * FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-    //print_r($tanks);
+    $tanks = $db->select('SELECT * FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";',__line__,__file__);
     $tmp = get_available_tanks_index();
     $index = 0;
     for ($i=1; $i<=10; $i++){
@@ -716,23 +502,13 @@ function add_top_tanks($lvl,$type) {
             $sql .= "('{$val['tank_id']}', '".($index)."', '".($j*10)."')";
             if($i != $j) { $sql .= ', '; $j++; } else { $sql .= ';'; }
         }
-        //echo $sql;
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert($sql,__line__,__file__);
     }
 }
 
 function delete_top_tanks($lvl, $type) {
     global $db;
-    $sql = 'SELECT tank_id FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tanks = $q->fetchAll(PDO :: FETCH_ASSOC);
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $tanks = $db->select('SELECT tank_id FROM `tanks` WHERE level = "'.$lvl.'" AND type = "'.$type.'";',__line__,__file__);
     if (count($tanks) > 0) {
         unset($q);
         $i = count($tanks);
@@ -742,10 +518,7 @@ function delete_top_tanks($lvl, $type) {
             $sql .= 'tank_id = "'.$val['tank_id'].'"';
             if($i != $j) { $sql .= ' OR '; $j++; } else { $sql .= ';'; }
         }
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert($sql,__line__,__file__);
     }
 }
 
@@ -758,24 +531,13 @@ function clean_db_left_players() {
     $roster_id = array_keys(roster_resort_id($new['data']['members']));
 
     if(count($roster_id)>0) {
-        $sql = 'SHOW TABLES LIKE "'.$db->prefix.'col%";';
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $tmp = $q->fetchAll(PDO::FETCH_COLUMN,0);
-        } else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $tmp = $db->select('SHOW TABLES LIKE "'.$db->prefix.'col%";',__line__,__file__,'rows');
 
         if(count($tmp)>0) {
             $roster_id_tmp = implode(',',$roster_id);
 
             foreach($tmp as $val) {
-                $sql = 'DELETE FROM '.$val.' WHERE account_id NOT IN('.$roster_id_tmp.');';
-                $q = $db->prepare($sql);
-                if ($q->execute() != TRUE) {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
-                //echo $sql,'<br />';
+                $db->insert('DELETE FROM '.$val.' WHERE account_id NOT IN('.$roster_id_tmp.');',__line__,__file__);
             }
         }
     }
@@ -786,21 +548,11 @@ function clean_db_old_cron($date) {
     if(!is_numeric($date)) { $date = 30; }
     $del = now()-$date*24*60*60;
 
-    $sql = 'SHOW TABLES LIKE "'.$db->prefix.'col%";';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tmp = $q->fetchAll(PDO::FETCH_COLUMN,0);
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $tmp = $db->select('SHOW TABLES LIKE "'.$db->prefix.'col%";',__line__,__file__,'rows');
 
     if(count($tmp)>0) {
         foreach($tmp as $val) {
-            $sql = 'DELETE FROM '.$val.' WHERE updated_at < "'.$del.'";';
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+            $db->insert('DELETE FROM '.$val.' WHERE updated_at < "'.$del.'";',__line__,__file__);
         }
     }
 }

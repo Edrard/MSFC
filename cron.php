@@ -152,13 +152,9 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                     $counter = $error_messages = array();
                     $counter['old'] = array();
                     //get list of members in DB, if some of theme already there from previous unsucessfull runs
-                    $sql = 'SELECT account_id FROM `col_players` WHERE updated_at >= "'.(now()-$config['cron_time']*60*60).'" ORDER BY updated_at DESC;';
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                       $tmp = $q->fetchAll(PDO::FETCH_COLUMN);
-                       if(!empty($tmp)) {
-                         $counter['old'] = array_flip($tmp);
-                       }
+                    $tmp = $db->select('SELECT account_id FROM `col_players` WHERE updated_at >= "'.(now()-$config['cron_time']*60*60).'" ORDER BY updated_at DESC;',__line__,__file__,'column');
+                    if(!empty($tmp)) {
+                     $counter['old'] = array_flip($tmp);
                     }
                     //Starting geting data
                     if (count($new2['data'][$config['clan']]['members']) > 0){

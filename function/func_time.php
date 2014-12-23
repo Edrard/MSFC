@@ -23,13 +23,7 @@ function went_players($rosterid,$start = 0,$end = -1){
    if($end == -1){
       $end = now();
    }
-   $sql = "SELECT account_id,nickname,updated_at,role,created_at FROM `col_players` WHERE updated_at <= '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at ASC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $result = $q->fetchAll(PDO::FETCH_ASSOC);
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
+   $result = $db->select('SELECT account_id,nickname,updated_at,role,created_at FROM `col_players` WHERE updated_at <= "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at ASC;',__line__,__file__);
    foreach($result as $val){
       if (!isset($rosterid[$val['account_id']])){
            $losed[$val['nickname']] = $val;
@@ -44,13 +38,7 @@ function new_players($rosterid,$start = 0,$end = -1){
    if ($end == -1){
        $end = now();
    }
-   $sql = "SELECT account_id,nickname,updated_at,role,created_at FROM `col_players` WHERE created_at <= '".$end."' AND created_at >= '".$start."' ORDER BY created_at DESC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $result = $q->fetchAll(PDO::FETCH_ASSOC);
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
+   $result = $db->select('SELECT account_id,nickname,updated_at,role,created_at FROM `col_players` WHERE created_at <= "'.$end.'" AND created_at >= "'.$start.'" ORDER BY created_at DESC;',__line__,__file__);
    //print_r($result);
    foreach($result as $val){
       if (($val['created_at'] <=$end) && ($val['created_at'] >= $start))
@@ -66,33 +54,14 @@ function player_progress_main($rosterid = null, $start = 0,$end = -1){
    if ($end == -1){
        $end = now();
    }
-
-   $sql = "SELECT DISTINCT updated_at FROM `col_players` WHERE updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $result = $q->fetchAll(PDO::FETCH_ASSOC);
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
+   $result = $db->select('SELECT DISTINCT updated_at FROM `col_players` WHERE updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
 
    if (count($result) > 1){
        $first = array_pop($result);
        $first = $first['updated_at'];
        $last = $result[0]['updated_at'];
-       $sql = "SELECT * FROM `col_players` WHERE updated_at = '".$first."';";
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $dfirst = $q->fetchAll(PDO::FETCH_ASSOC);
-       }   else {
-           die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
-       $sql = "SELECT * FROM `col_players` WHERE updated_at = '".$last."';";
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $dlast = $q->fetchAll(PDO::FETCH_ASSOC);
-       }   else {
-           die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
+       $dfirst = $db->select('SELECT * FROM `col_players` WHERE updated_at = "'.$first.'";',__line__,__file__);
+       $dlast = $db->select('SELECT * FROM `col_players` WHERE updated_at = "'.$last.'";',__line__,__file__);
 
        foreach($dfirst as $val){
           if (isset($rosterid[$val['account_id']])) {
@@ -148,14 +117,8 @@ function new_tanks($rosterid,$tables,$start = 0,$end = -1){
    }
    foreach ($rosterid as $acc_id) {
       foreach ($tables as $valt){
-         $sql = "SELECT * FROM `".$valt."` WHERE account_id = '".$acc_id['account_id']."' AND updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-         $q = $db->prepare($sql);
-         if ($q->execute() == TRUE) {
-             $tank[$valt] = $q->fetchAll();
-         }   else {
-             die(show_message($q->errorInfo(),__line__,__file__,$sql));
-         }
-
+         $tank[$valt] = $db->select('SELECT * FROM `'.$valt.'` WHERE account_id = "'.$acc_id['account_id'].'" AND updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
+         /*TODO: Проверить, есть ли возможность делать запрос по всем игрокам сразу, формировать массив, и работать с ним, а не дергать данные по каждому игроку*/
          foreach ($tank as $vals) {
             $first = count($vals) - 1;
             if (isset($vals[0])){
@@ -206,37 +169,20 @@ function medal_progress($rosterid = null, $medals, $start = 0,$end = -1){
        $end = now();
    }
 
-   $sql = "SELECT DISTINCT updated_at FROM `col_medals` WHERE updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $result = $q->fetchAll();
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
+   $result = $db->select('SELECT DISTINCT updated_at FROM `col_medals` WHERE updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
    if (count($result) > 1){
        $first = array_pop($result);
        $first = $first['updated_at'];
        $last = $result[0]['updated_at'];
 
-       $sql = "SELECT * FROM `col_medals` WHERE updated_at = '".$first."';";
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $dfirst = $q->fetchAll();
-       }   else {
-           die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
+       $dfirst = $db->select('SELECT * FROM `col_medals` WHERE updated_at = "'.$first.'";',__line__,__file__);
        foreach($dfirst as $val){
           if (isset($rosterid[$val['account_id']])) {
               $dfirst_new[$val['account_id']] = $val;
           }
        }
-       $sql = "SELECT * FROM `col_medals` WHERE updated_at = '".$last."';";
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $dlast = $q->fetchAll();
-       }   else {
-           die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       }
+
+       $dlast = $db->select('SELECT * FROM `col_medals` WHERE updated_at = "'.$last.'";',__line__,__file__);
        foreach($dlast as $vals){
           if (isset($dfirst_new[$vals['account_id']])){
               foreach($vals as $key => $val){
@@ -307,14 +253,8 @@ function player_progress($account_id, $tables, $tanks, $start = 0,$end = -1){
    if ($end == -1){
        $end = now();
    }
-   $sql = "SELECT * FROM `col_players` WHERE account_id = '".$account_id."' AND updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $players = $q->fetchAll();
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
 
+   $players = $db->select('SELECT * FROM `col_players` WHERE account_id = "'.$account_id.'" AND updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
    foreach($players as $vals){
       foreach($vals as $key => $val){
          if (!is_numeric($key)){
@@ -322,13 +262,8 @@ function player_progress($account_id, $tables, $tanks, $start = 0,$end = -1){
          }
       }
    }
-   $sql = "SELECT * FROM `col_medals` WHERE account_id = '".$account_id."' AND updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-   $q = $db->prepare($sql);
-   if ($q->execute() == TRUE) {
-       $medals = $q->fetchAll();
-   }   else {
-       die(show_message($q->errorInfo(),__line__,__file__,$sql));
-   }
+
+   $medals = $db->select('SELECT * FROM `col_medals` WHERE account_id = "'.$account_id.'" AND updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
    foreach($medals as $vals){
       foreach($vals as $key => $val){
          if (!is_numeric($key) && $key != 'account_id' && $key != 'updated_at'){
@@ -339,13 +274,7 @@ function player_progress($account_id, $tables, $tanks, $start = 0,$end = -1){
 
    foreach($tables as $val){
       $tmp = explode('_',$val);
-      $sql = "SELECT * FROM `".$val."` WHERE account_id = '".$account_id."' AND updated_at < '".$end."' AND updated_at >= '".$start."' ORDER BY updated_at DESC;";
-      $q = $db->prepare($sql);
-      if ($q->execute() == TRUE) {
-          $ftank[$tmp[2]] = $q->fetchAll();
-      }   else {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
+      $ftank[] = $db->select('SELECT * FROM `".$val."` WHERE account_id = "'.$account_id.'" AND updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
    }
 
    $newt = array();
@@ -379,6 +308,7 @@ function player_progress($account_id, $tables, $tanks, $start = 0,$end = -1){
 }
 
 function time_summer($array,$name){
+/*TODO: Проверить что за функция, для чего нужна*/
    $sum = 0;
    foreach($array as $val){
       $sum += $val[$name];

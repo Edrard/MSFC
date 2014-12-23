@@ -57,63 +57,124 @@
 
             public function __construct($dsn, $user = null, $password = null, $driver_options = array(),$dbprefix = null)
             {
-                $this->count = 0;
-                $this->sqls = array();
+              $this->count = 0;
+              $this->sqls = array();
 
-                if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $dbprefix, $this->matches)) {
-                    $this->prefix = $this->matches[0];
-                } else {
-                    $this->prefix = 'msfc_';
-                }
-                $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
-                $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks)([`\'"])/';
-                $this->replacement = '$1'.$this->prefix.'$2$3';
+              if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $dbprefix, $this->matches)) {
+                  $this->prefix = $this->matches[0];
+              } else {
+                  $this->prefix = 'msfc_';
+              }
+              $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
+              $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks)([`\'"])/';
+              $this->replacement = '$1'.$this->prefix.'$2$3';
 
-                parent::__construct($dsn, $user, $password, $driver_options);
+              parent::__construct($dsn, $user, $password, $driver_options);
+            }
+
+            public function add_prefix($statement) {
+              $this->count += 1;
+              $statement = preg_replace($this->pattern, $this->replacement, $statement);
+              $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
+              $this->sqls[$this->count] = $statement;
+
+              return $statement;
             }
 
             public function prepare($statement, $driver_options = array())
             {
-                $this->count += 1;
-                $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
-                $this->sqls[$this->count] = $statement;
-                return parent::prepare($statement, $driver_options);
+              $statement = $this->add_prefix($statement);
+              return parent::prepare($statement, $driver_options);
             }
-            public function query($statement)
-            {
-                $this->count += 1;
-                $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
-                $this->sqls[$this->count] = $statement;
-                $args = func_get_args();
 
-                if (count($args) > 1) {
-                    return call_user_func_array(array($this, 'parent::query'), $args);
-                } else {
-                    return parent::query($statement);
-                }
-            }
             public function exec($statement)
             {
-                $this->count += 1;
-                $statement = preg_replace($this->pattern, $this->replacement, $statement);
-                $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
-                $this->sqls[$this->count] = $statement;
-                return parent::exec($statement);
+              $statement = $this->add_prefix($statement);
+              return parent::exec($statement);
             }
+
             public function current_prefix(){
-                return $this->prefix;
+              return $this->prefix;
             }
+
             public function change_prefix($new_prefix) {
-                if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $new_prefix, $this->matches)) {
-                    $this->oldprefix = $this->prefix;
-                    $this->prefix = $this->matches[0];
-                    $this->replacement = '$1'.$this->prefix.'$2$3';
-                    return TRUE;
-                } else {
-                    return FALSE;
+              if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $new_prefix, $this->matches)) {
+                  $this->oldprefix = $this->prefix;
+                  $this->prefix = $this->matches[0];
+                  $this->replacement = '$1'.$this->prefix.'$2$3';
+                  return TRUE;
+              } else {
+                  return FALSE;
+              }
+            }
+
+            public function select($statement,$line = NULL,$file = NULL,$type = 'all') {
+              $statement = $this->add_prefix($statement);
+              $result = array();
+              try{
+                $test = parent::query($statement);
+                if(is_object($test)) {
+                  switch($type) {
+                    case 'fecth':
+                    $result = $test->fetch();
+                    break;
+                    case 'column':
+                    $result = $test->fetchColumn();
+                    break;
+                    case 'rows':
+                    $result = $test->fetchAll(PDO::FETCH_COLUMN);
+                    break;
+                    default:
+                    $result = $test->fetchAll();
+                    break;
+                  }
                 }
+              } catch (PDOException $e) {
+                require(ROOT_DIR.'/views/header_error.php');
+                show_message($e->getMessage(),$line,$file,$statement);
+                require(ROOT_DIR.'/views/footer.php');
+                die;
+              }
+              return $result;
+            }
+
+            public function insert($statement,$line = NULL,$file = NULL) {
+              $statement = $this->add_prefix($statement);
+              $res = FALSE;
+              try{
+                $res = parent::query($statement);
+              } catch (PDOException $e) {
+                require(ROOT_DIR.'/views/header_error.php');
+                show_message($e->getMessage(),$line,$file,$statement);
+                require(ROOT_DIR.'/views/footer.php');
+                die;
+              }
+              return $res;
+            }
+
+            public function query($statement) {
+              $this->count += 1;
+              $this->sqls[$this->count] = $statement;
+              $args = func_get_args();
+              if (count($args) > 1) {
+                try{
+                  return call_user_func_array('parent::query', $args);
+                } catch (PDOException $e) {
+                  require(ROOT_DIR.'/views/header_error.php');
+                  show_message($e->getMessage(),null,null,$statement);
+                  require(ROOT_DIR.'/views/footer.php');
+                  die;
+                }
+              } else {
+                try{
+                  return parent::query($statement);
+                } catch (PDOException $e) {
+                  require(ROOT_DIR.'/views/header_error.php');
+                  show_message($e->getMessage(),null,null,$statement);
+                  require(ROOT_DIR.'/views/footer.php');
+                  die;
+                }
+              }
             }
         }
     }
@@ -137,7 +198,11 @@
     }
 
     try {
-        $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array() ,$dbprefix);
+        $db_conn = array(
+          PDO::ATTR_ERRMODE             =>  PDO::ERRMODE_EXCEPTION,
+          PDO::ATTR_DEFAULT_FETCH_MODE  =>  PDO::FETCH_ASSOC
+        );
+        $db = new MyPDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, $db_conn ,$dbprefix);
     } catch (PDOException $e) {
         die(show_message($e->getMessage()));
     }
@@ -150,13 +215,7 @@
 
         $tmp_prefix = $_GET['multi'].'_';
 
-        $sql = "SELECT COUNT(id) FROM `multiclan` WHERE prefix = '".$tmp_prefix."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $multi = $q->fetchColumn();
-        }else{
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $multi = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$tmp_prefix.'";',__line__,__file__,'column');
         if($multi == 1){
             $db->change_prefix($tmp_prefix);
         } else {

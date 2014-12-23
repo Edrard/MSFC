@@ -81,27 +81,14 @@ $activity = $tmp = $tmp2 = $count = array();
 $count['all'] = $count['clan'] = $count['company'] = $sl_count = 0;
 $showarr = array('all', 'clan', 'company');
 
-$sql = "SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= '".$time['to']."' AND updated_at >= '".$time['from']."' ;";
-$q = $db->prepare($sql);
-if ($q->execute() == TRUE) {
-    $sl_count = $q->fetch();
-}   else {
-    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-}
+$sl_count = $db->select('SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ;',__line__,__file__,'fecth');
 if ($sl_count['count'] >0) {
-    $sql = "SELECT * FROM `col_players` WHERE updated_at <= '".$time['to']."' AND updated_at >= '".$time['from']."' ORDER BY updated_at ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tmp = $q->fetchAll();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-    
+    $tmp = $db->select('SELECT * FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ORDER BY updated_at ASC;',__line__,__file__);
+
     foreach ($tmp as $key => $val){
        $tmp2[date('d.m.Y',$val['updated_at'])][$val['account_id']] = $val;
     }
-    
-    
+
     foreach ($tmp2 as $keydata => $val){
       foreach ($val as $acc_id => $val2){
          $next = date('d.m.Y', strtotime($keydata .' +1 day'));

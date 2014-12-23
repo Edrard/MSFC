@@ -52,21 +52,11 @@ if (isset($_POST['recdb'])){
     insert_config($config);
 
     if ($config['lang'] <> 'ru') {
-       $sql = "SELECT file, name FROM `tabs`;";
-       $q = $db->prepare($sql);
-       if ($q->execute() == TRUE) {
-           $tabsindb = $q->fetchAll();
-       }else{
-           die(show_message($q->errorInfo(),__line__,__file__,$sql));
-       };
+       $tabsindb = $db->select('SELECT file, name FROM `tabs`;',__line__,__file__);
        foreach($tabs_lang['ru'] as $key => $val2){
           foreach ($tabsindb as $val) {
               if (($val['name']) == $val2) {
-                 $sql = "UPDATE `tabs` SET name = '".$tabs_lang[$config['lang']][$key]."' WHERE file = '".$val['file']."'; ";
-                 $q = $db->prepare($sql);
-                 if ($q->execute() != TRUE) {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                 };
+                 $db->insert('UPDATE `tabs` SET name = "'.$tabs_lang[$config['lang']][$key].'" WHERE file = "'.$val['file'].'";',__line__,__file__);
               }
           }
        }

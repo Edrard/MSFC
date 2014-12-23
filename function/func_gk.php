@@ -14,53 +14,42 @@
 * @version     $Rev: 3.1.2 $
 *
 */
+/*TODO: Перенести подключение этого файла в /tabs/headers/gk.php, и вообще весь код относящийся к вкладке
+"Заблокированная техника" перенести туда, что бы подключался только если вкладка активна */
 
 function gk_get_all($db) //Получаем список всей заблокированной техники
 {
-    $sql = "SELECT g.time AS time, t.name_i18n AS tank, g.name AS name
+    $sql = 'SELECT g.time AS time, t.name_i18n AS tank, g.name AS name
     FROM `gk` g
     LEFT OUTER JOIN `tanks` t
     ON g.tank = t.title
-    ORDER BY g.time ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll(PDO :: FETCH_ASSOC);
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    ORDER BY g.time ASC;';
+    return $db->select($sql,__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 function gk_tanks($gk_block,$db) // Получаем список танков в клане, с данными о времени блокировки
 {
-    $sql = "SELECT `title`, `level`, `type`, `tank_id` FROM `tanks`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tresult = $q->fetchAll(PDO :: FETCH_ASSOC);
-        foreach($tresult as $tvalue) {
-          if($tvalue['title'] == 'Bat_Chatillon155') { $tvalue['title'] = 'Bat_Chatillon155_58'; }
-          if(isset($gk_block[$tvalue['type']][$tvalue['level']])) {
-            $r[$tvalue['title']] = $gk_block[$tvalue['type']][$tvalue['level']];
-            $r['by_id'][$tvalue['tank_id']]['time'] = $gk_block[$tvalue['type']][$tvalue['level']];
-            $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
-          } else {
-            $r[$tvalue['title']] = 0;
-            $r['by_id'][$tvalue['tank_id']]['time'] = 0;
-            $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
-          }
-        }
-        return $r;
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+    $r = array();
+    $tresult = $db->select('SELECT `title`, `level`, `type`, `tank_id` FROM `tanks`;',__line__,__file__);
+    foreach($tresult as $tvalue) {
+      if($tvalue['title'] == 'Bat_Chatillon155') { $tvalue['title'] = 'Bat_Chatillon155_58'; }
+      if(isset($gk_block[$tvalue['type']][$tvalue['level']])) {
+        $r[$tvalue['title']] = $gk_block[$tvalue['type']][$tvalue['level']];
+        $r['by_id'][$tvalue['tank_id']]['time'] = $gk_block[$tvalue['type']][$tvalue['level']];
+        $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
+      } else {
+        $r[$tvalue['title']] = 0;
+        $r['by_id'][$tvalue['tank_id']]['time'] = 0;
+        $r['by_id'][$tvalue['tank_id']]['title'] = $tvalue['title'];
+      }
     }
-
+    return $r;
 }
 function gk_insert_tanks($array,$time) //Добавляем информацию о заблокированных танках
 {
     global $db;
-    $sql = "INSERT INTO `gk` (name,tank,time) VALUES ('{$array['name']}','{$array['vehicleType']}','{$time}');";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert("INSERT INTO `gk` (name,tank,time) VALUES ('{$array['name']}','{$array['vehicleType']}','{$time}');",__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 function gk_parse_file($file,$res,$gk_time,$lang,$db,$reducer = '') // Обработка реплея.
 {
@@ -169,11 +158,8 @@ function gk_parse_file($file,$res,$gk_time,$lang,$db,$reducer = '') // Обра�
 }
 function gk_clean_db($db)  //удаляем из бд старые записи
 {
-    $sql = "DELETE FROM `gk` WHERE `time` < '".time()."';";
-    $q = $db->prepare($sql);
-    if($q->execute() != true) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert('DELETE FROM `gk` WHERE `time` < "'.time().'";',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
     return 0;
 }
 ?>

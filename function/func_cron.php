@@ -79,56 +79,33 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
     if (!empty($col_rat)) {
         $sqlarr [] = "INSERT INTO `col_ratings` (".(implode(",",array_keys($col_rat))).") VALUES ('".(implode("','",$col_rat))."'); ";
     }
-
+    /*TODO: Посмотреть, можно ли сделать один запрос с множеством VALUES, а не много запросов. */
     // print_R($sqlarr);
     if (!empty($sqlarr)) {
         foreach ($sqlarr as $sql) {
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+          $db->insert($sql,__line__,__file__);
         }
     }
 }
 
 function update_multi_cron($dbprefix) {
     global $db;
-    $sql = "UPDATE `multiclan` SET cron = '".now()."' WHERE prefix = '".$dbprefix."';";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert('UPDATE `multiclan` SET cron = "'.now().'" WHERE prefix = "'.$dbprefix.'";',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function get_config_cron_time($prefix) {
     global $db;
-    $sql = "SELECT * FROM ".$prefix."config WHERE name = 'cron_time';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll(PDO::FETCH_ASSOC);
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select('SELECT * FROM '.$prefix.'config WHERE name = "cron_time";',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function cron_current_run($fh,$date) {
     global $db, $config;
 
-    $sql = "SELECT account_id FROM `col_players` LIMIT 1;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $id = $q->fetchColumn();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
-    $sql = "SELECT COUNT(account_id) FROM `col_players` WHERE account_id = '".$id."';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $player_stat = $q->fetchColumn();
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $id = $db->select('SELECT account_id FROM `col_players` LIMIT 1;',__line__,__file__,'column');
+    $player_stat = $db->select('SELECT COUNT(account_id) FROM `col_players` WHERE account_id = "'.$id.'";',__line__,__file__,'column');
     fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
+    /*TODO: Посмотреть запрос, возможно ли его обьеденить в один, и возможно ли без использования этого кода не как функции */
 }
 ?>

@@ -57,21 +57,9 @@ if ($_GET['multiadd'] == 1){
                         $_GET['prefix'] = $_GET['prefix'].'_';
                     }
 
-                    $sql = "SELECT COUNT(id) FROM `multiclan` WHERE id = '".$_GET['id']."';";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $status_clan = $q->fetchColumn();
-                    }   else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
+                    $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$_GET['id'].'";',__line__,__file__,'column');
+                    $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$_GET['prefix'].'";',__line__,__file__,'column');
 
-                    $sql = "SELECT COUNT(id) FROM `multiclan` WHERE prefix = '".$_GET['prefix']."';";
-                    $q = $db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $status_prefix = $q->fetchColumn();
-                    }   else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
                     $roster = get_api('clan/info',array('clan_id' => $_GET['id']));
                     if (isset($roster['status']) && ($roster['status']=='ok') && is_null($roster['data'][$_GET['id']])) {
                         $message['id'] = $lang['error_multi_8'];

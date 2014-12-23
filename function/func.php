@@ -42,7 +42,7 @@ function redirect($url)
 function reform($array){
     $new = array();
     foreach($array as $val){
-        $new[] = $val[0];
+        $new[] = end($val);
     }
     return $new;
 }
@@ -145,53 +145,30 @@ function lockin_mysql()
     global $db,$exec_time;
     //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
-    $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $check_if = $q->fetch();
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
+    $check_if = $db->select('SELECT value FROM `config` WHERE name = "lockin";',__line__,__file__,'fetch');
     if((now() - $check_if['value']) > ($exec_time + 5)){
-        $sql = "UPDATE `config` SET value = '".now()."' WHERE name = 'lockin';";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert('UPDATE `config` SET value = "'.now().'" WHERE name = "lockin";',__line__,__file__);
         return true;
     }elseif($check_if['value'] != 0){
         return false;
     }else{
-        $sql = "UPDATE `config` SET value = '".now()."' WHERE name = 'lockin';";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $db->insert('UPDATE `config` SET value = "'.now().'" WHERE name = "lockin";',__line__,__file__);
         return true;
     }    
 }
 function lockout_mysql()
 {
     global $db;
-    $db->prepare("UPDATE `config` SET value = '0' WHERE name = 'lockin';")->execute();
+    $db->insert('UPDATE `config` SET value = "0" WHERE name = "lockin";',__line__,__file__);
 }
 function lock_check()
 {
     global $db,$exec_time;
     //$check_if = $db->query("SELECT value FROM config WHERE name = 'lockin';")->fetch();
 
-    $sql = "SELECT value FROM `config` WHERE name = 'lockin';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $check_if = $q->fetch();
-    } else {                                                    
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
+    $check_if = $db->select('SELECT value FROM `config` WHERE name = "lockin";',__line__,__file__,'fetch');
     if((now() - $check_if['value']) > ($exec_time + 5)){
-        $sql = "UPDATE `config` SET value = '0' WHERE name = 'lockin';";
-        $db->prepare($sql)->execute();
+        $db->insert('UPDATE `config` SET value = "0" WHERE name = "lockin";',__line__,__file__);
         return true;
     }elseif($check_if['value'] != 0){
         return false;
@@ -308,12 +285,11 @@ function get_config()
 {
     global $db;
 
-    $sql = "SELECT * FROM `config`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        foreach($q->fetchAll() as $val){
-            $new[$val['name']] = $val['value'];
-        }
+    $tmp = $db->select('SELECT * FROM `config`;',__line__,__file__);
+    if(!empty($tmp)) {
+      foreach($tmp as $val){
+          $new[$val['name']] = $val['value'];
+      }
     } else {
         //print_r($q->errorInfo());
         $new['lang'] = 'en';
@@ -326,13 +302,7 @@ function get_config()
 function read_tabs($where = '')
 {
     global $db;
-    $sql = "SELECT * FROM `tabs` $where ORDER BY id ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return array_resort($q->fetchAll(PDO::FETCH_ASSOC),'id');
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }  
+    return array_resort($db->select("SELECT * FROM `tabs` $where ORDER BY id ASC;",__line__,__file__),'id');
 }
 function sort_id($a, $b)
 {

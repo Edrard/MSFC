@@ -44,20 +44,12 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
     $cache->clear('api_info', ROOT_DIR.'/cache/other/');
     $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
     //удаляем данные о танках
-    $sql = "TRUNCATE TABLE `tanks`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
     $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
     //Получаем информацию о танках
     update_tanks_db();
     //удаляем данные о наградах
-    $sql = "TRUNCATE TABLE `achievements`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $db->insert('TRUNCATE TABLE `achievements`;',__line__,__file__);
     //Получаем информацию о наградах
     update_achievements_db();
   }

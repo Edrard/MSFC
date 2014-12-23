@@ -16,13 +16,7 @@
     */
 ?>
 <?php
-    $sql = "SELECT * FROM `tanks` ORDER BY name_i18n;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tank_array = $q->fetchAll();
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+$tank_array = $db->select('SELECT * FROM `tanks` ORDER BY name_i18n;',__line__,__file__);
 ?>
 <script type="text/javascript">
     $(document).ready(function(){

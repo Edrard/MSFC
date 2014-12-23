@@ -23,17 +23,13 @@ function marks() {
 
 function tanks() {
     global $db;
-    $sql = " SELECT * FROM `tanks` ORDER BY tank_id ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tmp = $q->fetchAll();
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+
+    $tmp = $db->select('SELECT * FROM `tanks` ORDER BY tank_id ASC;',__line__,__file__);
     $ret = array();
     foreach ($tmp as $key =>$val) {
         foreach ($val as $key2 => $val2) {
             if (is_numeric($key2)) unset ($val[$key2]);
+            /*TODO: Посмотреть нужен ли этот цикл вообще, после добавления PDO::FETCH_ASSOC по умолчанию */
         }
         $ret[$val['tank_id']] = $val;
     }
@@ -42,33 +38,18 @@ function tanks() {
 
 function check_tables($medals, $nations, $tanks) {
     global $db;
-    $sql = "show tables like 'col_medals';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tmp = $q->fetchAll();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $tmp = $db->select('show tables like "col_medals";',__line__,__file__);
 
     if (count($tmp)==0) {
-        $sql = "CREATE TABLE IF NOT EXISTS `col_medals` (
+        $sql = 'CREATE TABLE IF NOT EXISTS `col_medals` (
         `account_id` INT(12),
         `updated_at` INT( 12 ) NOT NULL,
-        KEY `updated_at` (`updated_at`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;";
-        $q = $db->prepare($sql);
-        if ($q->execute() !== TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        KEY `updated_at` (`updated_at`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;';
+        $db->insert($sql,__line__,__file__);
     }
 
     //Получаем структуру таблицы
-    $sql = "SHOW COLUMNS FROM `col_medals` ;";
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
-    $medals_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
+    $medals_structure = array_flip($db->select('SHOW COLUMNS FROM `col_medals`;',__line__,__file__,'rows'));
     $tsql = '';
 
     foreach ($medals as $key => $val) {
@@ -80,12 +61,11 @@ function check_tables($medals, $nations, $tanks) {
         }   else {
             $size = 'smallint(12)';
         }
-        $tsql .= "ALTER TABLE `col_medals` ADD `".$key."` ".$size." UNSIGNED NOT NULL DEFAULT 0;";
+        $tsql .= 'ALTER TABLE `col_medals` ADD `'.$key.'` '.$size.' UNSIGNED NOT NULL DEFAULT 0;';
       }
     }
     if ($tsql != '') {
-        $q = $db->prepare($tsql);
-        if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+      $db->insert($tsql,__line__,__file__);
     }
 
     foreach ($tanks as $tank_id => $val3) {
@@ -94,58 +74,43 @@ function check_tables($medals, $nations, $tanks) {
     unset ($tanks);
     foreach ($nations as $val2) {
         $val = $val2['nation'];
-        $sql = "show tables like 'col_tank_".$val."';";
-        $q = $db->prepare($sql);
-        if ($q->execute() == TRUE) {
-            $tmp = $q->fetchAll();
-        }   else {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $tmp = $db->select('show tables like "col_tank_'.$val.'";',__line__,__file__);
         if (count($tmp)==0) {
-            $sql = "CREATE TABLE IF NOT EXISTS `col_tank_".$val."` (
+            $sql = 'CREATE TABLE IF NOT EXISTS `col_tank_'.$val.'` (
             `account_id` INT(12),
             `updated_at` INT( 12 ) NOT NULL,
-            KEY `updated_at` (`updated_at`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;";
-            $q = $db->prepare($sql);
-            if ($q->execute() !== TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+            KEY `updated_at` (`updated_at`) ) ENGINE=MYISAM ROW_FORMAT=DYNAMIC;';
+            $db->insert($sql,__line__,__file__);
+
             $sqlarr = array();
             foreach ($ntanks[$val] as $tank_id => $val4 ) {
-                $sqlarr[] = "ALTER TABLE `col_tank_".$val."`
-                ADD `".$tank_id."_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
-                ADD `".$tank_id."_wins` smallint( 12 ) NOT NULL DEFAULT 0,
-                ADD `".$tank_id."_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;";
+                $sqlarr[] = 'ALTER TABLE `col_tank_'.$val.'`
+                ADD `'.$tank_id.'_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
+                ADD `'.$tank_id.'_wins` smallint( 12 ) NOT NULL DEFAULT 0,
+                ADD `'.$tank_id.'_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;';
             }
             if (!empty($sqlarr)) {
                 foreach ($sqlarr as $tsql) {
-                    $q = $db->prepare($tsql);
-                    if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+                  $db->insert($tsql,__line__,__file__);
                 }
             }
         }
 
         $sqlarr = $tanks_structure = array();
         //Получаем структуру таблицы
-        $sql = "SHOW COLUMNS FROM `col_tank_".$val."`;";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $tanks_structure = array_flip($db->select('SHOW COLUMNS FROM `col_tank_'.$val.'`;',__line__,__file__,'rows'));
 
-        $tanks_structure = array_fill_keys($q->fetchAll(PDO::FETCH_COLUMN), 1);
         foreach ($ntanks[$val] as $tank_id => $val4 ) {
             if (!isset($tanks_structure[$tank_id.'_battles'])) {
-                $sqlarr[] = "ALTER TABLE `col_tank_".$val."`
-                ADD `".$tank_id."_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
-                ADD `".$tank_id."_wins` smallint( 12 ) NOT NULL DEFAULT 0,
-                ADD `".$tank_id."_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;";
+                $sqlarr[] = 'ALTER TABLE `col_tank_'.$val.'`
+                ADD `'.$tank_id.'_battles` smallint(12) UNSIGNED NOT NULL DEFAULT 0,
+                ADD `'.$tank_id.'_wins` smallint( 12 ) NOT NULL DEFAULT 0,
+                ADD `'.$tank_id.'_mark_of_mastery` tinyint(1) UNSIGNED NOT NULL DEFAULT 0;';
             }
         }
         if (!empty($sqlarr)) {
             foreach ($sqlarr as $tsql) {
-                $q = $db->prepare($tsql);
-                if ($q->execute() !== TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$tsql)); }
+              $db->insert($tsql,__line__,__file__);
             }
         }
     }
@@ -166,12 +131,8 @@ function get_last_roster($time)
     WHERE p.up = maxresults.maxup
     ORDER BY p.up DESC;";
 
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll();
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select($sql,__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function roster_sort($array)
@@ -211,6 +172,10 @@ function tanks_group($array){
 }
 
 function restr($array)
+/*TODO: Если правильно помню, эта функция удяет элементы массива с числовыми ключами
+Наличие функции вызвано дублированием ключей при получении данных из БД.
+После добавления PDO::FETCH_ASSOC как дефолной функции цифровых ключей в запросах больше не быть не должно
+Пересмотреть где используется функция, удалить, проверить работу без нее на всякий случай.*/
 {
     foreach(array_keys($array) as $val){
         if(is_array($array[$val])){
@@ -230,35 +195,20 @@ function restr($array)
 
 function tanks_nations() {
     global $db;
-    $sql='SELECT DISTINCT nation FROM `tanks`;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll();
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select('SELECT DISTINCT nation FROM `tanks`;',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function tanks_types() {
     global $db;
-    $sql='SELECT DISTINCT type FROM `tanks`;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll();
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select('SELECT DISTINCT type FROM `tanks`;',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function tanks_lvl() {
     global $db;
-    $sql='SELECT DISTINCT level FROM `tanks` order by level ASC;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll();
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select('SELECT DISTINCT level FROM `tanks` order by level ASC;',__line__,__file__);
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 /***** Exinaus *****/
@@ -269,12 +219,7 @@ function get_available_tanks() {
     FROM `top_tanks` tt, `tanks` t
     WHERE t.tank_id = tt.tank_id AND tt.show = "1"
     ORDER BY tt.index ASC, tt.order ASC, t.name_i18n ASC;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $top_tanks_unsorted = $q->fetchAll();
-    }   else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    $top_tanks_unsorted = $db->select($sql,__line__,__file__);
 
     foreach($top_tanks_unsorted as $val) {
         $top_tanks[$val['name_i18n']]['tank_id'] = $val['tank_id'];
@@ -292,17 +237,7 @@ function get_available_tanks() {
 function get_available_tanks_index() {
     global $db;
     $top_tanks = array();
-    $sql = 'SELECT DISTINCT tt.index
-    FROM `top_tanks` tt
-    WHERE tt.show = "1"
-    ORDER BY tt.index ASC;';
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $top_tanks_unsorted = $q->fetchAll();
-    }   else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
-
+    $top_tanks_unsorted = $db->select('SELECT DISTINCT tt.index FROM `top_tanks` tt WHERE tt.show = "1" ORDER BY tt.index ASC;',__line__,__file__);
     $count = 0;
     foreach($top_tanks_unsorted as $val) {
         $top_tanks['index'][$val['index']] = $val['index'];
@@ -337,12 +272,7 @@ function read_multiclan($dbprefix = FALSE)
     }else{
         $sql = "SELECT * FROM `multiclan` WHERE prefix = '".$dbprefix."' ORDER BY sort ASC;";
     }
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return $q->fetchAll(PDO::FETCH_ASSOC);
-    }else{
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return $db->select($sql,__line__,__file__);
 }
 
 function autoclean($time,$multi,$config,$directory)
@@ -368,11 +298,7 @@ function autoclean($time,$multi,$config,$directory)
                   }
               }
             }
-            $sql = "UPDATE ".$val['prefix']."config SET value = '".now()."' WHERE name = 'autoclean';";
-            $q = $db->prepare($sql);
-            if ($q->execute() != TRUE) {
-                die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }
+            $db->insert('UPDATE '.$val['prefix'].'config SET value = "'.now().'" WHERE name = "autoclean";',__line__,__file__);
         }
         if(!empty($map)) {
           foreach($map as $file){
@@ -407,23 +333,14 @@ function multi_main($multi){
 }
 function get_updated_at(){
     global $db;
-    $sql = "SELECT DISTINCT updated_at FROM `col_players` ;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return count($q->fetchAll());
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    return count($db->select('SELECT DISTINCT updated_at FROM `col_players`;',__line__,__file__));
+    /*TODO: Пересмотреть запрос, возможно ли использование COUNT на уровне запроса в БД */
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 function get_tables_like_col_tank($dbname){
-    global $db;  
-    $sql = "SHOW TABLES FROM `".$dbname."` LIKE 'col_tank_%';";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        return reform($q->fetchAll());
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+    global $db;
+    return reform($db->select('SHOW TABLES FROM `'.$dbname.'` LIKE "col_tank_%";',__line__,__file__));
+    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
@@ -437,11 +354,7 @@ function update_tanks_db($tanks = array(), $force = 0) {
       $updatearr = array();
 
       if(isset($_POST['update_tanks_db']) or $force == 1){
-          $sql = "TRUNCATE TABLE `tanks`;";
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
+          $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
           $tanks = array();
       }
 
@@ -467,10 +380,8 @@ function update_tanks_db($tanks = array(), $force = 0) {
           }
           $sql = substr($sql, 0, strlen($sql)-2);
           $sql .= ';';
-          $q = $db->prepare($sql);
-          if ($q->execute() != TRUE) {
-              die(show_message($q->errorInfo(),__line__,__file__,$sql));
-          }
+
+          $db->insert($sql,__line__,__file__);
       }
 
     }
@@ -493,22 +404,14 @@ function update_tanks_single($tank_id) {
         $tmp['is_premium'] = 0;
     }
 
-    $sql = 'INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");';
-    $q = $db->prepare($sql);
-    if ($q->execute() != TRUE) { die(show_message($q->errorInfo(),__line__,__file__,$sql)); }
-
+    $db->insert('INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");',__line__,__file__);
   }
 }
 
 function achievements() {
     global $db;
-    $sql = " SELECT * FROM `achievements` ORDER BY `section_order` ASC, `order` ASC;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $tmp = $q->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-    }
+
+    $tmp = $db->select('SELECT * FROM `achievements` ORDER BY `section_order` ASC, `order` ASC;',__line__,__file__);
     $ret = array();
     foreach ($tmp as $val) {
         //unserialize options
@@ -587,10 +490,7 @@ function update_achievements_db($ach = array()) {
 
       $sql = substr($sql, 0, strlen($sql)-2);
       $sql .= ';';
-      $q = $db->prepare($sql);
-      if ($q->execute() != TRUE) {
-          die(show_message($q->errorInfo(),__line__,__file__,$sql));
-      }
+      $db->insert($sql,__line__,__file__);
     }
   }
 }

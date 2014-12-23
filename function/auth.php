@@ -79,18 +79,12 @@
             }
 
             if ( $err == false ) {
-
                 $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $user);
-                $q = $this->db->prepare($sql);
-                if ($q->execute() == TRUE) {
-                    $result = $q->fetch();
-                } else {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
+                $result = $this->db->select($sql,__line__,__file__,'fetch');
                 if ( count($result) == 0 ) {
                     $this->errors[] = ucfirst($col). $this->lang['login_err_dexist'];
                 } else {
-                    $row = $result;
+                    $row = $result['0'];
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
@@ -196,13 +190,8 @@
             if ( $this->type == 'cookie' ) {
                 if ( isset($_COOKIE['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
-                    $q = $this->db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $result = $q->fetch();
-                    } else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                    $row = $result;
+                    $result = $this->db->select($sql,__line__,__file__,'fetch');
+                    $row = $result['0'];
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
@@ -215,13 +204,8 @@
             } elseif ( $this->type == 'session' ) {
                 if ( isset($_SESSION['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
-                    $q = $this->db->prepare($sql);
-                    if ($q->execute() == TRUE) {
-                        $result = $q->fetch();
-                    } else {
-                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                    }
-                    $row = $result;
+                    $result = $this->db->select($sql,__line__,__file__,'fetch');
+                    $row = $result['0'];
                     if ( $row[$col] !== $_SESSION[$col] || $row['password'] !== $_SESSION['password'] ) {
                         $this->logout();
                     }

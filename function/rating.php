@@ -211,7 +211,15 @@ function eff_rating($res, $wn8_exp = array()) {
 
                 $feff[$name]['xvm_eff'] = ($feff[$name]['eff']<440) ? 0 : round(max(min($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*($feff[$name]['eff']*(0.00000000000000004787*$feff[$name]['eff'] - 0.00000000000035544) + 0.00000000102606) - 0.0000014665) + 0.0010827) - 0.3133) + 20.49, 100), 0),0);
                 $feff[$name]['xvm_wn7'] = ($feff[$name]['wn7']>2140) ? 100 : round(max(min($feff[$name]['wn7']*($feff[$name]['wn7']*($feff[$name]['wn7']*( -0.00000000001334*$feff[$name]['wn7'] + 0.00000005673) - 0.00007575) + 0.08392) - 9.362, 100), 0),0);
-            }
+            } else {
+                $feff[$name]['eff'] = 0;
+                $feff[$name]['brone'] = 0;
+                $feff[$name]['wn7'] = 0;
+                $feff[$name]['wn8'] = 0;
+                $feff[$name]['xvm_eff'] = 0;
+                $feff[$name]['xvm_wn7'] = 0;
+                $feff[$name]['xvm_wn8'] = 0;
+           }
         }   else {
             $feff[$name]['eff'] = 0;
             $feff[$name]['brone'] = 0;
