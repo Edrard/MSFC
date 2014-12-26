@@ -36,12 +36,16 @@
 
     // Include Module functions
     require(ROOT_DIR.'/function/func.php');
+    require(ROOT_DIR.'/function/func_get.php');
     // Including main config files
     include(ROOT_DIR.'/function/config.php');
     //Loding language pack
     $config['align'] = '';
     $lang['error_1'] = '';
-    $lates_news = json_decode(get_url('http://wot-news.com/ajax/lastnews',$config),TRUE);
+    $lates_news = get_url('http://wot-news.com/ajax/lastnews',1);
+    if(isset($lates_news['status']) and $lates_news['status'] == 'error') {
+      $lates_news = array();
+    }
     ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -71,12 +75,12 @@
             <td>
                 <div id="rotate" class="width:450px">
                     <ul>
-                        <?php shuffle($lates_news); foreach($lates_news as $vals){ 
+                        <?php shuffle($lates_news); foreach($lates_news as $vals){
                                 foreach($vals as $val){ ?>
                                 <li><a target="_blank" href="<?=$val['link']?>"><?=$val['subject']?></a></li>
-                                <?php 
+                                <?php
                                 }
-                            } 
+                            }
                         ?>
                     </ul>
                 </div>

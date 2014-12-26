@@ -144,7 +144,7 @@
     $dir_val = scandir(ROOT_DIR.'./theme/');
     array_shift($dir_val);array_shift($dir_val);
 
-    $ver = json_decode(get_url('http://wot-news.com/ajax/clanstat',$config),TRUE);
+    $ver = get_url('http://wot-news.com/ajax/clanstat',1);
     // Config
     $config = update_array($config,get_config());
     // Scaning /tabs/ directory

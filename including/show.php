@@ -171,7 +171,7 @@ autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
 /* code for wn8 */
 $wn8 = $cache->get('wn8', 7*24*60*60, ROOT_DIR.'/cache/other/'); //once in 7 days
 if(($wn8 === FALSE) or !isset($wn8['data']) or empty($wn8['data'])) {
-  $wn8_get = get_wn8();
+  $wn8_get = get_url('http://www.wnefficiency.net/exp/expected_tank_values_latest.json', 1);
   if(isset($wn8_get['header']['version']) and isset($wn8_get['data'])) {
     $wn8 = array_resort($wn8_get['data'],'IDNum');
     $cache->clear('wn8',ROOT_DIR.'/cache/other/');

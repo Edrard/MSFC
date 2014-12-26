@@ -59,10 +59,9 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
     $fields = checkfield($fields_array);
     $url = $config['td'].'/wot/'.$method.'/?application_id='.$config['application_id'].$api_lang.$param.$fields;
     $ch = curl_init();
-    $timeout = 10;
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "X-Requested-With: XMLHttpRequest",
@@ -79,7 +78,7 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
       $data = curl_exec($ch);
       $return = json_decode(trim($data), true);
       $try++;
-    }  while ( curl_errno($ch) and $try < $config['try_count'] and $return['status'] != 'ok');
+    }  while ( (curl_errno($ch) or $return['status'] != 'ok') and $try < $config['try_count']);
 
 
     if ($data === false or curl_errno($ch)) {
@@ -190,13 +189,15 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
     return $res;
 }
 
-function get_wn8() {
-    $url = 'http://www.wnefficiency.net/exp/expected_tank_values_latest.json';
+function get_url($url, $json = '') {
+    global $config;
+
     $ch = curl_init();
-    $timeout = 10;
+
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_NOBODY, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "X-Requested-With: XMLHttpRequest",
@@ -204,14 +205,28 @@ function get_wn8() {
         "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
         "Connection: Keep-Alive",
     ));
-    $data = curl_exec($ch);
-    if ($data === false or curl_errno($ch)) {
-        $return = array('status' => 'error', 'error' => array('message' => curl_error($ch)) );
-        curl_close($ch);
-        return $return;
-    }   else {
-        curl_close($ch);
-        return (json_decode(trim($data), true));
+
+    $try = 0;
+    $return = array();
+    $data = false;
+
+    do {
+      $data = curl_exec($ch);
+      $try++;
+    }  while ( curl_errno($ch) and $try < $config['try_count']);
+
+
+    if ($data == false or curl_errno($ch)) {
+      $return = array('status' => 'error', 'message' => curl_error($ch) );
+    } else {
+      if(!empty($json)) {
+        $return = json_decode(trim($data), true);
+      } else {
+        $return = $data;
+      }
     }
+
+    curl_close($ch);
+    return $return;
 }
 ?>

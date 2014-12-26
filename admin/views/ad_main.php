@@ -42,27 +42,29 @@
             } ?>
         </div>
         <?php } ?>
-
     <table style="height: 100%; width: 100%;" cellpadding="4" cellspacing="0" class="ui-widget-content">
         <tbody>
-            <?php
-                if(isset($message['text']) && isset($message['color'])){ ?>
-                <tr valign="center">
-                    <td colspan="2" align="center">
-                        <?php if ($message['color'] == 'red') {
-                                echo '<div class="ui-state-error ui-corner-all" align="center">';
-                            } else {
-                                echo '<div class="ui-state-highlight ui-corner-all" align="center">';
-                            }
-                            echo '<h3>'.$message['text'].'</h3></div>'; ?>
-                    </td>
-                </tr>
-                <?php } ?>
             <tr style="height: 100px;" valign="center">
                 <td colspan="2" align="center">
                     <img src="../images/logo.png" width="500px"/>
                 </td>
             </tr>
+            <?php if(isset($message['text']) && isset($message['color'])){ ?>
+            <tr valign="center">
+                <td colspan="2" align="center">
+                  <div class="ui-state-<?=($message['color'] == 'red')?'error':'highlight';?> ui-corner-all" align="center"><h3><?=$message['text'];?></h3></div>
+                </td>
+            </tr>
+            <?php } ?>
+            <?php if(isset($ver['value']) and $ver['value'] != VER){ ?>
+            <tr valign="bottom">
+                <td colspan="2" align="center">
+                    <div align="center" style="width:100%;" class="ui-state-error ui-corner-all">
+                        <?=$lang['admin_new_version_1'],' ',$ver['value'],' ',$lang['admin_new_version_2'];?> <a href="http://wot-news.com/main/clanstat">WoT-News.Com</a>
+                    </div>
+                </td>
+            </tr>
+            <?php } ?>
             <tr>
                 <td valign="top" width="222px">
                     <ul id="ad_menu" class="tabsmenu ui-corner-all">
@@ -917,15 +919,6 @@
 <!-- -->
                 </td>
             </tr>
-            <?php if($ver['value'] != VER){ ?>
-                <tr valign="bottom">
-                    <td colspan="2" align="center">
-                        <div align="center" style="width:100%;" class="ui-state-error ui-corner-all">
-                            <?=$lang['admin_new_version_1'].' '.$ver['value'].' '.$lang['admin_new_version_2']?> <a href="http://wot-news.com/main/clanstat">WoT-News.Com</a>
-                        </div>
-                    </td>
-                </tr>
-            <?php } ?>
         </tbody>
     </table>
 </div>
