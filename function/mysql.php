@@ -115,7 +115,7 @@
                 $test = parent::query($statement);
                 if(is_object($test)) {
                   switch($type) {
-                    case 'fecth':
+                    case 'fetch':
                     $result = $test->fetch();
                     break;
                     case 'column':

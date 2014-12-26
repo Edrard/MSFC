@@ -284,18 +284,21 @@ return true;
 function get_config()
 {
     global $db;
+    $err = array('lang' => 'en', 'server' => 'ru', 'error' => 2);
+
+    $test = $db->select('SHOW TABLES LIKE "config";',__line__,__file__,'column');
+
+    if(empty($test)) {
+      return $err;
+    }
 
     $tmp = $db->select('SELECT * FROM `config`;',__line__,__file__);
-    if(!empty($tmp)) {
+    if(isset($tmp) and !empty($tmp)) {
       foreach($tmp as $val){
           $new[$val['name']] = $val['value'];
       }
     } else {
-        //print_r($q->errorInfo());
-        $new['lang'] = 'en';
-        $new['server'] = 'ru';
-        $new['error'] = '2'; // 2 - no base installed
-
+        return $err;
     }       
     return $new;
 }      

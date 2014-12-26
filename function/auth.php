@@ -84,7 +84,7 @@
                 if ( count($result) == 0 ) {
                     $this->errors[] = ucfirst($col). $this->lang['login_err_dexist'];
                 } else {
-                    $row = $result['0'];
+                    $row = $result;
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
@@ -191,7 +191,7 @@
                 if ( isset($_COOKIE['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
                     $result = $this->db->select($sql,__line__,__file__,'fetch');
-                    $row = $result['0'];
+                    $row = $result;
                     $this->rights = $row['prefix'];
                     $this->replays = $row['replays'];
                     if($row['prefix'] == 'all') {$row['prefix'] = $this->db->prefix;}
@@ -205,7 +205,7 @@
                 if ( isset($_SESSION['password']) ) {
                     $sql = sprintf("SELECT * FROM `users` WHERE %s = '%s'", $col, $_COOKIE[$col] );
                     $result = $this->db->select($sql,__line__,__file__,'fetch');
-                    $row = $result['0'];
+                    $row = $result;
                     if ( $row[$col] !== $_SESSION[$col] || $row['password'] !== $_SESSION['password'] ) {
                         $this->logout();
                     }

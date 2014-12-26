@@ -81,7 +81,7 @@ $activity = $tmp = $tmp2 = $count = array();
 $count['all'] = $count['clan'] = $count['company'] = $sl_count = 0;
 $showarr = array('all', 'clan', 'company');
 
-$sl_count = $db->select('SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ;',__line__,__file__,'fecth');
+$sl_count = $db->select('SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ;',__line__,__file__,'fetch');
 if ($sl_count['count'] >0) {
     $tmp = $db->select('SELECT * FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ORDER BY updated_at ASC;',__line__,__file__);
 

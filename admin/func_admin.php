@@ -214,7 +214,7 @@ function delete_tab($get)
     global $db;
     if($get['del'] == 1){
         if($get['type'] == 0){
-            $info = $db->select('SELECT * FROM `tabs` WHERE id = "'.$get['id'].'";',__line__,__file__,'fecth');
+            $info = $db->select('SELECT * FROM `tabs` WHERE id = "'.$get['id'].'";',__line__,__file__,'fetch');
             $target_path = ROOT_DIR.'/tabs/'.$info['file'];
             unlink($target_path);
         }
