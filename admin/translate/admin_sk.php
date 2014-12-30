@@ -129,7 +129,7 @@
     $lang['admin_multi_add_new'] = 'Pridať';
     $lang['admin_multi_link'] = 'Odkaz';
     $lang['admin_no_tanks'] = 'Žiadne údaje o vozidlách v DB';
-    $lang['admin_no_toptanks'] = 'Žiadne údaje o TOP vozidlách v DB';
+    $lang['admin_no_toptanks'] = 'Žiadne údaje o TOP vozidlách v DB'; //need translation to 'No data about tanks availability in DB'
 
     $lang['admin_cron_control'] = 'Zbieranie údajov v čase';
     $lang['admin_cron_auth'] = 'Prihlasovanie do cronu';

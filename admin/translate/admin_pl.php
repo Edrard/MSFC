@@ -128,7 +128,7 @@
     $lang['admin_multi_add_new'] = 'Dodać';
     $lang['admin_multi_link'] = 'Link';
     $lang['admin_no_tanks'] = 'Brak danych na temat zbiornik DB';
-    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiornik DB';
+    $lang['admin_no_toptanks'] = 'Brak danych na temat najlepszych zbiornik DB'; //need translation to 'No data about tanks availability in DB'
 
     $lang['admin_cron_control'] = 'Zbieranie danych w czasie';
     $lang['admin_cron_auth'] = 'Uwierzytelnianie';

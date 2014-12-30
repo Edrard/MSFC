@@ -128,7 +128,7 @@
     $lang['admin_multi_add_new'] = 'Add';
     $lang['admin_multi_link'] = 'Link';
     $lang['admin_no_tanks'] = 'No data about tanks in DB';
-    $lang['admin_no_toptanks'] = 'No data about toptanks in DB';
+    $lang['admin_no_toptanks'] = 'No data about tanks availability in DB';
 
     $lang['admin_cron_control'] = 'Data collection in time';
     $lang['admin_cron_auth'] = 'Authentication';

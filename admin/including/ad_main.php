@@ -91,7 +91,6 @@
     //Update information about tanks in db
     if(isset($_POST['update_tanks_db'])) {
         update_tanks_db();
-        $tanks = tanks();
     }
 
     //Update information about achievements in db
@@ -149,6 +148,8 @@
     $config = update_array($config,get_config());
     // Scaning /tabs/ directory
     $tabs_dir = read_tabs_dir();
+    //read tanks list
+    $tanks = tanks();    
 
     // Checking if all files in db
     $tabs_check = check_tabs_db($tabs_dir);

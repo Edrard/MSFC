@@ -98,7 +98,7 @@
                               </div><br clear=all>
                             <?php } ?>
                           <div class="ui-corner-all ui-widget-content">
-                            <?php if (!empty($adm_top_tanks)){?>
+                            <?php if (!empty($adm_top_tanks)) { ?>
                                 <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">
                                   <h3><?=$lang['admin_tab_tanks'];?></h3>
                                     <table id="top_tanks" width="100%" cellspacing="1">
@@ -138,13 +138,11 @@
                                     <?php } ?>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksupd"></p>
                                 </form>
-                            <?php } else {
-                                  echo '<div class="ui-state-error ui-corner-all" align="center">';
-                                  if (empty($tanks_list)) {
-                                      echo $lang['admin_no_tanks'].'</div>';
-                                  } else {
-                                      echo $lang['admin_no_toptanks'].'</div>';
-                                  } }; ?>
+                            <?php } else { ?>
+                              <div class="ui-state-error ui-corner-all" align="center">
+                                <?=(empty($tanks))?$lang['admin_no_tanks']:$lang['admin_no_toptanks'];?>
+                              </div>
+                            <?php } ?>
                           </div>
                           <div class="ui-corner-all ui-widget-content">
                             <form action="<?=$_SERVER['REQUEST_URI']?>#tabs-6" method="post">

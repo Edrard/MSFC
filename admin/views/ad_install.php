@@ -35,7 +35,8 @@ class="ui-accordion-content ui-helper-reset ui-widget-content ui-accordion-conte
                         <select name="lang">
                             <option value="ru">Русский</option>
                             <option value="en">English</option>
-														<option value="sk">Slovenčina</option>
+                            <option value="pl">Polski</option>
+							<option value="sk">Slovenčina</option>
                         </select>
                     </td>
                 </tr>

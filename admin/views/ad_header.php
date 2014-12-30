@@ -50,18 +50,6 @@
             <?php if(!empty($adm_top_tanks)){ ?>
                 $("#top_tanks").tablesorter({ sortList:[[6,0],[3,0]]});
             <?php } ?>
-            <?php if(!empty($tanks_list)){ ?>
-                $("#tanks_list").tablesorter({
-                    sortList: [[2, 0]],
-                    widgets : ['uitheme', 'zebra', 'filter'],
-                    widgetOptions : {
-                    filter_cssFilter : 'ui-datepicker-row-break'
-                    },
-                    textExtraction: function(node) {
-                        return $(node).find("span.hidden").text();
-                    }
-                });
-            <?php } ?>
             <?php if(isset($multiclan) and count($multiclan) > 1) { ?>
                 $('.iall_multiclans[type=checkbox]').prop('checked', false);
             <?php } ?>

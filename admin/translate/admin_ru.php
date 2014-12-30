@@ -128,7 +128,7 @@
     $lang['admin_multi_add_new'] = 'Добавить';
     $lang['admin_multi_link'] = 'Ссылка';
     $lang['admin_no_tanks'] = 'Нет информации о танках в БД модуля';
-    $lang['admin_no_toptanks'] = 'Нет информации о топтанках в БД модуля';
+    $lang['admin_no_toptanks'] = 'Нет информации о наличии танков в БД модуля';
     $lang['admin_cron_control'] = 'Сбор данных во времени';
     $lang['admin_cron_auth'] = 'Аутентификация';
     $lang['admin_cron_multi'] = 'Мультиклан';
