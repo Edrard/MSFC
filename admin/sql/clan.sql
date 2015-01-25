@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `achievements` (
   `options` text NOT NULL,
   `section_order` tinyint(2) NOT NULL,
   `image` varchar(150) NOT NULL,
-  `name_i18n` varchar(20) NOT NULL,
+  `name_i18n` varchar(30) NOT NULL,
   `type` varchar(20) NOT NULL,
   `order` smallint(10) NOT NULL,
   `description` varchar(250) NOT NULL,

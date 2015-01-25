@@ -379,8 +379,7 @@ function recreat_db()
 
     if($multi_exist == 'msfcmt_multiclan') {
 
-        $all_prefix = $db->select('SELECT `prefix` FROM `multiclan`;',__line__,__file__);
-
+        $all_prefix = $db->select('SELECT `prefix` FROM `multiclan`;',__line__,__file__,'rows');
         foreach($all_prefix as $t) {
            $tables = $db->select('SHOW TABLES LIKE "'.substr($t, 0, strlen($t)-1).'\_%";',__line__,__file__,'rows');
 
