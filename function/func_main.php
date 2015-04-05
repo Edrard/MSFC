@@ -26,11 +26,7 @@ function tanks() {
 
     $tmp = $db->select('SELECT * FROM `tanks` ORDER BY tank_id ASC;',__line__,__file__);
     $ret = array();
-    foreach ($tmp as $key =>$val) {
-        foreach ($val as $key2 => $val2) {
-            if (is_numeric($key2)) unset ($val[$key2]);
-            /*TODO: Посмотреть нужен ли этот цикл вообще, после добавления PDO::FETCH_ASSOC по умолчанию */
-        }
+    foreach ($tmp as $val) {
         $ret[$val['tank_id']] = $val;
     }
     return $ret;
@@ -115,25 +111,6 @@ function check_tables($medals, $nations, $tanks) {
         }
     }
 }
-function get_last_roster($time)
-{
-    global $db;
-    global $config;
-    $error = 1;
-
-    $sql = "
-    SELECT p.name, p.account_id, p.role, p.member_since
-    FROM `col_players` p,
-    (SELECT max(up) as maxup
-    FROM `col_players`
-    WHERE up <= ".$time."
-    LIMIT 1) maxresults
-    WHERE p.up = maxresults.maxup
-    ORDER BY p.up DESC;";
-
-    return $db->select($sql,__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
-}
 
 function roster_sort($array)
 {
@@ -171,44 +148,19 @@ function tanks_group($array){
     return $name;
 }
 
-function restr($array)
-/*TODO: Если правильно помню, эта функция удяет элементы массива с числовыми ключами
-Наличие функции вызвано дублированием ключей при получении данных из БД.
-После добавления PDO::FETCH_ASSOC как дефолной функции цифровых ключей в запросах больше не быть не должно
-Пересмотреть где используется функция, удалить, проверить работу без нее на всякий случай.*/
-{
-    foreach(array_keys($array) as $val){
-        if(is_array($array[$val])){
-            foreach(array_keys($array[$val]) as $v){
-                if(is_numeric($v)){
-                    unset($array[$val][$v]);
-                }
-            }
-        }else{
-            if(is_numeric($val)){
-                unset($array[$val]);
-            }
-        }
-    }
-    return $array;
-}
-
 function tanks_nations() {
     global $db;
     return $db->select('SELECT DISTINCT nation FROM `tanks`;',__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function tanks_types() {
     global $db;
     return $db->select('SELECT DISTINCT type FROM `tanks`;',__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 function tanks_lvl() {
     global $db;
     return $db->select('SELECT DISTINCT level FROM `tanks` order by level ASC;',__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
 }
 
 /***** Exinaus *****/
@@ -285,7 +237,7 @@ function autoclean($time,$multi,$config,$directory)
             $new = $cache->get('get_last_roster_'.$val['id'],0);
             if($new === FALSE)
             {
-                $new = get_api('clan/info',array('clan_id' => $config['clan']));
+                $new = get_api('wgn/clans/info',array('clan_id' => $config['clan']));
             }
             //print_r($new); die;
             if(isset($new['data'][$val['id']]['members']) and !empty($new['data'][$val['id']]['members']))
@@ -331,24 +283,13 @@ function multi_main($multi){
         }
     }
 }
-function get_updated_at(){
-    global $db;
-    return count($db->select('SELECT DISTINCT updated_at FROM `col_players`;',__line__,__file__));
-    /*TODO: Пересмотреть запрос, возможно ли использование COUNT на уровне запроса в БД */
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
-}
-function get_tables_like_col_tank($dbname){
-    global $db;
-    return reform($db->select('SHOW TABLES FROM `'.$dbname.'` LIKE "col_tank_%";',__line__,__file__));
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
-}
 function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
 
     if(empty($tanks)) {
       $tanks = tanks();
     }
-    $tanks_api = get_api('encyclopedia/tanks');
+    $tanks_api = get_api('wot/encyclopedia/tanks');
 
     if ((isset($tanks_api['status'])) && ($tanks_api['status'] == 'ok')) {
       $updatearr = array();
@@ -388,7 +329,7 @@ function update_tanks_db($tanks = array(), $force = 0) {
 }
 
 function update_tanks_single($tank_id) {
-  $tmp = get_api('encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
+  $tmp = get_api('wot/encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
 
   if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
     global $db;
@@ -430,7 +371,7 @@ function update_achievements_db($ach = array()) {
     $ach = achievements();
   }
 
-  $ach_res = get_api('encyclopedia/achievements');
+  $ach_res = get_api('wot/encyclopedia/achievements');
 
   if(isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data'])) {
 

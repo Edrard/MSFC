@@ -41,7 +41,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
         }
         $col_pl['nickname']   = $data['nickname'];
         $col_pl['max_xp'] = $data['statistics']['max_xp'];
-        $col_pl['created_at'] = $data['created_at'];
+        $col_pl['created_at'] = $data['joined_at'];
         $col_pl['role'] = $data['role'];
 
         foreach ($medals as $key => $val) {
@@ -86,26 +86,5 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
           $db->insert($sql,__line__,__file__);
         }
     }
-}
-
-function update_multi_cron($dbprefix) {
-    global $db;
-    $db->insert('UPDATE `multiclan` SET cron = "'.now().'" WHERE prefix = "'.$dbprefix.'";',__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
-}
-
-function get_config_cron_time($prefix) {
-    global $db;
-    return $db->select('SELECT * FROM '.$prefix.'config WHERE name = "cron_time";',__line__,__file__);
-    /*TODO: Нафиг эта функция, для одного запроса? Посмотреть где она используется и убрать по возможности */
-}
-
-function cron_current_run($fh,$date) {
-    global $db, $config;
-
-    $id = $db->select('SELECT account_id FROM `col_players` LIMIT 1;',__line__,__file__,'column');
-    $player_stat = $db->select('SELECT COUNT(account_id) FROM `col_players` WHERE account_id = "'.$id.'";',__line__,__file__,'column');
-    fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
-    /*TODO: Посмотреть запрос, возможно ли его обьеденить в один, и возможно ли без использования этого кода не как функции */
 }
 ?>

@@ -149,7 +149,7 @@
     // Scaning /tabs/ directory
     $tabs_dir = read_tabs_dir();
     //read tanks list
-    $tanks = tanks();    
+    $tanks = tanks();
 
     // Checking if all files in db
     $tabs_check = check_tabs_db($tabs_dir);
@@ -204,6 +204,7 @@
     if (isset($_POST['admclearcache'])){
         $cache->clear_all(array(), ROOT_DIR.'/cache/');
         $cache->clear_all(array(), ROOT_DIR.'/cache/players/');
+        $cache->clear('eff_ratings_'.$config['clan'],ROOT_DIR.'/cache/other/');
     }
 
     //Clear activity cache

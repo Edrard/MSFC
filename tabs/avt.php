@@ -350,7 +350,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                            <tr>
                               <td align="left"><a href="<?php echo $config['base'],$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
                               <td align="center"><?=(isset($api_cache['data']['clans_roles'][$val['role']]))?$api_cache['data']['clans_roles'][$val['role']]:'--';?></td>
-                              <td align="center"><?php echo floor(($val['updated_at'] - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)),$lang['days'];?></td>
+                              <td align="center"><?php echo floor(($val['updated_at'] - mktime(0, 0, 0, date("m", $val['joined_at']), date("d", $val['joined_at']), date("Y", $val['joined_at'])))/(3600*24)),$lang['days'];?></td>
                               <td align="center"><span class="hidden"><?=$val['updated_at'];?></span><?php echo date('d.m.Y',$val['updated_at']);?></td>
                            </tr>
                         <?php }
@@ -398,8 +398,8 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                            <tr>
                               <td align="left"><a href="<?php echo $config['base'],$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
                               <td align="center"><?=(isset($api_cache['data']['clans_roles'][$val['role']]))?$api_cache['data']['clans_roles'][$val['role']]:'--';?></td>
-                              <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)),$lang['days'];?></td>
-                              <td align="center"><span class="hidden"><?=$val['created_at'];?></span><?php echo date('d.m.Y',$val['created_at']);?></td>
+                              <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['joined_at']), date("d", $val['joined_at']), date("Y", $val['joined_at'])))/(3600*24)),$lang['days'];?></td>
+                              <td align="center"><span class="hidden"><?=$val['joined_at'];?></span><?php echo date('d.m.Y',$val['joined_at']);?></td>
                            </tr>
                         <?php }
                      }  else {

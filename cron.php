@@ -76,7 +76,9 @@ if($fh = fopen($myFile, 'a')){
     $log = 1;
     fwrite($fh, $date."////////////////////////////////////////////--->\n");
     fwrite($fh, $date.": (Info) Loging Started (v. ".$config['version'].")\n");
-    cron_current_run($fh, $date);
+
+    $player_stat = $db->select('SELECT COUNT(account_id) as count FROM `col_players` GROUP BY account_id ORDER BY count DESC LIMIT 1;',__line__,__file__,'column');
+    fwrite($fh, $date.": (Info) Current run number ".($player_stat + 1)."\n");
 }
 
 //cache
@@ -88,8 +90,8 @@ $multi_prefix = array_resort($multiclan,'prefix');
 if($config['cron_multi'] == 1){
     // Multiget.
     foreach($multiclan as $val){
-        $cron_time = get_config_cron_time($val['prefix']);
-        if(($val['cron'] + $cron_time[0]['value']*3600) <= now() ){
+        $cron_time = $db->select('SELECT value FROM `config` WHERE name = "cron_time";',__line__,__file__,'column');
+        if(($val['cron'] + $cron_time*3600) <= now() ){
             if($db->change_prefix($val['prefix']) == TRUE){ 
                 $dbprefix = $val['prefix'];
                 unset($config);
@@ -120,7 +122,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
 
         //Geting clan roster from wargaming.
         $new = $cache->get('get_last_roster_'.$config['clan'],0);
-        $new2 = get_api('clan/info',array('clan_id' => $config['clan']));
+        $new2 = get_api('wgn/clans/info',array('clan_id' => $config['clan']));
         //print_r($new2); die;
         if ($new2 === FALSE) {
             if($log == 1)  fwrite($fh, $date.": (Err) No roster from WG!"."\n");
@@ -216,7 +218,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                                 }
                                 $to_cache['data']['achievements'] = $res4[$p_id]['data']['achievements'];
                                 $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
-                                $to_cache['data']['created_at'] = $new2['data'][$config['clan']]['members'][$p_id]['created_at'];
+                                $to_cache['data']['joined_at'] = $new2['data'][$config['clan']]['members'][$p_id]['joined_at'];
 
                                 $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
                                 cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
@@ -238,7 +240,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             }
                             unset($toload, $res1, $res2, $res3,$to_cache);
                             if( ($counter['old_count']+$counter['get']) == $counter['total_members'] ) {
-                              update_multi_cron($dbprefix);
+                              $db->insert('UPDATE `multiclan` SET cron = "'.now().'" WHERE prefix = "'.$db->prefix.'";',__line__,__file__);
                               if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
                             } else {
                               if($log == 1) fwrite($fh, $date.": (Err) ".$lang['cron_done']."\n");

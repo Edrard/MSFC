@@ -60,7 +60,7 @@ if ($_GET['multiadd'] == 1){
                     $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$_GET['id'].'";',__line__,__file__,'column');
                     $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$_GET['prefix'].'";',__line__,__file__,'column');
 
-                    $roster = get_api('clan/info',array('clan_id' => $_GET['id']));
+                    $roster = get_api('wgn/clans/info',array('clan_id' => $_GET['id']));
                     if (isset($roster['status']) && ($roster['status']=='ok') && is_null($roster['data'][$_GET['id']])) {
                         $message['id'] = $lang['error_multi_8'];
                     }   elseif ((isset($roster['status']))&&($roster['status'] == 'ok')) {

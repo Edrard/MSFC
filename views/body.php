@@ -48,7 +48,7 @@
                     }
                 ?>                                                             
                 <a style="margin: 0 5px;" id="<?=$val['prefix'].'1';?>" href="./index.php<?=$multi_get?>">
-                    <img height="24" border="0" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['abbreviation']?></span>
+                    <img height="24" border="0" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['x24']['portal'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['tag']?></span>
                 </a>
                 <?php
                 }
@@ -67,7 +67,7 @@
                 <td align="center">
                     <a href="http://<?=$config['gm_url']; ?>/community/clans/<?=$config['clan']?>" target="_blank">
                     <?php $multiclan_info[$config['clan']]['data'][$config['clan']]['description_html'] = str_replace("'", '"', $multiclan_info[$config['clan']]['data'][$config['clan']]['description_html']); ?>
-                    <img class="bb" src="<?=$multiclan_info[$config['clan']]['data'][$config['clan']]['emblems']['large'];?>"
+                    <img class="bb" src="<?=$multiclan_info[$config['clan']]['data'][$config['clan']]['emblems']['x64']['portal'];?>"
                     style="padding: 0; margin: 0; height:64px; width:64px;border-width:0;" title='<?=$multiclan_info[$config["clan"]]["data"][$config["clan"]]["description_html"];?>' /></a>
                     <br>
                     <font color="<?=$multiclan_info[$config['clan']]['data'][$config['clan']]['color'];?>">

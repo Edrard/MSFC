@@ -118,7 +118,6 @@ function new_tanks($rosterid,$tables,$start = 0,$end = -1){
    foreach ($rosterid as $acc_id) {
       foreach ($tables as $valt){
          $tank[$valt] = $db->select('SELECT * FROM `'.$valt.'` WHERE account_id = "'.$acc_id['account_id'].'" AND updated_at < "'.$end.'" AND updated_at >= "'.$start.'" ORDER BY updated_at DESC;',__line__,__file__);
-         /*TODO: Проверить, есть ли возможность делать запрос по всем игрокам сразу, формировать массив, и работать с ним, а не дергать данные по каждому игроку*/
          foreach ($tank as $vals) {
             $first = count($vals) - 1;
             if (isset($vals[0])){
@@ -308,7 +307,6 @@ function player_progress($account_id, $tables, $tanks, $start = 0,$end = -1){
 }
 
 function time_summer($array,$name){
-/*TODO: Проверить что за функция, для чего нужна*/
    $sum = 0;
    foreach($array as $val){
       $sum += $val[$name];

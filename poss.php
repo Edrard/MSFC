@@ -52,7 +52,7 @@
         }
     }
     $poss = array();
-    $poss = get_api('clan/provinces',array('clan_id' => $config['clan']));
+    $poss = get_api('wot/clan/provinces',array('clan_id' => $config['clan']));
 
     //include(ROOT_DIR.'/views/header.php');
 ?>

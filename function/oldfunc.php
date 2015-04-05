@@ -1268,4 +1268,45 @@ function get_wn8() {
         return (json_decode(trim($data), true));
     }
 }
+
+function get_last_roster($time)
+{
+    global $db;
+    global $config;
+    $error = 1;
+
+    $sql = "
+    SELECT p.name, p.account_id, p.role, p.member_since
+    FROM `col_players` p,
+    (SELECT max(up) as maxup
+    FROM `col_players`
+    WHERE up <= ".$time."
+    LIMIT 1) maxresults
+    WHERE p.up = maxresults.maxup
+    ORDER BY p.up DESC;";
+
+    return $db->select($sql,__line__,__file__);
+}
+
+function restr($array)
+/* Если правильно помню, эта функция удяет элементы массива с числовыми ключами
+Наличие функции вызвано дублированием ключей при получении данных из БД.
+После добавления PDO::FETCH_ASSOC как дефолной функции цифровых ключей в запросах больше не быть не должно
+Пересмотреть где используется функция, удалить, проверить работу без нее на всякий случай.*/
+{
+    foreach(array_keys($array) as $val){
+        if(is_array($array[$val])){
+            foreach(array_keys($array[$val]) as $v){
+                if(is_numeric($v)){
+                    unset($array[$val][$v]);
+                }
+            }
+        }else{
+            if(is_numeric($val)){
+                unset($array[$val]);
+            }
+        }
+    }
+    return $array;
+}
 ?>

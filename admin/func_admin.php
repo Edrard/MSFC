@@ -175,6 +175,7 @@ function delete_multi($get){
                     }
                     $db->insert('DELETE FROM `multiclan` WHERE id = "'.$get['clan'].'";',__line__,__file__);
                     $cache->clear('get_last_roster_'.$get['clan']);
+                    $cache->clear('eff_ratings_'.$get['clan'],ROOT_DIR.'/cache/other/');
                 }
             }
         }

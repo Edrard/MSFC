@@ -16,7 +16,7 @@
     */
 ?>
 <?
-$maps = get_api('globalwar/maps');
+$maps = get_api('wot/globalwar/maps');
 $maps_id = array();
 if(isset($maps['status']) and $maps['status'] == 'ok') {
   foreach($maps['data'] as $val) {
@@ -26,7 +26,7 @@ if(isset($maps['status']) and $maps['status'] == 'ok') {
 if(empty($maps_id)){
   $maps_id = 'eventmap';
 }
-$fame = get_api('globalwar/accountpoints',array('map_id' => $maps_id, 'account_id' => array_keys($roster_id)));
+$fame = get_api('wot/globalwar/accountpoints',array('map_id' => $maps_id, 'account_id' => array_keys($roster_id)));
 if(!isset($fame['status']) or $fame['status'] != 'ok') {
   $fame = array();
 }

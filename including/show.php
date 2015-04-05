@@ -16,7 +16,7 @@
 */
 
 //Получаем информацио о апи
-$api_api = get_api('encyclopedia/info');
+$api_api = get_api('wot/encyclopedia/info');
 $api_cache = $cache->get('api_info', 0, ROOT_DIR.'/cache/other/');
 //Временный фикс, для тех кто использует промежуточную github версию модуля
 //Фикс необходим т.к. в версии 3.1.0 нет этого в кэше, а в промежуточных github версиях есть, но данные старые, без этого параметра
@@ -68,8 +68,8 @@ if (empty($achievements)) {
     $achievements = achievements();
 }
 
-$col_tables = get_tables_like_col_tank($dbname);
-$col_check = get_updated_at();
+$col_tables = reform($db->select('SHOW TABLES FROM `'.$dbname.'` LIKE "col_tank_%";',__line__,__file__));
+$col_check  = count($db->select('SELECT DISTINCT updated_at FROM `col_players`;',__line__,__file__));
 
 $multiclan = read_multiclan();
 $multiclan_main = multi_main($multiclan);
@@ -77,7 +77,7 @@ $multiclan_main = multi_main($multiclan);
 foreach($multiclan as $clan){
     $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
     if (($multiclan_info[$clan['id']] === FALSE) or (empty($multiclan_info[$clan['id']])) or ($clan['id'] == $config['clan'])) {
-        $multiclan_info[$clan['id']] = get_api('clan/info',array('clan_id' => $clan['id']));
+        $multiclan_info[$clan['id']] = get_api('wgn/clans/info',array('clan_id' => $clan['id']));
         if ((empty($multiclan_info[$clan['id']])) || (!isset($multiclan_info[$clan['id']]['status']))) {
             $multiclan_info[$clan['id']]['status'] = 'error';
         }

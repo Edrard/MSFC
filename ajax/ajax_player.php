@@ -431,13 +431,13 @@ if (isset($result)) {
      }
      $new = $cache->get('get_last_roster_'.$val['clanids'],0);
      if ($new === FALSE) {
-         $new2 = get_api('clan/info',array('clan_id' => $val['clanids']),array('emblems.large'));
-         if ($new2 != FALSE and isset($new2['status']) and $new2['status'] == 'ok' and isset($new2['data'][$val['clanids']]['emblems']['large']) and $new2['data'][$val['clanids']]['emblems']['large'] != '') {
-              $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['large'];
+         $new2 = get_api('wgn/clans/info',array('clan_id' => $val['clanids']),array('emblems.x64'));
+         if ($new2 != FALSE and isset($new2['status']) and $new2['status'] == 'ok' and isset($new2['data'][$val['clanids']]['emblems']['x64']['portal']) and $new2['data'][$val['clanids']]['emblems']['x64']['portal'] != '') {
+              $result[$key]['clanlink'] = $new2['data'][$val['clanids']]['emblems']['x64']['portal'];
          }
      } else {
-          if ($new['data'][$val['clanids']]['emblems']['large'] <>'') {
-              $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['large'];
+          if ($new['data'][$val['clanids']]['emblems']['x64']['portal'] <>'') {
+              $result[$key]['clanlink'] = $new['data'][$val['clanids']]['emblems']['x64']['portal'];
           }
      }
   }

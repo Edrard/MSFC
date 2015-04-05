@@ -20,8 +20,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php echo $lang['page_title'];
-    if (isset($multiclan_info[$config['clan']]['data'][$config['clan']]['abbreviation']))
-        echo " [",$multiclan_info[$config['clan']]['data'][$config['clan']]['abbreviation'],"]"; ?></title>
+    if (isset($multiclan_info[$config['clan']]['data'][$config['clan']]['tag']))
+        echo " [",$multiclan_info[$config['clan']]['data'][$config['clan']]['tag'],"]"; ?></title>
     <?php if (!isset($config['theme'])) {
         $config['theme'] = 'ui-lightness'; } ?>
     <link rel="stylesheet" href="./theme/<?=$config['theme']; ?>/jquery-ui.css" type="text/css" media="print, projection, screen" />

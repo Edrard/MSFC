@@ -57,7 +57,7 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
     $api_lang = checklang($config['api_lang']);
     $param = checkparam($param_array);
     $fields = checkfield($fields_array);
-    $url = $config['td'].'/wot/'.$method.'/?application_id='.$config['application_id'].$api_lang.$param.$fields;
+    $url = $config['td'].'/'.$method.'/?application_id='.$config['application_id'].$api_lang.$param.$fields;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

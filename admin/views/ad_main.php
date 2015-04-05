@@ -36,7 +36,7 @@
                         $multi_clan_prefix = '&multi='.str_replace('_','',$val['prefix']);
                 } ?>
                 <a style="margin: 0 5px; min-height: 48px; min-width: 48px;" id="<?=$val['prefix'].'1';?>" href="./index.php?page=main<?=$multi_clan_prefix;?>">
-                    <img height="24" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['small'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['abbreviation']?></span>
+                    <img height="24" src="<?=$multiclan_info[$val['id']]['data'][$val['id']]['emblems']['x24']['portal'];?>" /><span style="margin: auto 4px; display:block; color:<?=$multiclan_info[$val['id']]['data'][$val['id']]['color']?>"><?=$multiclan_info[$val['id']]['data'][$val['id']]['tag']?></span>
                 </a>
                 <?php
             } ?>
@@ -428,7 +428,7 @@
                                             <select name="prefix">
                                                 <option value="all">All</option>
                                                 <? foreach($multiclan as $mclan) { ?>
-                                                <option value="<?=$mclan['prefix'];?>"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['abbreviation'];?></option>
+                                                <option value="<?=$mclan['prefix'];?>"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['tag'];?></option>
                                                 <? } ?>
                                             </select>
                                         </td></tr>
@@ -490,7 +490,7 @@
                                                     <select name="prefix">
                                                         <option value="all" <?php if($val['prefix'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
                                                         <? foreach($multiclan as $mclan) { ?>
-                                                        <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['abbreviation'];?></option>
+                                                        <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['tag'];?></option>
                                                         <? } ?>
                                                     </select>
                                                 </td></tr>
@@ -683,7 +683,7 @@
                                                   <?php } ?>
                                               <td align="center"><?=$mclan['server']?></td>
                                               <td align="center"><?=$mclan['id']?></td>
-                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['abbreviation']?></td>
+                                              <td align="center"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['tag']?></td>
                                               <td align="center"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['members_count']?></td>
                                               <td align="center"><?=$mclan['prefix']?></td>
                                               <?php

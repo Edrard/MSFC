@@ -44,7 +44,6 @@
     require(ROOT_DIR.'/function/func.php');
     require(ROOT_DIR.'/function/func_main.php');
     require(ROOT_DIR.'/function/func_get.php');
-    require(ROOT_DIR.'/function/func_gk.php');
     require(ROOT_DIR.'/function/func_time.php');
     require(ROOT_DIR.'/function/cache.php');
 
@@ -96,7 +95,6 @@
 
     include(ROOT_DIR.'/function/tabs.php');
     include(ROOT_DIR.'/including/show.php');
-    include(ROOT_DIR.'/including/gk.php');
     if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($res) > 0) {
         require(ROOT_DIR.'/views/index.php');
     } else {
