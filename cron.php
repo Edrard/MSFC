@@ -166,6 +166,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             //break; //leave for testing purpose
                           }
                         }
+                        $new2['data'][$config['clan']]['members'] = array_resort($new2['data'][$config['clan']]['members'],'account_id');
                         if (!empty($toload)) {
                             //prepare some data
                             $counter['total'] = count($toload);
