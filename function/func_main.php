@@ -508,4 +508,11 @@ function achievements_ajax_player($ach,$filter = array()) {
 
   return $ret;
 }
-?>
+function get_battle_types($array){
+   foreach($array['data']['statistics'] as $key => $val){
+       if(is_array($val)){
+            $bat[$key] = $key;
+       }
+   } 
+   return $bat;
+}

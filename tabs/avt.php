@@ -348,7 +348,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                      <?php if (count($we_loosed) > 0){
                         foreach($we_loosed as $val){ ?>
                            <tr>
-                              <td align="left"><a href="<?php echo $config['base'],$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
+                              <td align="left"><a href="<?php echo $config['base'],$val['account_id'].'-'.$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
                               <td align="center"><?=(isset($api_cache['data']['clans_roles'][$val['role']]))?$api_cache['data']['clans_roles'][$val['role']]:'--';?></td>
                               <td align="center"><?php echo floor(($val['updated_at'] - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)),$lang['days'];?></td>
                               <td align="center"><span class="hidden"><?=$val['updated_at'];?></span><?php echo date('d.m.Y',$val['updated_at']);?></td>
@@ -369,7 +369,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                      <?php if (count($new_tanks) > 0){
                         foreach($new_tanks as $val){ ?>
                            <tr>
-                              <td align="left"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>"
+                              <td align="left"><a href="<?php echo $config['base'],$val['account_id'].'-'.$roster_id[$val['account_id']]['account_name'],'/'; ?>"
                                                 target="_blank"><?=$roster_id[$val['account_id']]['account_name'];?></a></td>
                               <td width="130px" align="left">
                                  <div style="position:relative; min-height:31px; padding: 0px; background: url('http://<?=$config['gm_url'];?>/static/3.6.0.1/common/img/nation/<?=$tanks[$val['tank_id']]['nation'];?>.png') no-repeat scroll 0 0 transparent;">
@@ -396,7 +396,7 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
                      <?php if (count($new_players) > 0){
                         foreach($new_players as $name => $val){ ?>
                            <tr>
-                              <td align="left"><a href="<?php echo $config['base'],$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
+                              <td align="left"><a href="<?php echo $config['base'],$val['account_id'].'-'.$val['nickname'],'/'; ?>" target="_blank"><?=$val['nickname'];?></a></td>
                               <td align="center"><?=(isset($api_cache['data']['clans_roles'][$val['role']]))?$api_cache['data']['clans_roles'][$val['role']]:'--';?></td>
                               <td align="center"><?php echo floor((time() - mktime(0, 0, 0, date("m", $val['created_at']), date("d", $val['created_at']), date("Y", $val['created_at'])))/(3600*24)),$lang['days'];?></td>
                               <td align="center"><span class="hidden"><?=$val['created_at'];?></span><?php echo date('d.m.Y',$val['created_at']);?></td>

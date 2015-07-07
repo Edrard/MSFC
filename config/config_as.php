@@ -17,7 +17,7 @@
 
 
     $config['server'] = 'as';
-    $config['base'] = 'http://worldoftanks.asia/uc/accounts/named/';
+    $config['base'] = 'http://worldoftanks.asia/community/accounts/';
     $config['base_direct'] = 'http://worldoftanks.asia/community/accounts/';
     $config['clan_img'] = 'http://worldoftanks.asia/dcont/clans/emblems/';
     $config['clan_link'] = 'http://worldoftanks.asia/uc/clanwars/';

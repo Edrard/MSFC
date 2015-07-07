@@ -43,7 +43,7 @@ if(!isset($fame['status']) or $fame['status'] != 'ok') {
         <tbody>
             <?php foreach($res as $name => $val){ ?>
                 <tr>
-                    <td><a href="<?php echo $config['base'],$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
+                    <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
                     <td><?=(isset($fame['data'][$val['data']['account_id']]['points']))?$fame['data'][$val['data']['account_id']]['points']:'';?></td>
                     <td><?=(isset($fame['data'][$val['data']['account_id']]['position']))?$fame['data'][$val['data']['account_id']]['position']:'';?></td>
                 </tr>

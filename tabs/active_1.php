@@ -37,7 +37,7 @@
                 <tbody>
                     <?php foreach($medal_resort['id'] as $id => $total){ ?>
                         <tr>
-                            <td><a href="<?=$config['base'].$roster_id[$id]['account_name'].'/'; ?>"
+                            <td><a href="<?=$config['base'].$id.'-'.$roster_id[$id]['account_name'].'/'; ?>"
                                 target="_blank"><?=$roster_id[$id]['account_name']; ?></a></td>
                             <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                                 <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>

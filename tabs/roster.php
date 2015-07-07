@@ -66,7 +66,7 @@
                        <div style="background-origin: content-box; padding: 0; margin: 0; " class="ui-accordion-header-icon ui-icon ui-icon-info">
                           &nbsp;
                         </div></a></td>
-                    <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
+                    <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_id'].'-'.$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
                     <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                         <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>
                     <? } ?>

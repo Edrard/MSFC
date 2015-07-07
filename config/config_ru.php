@@ -17,7 +17,7 @@
 
 
     $config['server'] = 'ru';
-    $config['base'] = 'http://worldoftanks.ru/uc/accounts/named/';
+    $config['base'] = 'http://worldoftanks.ru/community/accounts/';
     $config['clan_img'] = 'http://worldoftanks.ru/dcont/clans/emblems/';
     $config['base_direct'] = 'http://worldoftanks.ru/community/accounts/';
     $config['clan_link'] = 'http://worldoftanks.ru/uc/clanwars/';

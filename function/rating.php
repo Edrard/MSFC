@@ -132,7 +132,7 @@ function middel_tank_lvl($array){
     return round($mid,2);
 }
 
-function eff_rating($res, $wn8_exp = array()) {
+function eff_rating($res, $wn8_exp = array(), $type = 'all') {
     $feff = array();
     $tarr = array('xp', 'damage_dealt', 'wins', 'frags', 'spotted', 'dropped_capture_points', 'capture_points');
     foreach($res as $name => $val){

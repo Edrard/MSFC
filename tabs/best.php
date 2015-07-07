@@ -45,7 +45,7 @@
                                         <?php if($val['value'] != 0 && !in_array($valwls,$ni)){ ?>
                                             <tr> 
                                                 <td><?=$lang['all_'.$valwls];?></td>
-                                                <td><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank"><?=$roster_id[$val['account_id']]['account_name']; ?></a></td>
+                                                <td><a href="<?php echo $config['base'],$val['account_id'].'-'.$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank"><?=$roster_id[$val['account_id']]['account_name']; ?></a></td>
                                                 <td><?=$val['value'];?></td>
                                             </tr>
                                             <?php } ?>
@@ -71,7 +71,7 @@
                                             <tr>
                                                 <td align="center"><img height="25px" src='<?=$achievements[$name]['image'];?>' /></td>
                                                 <td valign="middle"><?=$achievements[$name]['name_i18n'],(($achievements[$name]['type']=='series')?'&nbsp;<span style="color:red;">*</span>':'');?></td>
-                                                <td valign="middle"><a href="<?php echo $config['base'],$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank">
+                                                <td valign="middle"><a href="<?php echo $config['base'],$val['account_id'].'-'.$roster_id[$val['account_id']]['account_name'],'/'; ?>" target="_blank">
                                                     <?php echo $roster_id[$val['account_id']]['account_name']; ?></a></td>
                                                 <td valign="middle"><?=$val['value'];?></td>
                                             </tr>

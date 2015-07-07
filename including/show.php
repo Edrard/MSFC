@@ -165,6 +165,11 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
     }
 }
 
+//Battle types
+$batt_types = get_battle_types($res[array_rand($res,1)]);
+ksort($batt_types);
+//print_r($batt_types); die;
+
 //Autocleaner
 autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
 
