@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
     *
     */
 
@@ -46,7 +46,8 @@
     require(ROOT_DIR.'/function/func_get.php');
     require(ROOT_DIR.'/function/func_time.php');
     require(ROOT_DIR.'/function/cache.php');
-
+    require(ROOT_DIR.'/function/atm.php');
+    
     // Including main config files
     include(ROOT_DIR.'/function/config.php');
     require(ROOT_DIR.'/config/config_'.$config['server'].'.php');

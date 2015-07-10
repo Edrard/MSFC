@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.1.2 $
+* @version     $Rev: 3.2.0 $
 *
 */
 
@@ -67,7 +67,7 @@ if($exec_time == 0){
 //Updater
 if (!preg_match ("/update.php/", $_SERVER['PHP_SELF']))
 {
-  if(isset($config['version']) and ( !is_numeric($config['version']) or (312.1 - (float) $config['version']) > 0 ) ) {
+  if(isset($config['version']) and ( !is_numeric($config['version']) or (320 - (float) $config['version']) > 0 ) ) {
     if(preg_match ("/\/admin\//", $_SERVER['PHP_SELF'])) { //admin cp
       header ("Location: ../update.php");
       die('Module version are outdated, rediecting to updater: <a href="../update.php" target="_self" title="update">Update</a>');

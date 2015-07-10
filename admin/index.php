@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
     *
     */
 
@@ -40,6 +40,7 @@
         require(ROOT_DIR.'/function/func_get.php');
         require(ROOT_DIR.'/function/func_main.php');
         include(ROOT_DIR.'/function/config.php');
+        require(ROOT_DIR.'/function/atm.php');
         require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
         foreach(scandir(LOCAL_DIR.'/translate/') as $files){
@@ -68,6 +69,7 @@
         require(ROOT_DIR.'/function/func_get.php');
         require(ROOT_DIR.'/function/func_main.php');
         include(ROOT_DIR.'/function/config.php');
+        require(ROOT_DIR.'/function/atm.php');
         require(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 
         foreach(scandir(LOCAL_DIR.'/translate/') as $files){

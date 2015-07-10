@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
     *
     */
   $lang['eff_ret'] = 'Ranking wydajności';

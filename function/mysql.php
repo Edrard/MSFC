@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
     *
     */
     if (preg_match ("/mysql.php/", $_SERVER['PHP_SELF']))
@@ -66,7 +66,7 @@
                   $this->prefix = 'msfc_';
               }
               $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
-              $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks)([`\'"])/';
+              $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks|stronghold)([`\'"])/';
               $this->replacement = '$1'.$this->prefix.'$2$3';
 
               parent::__construct($dsn, $user, $password, $driver_options);
@@ -76,8 +76,6 @@
               $this->count += 1;
               $statement = preg_replace($this->pattern, $this->replacement, $statement);
               $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
-              $this->sqls[$this->count] = $statement;
-
               return $statement;
             }
 

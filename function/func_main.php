@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.1.2 $
+* @version     $Rev: 3.2.0 $
 *
 */
 
@@ -49,19 +49,19 @@ function check_tables($medals, $nations, $tanks) {
     $tsql = '';
 
     foreach ($medals as $key => $val) {
-      if(!isset($medals_structure[$key])) {
-        $tmp2 = substr($key, 0, 6);
+        if(!isset($medals_structure[$key])) {
+            $tmp2 = substr($key, 0, 6);
 
-        if ($tmp2 == 'mechan' || $tmp2 == 'tank_e') {
-            $size = 'tinyint(1)';
-        }   else {
-            $size = 'smallint(12)';
+            if ($tmp2 == 'mechan' || $tmp2 == 'tank_e') {
+                $size = 'tinyint(1)';
+            }   else {
+                $size = 'smallint(12)';
+            }
+            $tsql .= 'ALTER TABLE `col_medals` ADD `'.$key.'` '.$size.' UNSIGNED NOT NULL DEFAULT 0;';
         }
-        $tsql .= 'ALTER TABLE `col_medals` ADD `'.$key.'` '.$size.' UNSIGNED NOT NULL DEFAULT 0;';
-      }
     }
     if ($tsql != '') {
-      $db->insert($tsql,__line__,__file__);
+        $db->insert($tsql,__line__,__file__);
     }
 
     foreach ($tanks as $tank_id => $val3) {
@@ -87,7 +87,7 @@ function check_tables($medals, $nations, $tanks) {
             }
             if (!empty($sqlarr)) {
                 foreach ($sqlarr as $tsql) {
-                  $db->insert($tsql,__line__,__file__);
+                    $db->insert($tsql,__line__,__file__);
                 }
             }
         }
@@ -106,7 +106,7 @@ function check_tables($medals, $nations, $tanks) {
         }
         if (!empty($sqlarr)) {
             foreach ($sqlarr as $tsql) {
-              $db->insert($tsql,__line__,__file__);
+                $db->insert($tsql,__line__,__file__);
             }
         }
     }
@@ -242,37 +242,37 @@ function autoclean($time,$multi,$config,$directory)
             //print_r($new); die;
             if(isset($new['data'][$val['id']]['members']) and !empty($new['data'][$val['id']]['members']))
             {
-              foreach($new['data'][$val['id']]['members'] as $player){
-                  foreach($map as $key => $file){
-                      if(sha1($player['account_id']) == $file){
-                          unset($map[$key]);
-                      }
-                  }
-              }
+                foreach($new['data'][$val['id']]['members'] as $player){
+                    foreach($map as $key => $file){
+                        if(sha1($player['account_id']) == $file){
+                            unset($map[$key]);
+                        }
+                    }
+                }
             }
             $db->insert('UPDATE '.$val['prefix'].'config SET value = "'.now().'" WHERE name = "autoclean";',__line__,__file__);
         }
         if(!empty($map)) {
-          foreach($map as $file){
-              unlink($directory.$file);
-          }
+            foreach($map as $file){
+                unlink($directory.$file);
+            }
         }
 
         //clean db from cron data
         if($config['cron_autoclean'] == 1) {
-          require(ROOT_DIR.'/admin/func_admin.php');
+            require(ROOT_DIR.'/admin/func_admin.php');
 
-          if($config['cron_cleanleft'] == 1) {
-            clean_db_left_players();
-          }
+            if($config['cron_cleanleft'] == 1) {
+                clean_db_left_players();
+            }
 
-          if($config['cron_cleanold'] == 1) {
-            clean_db_old_cron($config['cron_cleanold_d']);
-          }
+            if($config['cron_cleanold'] == 1) {
+                clean_db_old_cron($config['cron_cleanold_d']);
+            }
 
-          if($config['cron_clean_log'] == 1) {
-            cron_file_recreat();
-          }
+            if($config['cron_clean_log'] == 1) {
+                cron_file_recreat();
+            }
         }
     }
 }
@@ -287,66 +287,80 @@ function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
 
     if(empty($tanks)) {
-      $tanks = tanks();
+        $tanks = tanks();
     }
     $tanks_api = get_api('wot/encyclopedia/tanks');
 
     if ((isset($tanks_api['status'])) && ($tanks_api['status'] == 'ok')) {
-      $updatearr = array();
+        $updatearr = array();
 
-      if(isset($_POST['update_tanks_db']) or $force == 1){
-          $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
-          $tanks = array();
-      }
+        if(isset($_POST['update_tanks_db']) or $force == 1){
+            $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
+            $tanks = array();
+        }
 
-      foreach ($tanks_api['data'] as $tank_id => $val) {
-        if(!isset($tanks[$tank_id])){
-            $updatearr [$tank_id] = $val;
+        foreach ($tanks_api['data'] as $tank_id => $val) {
+            if(!isset($tanks[$tank_id])){
+                $updatearr [$tank_id] = $val;
 
-            $pieces = explode(':', $val['name']);
-            $updatearr [$tank_id]['title']      = $pieces['1'];
+                $pieces = explode(':', $val['name']);
+                $updatearr [$tank_id]['title']      = $pieces['1'];
 
-            if ($val['is_premium']== true) {
-                $updatearr [$tank_id]['is_premium']      = 1;
-            }   else {
-                $updatearr [$tank_id]['is_premium']      = 0;
+                if ($val['is_premium']== true) {
+                    $updatearr [$tank_id]['is_premium']      = 1;
+                }   else {
+                    $updatearr [$tank_id]['is_premium']      = 0;
+                }
             }
         }
-      }
 
-      if(!empty($updatearr)){
-          $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
-          foreach ($updatearr as $tank_id => $val) {
-              $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
-          }
-          $sql = substr($sql, 0, strlen($sql)-2);
-          $sql .= ';';
+        if(!empty($updatearr)){
+            $sql = "INSERT INTO `tanks` (`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`) VALUES ";
+            foreach ($updatearr as $tank_id => $val) {
+                $sql .= "('{$val['tank_id']}', '{$val['nation_i18n']}', '{$val['level']}', '{$val['nation']}', '{$val['is_premium']}',  '{$val['title']}', '{$val['name_i18n']}', '{$val['type']}', '{$val['image']}', '{$val['contour_image']}', '{$val['image_small']}'), ";
+            }
+            $sql = substr($sql, 0, strlen($sql)-2);
+            $sql .= ';';
 
-          $db->insert($sql,__line__,__file__);
-      }
+            $db->insert($sql,__line__,__file__);
+        }
 
     }
 }
 
 function update_tanks_single($tank_id) {
-  $tmp = get_api('wot/encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
+    $tmp = get_api('wot/encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
 
-  if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
-    global $db;
-    $tmp = $tmp['data'][$tank_id];
+    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
+        global $db;
+        $tmp = $tmp['data'][$tank_id];
 
-    $pieces = explode(':', $tmp['name']);
-    $tmp['title'] = $pieces['1'];
-    unset($tmp['name']);
+        $pieces = explode(':', $tmp['name']);
+        $tmp['title'] = $pieces['1'];
+        unset($tmp['name']);
 
-    if ($tmp['is_premium']== true) {
-        $tmp['is_premium'] = 1;
-    }   else {
-        $tmp['is_premium'] = 0;
+        if ($tmp['is_premium']== true) {
+            $tmp['is_premium'] = 1;
+        }   else {
+            $tmp['is_premium'] = 0;
+        }
+
+        $db->insert('INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");',__line__,__file__);
     }
-
-    $db->insert('INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");',__line__,__file__);
-  }
+}
+function stronghold() {
+    global $db;
+    $atm = new Atm($db,'stronghold');
+    return array_resort($atm->get_data(),'type');  
+}
+function update_stronghold_db($str = array()){
+    global $db,$config,$lang;
+    
+    $str_get = get_api('wot/stronghold/buildings'); 
+    $atm = new Atm($db,'stronghold');
+    $atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
+    //$atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
+    unset($atm);
 }
 
 function achievements() {
@@ -357,7 +371,7 @@ function achievements() {
     foreach ($tmp as $val) {
         //unserialize options
         if(!empty($val['options'])) {
-          $val['options'] = unserialize($val['options']);
+            $val['options'] = unserialize($val['options']);
         }
         $ret[$val['name']] = $val;
     }
@@ -365,56 +379,56 @@ function achievements() {
 }
 
 function update_achievements_db($ach = array()) {
-  global $db,$config,$lang;
+    global $db,$config,$lang;
 
-  if(empty($ach)) {
-    $ach = achievements();
-  }
-
-  $ach_res = get_api('wot/encyclopedia/achievements');
-
-  if(isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data'])) {
-
-    $updatearr = array();
-    foreach($ach_res['data'] as $val) {
-      if(!isset($ach[$val['name']])) {
-        $updatearr[] = $val;
-      }
+    if(empty($ach)) {
+        $ach = achievements();
     }
-    //echop($updatearr);
-    if(!empty($updatearr)) {
-      $sql = 'INSERT INTO `achievements`
-      (`name`, `section`, `section_i18n`, `options`, `section_order`, `image`, `name_i18n`, `type`, `order`, `description`, `condition`, `hero_info`)
-      VALUES  ';
 
-      foreach($updatearr as $val) {
-        if(!empty($val['name'])) {
-          if(empty($val['options'])) {
-            $options = '';
-          } else {
-            $options = serialize($val['options']);
-          }
-          //add more categories
-          if(preg_match('/tankExpert/',$val['name'])) {
-            $val['section'] = 'expert';
-            $val['section_i18n'] = $lang['ach_section_expert'];
-            $val['section_order'] += 20;
-          }
-          if(preg_match('/mechanicEngineer/',$val['name'])) {
-            $val['section'] = 'mechanic';
-            $val['section_i18n'] = $lang['ach_section_mechanic'];
-            $val['section_order'] += 20;
-          }
-          if(preg_match('/histBattle/',$val['name'])) {
-            $val['section'] = 'hist';
-            $val['section_i18n'] = $lang['ach_section_hist'];
-            $val['section_order'] += 10;
-          }
-          //fix links for medals
-          if(empty($val['image'])) {
-            $val['image'] = $val['options']['0']['image'];
-          }
-          $sql .= "(".$db->quote($val['name']).",
+    $ach_res = get_api('wot/encyclopedia/achievements');
+
+    if(isset($ach_res['status']) and ($ach_res['status'] == 'ok') and !empty($ach_res['data'])) {
+
+        $updatearr = array();
+        foreach($ach_res['data'] as $val) {
+            if(!isset($ach[$val['name']])) {
+                $updatearr[] = $val;
+            }
+        }
+        //echop($updatearr);
+        if(!empty($updatearr)) {
+            $sql = 'INSERT INTO `achievements`
+            (`name`, `section`, `section_i18n`, `options`, `section_order`, `image`, `name_i18n`, `type`, `order`, `description`, `condition`, `hero_info`)
+            VALUES  ';
+
+            foreach($updatearr as $val) {
+                if(!empty($val['name'])) {
+                    if(empty($val['options'])) {
+                        $options = '';
+                    } else {
+                        $options = serialize($val['options']);
+                    }
+                    //add more categories
+                    if(preg_match('/tankExpert/',$val['name'])) {
+                        $val['section'] = 'expert';
+                        $val['section_i18n'] = $lang['ach_section_expert'];
+                        $val['section_order'] += 20;
+                    }
+                    if(preg_match('/mechanicEngineer/',$val['name'])) {
+                        $val['section'] = 'mechanic';
+                        $val['section_i18n'] = $lang['ach_section_mechanic'];
+                        $val['section_order'] += 20;
+                    }
+                    if(preg_match('/histBattle/',$val['name'])) {
+                        $val['section'] = 'hist';
+                        $val['section_i18n'] = $lang['ach_section_hist'];
+                        $val['section_order'] += 10;
+                    }
+                    //fix links for medals
+                    if(empty($val['image'])) {
+                        $val['image'] = $val['options']['0']['image'];
+                    }
+                    $sql .= "(".$db->quote($val['name']).",
                     '{$val['section']}',
                     ".$db->quote($val['section_i18n']).",
                     ".$db->quote($options).",
@@ -426,93 +440,93 @@ function update_achievements_db($ach = array()) {
                     ".$db->quote($val['description']).",
                     ".$db->quote($val['condition']).",
                     ".$db->quote($val['hero_info'])."), ";
-       }
-      }
+                }
+            }
 
-      $sql = substr($sql, 0, strlen($sql)-2);
-      $sql .= ';';
-      $db->insert($sql,__line__,__file__);
+            $sql = substr($sql, 0, strlen($sql)-2);
+            $sql .= ';';
+            $db->insert($sql,__line__,__file__);
+        }
     }
-  }
 }
 
 function achievements_split($res,$ach) {
-  $ret = array('sections' => array(), 'split' => array());
-  $counter = array('id' => array(), 'split' => array(), 'count' => array());
-  $num = $n = $m = 0;
+    $ret = array('sections' => array(), 'split' => array());
+    $counter = array('id' => array(), 'split' => array(), 'count' => array());
+    $num = $n = $m = 0;
 
-  //list of ach. in clan
-  //except 'class' section
-  foreach($res as $val) {
-    if(!empty($val['data']['achievements'])) {
-      foreach($val['data']['achievements'] as $id => $t) {
-        if(!in_array($id,$counter['id']) and isset($ach[$id]) and $ach[$id]['section'] != 'class') {
-          $counter['id'][] = $id;
-          if(isset($counter['count'][$ach[$id]['section']])) { $counter['count'][$ach[$id]['section']] += 1; } else { $counter['count'][$ach[$id]['section']] = 1;}
+    //list of ach. in clan
+    //except 'class' section
+    foreach($res as $val) {
+        if(!empty($val['data']['achievements'])) {
+            foreach($val['data']['achievements'] as $id => $t) {
+                if(!in_array($id,$counter['id']) and isset($ach[$id]) and $ach[$id]['section'] != 'class') {
+                    $counter['id'][] = $id;
+                    if(isset($counter['count'][$ach[$id]['section']])) { $counter['count'][$ach[$id]['section']] += 1; } else { $counter['count'][$ach[$id]['section']] = 1;}
+                }
+            }
         }
-      }
     }
-  }
 
-  if(empty($counter['id'])) return array(); //no ach. in clan - return empty array
+    if(empty($counter['id'])) return array(); //no ach. in clan - return empty array
 
-  foreach($ach as $val) {
-    //list of sections to display
-    if(!isset($ret['sections'][$val['section']]) and in_array($val['name'],$counter['id'])) {
-      $ret['sections'][$val['section']] = $val['section_i18n'];
+    foreach($ach as $val) {
+        //list of sections to display
+        if(!isset($ret['sections'][$val['section']]) and in_array($val['name'],$counter['id'])) {
+            $ret['sections'][$val['section']] = $val['section_i18n'];
+        }
+        //list of ach. to display
+        if(in_array($val['name'],$counter['id'])) {
+            $counter['split'][$val['section']][] = $val['name'];
+        }
+        //counters
+        if($val['section'] == 'expert') {
+            ++$n;
+        }
+        if($val['section'] == 'mechanic') {
+            ++$m;
+        }
     }
-    //list of ach. to display
-    if(in_array($val['name'],$counter['id'])) {
-      $counter['split'][$val['section']][] = $val['name'];
-    }
-    //counters
-    if($val['section'] == 'expert') {
-      ++$n;
-    }
-    if($val['section'] == 'mechanic') {
-      ++$m;
-    }
-  }
-  //how many ach. in one section
-  $num = $n;
-  if($m > $num) { $num = $m; }
-  if($num == 0) { $num = 8; }
+    //how many ach. in one section
+    $num = $n;
+    if($m > $num) { $num = $m; }
+    if($num == 0) { $num = 8; }
 
-  //chunk ach. to sections
-  foreach($counter['count'] as $id => $n) {
-    if($n > $num) {
-      $ret['split'][$id] = array_chunk($counter['split'][$id], ceil($n/ceil($n/$num)));
-    } else {
-      $ret['split'][$id]['0'] = $counter['split'][$id];
+    //chunk ach. to sections
+    foreach($counter['count'] as $id => $n) {
+        if($n > $num) {
+            $ret['split'][$id] = array_chunk($counter['split'][$id], ceil($n/ceil($n/$num)));
+        } else {
+            $ret['split'][$id]['0'] = $counter['split'][$id];
+        }
     }
-  }
 
-  return $ret;
+    return $ret;
 }
 
 function achievements_ajax_player($ach,$filter = array()) {
-  $ret = array('sections' => array(), 'split' => array());
+    $ret = array('sections' => array(), 'split' => array());
 
-  foreach($ach as $val) {
-    if(!empty($filter) and !isset($filter[$val['name']])) {
-      continue;
+    foreach($ach as $val) {
+        if(!empty($filter) and !isset($filter[$val['name']])) {
+            continue;
+        }
+        if(in_array($val['name'], array('marksOnGun','markOfMastery'))) {
+            continue;
+        }
+        if(!isset($ret[$val['section']])) {
+            $ret['sections'][$val['section']] = $val['section_i18n'];
+        }
+        $ret['split'][$val['section']][] = $val['name'];
     }
-    if(in_array($val['name'], array('marksOnGun','markOfMastery'))) {
-      continue;
-    }
-    if(!isset($ret[$val['section']])) {
-      $ret['sections'][$val['section']] = $val['section_i18n'];
-    }
-    $ret['split'][$val['section']][] = $val['name'];
-  }
 
-  return $ret;
+    return $ret;
 }
 function get_battle_types($array){
-   foreach($array['data']['statistics'] as $key => $val){
-       if(is_array($val)){
+    foreach($array['data']['statistics'] as $key => $val){
+        if(is_array($val)){
             $bat[$key] = $key;
-       }
-   } 
-   return $bat;
+        }
+    } 
+    return $bat;
 }

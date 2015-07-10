@@ -334,3 +334,31 @@ table.ratings_table {
 table.ratings_table tbody {
   color: black;
 }
+.stronghold_back {
+    position: relative;
+    margin-left: -16px;
+    margin-top: 14px;
+    width: 980px;
+    height: 751px; 
+}
+.stronghold_img {
+    width: 980px;
+    height: 650px; 
+    background-size: cover;
+    margin-top: -101px;
+    -webkit-box-shadow: 0 0 1em hsla(0, 0%, 0%, 1);
+    -moz-box-shadow: 0 0 1em hsla(0, 0%, 0%, 1);
+    box-shadow: 0 0 1em hsla(0, 0%, 0%, 1);
+}
+.flex-center, .center-flex {
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

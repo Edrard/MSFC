@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
     *
     */
 
@@ -19,6 +19,7 @@
     $lang['admin_try_count'] = 'Количество повторов получения данных: ';
     $lang['for_all_clans'] = 'Для всех кланов:';
     $lang['admin_achievements_db_up'] = 'Обновить информацию о медалях';
+    $lang['admin_stronghold_db_up'] = 'Обновить информацию по укрепрайонах';
     $lang['ach_section_hist'] = 'Исторические бои';
     $lang['ach_section_expert'] = 'Эксперт';
     $lang['ach_section_mechanic'] = 'Инженер-механик';

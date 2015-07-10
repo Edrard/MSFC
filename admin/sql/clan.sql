@@ -159,12 +159,52 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '312.1'),
+('version', '320.0'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
 ('company', '0'),
 ('company_count', '1'),
 ('top', '5');
+
+-- phpMyAdmin SQL Dump
+-- version 3.5.3
+-- http://www.phpmyadmin.net
+--
+-- Хост: localhost
+-- Время создания: Июл 10 2015 г., 11:46
+-- Версия сервера: 10.0.10-MariaDB
+-- Версия PHP: 5.4.38
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- База данных: `msfc`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tronghold`
+--
+
+CREATE TABLE IF NOT EXISTS `stronghold` (
+  `|title` varchar(106) NOT NULL,
+  `|type` int(10) NOT NULL,
+  `|description` text NOT NULL,
+  `|image_url` varchar(130) NOT NULL,
+  `|short_description` varchar(162) NOT NULL,
+  `|reserve|image_url` varchar(143) NOT NULL,
+  `|reserve|description` text NOT NULL,
+  `|reserve|title` varchar(99) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 -- Структура таблицы `gk`
@@ -194,6 +234,7 @@ CREATE TABLE IF NOT EXISTS `tabs` (
 --
 
 INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
+(160, 'Укрепрайон', './stronghold.php', 1, 1, '0'),
 (150, 'Очки славы', 'famepoints.php', 0, 0, '0'),
 (130, 'Собственность клана', './poss.php', 1, 1, '0'),
 (120, 'Запланированные атаки', './attack.php', 1, 1, '0'),

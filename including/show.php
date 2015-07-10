@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.1.2 $
+* @version     $Rev: 3.2.0 $
 *
 */
 
@@ -52,6 +52,8 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
     $db->insert('TRUNCATE TABLE `achievements`;',__line__,__file__);
     //Получаем информацию о наградах
     update_achievements_db();
+     //Получаем информацию о Укрепах
+    update_stronghold_db();
   }
 }
 

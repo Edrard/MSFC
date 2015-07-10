@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.1.2 $
+    * @version     $Rev: 3.2.0 $
 		* @translation [sk] relic242
     *
     */
@@ -45,6 +45,8 @@
 
     $tabs_lang['ru']['poss'] =  'Собственность клана';
     $tabs_lang['ru']['attack'] =  'Запланированные атаки'; 
+    
+    $tabs_lang['ru']['stronghold'] =  'Укрепрайон';
 
     //Eng
     $tabs_lang['en']['active'] =  'Overall activity';
@@ -68,7 +70,9 @@
     $tabs_lang['en']['topteh'] =  'Top Vehicles';
 
     $tabs_lang['en']['poss'] =  'Clan possession'; 
-    $tabs_lang['en']['attack'] =  'Planning attacks';  
+    $tabs_lang['en']['attack'] =  'Planning attacks'; 
+    
+    $tabs_lang['en']['stronghold'] =  'Stronghold'; 
 
     //PL
     $tabs_lang['pl']['active'] =  'Aktywność ogólna';
@@ -93,6 +97,8 @@
 
     $tabs_lang['pl']['poss'] =  'Własność klanu'; 
     $tabs_lang['pl']['attack'] =  'Zaplanowane ataki'; 
+    
+    $tabs_lang['en']['stronghold'] =  'Stronghold';
 		
     //sk
 	$tabs_lang['sk']['active'] =  'Celková aktivita';
@@ -117,6 +123,8 @@
 		
     $tabs_lang['sk']['poss'] =  'Obsadené územia'; 
     $tabs_lang['sk']['attack'] =  'Plánované útoky';
+    
+    $tabs_lang['en']['stronghold'] =  'Stronghold';
 
     $tabs_lang['en']['famepoints'] =  'Fame Points';
     $tabs_lang['ru']['famepoints'] =  'Очки славы';
