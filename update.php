@@ -940,14 +940,14 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
     if(!empty($prefix)) {
         $sql = "CREATE TABLE IF NOT EXISTS `stronghold` (
-        `|title` varchar(106) NOT NULL,
-        `|type` int(10) NOT NULL,
-        `|description` text NOT NULL,
-        `|image_url` varchar(130) NOT NULL,
-        `|short_description` varchar(162) NOT NULL,
-        `|reserve|image_url` varchar(143) NOT NULL,
-        `|reserve|description` text NOT NULL,
-        `|reserve|title` varchar(99) NOT NULL
+        `title` varchar(106) NOT NULL,
+        `type` int(10) NOT NULL,
+        `description` text NOT NULL,
+        `image_url` varchar(130) NOT NULL,
+        `short_description` varchar(162) NOT NULL,
+        `reserve|image_url` varchar(143) NOT NULL,
+        `reserve|description` text NOT NULL,
+        `reserve|title` varchar(99) NOT NULL
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
         $q = $db->prepare($sql);
         if ($q->execute() != TRUE) {

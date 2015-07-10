@@ -195,14 +195,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `stronghold` (
-  `|title` varchar(106) NOT NULL,
-  `|type` int(10) NOT NULL,
-  `|description` text NOT NULL,
-  `|image_url` varchar(130) NOT NULL,
-  `|short_description` varchar(162) NOT NULL,
-  `|reserve|image_url` varchar(143) NOT NULL,
-  `|reserve|description` text NOT NULL,
-  `|reserve|title` varchar(99) NOT NULL
+  `title` varchar(106) NOT NULL,
+  `type` int(10) NOT NULL,
+  `description` text NOT NULL,
+  `image_url` varchar(130) NOT NULL,
+  `short_description` varchar(162) NOT NULL,
+  `reserve|image_url` varchar(143) NOT NULL,
+  `reserve|description` text NOT NULL,
+  `reserve|title` varchar(99) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

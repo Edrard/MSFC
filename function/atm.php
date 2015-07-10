@@ -3,8 +3,8 @@
 /**
 * Array to MySQL  (Atm)
 * Creating, updating and inserting datat from multidamentional array to MySQL table
-* @author Ustinov Aleksandr (wot-news.com)
-* @version 0.1.3
+* @author Aleksandr (wot-news.com)
+* @version 0.1.4
 *  
 * Usable Function
 * construct_data($data), $data - array with data. Checking data size and convert multidementional array to 1 level array
@@ -144,7 +144,7 @@ class Atm
                 }else{
                     $new[$key] = $lav; 
                 }
-            }   
+            }  
             if(!empty($new)){
                 foreach($new as $key => $val){
                     $this->create_row($key,$val);
@@ -249,7 +249,9 @@ class Atm
         if(is_array($comp)){
             foreach($comp as $key => $val){
                 if(is_array($val)){
-                    $key = $keyin.$this->separator.$key;
+                    if(!empty($keyin)){
+                        $key = $keyin.$this->separator.$key;
+                    }
                     $tmp = $this->array_move($val,$key);
                     if(is_array($tmp)){ 
                         foreach($tmp as $tkey =>$tval){
@@ -258,7 +260,9 @@ class Atm
                     }
                 }else{ 
                     if(trim($val)){
-                        $key = $keyin.$this->separator.$key;
+                        if(!empty($keyin)){
+                            $key = $keyin.$this->separator.$key;
+                        }
                         $new[trim($key,'_')] = $this->detect_type_mysql($val);
                         $new[trim($key,'_')]['data'] = $val;
                     }
@@ -284,9 +288,9 @@ class Atm
     }
     public function get_data($order = '',$custom = FALSE){  // $order = 'ORDER BY `|type` ASC'
         if($custom == FALSE){
-           return $this->reconstruct_array($this->db->select('SELECT * FROM `'.$this->tbname.'` '.$order.';',__line__,__file__));    
+            return $this->reconstruct_array($this->db->select('SELECT * FROM `'.$this->tbname.'` '.$order.';',__line__,__file__));    
         }else{
-           return $this->reconstruct_array($this->db->select($custom,__line__,__file__)); 
+            return $this->reconstruct_array($this->db->select($custom,__line__,__file__)); 
         }
     }
     private function reconstruct_array($array){
@@ -294,14 +298,13 @@ class Atm
         foreach($array as $kk => $val){ 
             foreach($val as $key => $var){
                 $p = explode('|',$key);
-                unset($p[0]);
-                if(!isset($p[2])){
-                    $new[$kk][$p[1]] = $var;
+                if(!isset($p[1])){
+                    $new[$kk][$p[0]] = $var;
                 }else{     
-                    if(!isset($new[$kk][$p[1]])){
-                        $new[$kk][$p[1]] = array();
-                    }
-                    $new[$kk][$p[1]] = $this->_reconstruct_array($p,$var,1,$new[$kk][$p[1]]);                
+                    if(!isset($new[$kk][$p[0]])){
+                        $new[$kk][$p[0]] = array();
+                    }  
+                    $new[$kk][$p[0]] = $this->_reconstruct_array($p,$var,0,$new[$kk][$p[0]]);                
                 }
             }
         }
@@ -312,7 +315,10 @@ class Atm
         if(!isset($p[$n+2])){
             $curr[$p[$n+1]] = $var;
         }else{
-            $curr[$p[$n+1]] = $this->_reconstruct_array($p,$var,1);                
+            if(!isset($curr[$p[$n+1]])){
+                $curr[$p[$n+1]] = array();
+            }
+            $curr[$p[$n+1]] = $this->_reconstruct_array($p,$var,1,$curr[$p[$n+1]]);                
         } 
         return  $curr;
     }
