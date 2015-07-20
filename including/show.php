@@ -169,6 +169,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
 
 //Battle types
 $batt_types = get_battle_types($res[array_rand($res,1)]);
+$batt_types_activity = array('all','clan','company');
 ksort($batt_types);
 //print_r($batt_types); die;
 
