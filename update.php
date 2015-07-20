@@ -955,20 +955,22 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
         }
         echo 'New stronghod table added.<br>';
         foreach($prefix as $t) {
+            $db->change_prefix($t);
+            $config = get_config();
             $sql = "UPDATE `config` SET `value` = '".$upd_ver."' WHERE `name` = 'version' LIMIT 1 ;";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
                 die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }
             echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+            $sql = "INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
+            (160, 'Укрепрайон', './stronghold.php', 1, 1, '0')";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            echo 'Added Stronghold tab for prefix:',$t,' - updated.<br>';
         }
-        $sql = "INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
-        (160, 'Укрепрайон', './stronghold.php', 1, 1, '0')";
-        $q = $db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
-        echo 'Added Stronghold tab - updated.<br>';
     }
 } //$upd_ver = 320.0;
 
