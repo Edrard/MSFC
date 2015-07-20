@@ -962,6 +962,13 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
             }
             echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
         }
+        $sql = "INSERT INTO `tabs` (`id`, `name`, `file`, `type`, `status`, `auth`) VALUES
+        (160, 'Укрепрайон', './stronghold.php', 1, 1, '0')";
+        $q = $db->prepare($sql);
+        if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+        }
+        echo 'Added Stronghold tab - updated.<br>';
     }
 } //$upd_ver = 320.0;
 
