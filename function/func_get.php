@@ -26,29 +26,29 @@ function checkfield($a) {
 }
 
 function checkparam($p) {
-  $return = '';
-  if(!empty($p)) {
-    foreach($p as $k => $v) {
-      if(is_array($v)) {
-        $return .= '&'.$k.'='.implode(",", $v);
-      } else {
-        $return .= '&'.$k.'='.$v;
-      }
+    $return = '';
+    if(!empty($p)) {
+        foreach($p as $k => $v) {
+            if(is_array($v)) {
+                $return .= '&'.$k.'='.implode(",", $v);
+            } else {
+                $return .= '&'.$k.'='.$v;
+            }
+        }
     }
-  }
-  return $return;
+    return $return;
 }
 
 function checklang($p) {
-  global $api_langs;
-  $return = '';
-  $lang_api = array_keys($api_langs);
-  if(in_array($p,$lang_api)) {
-    $return = '&language='.$p;
-  } else {
-    $return = '&language=en';
-  }
-  return $return;
+    global $api_langs;
+    $return = '';
+    $lang_api = array_keys($api_langs);
+    if(in_array($p,$lang_api)) {
+        $return = '&language='.$p;
+    } else {
+        $return = '&language=en';
+    }
+    return $return;
 }
 
 function get_api($method, $param_array = array(), $fields_array = array()) {
@@ -75,9 +75,9 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
     $data = false;
 
     do {
-      $data = curl_exec($ch);
-      $return = json_decode(trim($data), true);
-      $try++;
+        $data = curl_exec($ch);
+        $return = json_decode(trim($data), true);
+        $try++;
     }  while ( (curl_errno($ch) or $return['status'] != 'ok') and $try < $config['try_count']);
 
 
@@ -111,15 +111,15 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
         $curl = new CURL();
         $curl->retry = 2;
         $opts = array(CURLOPT_RETURNTRANSFER => true,
-                      CURLOPT_CONNECTTIMEOUT => $timeout,
-                      CURLOPT_FOLLOWLOCATION => false
+            CURLOPT_CONNECTTIMEOUT => $timeout,
+            CURLOPT_FOLLOWLOCATION => false
         );
         usleep(5);
         $url_chunk = array_chunk($urls, 10, TRUE);
         foreach($url_chunk as $chunk) {
-          foreach($chunk as $key => $url) $curl->addSession($url, $key, $opts);
-          $result = array_special_merge($curl->exec(),$result);
-          $curl->clear();
+            foreach($chunk as $key => $url) $curl->addSession($url, $key, $opts);
+            $result = array_special_merge($curl->exec(),$result);
+            $curl->clear();
         }
     }   elseif($config['pars'] == 'mcurl') {
         $curl = new MCurl;
@@ -129,35 +129,34 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
     }   else {
         $url_chunk = array_chunk($urls, 10, TRUE);
         foreach($url_chunk as $chunk) {
-          foreach($chunk as $key => $url) {
-              $ch[$key] = curl_init();
-              curl_setopt($ch[$key], CURLOPT_URL, $url);
-              curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
-              curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
-              curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
-              curl_setopt($ch[$key], CURLOPT_FOLLOWLOCATION, false);
-              curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
-                  "X-Requested-With: XMLHttpRequest",
-                  "Accept: text/html, */*",
-                  "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
-                  "Connection: Keep-Alive",
-              ));
-          }
-          $mh = curl_multi_init();
-          foreach($ch as $key => $h) curl_multi_add_handle($mh,$h);
-          $running = null;
-          do {curl_multi_exec($mh, $running);} while($running > 0);
-          foreach($ch as $key => $h){
-              $result[$key] = curl_multi_getcontent( $h );
-          }
-          foreach($ch as $clanid => $h){
-              curl_multi_remove_handle($mh, $h);
-          }
-          curl_multi_close($mh);
-          unset($ch, $mh);
+            foreach($chunk as $key => $url) {
+                $ch[$key] = curl_init();
+                curl_setopt($ch[$key], CURLOPT_URL, $url);
+                curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
+                curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
+                curl_setopt($ch[$key], CURLOPT_FOLLOWLOCATION, false);
+                curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
+                    "X-Requested-With: XMLHttpRequest",
+                    "Accept: text/html, */*",
+                    "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+                    "Connection: Keep-Alive",
+                ));
+            }
+            $mh = curl_multi_init();
+            foreach($ch as $key => $h) curl_multi_add_handle($mh,$h);
+            $running = null;
+            do {curl_multi_exec($mh, $running);} while($running > 0);
+            foreach($ch as $key => $h){
+                $result[$key] = curl_multi_getcontent( $h );
+            }
+            foreach($ch as $clanid => $h){
+                curl_multi_remove_handle($mh, $h);
+            }
+            curl_multi_close($mh);
+            unset($ch, $mh);
         }
     }
-    unset($urls,$url_chunk,$chunk);
     if (isset($result)) {
         foreach ($result as $key => $val) {
             $json = json_decode($val,TRUE);
@@ -168,14 +167,48 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
                     $res[$clanid]['data'] = $data;
                 }
             }   else {
-                foreach ($clids[$key] as $id) {
-                    if (isset($json['error']['message'])) {
-                        $message = 'Get current error from WG: ('.$json['error']['message'].')';
-                    }   else {
-                        $message = 'No connection to WG API';
+                $k = 0;
+                while($json['status'] !='ok'){ 
+                    usleep(1000000);
+                    $ch = curl_init();
+
+                    curl_setopt($ch, CURLOPT_URL, $urls[$key]);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_FAILONERROR, true);
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        "X-Requested-With: XMLHttpRequest",
+                        "Accept: text/html, */*",
+                        "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+                        "Connection: Keep-Alive",
+                    ));
+
+                    $uly = curl_exec($ch);
+                    $json = json_decode($uly,TRUE);
+                    curl_close ($ch);
+                    unset($uly);
+                    if($k >= 10){
+                        break;
                     }
-                    $res[$id]['status'] = 'error';
-                    $res[$id]['error']['message'] = $message;
+                    $k++;
+                }
+                if ((isset($json['status'])) && ($json['status'] == 'ok')) {
+                    foreach ($json['data'] as $clanid => $data) {
+                        $res[$clanid]['status'] = $json['status'];
+                        $res[$clanid]['count'] = '1';
+                        $res[$clanid]['data'] = $data;
+                    }
+                }   else {
+                    foreach ($clids[$key] as $id) {    
+                        if (isset($json['error']['message'])) {
+                            $message = 'Get current error from WG: ('.$json['error']['message'].')';
+                        }   else {
+                            $message = 'No connection to WG API';
+                        }
+                        $res[$id]['status'] = 'error';
+                        $res[$id]['error']['message'] = $message;
+                    }
                 }
             }
             unset ($result[$key], $json, $val, $data);
@@ -210,18 +243,18 @@ function get_url($url, $json = '') {
     $data = false;
 
     do {
-      $data = curl_exec($ch);
-      $try++;
+        $data = curl_exec($ch);
+        $try++;
     }  while ( curl_errno($ch) and $try < $config['try_count']);
 
     if ($data == false or curl_errno($ch)) {
-      $return = array('status' => 'error', 'message' => curl_error($ch) );
+        $return = array('status' => 'error', 'message' => curl_error($ch) );
     } else {
-      if(!empty($json)) {
-        $return = json_decode(trim($data), true);
-      } else {
-        $return = $data;
-      }
+        if(!empty($json)) {
+            $return = json_decode(trim($data), true);
+        } else {
+            $return = $data;
+        }
     }
 
     curl_close($ch);
