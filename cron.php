@@ -179,7 +179,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             }
                             if ($counter['total'] > 0 and $log == 1){
                                fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
-                            }
+                            } 
                             do {
                               $res1 = $res2 = $res3 = $res4 = array();
                               $res1 = multiget_v2('account_id', $toload, 'account/info');

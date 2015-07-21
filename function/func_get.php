@@ -91,6 +91,147 @@ function get_api($method, $param_array = array(), $fields_array = array()) {
 
 //------------------------------------------------------------------------------
 
+function form_link_v2($paramtoload, $clanids, $whattoload, $fields_array = array(), $param_array = array()){
+    global $config;
+
+    $fields = checkfield($fields_array);
+    $param = checkparam($param_array);
+    $api_lang = checklang($config['api_lang']);
+    $timeout = 100;
+    $urls = $res = array();
+
+    foreach($clanids as $arrid => $ids){
+        $toload = checkparam(array($paramtoload => $ids));
+        $urls[$arrid] = $config['td']."/wot/".$whattoload."/?application_id=".$config['application_id'].$param.$api_lang.$toload.$fields;
+    }
+    unset ($fields_array,$toload,$param_array);  
+    return $urls;
+}
+// Curl Method function
+function curl_class_function($timeout,$urls,$result = array()){
+    global $config;
+    $curl = new CURL();
+    $curl->retry = 2;
+    $opts = array(CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => $timeout,
+        CURLOPT_FOLLOWLOCATION => false
+    );
+    usleep(5);
+    foreach($urls as $key => $url){ 
+        $curl->addSession($url, $key, $opts);
+    }
+    $result = array_special_merge($curl->exec(),$result);
+    $curl->clear();
+    return $result;
+}
+function mcurl_function($timeout,$urls,$result = array()){
+    global $config;
+
+    $curl = new MCurl;
+    $curl->threads = 5;
+    $curl->timeout = 15;
+    $curl->sec_multiget($urls, $result);
+    return $result;
+}
+
+function curl_function($timeout,$urls,$result = array()){
+    global $config;
+
+    foreach($urls as $key => $url) {
+        $ch[$key] = curl_init();
+        curl_setopt($ch[$key], CURLOPT_URL, $url);
+        curl_setopt($ch[$key], CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch[$key], CURLOPT_FAILONERROR, true);
+        curl_setopt($ch[$key], CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch[$key], CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch[$key], CURLOPT_HTTPHEADER, array(
+            "X-Requested-With: XMLHttpRequest",
+            "Accept: text/html, */*",
+            "User-Agent: Mozilla/3.0 (compatible; easyhttp)",
+            "Connection: Keep-Alive",
+        ));
+    }
+    $mh = curl_multi_init();
+    foreach($ch as $key => $h) curl_multi_add_handle($mh,$h);
+    $running = null;
+    do {curl_multi_exec($mh, $running);} while($running > 0);
+    foreach($ch as $key => $h){
+        $result[$key] = curl_multi_getcontent( $h );
+    }
+    foreach($ch as $clanid => $h){
+        curl_multi_remove_handle($mh, $h);
+    }
+    curl_multi_close($mh);
+    unset($ch, $mh);
+    return $result;
+}
+
+function multiget_v3($urls,$over,$clids, $res = array()) {
+
+    global $config;
+
+    $timeout = 100;
+    switch ($config['pars']) {
+        case 'curl':
+            $result = curl_class_function($timeout,$urls);
+            break;
+        case 'mcurl':
+            $result = mcurl_function($timeout,$urls);
+            break;
+        case 'curl2':
+            $result = curl_function($timeout,$urls);
+            break;
+    }
+    if (isset($result)) {
+        foreach ($result as $key => $val) {
+            $json = json_decode($val,TRUE);
+            if ((isset($json['status'])) && ($json['status'] == 'ok')) {
+                foreach ($json['data'] as $clanid => $data) {
+                    $res[$key][$clanid]['status'] = $json['status'];
+                    $res[$key][$clanid]['count'] = '1';
+                    $res[$key][$clanid]['data'] = $data;
+                }
+
+            }   else {
+                $k = 0;
+                while($json['status'] !='ok'){ 
+                    sleep(5);
+                    $json = get_url($urls[$key],1);
+                    if($k >= 10){
+                        break;
+                    }
+                    $k++;
+                }
+                if ((isset($json['status'])) && ($json['status'] == 'ok')) {
+                    foreach ($json['data'] as $clanid => $data) {
+                        $res[$key][$clanid]['status'] = $json['status'];
+                        $res[$key][$clanid]['count'] = '1';
+                        $res[$key][$clanid]['data'] = $data;
+                    }
+
+                }   else {
+
+                    foreach ($clids[$over] as $id) {    
+                        if (isset($json['error']['message'])) {
+                            $message = 'Get current error from WG: ('.$json['error']['message'].')';
+                        }   else {
+                            $message = 'No connection to WG API';
+                        }
+                        $res[$key][$id]['status'] = 'error';
+                        $res[$key][$id]['error']['message'] = $message;
+                    }
+                }
+            }
+            unset ($result[$key], $json, $val, $data);
+        }
+    }   else {
+        foreach ($clids as $id) {
+            $res[$key][$id]['status'] = 'error';
+            $res[$key][$id]['error']['message'] = '(M)Incoming array to load is empty!';
+        }
+    }
+    return $res;
+}
 function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(), $param_array = array(), $result = array()) {
 
     global $config;
@@ -221,7 +362,6 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
     }
     return $res;
 }
-
 function get_url($url, $json = '') {
     global $config;
 
@@ -260,4 +400,3 @@ function get_url($url, $json = '') {
     curl_close($ch);
     return $return;
 }
-?>

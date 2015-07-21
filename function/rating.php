@@ -236,12 +236,12 @@ function eff_rating($res, $wn8_exp = array(), $type = 'all') {
 function build_ratings_tables($eff = array()) {
   global $lang;
 
-  $rating['eff']    = array(-1,609,849,1144,1474,1774,9999);
-  $rating['wn7']    = array(-1,449,814,1184,1589,1924,9999);
-  $rating['wn8']    = array(-1,354,819,1369,2019,2619,9999);
+  $rating['eff']    = array(-1,609,864,1164,1514,1834,9999);
+  $rating['wn7']    = array(-1,479,844,1214,1614,1954,9999);
+  $rating['wn8']    = array(-1,359,824,1384,2054,2674,9999);
   $rating['brone']  = array(-1,2049.96,2771.26,4027.73,6001.84,8070.96,99999);
 
-  $help['win']      = array(-1,46,48,51,56,64,100);
+  $help['win']      = array(-1,46,48,51,57,64,100);
   $help['colors']   = array('red','#FF7E00','grey','#489928','royalblue','#D042F3');
 
   $lang['overall_all_table'] = '<table cellspacing=\'0\' cellpadding=\'0\' align=\'center\' class=\'ui-widget ui-widget-content ratings_table\' style=\'background-image:none;\'>';

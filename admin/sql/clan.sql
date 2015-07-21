@@ -161,7 +161,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('medal_progress', '172800'),
 ('version', '320.0'),
 ('new_tanks', '172800'),
-('application_id', 'demo'),
+('application_id', '54b29552a32dd5f3ade861259e38a368'),
 ('company', '0'),
 ('company_count', '1'),
 ('top', '5');

@@ -20,7 +20,7 @@
     {  
 
         var $timeout = 20; // максимальное время загрузки страницы в секундах  
-        var $threads = 10; // количество потоков
+        var $threads = 5; // количество потоков
 
         var $all_useragents = array(  
         "Opera/9.23 (Windows NT 5.1; U; ru)",  
