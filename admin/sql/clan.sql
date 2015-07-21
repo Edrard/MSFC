@@ -159,9 +159,9 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '320.0'),
+('version', '321.0'),
 ('new_tanks', '172800'),
-('application_id', '54b29552a32dd5f3ade861259e38a368'),
+('application_id', 'demo'),
 ('company', '0'),
 ('company_count', '1'),
 ('top', '5');

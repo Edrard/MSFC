@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.0 $
+* @version     $Rev: 3.2.1 $
 *
 */
 if (preg_match ("/func.php/", $_SERVER['PHP_SELF']))
@@ -382,4 +382,28 @@ function xss_clean($data)
     // we are done...
     return $data;
 }
-?>
+function app_id_region($region,$current){
+    if($current == 'demo'){
+        switch ($region) {
+            case 'eu':
+                return '598b03da23af02f4fbd9a7ba51374ff3';
+                break;
+            case 'ru':
+                return '54b29552a32dd5f3ade861259e38a368';
+                break;
+            case 'us':
+                return '16716e4343b9b95949a4460a269db7e4';
+                break;
+            case 'as':
+                return 'e879f36d97ffa5067c60781f9cab506e';
+                break;
+            case 'kr':
+                return 'c33a95b8058665964c32d3b6c4374db6';
+                break;
+
+            default:
+                return 'demo';
+        }
+    }
+    return $current;
+}

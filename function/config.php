@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.0 $
+* @version     $Rev: 3.2.1 $
 *
 */
 
@@ -24,6 +24,9 @@ if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
 }
 
 $config = get_config();
+
+$config['application_id'] = app_id_region($config['server'],$config['application_id']);
+
 if (function_exists('date_default_timezone_set'))
 {
     if(isset($config['time']) and $config['time'] !='none' ) {
