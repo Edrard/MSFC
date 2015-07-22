@@ -202,7 +202,7 @@ function get_headers_curl($url)
 function get_config()
 {
     global $db;
-    $err = array('lang' => 'en', 'server' => 'ru', 'error' => 2);
+    $err = array('lang' => 'en', 'server' => 'ru', 'error' => 2, 'application_id' => 'demo');
 
     $test = $db->select('SHOW TABLES LIKE "config";',__line__,__file__,'column');
 
