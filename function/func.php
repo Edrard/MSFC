@@ -383,7 +383,7 @@ function xss_clean($data)
     return $data;
 }
 function app_id_region($region,$current){
-    if($current == 'demo'){
+    if($current == 'demo' || !$current){
         switch ($region) {
             case 'eu':
                 return '598b03da23af02f4fbd9a7ba51374ff3';

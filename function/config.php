@@ -25,7 +25,9 @@ if (preg_match ("/config.php/", $_SERVER['PHP_SELF']))
 
 $config = get_config();
 
+if(isset($config['application_id'])){
 $config['application_id'] = app_id_region($config['server'],$config['application_id']);
+}
 
 if (function_exists('date_default_timezone_set'))
 {
