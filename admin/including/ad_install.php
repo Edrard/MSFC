@@ -40,6 +40,7 @@ if (isset($_POST['recdb'])){
     }
     if (isset($_POST['server'])){
         $config['server'] = $_POST['server'];
+        $config['application_id'] = app_id_region($config['server'], 'demo');
     }  else {
         $config['server'] = 'ru';
     }
