@@ -102,30 +102,21 @@ class Atm
         $sql = "CREATE TABLE IF NOT EXISTS `".$this->prefix.$this->tbname."` (
         ".(implode(',',$in))."
         ) ENGINE=".$this->mtype." DEFAULT CHARSET=utf8;"; 
-        $q = $this->db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $this->db->insert($sql,__line__,__file__);
     }
     public function create_row($rowname,$rowopt) {    // rowopt - array(type,size)  type - MySQL type, size if needed
         if($rowopt['size']){
             $rowopt['size'] = ' ('.$rowopt['size'].') ';
         }
         $sql = 'ALTER TABLE `'.$this->prefix.$this->tbname.'`  ADD `'.$rowname.'` '.$rowopt['type'].$rowopt['size'].' NOT NULL';
-        $q = $this->db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $this->db->insert($sql,__line__,__file__);
     }
     public function change_row($rowname,$rowopt){     // rowopt - array(type,size)  type - MySQL type, size if needed
         if($rowopt['size']){
             $rowopt['size'] = ' ('.$rowopt['size'].') ';
         }
         $sql = 'ALTER TABLE `'.$this->prefix.$this->tbname.'` CHANGE `'.$rowname.'` `'.$rowname.'` '.$rowopt['type'].$rowopt['size'].' NOT NULL';
-        $q = $this->db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $this->db->insert($sql,__line__,__file__);
     }
     public function check_mysql($field = array()){
         if(!empty($field)){
@@ -162,18 +153,12 @@ class Atm
     }
     public function truncate_table(){
         $sql = 'TRUNCATE TABLE '.$this->prefix.$this->tbname;
-        $q = $this->db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $this->db->insert($sql,__line__,__file__);
         return $this;
     }
     public function delete_table(){
         $sql = 'DROP TABLE '.$this->prefix.$this->tbname;
-        $q = $this->db->prepare($sql);
-        if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
-        }
+        $this->db->insert($sql,__line__,__file__);
         return $this;
     }
     public function insert_data($data = array()){
@@ -184,13 +169,10 @@ class Atm
             foreach($this->all_fields as $val){
                 foreach($val as $key => $var){
                     $rows[] = '`'.$key.'`';
-                    $in[] = '\''.$var['data'].'\'';
+                    $in[] = $this->db->quote($var['data']);
                 }
                 $sql = 'INSERT INTO `'.$this->prefix.$this->tbname.'` ('.implode(', ',$rows).') VALUES ('.implode(', ',$in).');';   
-                $q = $this->db->prepare($sql);
-                if ($q->execute() != TRUE) {
-                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
-                }
+                $q = $this->db->insert($sql,__line__,__file__);
                 unset($rows,$in);
             }    
         }   

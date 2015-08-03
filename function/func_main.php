@@ -356,7 +356,7 @@ function stronghold() {
 function update_stronghold_db($str = array()){
     global $db,$config,$lang;
     
-    $str_get = get_api('wot/stronghold/buildings'); 
+    $str_get = get_api('wot/stronghold/buildings');
     $atm = new Atm($db,'stronghold');
     $atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
     //$atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();

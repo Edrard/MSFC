@@ -56,7 +56,7 @@ if ($_GET['multiadd'] == 1){
                     if (!preg_match("/[a-zA-Z0-9]{1,5}_/i", $_GET['prefix'])){
                         $_GET['prefix'] = $_GET['prefix'].'_';
                     }
-
+                    
                     $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$_GET['id'].'";',__line__,__file__,'column');
                     $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$_GET['prefix'].'";',__line__,__file__,'column');
 
