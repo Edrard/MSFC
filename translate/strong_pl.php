@@ -6,6 +6,7 @@
   $lang['skirmish_battles_count']               = 'Total number of Skirmishes';
   $lang['skirmish_battles_win_percentage']      = 'Win percentage';
   $lang['skirmish_battles_wins']                = 'Number of victories';
+  $lang['skirmish_battles_losses']              = 'Number of losses';
    
   $lang['defense_mode_is_activated']            = 'Defense mode is activated';
   $lang['defense_mode_is_deactivated']          = 'Defense mode is deactivated';
