@@ -52,12 +52,11 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
     }
 }
 
-//Определяем активную карту на ГК 
-$maps_active = 0;
+//Определяем активную карту на ГК
+$maps_active = 1;
 $maps = get_api('wot/globalmap/info');
-
 if(isset($maps['status']) and $maps['status'] == 'ok') {
-  if($maps['data']['state'] == 'active' ) { $maps_active = 1; }
+  if($maps['data']['state'] == 'frozen' ) { $maps_active = 0; }
 }
 
 if($maps_active) {
