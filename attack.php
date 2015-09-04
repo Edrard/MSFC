@@ -53,10 +53,10 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
 }
 
 //Определяем активную карту на ГК
-$maps_active = 1;
+$maps_active = 0;
 $maps = get_api('wot/globalmap/info');
 if(isset($maps['status']) and $maps['status'] == 'ok') {
-  if($maps['data']['state'] == 'frozen' ) { $maps_active = 0; }
+  if($maps['data']['state'] != 'frozen' ) { $maps_active = 1; }
 }
 
 if($maps_active) {
@@ -93,9 +93,9 @@ if($maps_active) {
     }
   }
 } ?>
-<? if(!$maps_active) { ?>
+<? if(isset($maps['data']['state']) and $maps['data']['state'] == 'frozen') { ?>
   <div align="center" class="ui-state-highlight ui-corner-all "><?=$lang['global_map_frozen'];?></div>
-<? } else { ?>
+<? } elseif($maps_active) { ?>
   <script type="text/javascript" id="js">
      $(document).ready(function()
      {
