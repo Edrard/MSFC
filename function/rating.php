@@ -236,9 +236,9 @@ function eff_rating($res, $wn8_exp = array(), $type = 'all') {
 function build_ratings_tables($eff = array()) {
   global $lang;
 
-  $rating['eff']    = array(-1,609,864,1164,1514,1834,9999);
-  $rating['wn7']    = array(-1,479,844,1214,1614,1954,9999);
-  $rating['wn8']    = array(-1,359,824,1384,2054,2674,9999);
+  $rating['eff']    = array(-1,614,869,1174,1524,1849,9999);
+  $rating['wn7']    = array(-1,494,859,1219,1619,1964,9999);
+  $rating['wn8']    = array(-1,369,844,1394,2069,2714,9999);
   $rating['brone']  = array(-1,2049.96,2771.26,4027.73,6001.84,8070.96,99999);
 
   $help['win']      = array(-1,46,48,51,57,64,100);

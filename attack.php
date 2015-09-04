@@ -52,108 +52,96 @@ foreach(scandir(ROOT_DIR.'/translate/') as $files){
     }
 }
 
-//Определяем активную карту на ГК
-$maps_link = array( 'globalmap' => 1, 'eventmap' => 2 );
-$maps_active = array();
-$maps = get_api('wot/globalwar/maps');
+//Определяем активную карту на ГК 
+$maps_active = 0;
+$maps = get_api('wot/globalmap/info');
 
 if(isset($maps['status']) and $maps['status'] == 'ok') {
-  foreach($maps['data'] as $val) {
-    if($val['state'] == 'active' ) { $maps_active[] = $val['map_id']; }
-  }
+  if($maps['data']['state'] == 'active' ) { $maps_active = 1; }
 }
 
-foreach($maps_active as $maps_id) {
-    $prov = $p_info = $owner = $owner_info = array();
-    $battel = get_api('wot/globalwar/battles',array('map_id' => $maps_id, 'clan_id' => $config['clan']));
-    if(isset($battel['status']) and $battel['status'] == 'ok' and !empty($battel['data'][$config['clan']])) {
-      foreach($battel['data'][$config['clan']] as $val) {
-        foreach($val['provinces_i18n'] as $v) {
-          if(!in_array($v['province_id'],$prov)) {
-            $prov[] = $v['province_id'];
-          }
+if($maps_active) {
+  $prov = $p_info = $owner = $owner_info = array();
+  $battel = get_api('wot/globalmap/clanbattles',array('clan_id' => $config['clan'], 'fields' => 'front_id,time,province_id,type'));
+
+  if(isset($battel['status']) and $battel['status'] == 'ok' and !empty($battel['data'])) {
+
+  foreach($battel['data'] as $v) { $prov[] = $v['province_id']; $front_id = $v['front_id']; }
+
+  $provinces = get_api('wot/globalmap/provinces',array('front_id' => $front_id, 'province_id' => $prov, 'fields' => 'province_id,province_name,arena_name,prime_time,owner_clan_id,daily_revenue,revenue_level,uri'));
+
+    if(isset($provinces['status']) and $provinces['status'] == 'ok') {
+      $p_info = array_resort($provinces['data'],'province_id');
+      foreach($p_info as $val) {
+        if(!in_array($val['owner_clan_id'],$owner)) {
+          $owner[] = $val['owner_clan_id'];
         }
+        //arrrrgh ... f***ng WG .. i hate how they change prime time display every time ...
+        //fix it ...
+        $p_time = explode(':',$val['prime_time']);
+        $p_info[$val['province_id']]['prime_time'] = (string) ( $p_time['0'] + $config['time'] ).':'.$p_time['1'];
       }
-      $provinces = get_api('wot/globalwar/provinces',array('map_id' => $maps_id, 'province_id' => $prov, 'fields' => 'province_i18n,prime_time,clan_id,revenue'));
-      if(isset($provinces['status']) and $provinces['status'] == 'ok') {
-        $p_info = $provinces['data'];
+      $tmp = get_api('wgn/clans/info',array('clan_id' => $owner, 'fields' => 'emblems.x24,color,tag'));
+      if(isset($tmp['status']) and $tmp['status'] == 'ok') {
+        $owner_info = $tmp['data'];
         foreach($p_info as $val) {
-          if(!in_array($val['clan_id'],$owner)) {
-            $owner[] = $val['clan_id'];
-          }
-        }
-        $tmp = get_api('wgn/clans/info',array('clan_id' => $owner, 'fields' => 'emblems.x24,color,tag')); 
-        if(isset($tmp['status']) and $tmp['status'] == 'ok') {
-          $owner_info = $tmp['data'];
-        }
-      } else {
-        foreach ($battel['data'][$config['clan']] as $val) {
-          foreach($val['provinces'] as $p) {
-            $p_info[$p]['province_i18n'] = '***';
-            $p_info[$p]['prime_time'] = '***';
-          }
+          $o_info = $tmp['data'][$val['owner_clan_id']];
+          $p_info[$val['province_id']]['owner_info']  = '<img style="height: 16px; vertical-align: middle; width: 16px;" src="'.$o_info['emblems']['x24']['portal'].'" border="0">';
+          $p_info[$val['province_id']]['owner_info'] .= '&nbsp;';
+          $p_info[$val['province_id']]['owner_info'] .= '<a href="http://'.$config['gm_url'].'/community/clans/'.$val['owner_clan_id'].'/" target="_blank" style="color: '.$o_info['color'].'">['.$o_info['tag'].']</a>';
         }
       }
     }
-
-    ?>
-    <script type="text/javascript" id="js">
-       $(document).ready(function()
-       {
-           $("#attack<?=$maps_id;?>").tablesorter({sortList:[[1,0]]});
-       });
-    </script>
-    <div align="center">
-        <?=$lang['global_map_n'],$maps_link[$maps_id];?>
-        <table id="attack<?=$maps_id;?>" cellspacing="1" cellpadding="2" width="100%">
-            <thead>
-                <tr>
-                    <th width="40"><?=$lang['type']; ?></th>
-                    <th width="100"><?=$lang['time']; ?></th>
-                    <th width="100"><?=$lang['prime_time']; ?></th>
-                    <th width="25%"><?=$lang['title_name']; ?></th>
-                    <th width="25%"><?=$lang['map']; ?></th>
-                    <th width="100"><?=$lang['income']; ?></th>
-                    <th width="150" class="sorter-false"><?=$lang['global_map_owner'];?></th>
-                </tr>
-            </thead>
-            <tbody>
-            <? if(!isset($maps_id) or !isset($battel['data'])) { ?>
-                <tr><td colspan="7" align="center"><?=$lang['error_1'].(isset($battel['error']['message'])?' ('.$battel['error']['message'].')':'');?></td></tr>
-            <? } elseif(empty($battel['data'][$config['clan']])) { ?>
-                <tr><td colspan="7" align="center"><?=$lang['no_war'];?></td></tr>
-            <? } else { ?>
-                <? foreach($battel['data'][$config['clan']] as $val){ ?>
-                    <tr>
-                        <td align="center"><img src="./images/<?=$val['type'];?>.png"></td>
-                        <td align="center"><?=($val['time'] > 1)?date('H:i',$val['time']).' +':'--:--'; ?></td>
-                        <td align="center"><?=is_numeric($p_info[$val['provinces']['0']]['prime_time'])?date('H',mktime($p_info[$val['provinces']['0']]['prime_time']+$config['time'])).':00':'--:--'; ?></td>
-                        <td align="center">
-                          <a href="<?=$config['clan_link']; ?>maps/<?=$maps_id;?>/?province=<?=$val['provinces']['0']; ?>" target="_blank"><?=$p_info[$val['provinces']['0']]['province_i18n']; ?></a>
-                            <? if(count($val['provinces'])>1) { ?>
-                            &nbsp;x&nbsp;<a href="<?=$config['clan_link']; ?>maps/<?=$maps_id;?>/?province=<?=$val['provinces']['1']; ?>" target="_blank"><?=$p_info[$val['provinces']['1']]['province_i18n']; ?></a>
-                            <? } ?>
-                        </td>
-                        <td align="center">
-                          <?=$val['arenas']['0']['name_i18n']; ?>
-                          <? if(count($val['arenas'])>1) { ?>
-                            &nbsp;x&nbsp;<?=$val['arenas']['1']['name_i18n']; ?>
-                          <? } ?>
-                        </td>
-                        <td align="center" style="color: #ba904d;"><?=isset($p_info[$val['provinces']['0']]['revenue'])?$p_info[$val['provinces']['0']]['revenue']:0;?> <img src="./images/currency-gold.png" border="0"></td>
-                        <? if(!empty($owner_info[$p_info[$val['provinces']['0']]['clan_id']])) { ?>
-                          <td align="center" valign="middle"><img style="height: 16px; vertical-align: middle; width: 16px;" src="<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['emblems']['x24']['portal'];?>" border="0"> <a href="http://<?=$config['gm_url'];?>/community/clans/<?=$p_info[$val['provinces']['0']]['clan_id'];?>/" target="_blank" style="color: <?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['color'];?>;">[<?=$owner_info[$p_info[$val['provinces']['0']]['clan_id']]['tag'];?>]</a></td>
-                        <? } else { ?>
-                          <td align="center" valign="middle" >---</td>
-                        <? } ?>
-                    </tr>
-                <? } ?>
-            <? } ?>
-            </tbody>
-        </table>
-    </div>
-    <br>
-<? } ?>
-<? if(empty($maps_active)) { ?>
+  }
+} ?>
+<? if(!$maps_active) { ?>
   <div align="center" class="ui-state-highlight ui-corner-all "><?=$lang['global_map_frozen'];?></div>
+<? } else { ?>
+  <script type="text/javascript" id="js">
+     $(document).ready(function()
+     {
+         $("#attack_table").tablesorter({sortList:[[1,0]]});
+     });
+  </script>
+  <div align="center">
+      <table id="attack_table" cellspacing="1" cellpadding="2" width="100%">
+          <thead>
+              <tr>
+                  <th width="40"><?=$lang['type']; ?></th>
+                  <th width="100"><?=$lang['time']; ?></th>
+                  <th width="100"><?=$lang['prime_time']; ?></th>
+                  <th width="25%"><?=$lang['title_name']; ?></th>
+                  <th width="25%"><?=$lang['map']; ?></th>
+                  <th width="100"><?=$lang['income']; ?></th>
+                  <th width="150" class="sorter-false"><?=$lang['global_map_owner'];?></th>
+              </tr>
+          </thead>
+          <tbody>
+          <? if( isset($battel['error']['message']) ) { ?>
+              <tr><td colspan="7" align="center"><?=$lang['error_1'].(isset($battel['error']['message'])?' ('.$battel['error']['message'].')':'');?></td></tr>
+          <? } elseif( empty($battel['data']) ) { ?>
+              <tr><td colspan="7" align="center"><?=$lang['no_war'];?></td></tr>
+          <? } else { ?>
+              <? foreach($battel['data'] as $val){ ?>
+                  <tr>
+                      <td align="center"><img src="./images/<?=($val['type']=='attack')?'meeting_engagement':'for_province';?>.png"></td>
+                      <td align="center"><?=($val['time'] > 1)?date('H:i',$val['time']).' +':'--:--'; ?></td>
+                      <td align="center"><?=isset($p_info[$val['province_id']]['prime_time'])?$p_info[$val['province_id']]['prime_time']:'--:--'; ?></td>
+                      <td align="center">
+                        <? if(isset($p_info[$val['province_id']]['province_name'])) { ?>
+                          <a href="http://<?=$config['server'];?>.wargaming.net/globalmap<?=$p_info[$val['province_id']]['uri'];?>" target="_blank"><?=$p_info[$val['province_id']]['province_name']; ?></a>
+                        <? } else { ?>
+                          ---
+                        <? } ?>
+                      </td>
+                      <td align="center"><?=isset($p_info[$val['province_id']]['arena_name'])?$p_info[$val['province_id']]['arena_name']:'--'; ?></td>
+                      <td align="center" style="color: #ba904d;"><?=isset($p_info[$val['province_id']]['daily_revenue'])?$p_info[$val['province_id']]['daily_revenue']:0;?> <img src="./images/currency-gold.png" border="0"> (x<?=isset($p_info[$val['province_id']]['revenue_level'])?$p_info[$val['province_id']]['revenue_level']:0;?>)</td>
+                      <td align="center"><?=isset($p_info[$val['province_id']]['owner_info'])?$p_info[$val['province_id']]['owner_info']:'---'; ?></td>
+                  </tr>
+              <? } ?>
+          <? } ?>
+          </tbody>
+      </table>
+  </div>
+  <br>
 <? } ?>

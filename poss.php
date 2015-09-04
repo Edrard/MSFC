@@ -52,7 +52,8 @@
         }
     }
     $poss = array();
-    $poss = get_api('wot/clan/provinces',array('clan_id' => $config['clan']));
+    $config['clan'] = 156935;
+    $poss = get_api('wot/globalmap/clanprovinces',array('clan_id' => $config['clan']));
 
     //include(ROOT_DIR.'/views/header.php');
 ?>
@@ -66,7 +67,7 @@
     <table id="poss" cellspacing="1" cellpadding="2" width="100%">
         <thead>
             <tr>
-                <th width="40"><?=$lang['type']; ?></th>
+                <th width="60"><?=$lang['type']; ?></th>
                 <th><?=$lang['title_name']; ?></th>
                 <th><?=$lang['map']; ?></th>
                 <th><?=$lang['prime_time']; ?></th>
@@ -76,18 +77,18 @@
             </tr> 
         </thead>
         <tbody>
-          <? if (isset($poss['data'])) { ?>
-            <? if (empty($poss['data'])) { ?>
+          <? if ( isset($poss['status']) and $poss['status'] == 'ok' ) { ?>
+            <? if (empty($poss['data'][$config['clan']])) { ?>
               <tr><td colspan="6" align="center"><?=$lang['no_province'];?></td></tr>
             <? } else { $total = 0; ?>
-              <? foreach($poss['data'] as $val) { $total += $val['revenue']; ?>
+              <? foreach($poss['data'][$config['clan']] as $val) { $total += $val['daily_revenue']; ?>
                 <tr>
-                  <td><img src="./images/<?=$val['type'];?>.png"></td>
-                  <td><a href="<?=$config['clan_link'];?>maps/<?=$val['map_id'];?>/?province=<?=$val['province_id'];?>" target="_blank"><?=$val['name'];?></a></td>
-                  <td><?=$val['arena_i18n'];?></td>
-                  <td align="center"><?=date('H:i',$val['prime_time']);?></td>
-                  <td align="center" style="color: #ba904d;"><?=$val['revenue'];?> <img src="./images/currency-gold.png"></td>
-                  <td align="center"><?=$val['occupancy_time'],' ',$lang['days'];?></td>
+                  <td><?=$val['max_vehicle_level'],' ',$lang['lvl'];?></td>
+                  <td><a href="http://<?=$config['server'];?>.wargaming.net/globalmap/#province/<?=$val['province_id'];?>" target="_blank"><?=$val['province_name'];?></a></td>
+                  <td><?=$val['arena_name'];?></td>
+                  <td align="center"><?=$val['prime_time'];?> UTC+0</td>
+                  <td align="center" style="color: #ba904d;"><?=$val['daily_revenue'];?> <img src="./images/currency-gold.png"> (x<?=$val['revenue_level'];?>)</td>
+                  <td align="center"><?=ceil($val['turns_owned']/24),' ',$lang['days'];?></td>
                 </tr>
               <? } ?>
             <? } ?>
