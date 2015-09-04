@@ -52,7 +52,6 @@
         }
     }
     $poss = array();
-    $config['clan'] = 156935;
     $poss = get_api('wot/globalmap/clanprovinces',array('clan_id' => $config['clan']));
 
     //include(ROOT_DIR.'/views/header.php');
