@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.1 $
+* @version     $Rev: 3.2.2 $
 *
 */
 
@@ -1003,6 +1003,97 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
     }
 } //$upd_ver = 320.0;
 
+$mline[] = 'globalmap_absolute_spotted'; 
+$mline[] = 'globalmap_absolute_hits';
+$mline[] = 'globalmap_absolute_battle_avg_xp'; 
+$mline[] = 'globalmap_absolute_draws';
+$mline[] = 'globalmap_absolute_wins'; 
+$mline[] = 'globalmap_absolute_losses'; 
+$mline[] = 'globalmap_absolute_capture_points'; 
+$mline[] = 'globalmap_absolute_battles';
+$mline[] = 'globalmap_absolute_damage_dealt'; 
+$mline[] = 'globalmap_absolute_hits_percents'; 
+$mline[] = 'globalmap_absolute_damage_received'; 
+$mline[] = 'globalmap_absolute_shots'; 
+$mline[] = 'globalmap_absolute_xp'; 
+$mline[] = 'globalmap_absolute_frags'; 
+$mline[] = 'globalmap_absolute_survived_battles';
+$mline[] = 'globalmap_absolute_dropped_capture_points';
+
+$mline[] = 'globalmap_champion_spotted'; 
+$mline[] = 'globalmap_champion_hits';
+$mline[] = 'globalmap_champion_battle_avg_xp'; 
+$mline[] = 'globalmap_champion_draws';
+$mline[] = 'globalmap_champion_wins'; 
+$mline[] = 'globalmap_champion_losses'; 
+$mline[] = 'globalmap_champion_capture_points'; 
+$mline[] = 'globalmap_champion_battles';
+$mline[] = 'globalmap_champion_damage_dealt'; 
+$mline[] = 'globalmap_champion_hits_percents'; 
+$mline[] = 'globalmap_champion_damage_received'; 
+$mline[] = 'globalmap_champion_shots'; 
+$mline[] = 'globalmap_champion_xp'; 
+$mline[] = 'globalmap_champion_frags'; 
+$mline[] = 'globalmap_champion_survived_battles';
+$mline[] = 'globalmap_champion_dropped_capture_points';
+
+$mline[] = 'globalmap_middle_spotted'; 
+$mline[] = 'globalmap_middle_hits';
+$mline[] = 'globalmap_middle_battle_avg_xp'; 
+$mline[] = 'globalmap_middle_draws';
+$mline[] = 'globalmap_middle_wins'; 
+$mline[] = 'globalmap_middle_losses'; 
+$mline[] = 'globalmap_middle_capture_points'; 
+$mline[] = 'globalmap_middle_battles';
+$mline[] = 'globalmap_middle_damage_dealt'; 
+$mline[] = 'globalmap_middle_hits_percents'; 
+$mline[] = 'globalmap_middle_damage_received'; 
+$mline[] = 'globalmap_middle_shots'; 
+$mline[] = 'globalmap_middle_xp'; 
+$mline[] = 'globalmap_middle_frags'; 
+$mline[] = 'globalmap_middle_survived_battles';
+$mline[] = 'globalmap_middle_dropped_capture_points';
+
+$upd_ver = 322.0;
+if( ($upd_ver - (float) $config['version']) > 0 ) {
+
+    echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
+
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM `multiclan`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+        $prefix = array();
+    }
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+        foreach($prefix as $t) {
+            $db->change_prefix($t);
+            $config = get_config();
+            $sql = "UPDATE `config` SET `value` = '".$upd_ver."' WHERE `name` = 'version' LIMIT 1 ;";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            foreach($mline as $line){
+                $sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
+                $q = $db->prepare($sql);
+                if ($q->execute() != TRUE) {
+                    die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                }
+            }
+            echo 'Table col_players for prefix:',$t,' - updated.<br>';
+
+
+            echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+    }
+} //$upd_ver = 322.0;
+unset($mline);
 /*
 $upd_ver = 312.1;
 if( ($upd_ver - (float) $config['version']) > 0 ) {

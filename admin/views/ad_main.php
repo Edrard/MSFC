@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.1 $
+* @version     $Rev: 3.2.2 $
 *
 */
 ?>
@@ -809,7 +809,7 @@
                                     <p align="center"><?=$lang['for_all_clans'];?>&nbsp;<input class="iall_multiclans" type="checkbox" name="all_multiclans" value="1" size="2" /></p>
                                     <?php } ?>
                                 <input type="hidden" value="9" name="tab_redirect_id">
-                                <p align="center" class="admin_cdhide"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></p>
+                                <p align="center"><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_2"></p>
                             </div>
                         </form>
                         <br />

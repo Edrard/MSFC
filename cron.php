@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.1 $
+* @version     $Rev: 3.2.2 $
 *
 */
 
@@ -182,7 +182,7 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             } 
                             do {
                               $res1 = $res2 = $res3 = $res4 = array();
-                              $res1 = multiget_v2('account_id', $toload, 'account/info');
+                              $res1 = multiget_v2('account_id', $toload, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));
                               $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
                               $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'));
                               $res4 = multiget_v2('account_id', $toload, 'account/achievements');
