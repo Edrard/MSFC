@@ -160,7 +160,7 @@
     $lang['mediumTank'] = 'MT';
     $lang['heavyTank'] = 'HT';
     $lang['tab_del'] = 'Modul <b>%1$s</b> (súbor: <b>%2$s</b>) bol vymazaný, ale údaje sú v databáze. <br /> Prosím, vymaž údaje z databázy v Administračnom centre, alebo obnov súbor.';
-    $lang['days'] = ' dní';    
+    $lang['days'] = ' dní';   
     $lang['no_province'] = 'Klan nedrží žiadne územia na Globálnej mape.';
     $lang['no_war'] = 'Klan nemá plánované žiadne bitky na Globálnej mape.';
     $lang['dateof'] = 'Údaje z';
@@ -245,4 +245,7 @@
     $lang['teh_anno'] = '*V tabuľke sa zobrazujú vozidlá s viac ako 20 bitkami.';
     $lang['avr_eff_ret'] = 'Priemerná EFF';
     $lang['company'] = 'Jednotka';
+
+    $lang['turns'] = 'turns';  
+    $lang['max_lvl'] = 'max lvl';    
 ?>

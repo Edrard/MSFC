@@ -172,7 +172,7 @@
     $lang['heavyTank'] = 'ht';
 
     $lang['tab_del'] = 'Tab <b>%1$s</b> (file: <b>%2$s</b>) has been deleted, but the record about it remains in the database. <br /> Please, delete the record from the database in the Admin CP, or restore the file.';
-    $lang['days'] = ' days';    
+    $lang['days'] = ' days';   
     $lang['no_province'] = 'The clan owns no provinces on the Global Map.';
     $lang['no_war'] = 'The clan has no scheduled battles.';
     $lang['dateof'] = 'Data for';
@@ -262,4 +262,7 @@
     $lang['avr_eff_ret'] = 'Average ER';
 
     $lang['company'] = 'Company';
+    
+    $lang['turns'] = 'turns'; 
+    $lang['max_lvl'] = 'max lvl';
 ?>

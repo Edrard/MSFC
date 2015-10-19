@@ -23,4 +23,5 @@
     $config['clan_link'] = 'http://worldoftanks.asia/uc/clanwars/';
     $config['gm_url'] = 'worldoftanks.asia';
     $config['td'] = 'http://api.worldoftanks.asia';
+    $config['wg'] = 'https://asia.wargaming.net';
 ?>

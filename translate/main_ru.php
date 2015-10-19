@@ -249,4 +249,7 @@
     $lang['avr_eff_ret'] = 'Средний РЭ';
 
     $lang['company'] = 'Рота';
+    
+    $lang['turns'] = 'ходов';
+    $lang['max_lvl'] = 'макс. уровень';
 ?>

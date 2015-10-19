@@ -262,4 +262,7 @@
     $lang['avr_eff_ret'] = 'średnia Rw';
 
     $lang['company'] = 'Company';
+
+    $lang['turns'] = 'turns'; 
+    $lang['max_lvl'] = 'max lvl';    
 ?>
