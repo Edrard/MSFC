@@ -27,7 +27,9 @@
     $lang['activity_6'] = 'Kategórie';
     $lang['activity_7'] = 'Súbor:';
     $lang['a_cat_1'] = 'Náhodné bitky';
-    $lang['a_cat_2'] = 'Bitky na globálnej mape';
+    $lang['a_cat_2a'] = 'Bitky na globálnej mape(10)';
+    $lang['a_cat_2b'] = 'Bitky na globálnej mape(8)';
+    $lang['a_cat_2c'] = 'Bitky na globálnej mape(6)';
     $lang['a_cat_3'] = 'Týmové bitky';
     $lang['a_cat_4'] = 'Tréning';
 

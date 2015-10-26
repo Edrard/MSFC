@@ -26,7 +26,9 @@
     $lang['activity_6'] = 'Kategorie';
     $lang['activity_7'] = 'Folder:';
     $lang['a_cat_1'] = 'Ogólna';
-    $lang['a_cat_2'] = 'Globalna mapa';
+    $lang['a_cat_2a'] = 'Globalna mapa(10)';
+    $lang['a_cat_2b'] = 'Globalna mapa(8)';
+    $lang['a_cat_2c'] = 'Globalna mapa(6)';
     $lang['a_cat_3'] = 'Bitwy plutonów';
     $lang['a_cat_4'] = 'Treningi';
 

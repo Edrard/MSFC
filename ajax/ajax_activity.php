@@ -191,9 +191,9 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
         <form>
             <div id="triggeractivity" align="center">
                 <input type="radio" id="change_all" name="triggerrating" checked="checked" /><label for="change_all"><?=$lang['a_cat_1'];?></label>
-                <input type="radio" id="change_globalmap_absolute" name="triggerrating" /><label for="change_globalmap_absolute"><?=$lang['a_cat_2'];?></label>
-                <input type="radio" id="change_globalmap_champion" name="triggerrating" /><label for="change_globalmap_champion"><?=$lang['a_cat_2'];?></label>
-                <input type="radio" id="change_globalmap_middle" name="triggerrating" /><label for="change_globalmap_middle"><?=$lang['a_cat_2'];?></label>
+                <input type="radio" id="change_globalmap_absolute" name="triggerrating" /><label for="change_globalmap_absolute"><?=$lang['a_cat_2a'];?></label>
+                <input type="radio" id="change_globalmap_champion" name="triggerrating" /><label for="change_globalmap_champion"><?=$lang['a_cat_2b'];?></label>
+                <input type="radio" id="change_globalmap_middle" name="triggerrating" /><label for="change_globalmap_middle"><?=$lang['a_cat_2c'];?></label>
                 <input type="radio" id="change_company" name="triggerrating" /><label for="change_company"><?=$lang['a_cat_3'];?></label>
             </div>
         </form>

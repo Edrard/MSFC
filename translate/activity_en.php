@@ -26,7 +26,9 @@
     $lang['activity_6'] = 'Categories';
     $lang['activity_7'] = 'File:';
     $lang['a_cat_1'] = 'Overall';
-    $lang['a_cat_2'] = 'Global Map';
+    $lang['a_cat_2a'] = 'Global Map(10)';
+    $lang['a_cat_2b'] = 'Global Map(8)';
+    $lang['a_cat_2c'] = 'Global Map(6)';
     $lang['a_cat_3'] = 'Tank Company Battle';
     $lang['a_cat_4'] = 'Training';
 
