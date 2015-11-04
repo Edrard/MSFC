@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.2 $
+* @version     $Rev: 3.2.3 $
 *
 */
 
@@ -19,7 +19,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
     global $db;
     //   print_r($data);
     $col_pl = $col_med = $col_tanks = $col_rat = $sqlarr = array();
-    $stats = array('all', 'globalmap_absolute', 'globalmap_middle', 'globalmap_champion', 'company');
+    $stats = array('all', 'globalmap_absolute', 'globalmap_middle', 'globalmap_champion', 'company', 'clan');
     $stats2 = array('spotted', 'hits', 'battle_avg_xp', 'draws', 'wins', 'losses', 'capture_points',
         'battles', 'damage_dealt', 'hits_percents', 'damage_received', 'shots', 'xp', 'frags',
         'survived_battles', 'dropped_capture_points');

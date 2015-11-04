@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.2.2 $
+    * @version     $Rev: 3.2.3 $
     *
     */
 
@@ -71,8 +71,7 @@ function player_progress_main($rosterid = null, $start = 0,$end = -1){
        $statwls = array('spotted', 'hits', 'battle_avg_xp', 'draws', 'wins', 'losses', 'capture_points',
                        'battles', 'damage_dealt', 'hits_percents', 'damage_received', 'shots', 'xp', 'frags',
                        'survived_battles', 'dropped_capture_points');
-       $statacc = array('all', 'clan', 'company');
-
+       $statacc = array('all', 'globalmap_absolute', 'globalmap_middle', 'globalmap_champion', 'company', 'clan');
        foreach($dlast as $vals){
           if (isset($dfirst_new[$vals['account_id']])){
               foreach ($statwls as $valwls) {

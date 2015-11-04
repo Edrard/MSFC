@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.2.2 $
+    * @version     $Rev: 3.2.3 $
 		* @translation [sk] relic242
     *
     */
@@ -151,6 +151,7 @@
     $lang['usa'] = 'Usa';
     $lang['china'] = 'Čína';
     $lang['ussr'] = 'Rusko';
+    $lang['czech'] = 'Československo';
     $lang['france'] = 'Francúzsko';
     $lang['uk'] = 'Anglicko';
     $lang['japan'] = 'Japonsko';

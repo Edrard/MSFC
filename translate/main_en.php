@@ -11,7 +11,7 @@
     * @copyright   2011-2013 Edd - Aleksandr Ustinov
     * @link        http://wot-news.com
     * @package     Clan Stat
-    * @version     $Rev: 3.2.2 $
+    * @version     $Rev: 3.2.3 $
     *
     */
 
@@ -161,6 +161,7 @@
     $lang['usa'] = 'Usa';
     $lang['china'] = 'China';
     $lang['ussr'] = 'Ussr';
+    $lang['czech'] = 'Czechoslovakia';
     $lang['france'] = 'France';
     $lang['uk'] = 'England';
     $lang['japan'] = 'Japan';

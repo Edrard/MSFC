@@ -11,7 +11,7 @@
 * @copyright   2011-2013 Edd - Aleksandr Ustinov
 * @link        http://wot-news.com
 * @package     Clan Stat
-* @version     $Rev: 3.2.2 $
+* @version     $Rev: 3.2.3 $
 *
 */
 
@@ -1094,6 +1094,77 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
     }
 } //$upd_ver = 322.0;
 unset($mline);
+
+$mline[] = 'clan_spotted'; 
+$mline[] = 'clan_hits';
+$mline[] = 'clan_battle_avg_xp'; 
+$mline[] = 'clan_draws';
+$mline[] = 'clan_wins'; 
+$mline[] = 'clan_losses'; 
+$mline[] = 'clan_capture_points'; 
+$mline[] = 'clan_battles';
+$mline[] = 'clan_damage_dealt'; 
+$mline[] = 'clan_hits_percents'; 
+$mline[] = 'clan_damage_received'; 
+$mline[] = 'clan_shots'; 
+$mline[] = 'clan_xp'; 
+$mline[] = 'clan_frags'; 
+$mline[] = 'clan_survived_battles';
+$mline[] = 'clan_dropped_capture_points';
+
+$upd_ver = 323.0;
+if( ($upd_ver - (float) $config['version']) > 0 ) {
+
+    echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
+
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM `multiclan`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+        $prefix = array();
+    }
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+        foreach($prefix as $t) {
+            $db->change_prefix($t);
+            $config = get_config();
+            $sql = "UPDATE `config` SET `value` = '".$upd_ver."' WHERE `name` = 'version' LIMIT 1 ;";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }    
+            $sql = "DESCRIBE {$t}col_players";
+            $sel = $db->select($sql);
+            $mark = 0;
+            foreach($sel as $vv){
+                if (strpos($vv['Field'],'clan_') !== false) {
+                    $mark++;
+                }
+            }
+            if($mark = 0){
+                foreach($mline as $line){
+                    //$sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
+
+                    $sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
+                    $q = $db->prepare($sql);
+                    if ($q->execute() != TRUE) {
+                        die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                    }
+                }
+            }
+            echo 'Table col_players for prefix:',$t,' - updated.<br>';
+
+
+            echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+    }
+} //$upd_ver = 322.0;
+unset($mline);
+
 /*
 $upd_ver = 312.1;
 if( ($upd_ver - (float) $config['version']) > 0 ) {

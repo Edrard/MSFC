@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.5.1
--- http://www.phpmyadmin.net
---
--- Хост: 127.0.0.1
--- Время создания: Сен 07 2012 г., 15:48
--- Версия сервера: 5.5.27
--- Версия PHP: 5.3.16
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -110,6 +101,24 @@ CREATE TABLE IF NOT EXISTS `col_players` (
   `company_frags` int(8) NOT NULL,
   `company_survived_battles` int(8) NOT NULL,
   `company_dropped_capture_points` int(8) NOT NULL,
+  
+  `clan_spotted` int(8) NOT NULL,
+  `clan_hits` int(8) NOT NULL,
+  `clan_battle_avg_xp` int(8) NOT NULL,
+  `clan_draws` int(8) NOT NULL,
+  `clan_wins` int(8) NOT NULL,
+  `clan_losses` int(8) NOT NULL,
+  `clan_capture_points` int(8) NOT NULL,
+  `clan_battles` int(8) NOT NULL,
+  `clan_damage_dealt` int(8) NOT NULL,
+  `clan_hits_percents` int(8) NOT NULL,
+  `clan_damage_received` int(8) NOT NULL,
+  `clan_shots` int(8) NOT NULL,
+  `clan_xp` int(8) NOT NULL,
+  `clan_frags` int(8) NOT NULL,
+  `clan_survived_battles` int(8) NOT NULL,
+  `clan_dropped_capture_points` int(8) NOT NULL,
+  
   `max_xp` int(4) NOT NULL,
   `created_at` int(12) NOT NULL,
   `role` varchar(50) NOT NULL
@@ -194,21 +203,13 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('new_players', '172800'),
 ('main_progress', '172800'),
 ('medal_progress', '172800'),
-('version', '322.0'),
+('version', '323.0'),
 ('new_tanks', '172800'),
 ('application_id', 'demo'),
 ('company', '0'),
 ('company_count', '1'),
 ('top', '5');
 
--- phpMyAdmin SQL Dump
--- version 3.5.3
--- http://www.phpmyadmin.net
---
--- Хост: localhost
--- Время создания: Июл 10 2015 г., 11:46
--- Версия сервера: 10.0.10-MariaDB
--- Версия PHP: 5.4.38
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
