@@ -1136,16 +1136,17 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
             die(show_message($q->errorInfo(),__line__,__file__,$sql));
-            }    
+            }   
             $sql = "DESCRIBE {$t}col_players";
             $sel = $db->select($sql);
+
             $mark = 0;
             foreach($sel as $vv){
                 if (strpos($vv['Field'],'clan_') !== false) {
                     $mark++;
                 }
             }
-            if($mark = 0){
+            if($mark == 0){
                 foreach($mline as $line){
                     //$sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
 
