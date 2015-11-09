@@ -31,6 +31,8 @@
     $lang['a_cat_2c'] = 'Globalna mapa(6)';
     $lang['a_cat_3'] = 'Bitwy plutonów';
     $lang['a_cat_4'] = 'Treningi';
+    $lang['a_cat_4a'] = 'Stronghold defense';
+    $lang['a_cat_4b'] = 'Stronghold skirmishes';
 
     $lang['activity_main_progress'] = 'Główne zmiany';
     $lang['activity_average_progress'] = 'Postęp i znaczenie w ciągu okresu';

@@ -1112,6 +1112,40 @@ $mline[] = 'clan_frags';
 $mline[] = 'clan_survived_battles';
 $mline[] = 'clan_dropped_capture_points';
 
+$mline[] = 'stronghold_defense_spotted'; 
+$mline[] = 'stronghold_defense_hits';
+$mline[] = 'stronghold_defense_battle_avg_xp'; 
+$mline[] = 'stronghold_defense_draws';
+$mline[] = 'stronghold_defense_wins'; 
+$mline[] = 'stronghold_defense_losses'; 
+$mline[] = 'stronghold_defense_capture_points'; 
+$mline[] = 'stronghold_defense_battles';
+$mline[] = 'stronghold_defense_damage_dealt'; 
+$mline[] = 'stronghold_defense_hits_percents'; 
+$mline[] = 'stronghold_defense_damage_received'; 
+$mline[] = 'stronghold_defense_shots'; 
+$mline[] = 'stronghold_defense_xp'; 
+$mline[] = 'stronghold_defense_frags'; 
+$mline[] = 'stronghold_defense_survived_battles';
+$mline[] = 'stronghold_defense_dropped_capture_points';
+
+$mline[] = 'stronghold_skirmish_spotted'; 
+$mline[] = 'stronghold_skirmish_hits';
+$mline[] = 'stronghold_skirmish_battle_avg_xp'; 
+$mline[] = 'stronghold_skirmish_draws';
+$mline[] = 'stronghold_skirmish_wins'; 
+$mline[] = 'stronghold_skirmish_losses'; 
+$mline[] = 'stronghold_skirmish_capture_points'; 
+$mline[] = 'stronghold_skirmish_battles';
+$mline[] = 'stronghold_skirmish_damage_dealt'; 
+$mline[] = 'stronghold_skirmish_hits_percents'; 
+$mline[] = 'stronghold_skirmish_damage_received'; 
+$mline[] = 'stronghold_skirmish_shots'; 
+$mline[] = 'stronghold_skirmish_xp'; 
+$mline[] = 'stronghold_skirmish_frags'; 
+$mline[] = 'stronghold_skirmish_survived_battles';
+$mline[] = 'stronghold_skirmish_dropped_capture_points';
+
 $upd_ver = 323.0;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
@@ -1135,27 +1169,23 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
             $sql = "UPDATE `config` SET `value` = '".$upd_ver."' WHERE `name` = 'version' LIMIT 1 ;";
             $q = $db->prepare($sql);
             if ($q->execute() != TRUE) {
-            die(show_message($q->errorInfo(),__line__,__file__,$sql));
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
             }   
             $sql = "DESCRIBE {$t}col_players";
             $sel = $db->select($sql);
 
             $mark = 0;
             foreach($sel as $vv){
-                if (strpos($vv['Field'],'clan_') !== false) {
-                    $mark++;
-                }
+                $liom[] = $vv['Field'];
             }
-            if($mark == 0){
-                foreach($mline as $line){
-                    //$sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
-
+            foreach($mline as $line){
+                if(!in_array($line,$liom)){
                     $sql = "ALTER TABLE `col_players` ADD `".$line."` INT( 8 ) NOT NULL;";
                     $q = $db->prepare($sql);
                     if ($q->execute() != TRUE) {
                         die(show_message($q->errorInfo(),__line__,__file__,$sql));
                     }
-                }
+                }    
             }
             echo 'Table col_players for prefix:',$t,' - updated.<br>';
 

@@ -32,6 +32,8 @@
     $lang['a_cat_2c'] = 'Bitky na globálnej mape(6)';
     $lang['a_cat_3'] = 'Týmové bitky';
     $lang['a_cat_4'] = 'Tréning';
+    $lang['a_cat_4a'] = 'Stronghold defense';
+    $lang['a_cat_4b'] = 'Stronghold skirmishes';
 
     $lang['activity_main_progress'] = 'Číselné vyjadrenie';
     $lang['activity_average_progress'] = 'Percentuálne vyjadrenie a priemer';

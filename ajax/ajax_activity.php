@@ -78,8 +78,8 @@ if (isset($_POST['a_from']) and isset($_POST['a_to']) and preg_match('/[0-9]{2}.
 }
 
 $activity = $tmp = $tmp2 = $count = array();
-$count['globalmap_absolute'] = $count['globalmap_champion'] = $count['all'] = $count['globalmap_middle'] = $count['company'] = $sl_count = 0;
-$showarr = array('all', 'globalmap_middle', 'globalmap_absolute', 'globalmap_champion', 'company');
+$count['stronghold_defense'] = $count['stronghold_skirmish'] = $count['globalmap_absolute'] = $count['globalmap_champion'] = $count['all'] = $count['globalmap_middle'] = $count['company'] = $sl_count = 0;
+$showarr = array('all','stronghold_defense', 'stronghold_skirmish', 'globalmap_middle', 'globalmap_absolute', 'globalmap_champion', 'company');
 
 $sl_count = $db->select('SELECT count(account_id) as count FROM `col_players` WHERE updated_at <= "'.$time['to'].'" AND updated_at >= "'.$time['from'].'" ;',__line__,__file__,'fetch');
 if ($sl_count['count'] >0) {
@@ -108,13 +108,17 @@ if ($sl_count['count'] >0) {
                     }
                 }
             }   else {
+                $activity[$keydata][$val2['nickname']]['stronghold_defense_battles'] =
+                $activity[$keydata][$val2['nickname']]['stronghold_skirmish_battles'] =
                 $activity[$keydata][$val2['nickname']]['globalmap_middle_battles'] = 
                 $activity[$keydata][$val2['nickname']]['globalmap_absolute_battles'] = 
                 $activity[$keydata][$val2['nickname']]['globalmap_champion_battles'] = 
                 $activity[$keydata][$val2['nickname']]['all_battles'] = 
                 $activity[$keydata][$val2['nickname']]['clan_battles'] = 
                 $activity[$keydata][$val2['nickname']]['company_battles'] = 0;
-                if (!isset ($activity[$keydata]['all']['all_battles'])) {
+                if (!isset ($activity[$keydata]['all']['all_battles'])) {      
+                    $activity[$keydata]['stronghold_defense']['stronghold_defense_battles'] =
+                    $activity[$keydata]['stronghold_skirmish']['stronghold_skirmish_battles'] =
                     $activity[$keydata]['globalmap_middle']['globalmap_middle_battles'] = 
                     $activity[$keydata]['globalmap_absolute']['globalmap_absolute_battles'] = 
                     $activity[$keydata]['globalmap_champion']['globalmap_champion_battles'] =                
@@ -132,7 +136,7 @@ if ($sl_count['count'] >0) {
     unset($tmp,$tmp2);
 }
 
-if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion'] == 0 && $count['globalmap_absolute'] == 0 && $count['globalmap_middle'] == 0 && $count['company'] == 0)) {
+if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['stronghold_defense'] == 0 && $count['stronghold_skirmish'] == 0 && $count['globalmap_champion'] == 0 && $count['globalmap_absolute'] == 0 && $count['globalmap_middle'] == 0 && $count['company'] == 0)) {
     echo '<div align="center" class="ui-state-highlight ui-widget-content">',$lang['activity_error_2'],'</div>';
 }   else {
     ?>
@@ -141,11 +145,15 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
             {
                 $("#activity_table").tablesorter();
                 $( "#triggeractivity" ).buttonset();
+                $(".stronghold_defense").hide();
+                $(".stronghold_skirmish").hide();
                 $(".globalmap_middle").hide();
                 $(".globalmap_absolute").hide();
                 $(".globalmap_champion").hide();
                 $(".company").hide();
                 $("#change_all").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".stronghold_skirmish").hide();
                     $(".globalmap_middle").hide();
                     $(".globalmap_absolute").hide();
                     $(".globalmap_champion").hide();
@@ -154,6 +162,8 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
                     return false;
                 });
                 $("#change_globalmap_middle").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".stronghold_skirmish").hide();
                     $(".all").hide();
                     $(".company").hide();
                     $(".globalmap_absolute").hide();
@@ -162,6 +172,8 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
                     return false;
                 });
                 $("#change_globalmap_absolute").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".stronghold_skirmish").hide();
                     $(".all").hide();
                     $(".company").hide();
                     $(".globalmap_middle").hide();
@@ -170,6 +182,8 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
                     return false;
                 });
                 $("#change_globalmap_champion").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".stronghold_skirmish").hide();
                     $(".all").hide();
                     $(".company").hide();
                     $(".globalmap_middle").hide();
@@ -178,11 +192,33 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
                     return false;
                 });
                 $("#change_company").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".stronghold_skirmish").hide();
                     $(".all").hide();
                     $(".globalmap_middle").hide();
                     $(".globalmap_absolute").hide();
                     $(".globalmap_champion").hide();
                     $(".company").show();
+                    return false;
+                });
+                $("#change_stronghold_skirmish").click(function() {
+                    $(".stronghold_defense").hide();
+                    $(".company").hide();     
+                    $(".all").hide();
+                    $(".globalmap_middle").hide();
+                    $(".globalmap_absolute").hide();
+                    $(".globalmap_champion").hide();
+                    $(".stronghold_skirmish").show();
+                    return false;
+                });
+                $("#change_stronghold_defense").click(function() {
+                    $(".stronghold_skirmish").hide();
+                    $(".company").hide();     
+                    $(".all").hide();
+                    $(".globalmap_middle").hide();
+                    $(".globalmap_absolute").hide();
+                    $(".globalmap_champion").hide();
+                    $(".stronghold_defense").show();
                     return false;
                 });
         });
@@ -194,6 +230,8 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['globalmap_champion
                 <input type="radio" id="change_globalmap_absolute" name="triggerrating" /><label for="change_globalmap_absolute"><?=$lang['a_cat_2a'];?></label>
                 <input type="radio" id="change_globalmap_champion" name="triggerrating" /><label for="change_globalmap_champion"><?=$lang['a_cat_2b'];?></label>
                 <input type="radio" id="change_globalmap_middle" name="triggerrating" /><label for="change_globalmap_middle"><?=$lang['a_cat_2c'];?></label>
+                <input type="radio" id="change_stronghold_defense" name="triggerrating" /><label for="change_stronghold_defense"><?=$lang['a_cat_4a'];?></label>
+                <input type="radio" id="change_stronghold_skirmish" name="triggerrating" /><label for="change_stronghold_skirmish"><?=$lang['a_cat_4b'];?></label>
                 <input type="radio" id="change_company" name="triggerrating" /><label for="change_company"><?=$lang['a_cat_3'];?></label>
             </div>
         </form>

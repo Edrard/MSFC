@@ -31,6 +31,8 @@
     $lang['a_cat_2c'] = 'Global Map(6)';
     $lang['a_cat_3'] = 'Tank Company Battle';
     $lang['a_cat_4'] = 'Training';
+    $lang['a_cat_4a'] = 'Stronghold defense';
+    $lang['a_cat_4b'] = 'Stronghold skirmishes';
 
     $lang['activity_main_progress'] = 'Main progress';
     $lang['activity_average_progress'] = 'Average progress';
