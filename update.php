@@ -59,6 +59,10 @@ if(!isset($config['version']) or !is_numeric($config['version'])) {
 
 $db->replacement2 = '$1$2$3';
 
+//Manual change version
+
+$config['version'] = isset($_GET['ver']) ? $_GET['ver'] : $config['version'];
+
 if(!isset($config['api_lang'])) {
 
     //Получаем список префиксов из таблицы multiclan
@@ -1147,7 +1151,7 @@ $mline[] = 'stronghold_skirmish_survived_battles';
 $mline[] = 'stronghold_skirmish_dropped_capture_points';
 
 $upd_ver = 323.0;
-if( ($upd_ver - (float) $config['version']) > 0 ) {
+if( ($upd_ver - (float) $config['version']) > 0 ) {   
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
 
