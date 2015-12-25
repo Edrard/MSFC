@@ -330,15 +330,14 @@ function update_tanks_db($tanks = array(), $force = 0) {
 
 function update_tanks_single($tank_id) {
     $tmp = get_api('wot/encyclopedia/tankinfo',array('tank_id'=>$tank_id),array('nation_i18n','name','level','nation','is_premium','name_i18n','type','tank_id','contour_image','image','image_small'));
-
-    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok')) {
+    if ((isset($tmp['status'])) && ($tmp['status'] == 'ok') && (!empty($tmp['status']['data'][$tank_id]))) {
         global $db;
         $tmp = $tmp['data'][$tank_id];
 
         $pieces = explode(':', $tmp['name']);
         $tmp['title'] = $pieces['1'];
         unset($tmp['name']);
-
+        
         if ($tmp['is_premium']== true) {
             $tmp['is_premium'] = 1;
         }   else {
