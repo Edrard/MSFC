@@ -40,7 +40,7 @@ function cron_insert_pars_data($data, $medals, $tanks, $nationsin, $time){
             }
         }
         $col_pl['nickname']   = $data['nickname'];
-        $col_pl['max_xp'] = $data['statistics']['max_xp'];
+        $col_pl['max_xp'] = $data['statistics']['all']['max_xp'];
         $col_pl['created_at'] = $data['joined_at'];
         $col_pl['role'] = $data['role'];
 

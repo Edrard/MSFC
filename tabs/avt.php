@@ -14,7 +14,7 @@
     foreach($res as $name => $val){
       $avt_eff[$eff_rating[$name]['eff']] = $name;
       $aeff += $eff_rating[$name]['eff'];
-      $avt_mexp[] = $val['data']['statistics']['max_xp'];
+      $avt_mexp[] = $val['data']['statistics']['all']['max_xp'];
     }
 
     krsort($avt_eff);

@@ -290,7 +290,7 @@ foreach ($statacc as $val) {
            </tr>
          </thead>
          <tbody>
-           <tr><td><span class="hidden">1</span><?=$lang['max_xp'];?></td><td><?=$pres['data']['statistics']['max_xp']; ?></td></tr>
+           <tr><td><span class="hidden">1</span><?=$lang['max_xp'];?></td><td><?=$pres['data']['statistics']['all']['max_xp']; ?></td></tr>
            <?php $i=2; foreach($statexp as $val) { ?>
            <tr>
              <td><span class="hidden"><? echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
