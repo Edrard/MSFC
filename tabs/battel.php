@@ -69,11 +69,7 @@
                             <? } ?>
                         <?php foreach($exp as $column => $cat){
                             echo '<td>';
-                            if ($cat=='max_xp') {
-                                echo $val['data']['statistics'][$cat];
-                            }   else {
-                                echo $val['data']['statistics']['all'][$cat];
-                            }
+                            echo $val['data']['statistics']['all'][$cat];
                             echo '</td>';
                         } ?>
                     </tr>
