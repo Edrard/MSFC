@@ -16,7 +16,7 @@
     *
     */
 
-
+    $lang['loading']  = 'Nalaganje';
     $lang['language'] = 'sk';
     $lang['total_p'] = 'Spolu hráčov';
     $lang['games_p'] = 'Spolu bitiek'; 

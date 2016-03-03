@@ -111,6 +111,7 @@
     $lang['admin_clear_a_cache_form'] = 'Удалить кэшированные данные о активности, кроме последних <input type="text" size="1" name="clear_a_cache_date" value="7" /> дней.';
 
     $lang['admin_themes'] = 'Тема:';
+    $lang['admin_fadeloading'] = 'Задержка отображения, до полной загрузки страницы:';
 
     $lang['admin_cln_control'] = 'Управление кланами';
     $lang['admin_current_calns'] = 'Текущие кланы';

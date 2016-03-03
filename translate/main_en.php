@@ -15,7 +15,7 @@
     *
     */
 
-
+    $lang['loading']  = 'Loading';
     $lang['language'] = 'en';
     $lang['total_p'] = 'Total Players';
     $lang['games_p'] = 'Games Played'; 

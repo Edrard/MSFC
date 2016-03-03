@@ -112,6 +112,7 @@
     $lang['admin_clear_a_cache_form'] = 'Vymazať vyrovnávaciu pamäť aktivity, okrem posledných <input type="text" size="1" name="clear_a_cache_date" value="7" /> dní.';
 
     $lang['admin_themes'] = 'Téma:';
+    $lang['admin_fadeloading'] = 'Задержка отображения, до полной загрузки страницы:';
 
     $lang['admin_cln_control'] = 'Nastavenia sledovaných klanov';
     $lang['admin_current_calns'] = 'Aktuálny klan';
@@ -119,7 +120,7 @@
     $lang['admin_add_clan'] = 'Pridať nový klan';
 
     $lang['admin_multi_id'] = 'Klanové ID';
-    $lang['admin_multi_teg'] = 'Skratka';
+    $lang['admin_multi_teg'] = 'Delay do polne nalaganju strani';
     $lang['admin_multi_mem_count'] = 'Počet hráčov';
     $lang['admin_multi_prefix'] = 'Prefix v DB';
     $lang['admin_multi_index'] = 'Poradové číslo';

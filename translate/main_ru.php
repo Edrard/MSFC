@@ -15,7 +15,7 @@
     *
     */
 
-
+    $lang['loading']  = 'Загрузка';
     $lang['language'] = 'ru';
     $lang['total_p'] = 'Всего игроков';
     $lang['games_p'] = 'Проведено боёв';

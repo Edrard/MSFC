@@ -1200,6 +1200,45 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
 } //$upd_ver = 322.0;
 unset($mline);
 
+$upd_ver = 323.1;
+if( ($upd_ver - (float) $config['version']) > 0 ) {   
+
+    echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
+
+    //Получаем список префиксов из таблицы multiclan
+    $sql = "SELECT prefix FROM `multiclan`;";
+    $q = $db->prepare($sql);
+    if ($q->execute() == TRUE) {
+        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
+    }   else {
+        $prefix = array();
+    }
+    //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
+    //Для внесения изменений в БД всех мультикланов.
+    if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
+    if(!empty($prefix)) {
+        foreach($prefix as $t) {
+            $db->change_prefix($t);
+            $config = get_config();
+            $sql = "UPDATE `config` SET `value` = '".$upd_ver."' WHERE `name` = 'version' LIMIT 1 ;";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }   
+
+            $sql = "INSERT INTO `config` (`name`,`value`) VALUES ('fadeloading', 0);";
+            $q = $db->prepare($sql);
+            if ($q->execute() != TRUE) {
+                die(show_message($q->errorInfo(),__line__,__file__,$sql));
+            }
+            echo 'Config table (`fadeloading` 0) for prefix:',$t,' - updated.<br>';
+            $config['fadeloading'] = 0;
+
+            echo 'Config table (`version` value) for prefix:',$t,' - updated.<br>';
+        }
+    }
+} //$upd_ver = 322.0;
+
 /*
 $upd_ver = 312.1;
 if( ($upd_ver - (float) $config['version']) > 0 ) {

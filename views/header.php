@@ -126,16 +126,37 @@
         $(document).ready(function() {
             $("#menu").menu();
             $('#allcontainer ul li a').click(function () {window.location.hash = $(this).attr('href');window.scrollTo(0, 0);});
-            $('body').show( "fade", {}, 100, function(){
-                $('.tablesorter').trigger('applyWidgets');
-            });
+            <?php if($config['fadeloading'] == 1){?>
+                $('#main_wrap').show( "fade", {}, 300, function(){
+                    $('#loading_shower').detach();
+                    $('.tablesorter').trigger('applyWidgets');
+                });
+                <?php } ?>
         });
     </script>
 </head>
-<body>  
-<script type="text/javascript">
-    $('body').hide();    
-</script> 
+<body> 
+<?php if($config['fadeloading'] == 1){?>
+    <div id="loading_shower" style="position: absolute;top:0;left:0">
+        <div id="fountainG" style="top:48%;">
+            <?=$lang['loading'];?> . . .
+        </div>
+    </div> 
+    <?php } ?>
+<div id="main_wrap">
+<?php if($config['fadeloading'] == 1){?>
+    <script type="text/javascript">
+        (function(){
+            var width_container = $('#fountainG').css('width'); 
+            var height_container = $('#fountainG').css('height');
+            console.log(width_container + ' ' + height_container)
+            $('#loading_shower').css('width',$(window).width()+'px');
+            $('#loading_shower').css('height',$(window).height()+'px');
+
+            $('#main_wrap').hide();
+        })(jQuery)    
+    </script> 
+    <?php } ?>
 <noscript>
     <?php show_message($lang['js_off']); ?>
 </noscript>

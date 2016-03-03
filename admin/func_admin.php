@@ -45,6 +45,9 @@ function insert_config($config)
         if(!isset($config['dst'])){
             $config['dst'] = 0;
         }
+        if(!isset($config['fadeloading'])){
+            $config['fadeloading'] = 0;
+        }
     }
     if(isset($config['consub_2'])){
         if(!isset($config['cron'])){
@@ -68,12 +71,12 @@ function insert_config($config)
     }
     if(isset($config['consub_3'])){
         if(!isset($config['company'])){
-          $config['company'] = 0;
+            $config['company'] = 0;
         } else {
-          $config['company'] = 1;
+            $config['company'] = 1;
         }
         if(!is_numeric($config['company_count']) or $config['company_count'] < 1) {
-          $config['company_count'] = 1;
+            $config['company_count'] = 1;
         }
     }
     $prefix = array();
@@ -86,13 +89,13 @@ function insert_config($config)
     unset($config['consub'],$config['consub_2'],$config['consub_3'],$config['all_multiclans'],$config['tab_redirect_id']);
 
     foreach($prefix as $t) {
-      $db->change_prefix($t);
-      foreach($config as $name => $var){
-          $db->insert('UPDATE `config` SET value = "'.$var.'" WHERE name = "'.$name.'";',__line__,__file__);
-          if($name == 'clan'){
-              $db->insert('UPDATE `multiclan` SET id = "'.$var.'" WHERE main = "1";',__line__,__file__);
-          }
-      }
+        $db->change_prefix($t);
+        foreach($config as $name => $var){
+            $db->insert('UPDATE `config` SET value = "'.$var.'" WHERE name = "'.$name.'";',__line__,__file__);
+            if($name == 'clan'){
+                $db->insert('UPDATE `multiclan` SET id = "'.$var.'" WHERE main = "1";',__line__,__file__);
+            }
+        }
     }
 }
 function new_user($post)
@@ -166,12 +169,12 @@ function delete_multi($get){
                 //print_r($status_clan);
                 if(isset($status_clan) and !empty($status_clan))
                 {
-                   $tables = $db->select('SHOW TABLES LIKE "'.substr($status_clan, 0, strlen($status_clan)-1).'\_%";',__line__,__file__,'rows');
+                    $tables = $db->select('SHOW TABLES LIKE "'.substr($status_clan, 0, strlen($status_clan)-1).'\_%";',__line__,__file__,'rows');
 
-                   if(!empty($tables)) {
-                     foreach($tables as $tab){
-                          $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
-                      }
+                    if(!empty($tables)) {
+                        foreach($tables as $tab){
+                            $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
+                        }
                     }
                     $db->insert('DELETE FROM `multiclan` WHERE id = "'.$get['clan'].'";',__line__,__file__);
                     $cache->clear('get_last_roster_'.$get['clan']);
@@ -182,31 +185,31 @@ function delete_multi($get){
     }
 }
 function add_multiclan($post, $lang){
-   global $db, $dbprefix;
-   //print_r($post); die;
-   unset($post['multiadd']);
-   if ($post['id'] && $post['prefix'] && $post['sort']){
-       if (is_numeric($post['id'])){
-           if (preg_match('/^\d/', $post['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$post['prefix'])) <= 5){
-               if (ctype_alnum(preg_replace('/(.*)_/','$1',$post['prefix']))){
-                   $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$post['id'].'";',__line__,__file__,'column');
-                   $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$post['prefix'].'";',__line__,__file__,'column');
-                   if ($status_clan == 0 and $status_prefix == 0) {
-                       $db->insert('INSERT INTO `multiclan` (`'.(implode('`,`',array_keys($post))).'`) VALUES ("'.(implode('","',$post)).'");',__line__,__file__);
-                       insert_file(LOCAL_DIR.'/sql/clan.sql');
-                       $db->insert('UPDATE `config` SET value = "'.$post['id'].'" WHERE name = "clan";',__line__,__file__);
-                       $db->insert('UPDATE `config` SET value = "'.$post['server'].'" WHERE name = "server";',__line__,__file__);
-                       $multi_get = '';
-                       if (isset($_GET['multi'])){
-                           $multi_get = '&multi='.$_GET['multi'];
-                       }
-                   }
-               }
-           }
-       }
-   }
-   header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
-   exit;
+    global $db, $dbprefix;
+    //print_r($post); die;
+    unset($post['multiadd']);
+    if ($post['id'] && $post['prefix'] && $post['sort']){
+        if (is_numeric($post['id'])){
+            if (preg_match('/^\d/', $post['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$post['prefix'])) <= 5){
+                if (ctype_alnum(preg_replace('/(.*)_/','$1',$post['prefix']))){
+                    $status_clan = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE id = "'.$post['id'].'";',__line__,__file__,'column');
+                    $status_prefix = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$post['prefix'].'";',__line__,__file__,'column');
+                    if ($status_clan == 0 and $status_prefix == 0) {
+                        $db->insert('INSERT INTO `multiclan` (`'.(implode('`,`',array_keys($post))).'`) VALUES ("'.(implode('","',$post)).'");',__line__,__file__);
+                        insert_file(LOCAL_DIR.'/sql/clan.sql');
+                        $db->insert('UPDATE `config` SET value = "'.$post['id'].'" WHERE name = "clan";',__line__,__file__);
+                        $db->insert('UPDATE `config` SET value = "'.$post['server'].'" WHERE name = "server";',__line__,__file__);
+                        $multi_get = '';
+                        if (isset($_GET['multi'])){
+                            $multi_get = '&multi='.$_GET['multi'];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    header ( 'Location: index.php?page=main#tabs-8'.$multi_get );
+    exit;
 }
 
 
@@ -262,9 +265,9 @@ function tabs_info_db($post)
     unset($post['tabsub']);
 
     if(isset($post['all_multiclans'])) {
-      unset($post['all_multiclans']);
-      //Получаем список префиксов из таблицы multiclan
-      $prefix = $db->select('SELECT prefix FROM `multiclan`;',__line__,__file__,'rows');
+        unset($post['all_multiclans']);
+        //Получаем список префиксов из таблицы multiclan
+        $prefix = $db->select('SELECT prefix FROM `multiclan`;',__line__,__file__,'rows');
     }
     if(empty($prefix)) { $prefix = array($db->prefix); }
 
@@ -294,21 +297,21 @@ function tabs_info_db($post)
         }
     }  
     if($error == 0){
-     foreach($prefix as $t) {
-      $db->change_prefix($t);
-        foreach($new as $vals){
-            //print_r($vals);
-            $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."')
-                     ON DUPLICATE KEY UPDATE ";
-            foreach($vals as $column => $val) {
-              $sql .= "`$column` = '$val', ";
+        foreach($prefix as $t) {
+            $db->change_prefix($t);
+            foreach($new as $vals){
+                //print_r($vals);
+                $sql = "INSERT INTO `tabs` (`".(implode("`,`",array_keys($vals)))."`) VALUES ('".(implode("','",$vals))."')
+                ON DUPLICATE KEY UPDATE ";
+                foreach($vals as $column => $val) {
+                    $sql .= "`$column` = '$val', ";
+                }
+                $sql = substr($sql, 0, strlen($sql)-2);
+                $sql .= ';';
+                $db->insert($sql,__line__,__file__);
             }
-            $sql = substr($sql, 0, strlen($sql)-2);
-            $sql .= ';';
-            $db->insert($sql,__line__,__file__);
         }
-     }
-     $db->change_prefix($old_prefix);
+        $db->change_prefix($old_prefix);
     }
     //echop($db->sqls);
     return $error;
@@ -382,22 +385,22 @@ function recreat_db()
 
         $all_prefix = $db->select('SELECT `prefix` FROM `multiclan`;',__line__,__file__,'rows');
         foreach($all_prefix as $t) {
-           $tables = $db->select('SHOW TABLES LIKE "'.substr($t, 0, strlen($t)-1).'\_%";',__line__,__file__,'rows');
+            $tables = $db->select('SHOW TABLES LIKE "'.substr($t, 0, strlen($t)-1).'\_%";',__line__,__file__,'rows');
 
-           if(!empty($tables)) {
-             foreach($tables as $tab){
-                  $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
-             }
-           }
+            if(!empty($tables)) {
+                foreach($tables as $tab){
+                    $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
+                }
+            }
         }
     }
 
     $multi_tables = $db->select('show tables like "msfcmt\_%";',__line__,__file__,'rows');
 
     if(!empty($multi_tables)) {
-      foreach($multi_tables as $tab){
-          $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
-      }
+        foreach($multi_tables as $tab){
+            $db->insert('DROP TABLE IF EXISTS `'.$tab.'`;',__line__,__file__);
+        }
     }
 }
 function insert_multicaln($id_clan,$server,$dbprefix)
@@ -460,17 +463,17 @@ function update_top_tanks($array) {
     $array = $array['Array'];
 
     foreach($prefix as $t) {
-      $db->change_prefix($t);
-      $db->insert('delete from `top_tanks`;',__line__,__file__);
-      foreach ($array as $index =>$misc) {
-        foreach ($misc as $tank_id => $val) {
-            $val['show'] = isset($val['show']) ? 1 : 0;
-            $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
-            VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
-            $db->insert($sql,__line__,__file__);
-            /*TODO: Пересмотреть формирование запроса, возможно вместо множества запросов сделать один с кучей VALUES */
+        $db->change_prefix($t);
+        $db->insert('delete from `top_tanks`;',__line__,__file__);
+        foreach ($array as $index =>$misc) {
+            foreach ($misc as $tank_id => $val) {
+                $val['show'] = isset($val['show']) ? 1 : 0;
+                $sql = 'INSERT INTO `top_tanks` (`tank_id`, `order`, `show`, `shortname`, `index`)
+                VALUES ("'.$tank_id.'", "'.$val['order'].'", "'.$val['show'].'", "'.$val['shortname'].'", "'.$val['index'].'");';
+                $db->insert($sql,__line__,__file__);
+                /*TODO: Пересмотреть формирование запроса, возможно вместо множества запросов сделать один с кучей VALUES */
+            }
         }
-      }
     }
 }
 
@@ -570,14 +573,14 @@ function utf8_substr($str, $offset, $length = null)
         return mb_substr($str, $offset, $length, 'utf-8');
     }
     preg_match_all('~[\x09\x0A\x0D\x20-\x7E]             # ASCII
-                     | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
-                     |  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
-                     | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
-                     |  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
-                     |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
-                     | [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
-                     |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
-                    ~xs', $str, $m);
+        | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+        |  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
+        | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
+        |  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
+        |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+        | [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
+        |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+        ~xs', $str, $m);
     if ($length !== null)
     {
         $a = array_slice($m[0], $offset, $length);

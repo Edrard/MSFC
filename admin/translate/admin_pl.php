@@ -111,6 +111,7 @@
     $lang['admin_clear_a_cache_form'] = 'Usunąć buforowane dane o aktywności, oprócz ostatnich <input type="text" size="1" name="clear_a_cache_date" value="7" /> dni.';
 
     $lang['admin_themes'] = 'Temat:';
+    $lang['admin_fadeloading'] = 'Opóźnienie do pełnego ładowania strony:';
 
     $lang['admin_cln_control'] = 'Kierowanie klanami';
     $lang['admin_current_calns'] = 'Bieżące klany';

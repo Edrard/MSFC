@@ -210,6 +210,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 --
 
 INSERT INTO `config` (`name`, `value`) VALUES
+('fadeloading', '0'),
 ('lockin', '0'),
 ('lang', 'ru'),
 ('api_lang', 'ru'),

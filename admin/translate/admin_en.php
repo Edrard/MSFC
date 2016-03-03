@@ -111,6 +111,7 @@
     $lang['admin_clear_a_cache_form'] = 'Delete activity cache, except last <input type="text" size="1" name="clear_a_cache_date" value="7" /> days.';
 
     $lang['admin_themes'] = 'Theme:';
+    $lang['admin_fadeloading'] = 'Delay till full page load:';
 
     $lang['admin_cln_control'] = 'Clans Control';
     $lang['admin_current_calns'] = 'Current clans';

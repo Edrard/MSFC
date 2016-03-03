@@ -293,6 +293,12 @@
                                             <?php }?>
                                     </div>
                                 </div>
+                                <div class="settingsLine">
+                                    <div><?=$lang['admin_fadeloading'];?></div>
+                                    <div>
+                                        <input <?=($config['fadeloading']=='1')?'checked="checked"':'';?> type="checkbox" name="fadeloading" value="1" size="2" />
+                                    </div>
+                                </div>
                                 <?php if(count($multiclan) > 1){ ?>
                                     <p align="center"><?=$lang['for_all_clans'];?>&nbsp;<input id="iall_multiclans" class="iall_multiclans" type="checkbox" name="all_multiclans" value="1" size="2" /></p>
                                     <?php } ?>

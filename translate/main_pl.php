@@ -16,6 +16,7 @@
     */
 ?>
 <?php
+    $lang['loading']  = 'Załadunek';
     $lang['language'] = 'pl';
     $lang['total_p'] = 'Wszystkich graczy w klanie';
     $lang['games_p'] = 'Stoczone bitwy';

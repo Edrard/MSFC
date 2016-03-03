@@ -362,3 +362,10 @@ table.ratings_table tbody {
     justify-content: center;
     text-align: center;
 }
+#fountainG{
+    position:relative;
+    width:234px;
+    height:28px;
+    margin:auto;
+    font-size: 2em;
+}
