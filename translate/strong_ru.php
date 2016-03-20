@@ -7,6 +7,7 @@
   $lang['skirmish_battles_win_percentage']      = 'Процент побед';
   $lang['skirmish_battles_wins']                = 'Количество побед';
   $lang['skirmish_battles_losses']              = 'Количество поражений';
+  $lang['skirmish_total_resource_capture']      = 'Всего заработано ресурсов';
    
   $lang['defense_mode_is_activated']            = 'Период обороны активирован';
   $lang['defense_mode_is_deactivated']          = 'Период обороны деактивирован';
