@@ -39,6 +39,7 @@ require(ROOT_DIR.'/function/mcurl.php');
 include(ROOT_DIR.'/function/func.php');
 include(ROOT_DIR.'/function/func_get.php');
 include(ROOT_DIR.'/function/func_main.php');
+include(ROOT_DIR.'/function/func_update.php');
 include(ROOT_DIR.'/function/config.php');
 include(ROOT_DIR.'/config/config_'.$config['server'].'.php');
 require(ROOT_DIR.'/function/cache.php');
@@ -57,6 +58,9 @@ if(!isset($config['version']) or !is_numeric($config['version'])) {
     $config['version'] = (float) 300.0;
 }
 
+$prefix = get_update_prefix();
+min_version($prefix,$config);
+
 $db->replacement2 = '$1$2$3';
 
 //Manual change version
@@ -64,15 +68,6 @@ $db->replacement2 = '$1$2$3';
 $config['version'] = isset($_GET['ver']) ? $_GET['ver'] : $config['version'];
 
 if(!isset($config['api_lang'])) {
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
 
     if(!empty($prefix)) {
         foreach($prefix as $t) {
@@ -138,15 +133,6 @@ if( (304.0 - (float) $config['version']) > 0 ) {
     /*************************************/
     /*    Изменения в таблице `tanks`    */
     /****************end******************/
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
 
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
@@ -328,14 +314,6 @@ if( (304.0 - (float) $config['version']) > 0 ) {
 } //if($config['version'] < 304.0)
 
 if( (310.1 - (float) $config['version']) > 0 ) {
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
 
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
@@ -460,15 +438,6 @@ if( (310.2 - (float) $config['version']) > 0 ) {
     } else {
         echo 'Table achievements - created.<br>';
     }
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -499,15 +468,6 @@ if( (310.3 - (float) $config['version']) > 0 ) {
         die(show_message($q->errorInfo(),__line__,__file__,$sql));
     } else {
         echo 'Table achievements - updated (name_i18n).<br>';
-    }
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
     }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
@@ -547,15 +507,6 @@ if( (310.4 - (float) $config['version']) > 0 ) {
     if (empty($achievements)) {
         update_achievements_db($achievements);
         $achievements = achievements();
-    }
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
     }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
@@ -611,15 +562,6 @@ if( (310.4 - (float) $config['version']) > 0 ) {
 } //if( (310.3 - (float) $config['version']) > 0 )
 
 if( (310.5 - (float) $config['version']) > 0 ) {
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -669,15 +611,6 @@ if( (310.5 - (float) $config['version']) > 0 ) {
 } //if( (310.5 - (float) $config['version']) > 0 )
 
 if( (310.6 - (float) $config['version']) > 0 ) {
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -746,15 +679,6 @@ if( (310.6 - (float) $config['version']) > 0 ) {
 } //if( (310.6 - (float) $config['version']) > 0
 
 if( (310.7 - (float) $config['version']) > 0 ) {
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -790,15 +714,6 @@ if( (310.7 - (float) $config['version']) > 0 ) {
 } //if( (310.7 - (float) $config['version']) > 0
 
 if( (311.0 - (float) $config['version']) > 0 ) {
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -844,15 +759,6 @@ $upd_ver = 312.0;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -888,15 +794,6 @@ $upd_ver = 312.1;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -930,15 +827,6 @@ $upd_ver = 320.0;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -981,15 +869,6 @@ $upd_ver = 321.0;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -1062,15 +941,6 @@ $upd_ver = 322.0;
 if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
-
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -1155,14 +1025,6 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
 
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
@@ -1200,19 +1062,11 @@ if( ($upd_ver - (float) $config['version']) > 0 ) {
 } //$upd_ver = 322.0;
 unset($mline);
 
-$upd_ver = 323.1;
+$upd_ver = 323.1;   
 if( ($upd_ver - (float) $config['version']) > 0 ) {   
 
     echo '<br><br><br>Updating to version ',$upd_ver,'.<br>';
 
-    //Получаем список префиксов из таблицы multiclan
-    $sql = "SELECT prefix FROM `multiclan`;";
-    $q = $db->prepare($sql);
-    if ($q->execute() == TRUE) {
-        $prefix = $q->fetchAll(PDO::FETCH_COLUMN);
-    }   else {
-        $prefix = array();
-    }
     //Проверяем полученный массив префиксов. Если он не пустой устраиваем цикл, применяющий все префиксы
     //Для внесения изменений в БД всех мультикланов.
     if(empty($prefix)) {echo 'Error: Couldn\'t find info about any clan in db.<br>';}
