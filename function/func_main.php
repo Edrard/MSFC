@@ -283,15 +283,49 @@ function multi_main($multi){
         }
     }
 }
+function resort_tanks_db($val){
+    $i = 0;
+    if(isset($val['data'])){
+        if(is_array($val['data'])){                
+            if($i == 0){
+                $ove = $val;
+            }
+            foreach($val['data'] as $wgid => $kin){
+                if(!isset($ove['data'][$wgid])){
+                    $ove['data'][$wgid] = $kin;
+                }
+                $lang = 'ru';
+                $ove['data'][$wgid]['name_i18n'] = $kin['name'] ? $kin['name'] : str_replace('_',' ',$kin['tag']);
+                $ove['data'][$wgid]['short_name_i18n'] = $kin['short_name'] ? $kin['short_name'] : str_replace('_',' ',$kin['tag']);
+                if($i == 0){
+                    unset($ove['data'][$wgid]['images']);
+                }
+                $ove['data'][$wgid] = array_special_merge($kin['images'],$ove['data'][$wgid]);
+                $ove['data'][$wgid]['title'] = $kin['tag'];
+                $ove['data'][$wgid]['level'] = $kin['tier'];
+                $ove['data'][$wgid]['nation_i18n'] = $kin['nation'];
+                $ove['data'][$wgid]['image'] = $ove['data'][$wgid]['big_icon'];
+                $ove['data'][$wgid]['image_small'] = $ove['data'][$wgid]['small_icon'];
+                $ove['data'][$wgid]['contour_image'] = $ove['data'][$wgid]['contour_icon'];
+                $ove['data'][$wgid]['is_premium'] = $kin['is_premium'];
+                unset($ove['data'][$wgid]['short_name'],$ove['data'][$wgid]['tag'],$ove['data'][$wgid]['tier']);
+                //`tank_id`, `nation_i18n`, `level`, `nation`, `is_premium`, `title`, `name_i18n`, `type`, `image`, `contour_image`, `image_small`
+            }
+        }
+    }
+    return $ove; 
+}
 function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
 
     if(empty($tanks)) {
         $tanks = tanks();
     }
-    $tanks_api = get_api('wot/encyclopedia/tanks');
+    $tanks_api = get_api('wot/encyclopedia/vehicles',array('fields' => 'name,nation,tag,tank_id,tier,type,images,short_name,is_premium'));
 
     if ((isset($tanks_api['status'])) && ($tanks_api['status'] == 'ok')) {
+        $tanks_api = resort_tanks_db($tanks_api);
+        //print_r($tanks_api); die;
         $updatearr = array();
 
         if(isset($_POST['update_tanks_db']) or $force == 1){
@@ -302,10 +336,6 @@ function update_tanks_db($tanks = array(), $force = 0) {
         foreach ($tanks_api['data'] as $tank_id => $val) {
             if(!isset($tanks[$tank_id])){
                 $updatearr [$tank_id] = $val;
-
-                $pieces = explode(':', $val['name']);
-                $updatearr [$tank_id]['title']      = $pieces['1'];
-
                 if ($val['is_premium']== true) {
                     $updatearr [$tank_id]['is_premium']      = 1;
                 }   else {
@@ -321,7 +351,6 @@ function update_tanks_db($tanks = array(), $force = 0) {
             }
             $sql = substr($sql, 0, strlen($sql)-2);
             $sql .= ';';
-
             $db->insert($sql,__line__,__file__);
         }
 

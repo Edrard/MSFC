@@ -155,6 +155,9 @@
     $lang['france'] = 'Francúzsko';
     $lang['uk'] = 'Anglicko';
     $lang['japan'] = 'Japonsko';
+    $lang['poland'] = 'Polsko';
+    $lang['sweden'] = 'Švédsko';    
+    
     $lang['AT-SPG'] = 'TD';
     $lang['SPG'] = 'SPG';
     $lang['lightTank'] = 'LT';

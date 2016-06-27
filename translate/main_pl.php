@@ -167,7 +167,9 @@
     $lang['france'] = 'Francja';
     $lang['uk'] = 'Anglia';
     $lang['japan'] = 'Japonia';
-
+        $lang['poland'] = 'Poland';
+    $lang['sweden'] = 'Sweden';
+    
     $lang['AT-SPG'] = 'ncz';
     $lang['SPG'] = 'arta';
     $lang['lightTank'] = 'lcz';

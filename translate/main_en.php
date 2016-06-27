@@ -165,6 +165,8 @@
     $lang['france'] = 'France';
     $lang['uk'] = 'England';
     $lang['japan'] = 'Japan';
+    $lang['poland'] = 'Poland';
+    $lang['sweden'] = 'Sweden';
 
     $lang['AT-SPG'] = 'td';
     $lang['SPG'] = 'spg';
