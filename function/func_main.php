@@ -294,7 +294,6 @@ function resort_tanks_db($val){
                 if(!isset($ove['data'][$wgid])){
                     $ove['data'][$wgid] = $kin;
                 }
-                $lang = 'ru';
                 $ove['data'][$wgid]['name_i18n'] = $kin['name'] ? $kin['name'] : str_replace('_',' ',$kin['tag']);
                 $ove['data'][$wgid]['short_name_i18n'] = $kin['short_name'] ? $kin['short_name'] : str_replace('_',' ',$kin['tag']);
                 if($i == 0){
@@ -315,6 +314,21 @@ function resort_tanks_db($val){
     }
     return $ove; 
 }
+function fix_wg_sheet(&$ove){
+    if(!isset($ove['data']['16913'])){
+        $ove['data']['16913']['tank_id'] = 16913;
+        $ove['data']['16913']['name_i18n'] = 'Waffenträger E-100';
+        $ove['data']['16913']['title'] = 'Waffentrager_E100';
+        $ove['data']['16913']['level'] = 10;
+        $ove['data']['16913']['type'] = 'AT-SPG';
+        $ove['data']['16913']['nation'] = 'germany';
+        $ove['data']['16913']['nation_i18n'] = 'germany';
+        $ove['data']['16913']['image'] = 'http://static-ptl-ru.gcdn.co/static/2.42.0/encyclopedia/tankopedia/vehicle/germany-waffentrager_e100.png';
+        $ove['data']['16913']['image_small'] = 'http://static-ptl-ru.gcdn.co/static/2.42.0/encyclopedia/tankopedia/vehicle/small/germany-waffentrager_e100.png';
+        $ove['data']['16913']['contour_image'] = 'http://static-ptl-ru.gcdn.co/static/2.42.0/encyclopedia/tankopedia/vehicle/contour/germany-waffentrager_e100.png';
+        $ove['data']['16913']['is_premium'] = 0;
+    }   
+}
 function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
 
@@ -332,7 +346,7 @@ function update_tanks_db($tanks = array(), $force = 0) {
             $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
             $tanks = array();
         }
-
+        fix_wg_sheet($tanks_api);
         foreach ($tanks_api['data'] as $tank_id => $val) {
             if(!isset($tanks[$tank_id])){
                 $updatearr [$tank_id] = $val;
@@ -366,7 +380,7 @@ function update_tanks_single($tank_id) {
         $pieces = explode(':', $tmp['name']);
         $tmp['title'] = $pieces['1'];
         unset($tmp['name']);
-        
+
         if ($tmp['is_premium']== true) {
             $tmp['is_premium'] = 1;
         }   else {
@@ -383,7 +397,7 @@ function stronghold() {
 }
 function update_stronghold_db($str = array()){
     global $db,$config,$lang;
-    
+
     $str_get = get_api('wot/stronghold/buildings');
     $atm = new Atm($db,'stronghold');
     $atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
