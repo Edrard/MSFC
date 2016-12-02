@@ -43,7 +43,7 @@
         <?php $i=1; foreach($batt_types as $val){ ?>
             <input value="<?=$val?>" type="radio" id="perform-radio<?=$i?>" name="perform-radio">
             <label for="perform-radio<?=$i?>"><?=$lang['btype_'.$val]?></label>
-            <?php $i++; } ?>
+        <?php $i++; } ?>
     </div></center>
 <div id="perform-load">
     <div align="center">
@@ -74,44 +74,45 @@
             <thead>
                 <tr>
                     <th><?=$lang['name']; ?></th>
-                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                         <th><?=$lang['company']; ?></th>
-                        <? } ?>
-                    <? $perform = array ('hits_percents', 'frags',  'damage_dealt', 'damage_received', 'spotted', 'capture_points', 'dropped_capture_points');
+                    <?php } ?>
+                    <?php $perform = array ('hits_percents', 'frags',  'damage_dealt', 'damage_received', 'spotted', 'capture_points', 'dropped_capture_points');
                     foreach($perform as $cat){ ?>
                         <?php if($cat == 'hits_percents') { ?>
                             <th class='fs as'><?=$lang['all_'.$cat];?></th>
-                            <? } else { ?>
+                        <?php } else { ?>
                             <th class='as'><?=$lang['all_'.$cat];?></th>
                             <th class='fs'><?=$lang['all_'.$cat];?></th>
-                            <?php } } ?>
+                        <?php } ?> 
+                    <?php } ?>
                 </tr>  
             </thead>
             <tbody>
                 <?php foreach($res as $name => $val){  ?>
                     <tr> 
                         <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                        <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                        <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                             <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                            <? } ?>
+                        <?php } ?>
                         <?php foreach($perform as $cat){ ?>
                             <?php if($cat == 'hits_percents') { ?>
                                 <td class='fs as'>
                                     <?php echo $val['data']['statistics']['all'][$cat]; ?>
                                 </td>
-                                <?php } else { ?>
+                            <?php } else { ?>
                                 <td class='as'>
-                                    <? if($val['data']['statistics']['all']['battles'] > 0) { echo round($val['data']['statistics']['all'][$cat]/$val['data']['statistics']['all']['battles'],2); } else { echo '0'; } ?>
+                                    <?php if($val['data']['statistics']['all']['battles'] > 0) { echo round($val['data']['statistics']['all'][$cat]/$val['data']['statistics']['all']['battles'],2); } else { echo '0'; } ?>
                                 </td>
                                 <td class='fs'>
                                     <?php echo $val['data']['statistics']['all'][$cat]; ?>
                                 </td>
-                                <?php }
+                        <?php }
                         } ?>
                     </tr>
-                    <?php } ?>
+                <?php } ?>
             </tbody>  
         </table>
     </div>
 </div>
-<? unset($column); unset($cat); unset($name); unset($val); ?>
+<?php unset($column); unset($cat); unset($name); unset($val); ?>

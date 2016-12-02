@@ -64,9 +64,9 @@
                 <?php foreach($res as $name => $val){ ?>
                     <tr> 
                         <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                        <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                        <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                             <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                            <? } ?>
+                            <?php } ?>
                         <?php foreach($exp as $column => $cat){
                             echo '<td>';
                             echo $val['data']['statistics']['all'][$cat];

@@ -125,11 +125,11 @@
                                                             <td align="center"><input type="checkbox" <?=$val2['show']?> name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][show]"></td>
                                                             <td align="center"><input type="text" value="<?=$val2['shortname']?>" name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][shortname]"></td>
                                                             <td align="center"><div class="hidden"><?=$val2['index']?></div>
-                                                                <select name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][index]"><? for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val2['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
+                                                                <select name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][index]"><?php for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val2['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
                                                             </td>
                                                             <td align="center"><a href="./index.php?removetoptank=1&tank_id=<?=$val2['tank_id']?>&index=<?=$val2['index']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$val2['name_i18n'];?>?')"><img src="../images/cred.png" /></a></td>
                                                         </tr>
-                                                        <?      }
+                                                        <?php      }
                                                 } ?>
                                             </tbody>
                                         </table>
@@ -153,15 +153,15 @@
                                     </select>
                                     <?=$lang['adm_tank_top_add3'];?>
                                     <select name="adm_top_tanks_lvl">
-                                        <? for($i = 10; $i >= 1; $i--){?>
+                                        <?php for($i = 10; $i >= 1; $i--){?>
                                             <option value="<?=$i?>"><?=$i?></option>
-                                            <? } ?>
+                                            <?php } ?>
                                     </select>
                                     <?=$lang['adm_tank_top_add4'];?>
                                     <select name="adm_top_tanks_type">
-                                        <? foreach($lang_s['class'] as $name => $val) { ?>
+                                        <?php foreach($lang_s['class'] as $name => $val) { ?>
                                             <option value="<?=$name?>"><?=$val?></option>
-                                            <? } ?>
+                                            <?php } ?>
                                     </select>
                                     <p><input type="submit" value="<?=$lang['adm_tank_top_submit']?>" name="toptanksadd"></p>
                                 </form>
@@ -186,9 +186,9 @@
                                     <div><?=$lang['admin_lang'];?> API</div>
                                     <div>
                                         <select name="api_lang">
-                                            <? foreach($api_langs as $t => $i) { ?>
+                                            <?php foreach($api_langs as $t => $i) { ?>
                                                 <option value="<?=$t;?>" <?php if($config['api_lang'] == $t){ echo 'selected="selected"';} ?>><?=$i;?></option>
-                                                <? } ?>
+                                                <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -334,7 +334,7 @@
                                 <div style="float:left;"><?=$lang['admin_load_tabs_names']; ?></div>
                                 <?php foreach ($tablangs as $val) { ?>
                                     <button style="float:left;" id="load<?=$val; ?>"><?=$lang[$val]; ?></button>
-                                    <? }?>
+                                    <?php }?>
                             </div><br clear=all>
                             <form enctype="multipart/form-data" action="<?=$_SERVER['REQUEST_URI']?>#tabs-2" method="POST">
                                 <table id="files" width="100%" cellspacing="1">
@@ -433,9 +433,9 @@
                                                     <td align="left">
                                                         <select name="prefix">
                                                             <option value="all">All</option>
-                                                            <? foreach($multiclan as $mclan) { ?>
+                                                            <?php foreach($multiclan as $mclan) { ?>
                                                                 <option value="<?=$mclan['prefix'];?>"><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['tag'];?></option>
-                                                                <? } ?>
+                                                                <?php } ?>
                                                         </select>
                                                     </td></tr>
                                                 <?php } ?>
@@ -495,9 +495,9 @@
                                                     <tr><td><?=$lang['admin_user_access'];?>:</td> <td>
                                                             <select name="prefix">
                                                                 <option value="all" <?php if($val['prefix'] == 'all'){ echo 'selected="selected"';} ?>>All</option>
-                                                                <? foreach($multiclan as $mclan) { ?>
+                                                                <?php foreach($multiclan as $mclan) { ?>
                                                                     <option value="<?=$mclan['prefix'];?>" <?php if($mclan['prefix'] == $val['prefix']){ echo 'selected="selected"';} ?>><?=$multiclan_info[$mclan['id']]['data'][$mclan['id']]['tag'];?></option>
-                                                                    <? } ?>
+                                                                    <?php } ?>
                                                             </select>
                                                         </td></tr>
                                                     <?php } ?>
@@ -687,7 +687,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <? foreach($multiclan as $mclan) { ?>
+                                            <?php foreach($multiclan as $mclan) { ?>
                                                 <tr>
                                                     <td align="center"><div class="hidden"><?=$mclan['sort']?></div><input type="text" value="<?=$mclan['sort']?>" name="Array[<?=$mclan['id']?>][order]" style="width: 30px;"></td>
                                                     <?php if($mclan['main'] == 0){?>
@@ -714,7 +714,7 @@
                                                         <td align="center"></td>
                                                         <?php } ?>
                                                 </tr>
-                                                <? } ?>
+                                                <?php } ?>
                                         </tbody>
                                     </table><br>
                                     <input type="submit" value="<?=$lang['admin_submit'];?>" name="mcsort"><br />
@@ -856,7 +856,7 @@
                                 <p align="center" class=""><input type="submit" value="<?=$lang['admin_submit'];?>" name="consub_3"></p>
                             </div>
                         </form>
-                        <? if($config['company'] == 1 ) { ?>
+                        <?php if($config['company'] == 1 ) { ?>
                             <br clear=all>
                             <div class="ui-corner-all ui-widget-content admin_cdhide2" align="center">
                                 <br /><h3><?=$lang['admin_company_add'];?></h3>
@@ -880,7 +880,7 @@
                                 </form>
                             </div>
                             <br clear=all>
-                            <? if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members']) and !empty($multiclan_info[$config['clan']]['data'][$config['clan']]['members'])) { ?>
+                            <?php if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members']) and !empty($multiclan_info[$config['clan']]['data'][$config['clan']]['members'])) { ?>
                                 <table cellpadding="4" cellspacing="0" width="100%" class="ui-corner-all ui-widget-content div4settings admin_cdhide2">
                                     <tr>
                                         <td colspan="2" align="center" valign="top"><h3><?=$lang['admin_company_split'];?></h3></td>
@@ -893,40 +893,40 @@
                                             <div class="ui-widget-header"><?=$lang['admin_company_clan_list'];?></div>
                                             <div class="ui-widget-content pl_list">
                                                 <ul class="connectedSortable droptrue" id="sortable0">
-                                                    <? foreach($multiclan_info[$config['clan']]['data'][$config['clan']]['members'] as $val) { ?>
-                                                        <? if(!in_array($val['account_id'],$adm_company['in_company'])) { ?>
+                                                    <?php foreach($multiclan_info[$config['clan']]['data'][$config['clan']]['members'] as $val) { ?>
+                                                        <?php if(!in_array($val['account_id'],$adm_company['in_company'])) { ?>
                                                             <li id="list=<?=$val['account_id'];?>" class="ui-state-default"><?=$val['account_name'];?></li>
-                                                            <? } ?>
-                                                        <? } ?>
+                                                            <?php } ?>
+                                                        <?php } ?>
                                                 </ul>
                                             </div>
                                         </td>
                                         <td align="center" width="50%" valign="top">
-                                            <? for($index=1;$index<=$config['company_count'];$index++){ ?>
+                                            <?php for($index=1;$index<=$config['company_count'];$index++){ ?>
                                                 <div class="ui-widget-header">
                                                 <span style="float:right;margin-right:10px;" class="company_collapse" company="<?=$index;?>"><span class="ui-icon ui-icon-carat-2-n-s"></span></span><?=isset($adm_company['company_names'][$index])?$adm_company['company_names'][$index]:$index;?></div>
                                                 <div class="ui-widget-content pl_list" id="company_collapse_target<?=$index;?>">
                                                     <ul class="connectedSortable droptrue" id="sortable<?=$index;?>">
-                                                        <? if(isset($adm_company['list'.$index]) and !empty($adm_company['list'.$index])) { ?>
-                                                            <? foreach($adm_company['list'.$index] as $val) { ?>
-                                                                <? if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val])) { ?>
+                                                        <?php if(isset($adm_company['list'.$index]) and !empty($adm_company['list'.$index])) { ?>
+                                                            <?php foreach($adm_company['list'.$index] as $val) { ?>
+                                                                <?php if(isset($multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val])) { ?>
                                                                     <li id="list=<?=$val;?>" class="ui-state-default"><?=$multiclan_info[$config['clan']]['data'][$config['clan']]['members'][$val]['account_name'];?></li>
-                                                                    <? } ?>
-                                                                <? } ?>
-                                                            <? } ?>
+                                                                    <?php } ?>
+                                                                <?php } ?>
+                                                            <?php } ?>
                                                     </ul>
                                                 </div>
                                                 <br clear=all>
-                                                <? } ?>
+                                                <?php } ?>
                                         </td>
                                     </tr>
                                 </table>
-                                <? } else { ?>
+                                <?php } else { ?>
                                 <div class="ui-state-error ui-corner-all" align="center">
                                     <?=$lang['admin_company_no_list'];?>
                                 </div>
-                                <? } ?>
-                            <? } ?>
+                                <?php } ?>
+                            <?php } ?>
                     </div>
                     <!-- -->
                 </td>

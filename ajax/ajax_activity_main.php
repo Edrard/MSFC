@@ -119,18 +119,18 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
             <thead>
                 <tr>
                     <th><?=$lang['name'];?></th>
-                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                         <th><?=$lang['company']; ?></th>
-                        <? } ?>
+                        <?php } ?>
                     <th><?=$lang['all_battles'];?></th>
                     <?
                     foreach ($stats2 as $val) {
                         if ($main_progress['totaldiff'][$btype][$val] <>0) {?>
                             <th class="{sorter: 'digit'} all_progress_hide main_progress"><?=$lang['all_'.$val];?></th>
-                            <? }
+                            <?php }
                         if (($main_progress['totalavr'][$btype][$val] <>0)&&(!in_array($key,$ni))) {?>
                             <th class="{sorter: 'digit'} all_progress_hide average_progress"><?=$lang['all_'.$val];?></th>
-                            <? }
+                            <?php }
                     } ?>
                 </tr>
             </thead>

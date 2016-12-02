@@ -101,9 +101,9 @@
     <thead>
         <tr>
             <th><?=$lang['name']; ?></th>
-            <? if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
+            <?php if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
                 <th><?=$lang['company']; ?></th>
-            <? } ?>
+            <?php } ?>
             <?php
             foreach ($tanks as $val) {
                echo '<th>',$val['name_i18n'],'</th>';
@@ -114,9 +114,9 @@
         <?php foreach($res as $name => $val){ ?>
             <tr>
                 <td><a href="<?php echo $config['base'].$val['data']['account_id'].'-'.$name.'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                <? if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
+                <?php if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
                     <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                <? } ?>
+                <?php } ?>
                 <?php
                 foreach ($tanks as $key => $stat) {
                    echo '<td>';

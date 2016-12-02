@@ -58,14 +58,14 @@ function plmagic(elem){
       complete: function() {
         $('body,html').scrollTop( 0 );
         $("#player0").add("#player01")
-          <? for ($i=1; $i<=9; $i++) { ?>
+          <?php for ($i=1; $i<=9; $i++) { ?>
             .add("#player<?=$i;?>")
-          <? } ;?>
+          <?php } ;?>
         .tablesorter({sortList:[[0,0]], theme : 'bootstrap'});
         $("#player10")
-        <? for ($i=11; $i<=17; $i++) {?>
+        <?php for ($i=11; $i<=17; $i++) {?>
             .add("#player<?=$i;?>")
-        <? } ;?>
+        <?php } ;?>
         .tablesorter({sortList:[[1,1]], theme : 'jui'});
 
         $('.bb[title]').tooltip({

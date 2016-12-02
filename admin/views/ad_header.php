@@ -89,7 +89,7 @@
                         <?php };?>
                      });
             <?php };?>
-            <? if($config['company'] == 1 ) { ?>
+            <?php if($config['company'] == 1 ) { ?>
               $( "ul.droptrue" ).sortable({
                   connectWith: "ul",
                   cursor: "move",
@@ -135,7 +135,7 @@
                 $("#company_collapse_target" + $(this).attr('company')).toggle();
                 return false;
               });
-            <? } ?>
+            <?php } ?>
         });
         function magic(elem){
             $(".ui-menu-item").each(function(){

@@ -15,7 +15,7 @@
     *
     */
 ?>
-<?
+<?php
 $cur_time = time();
 ?>
 
@@ -29,7 +29,7 @@ $cur_time = time();
     });
 </script>
 <div class="num" align="left">
-<? if($auth->replays) { ?>
+<?php if($auth->replays) { ?>
 <form action="./main.php<?=$multi_url;?>#tabs-<?php echo $key; ?>" method="post" enctype="multipart/form-data">
 <input type="file" name="filename"><span id="province_show"></span>
 <select name="province_type" required id="select_province">
@@ -38,12 +38,12 @@ $cur_time = time();
 <option value="start"><?=$lang['gk_start'];?></option>
 <option value="gold"><?=$lang['gk_gold'];?></option>
 </select>
-<input type="submit" value="<? echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
+<input type="submit" value="<?php echo $lang['gk_info_1']; ?>" class="gksubmit" name="gkreplay">
 </form>
 <br />
-<? } ?>
-<? if(isset($gk_fresult['error']) and !is_null($gk_fresult['error'])) { echo $gk_fresult['error']; } ?>
-<? if(isset($gk_fresult['team']) and !is_null($gk_fresult['team'])) { ?>
+<?php } ?>
+<?php if(isset($gk_fresult['error']) and !is_null($gk_fresult['error'])) { echo $gk_fresult['error']; } ?>
+<?php if(isset($gk_fresult['team']) and !is_null($gk_fresult['team'])) { ?>
 <script type="text/javascript" id="js">
     $(document).ready(function(){
         $("#gk_destroyed").tablesorter();
@@ -63,13 +63,13 @@ $cur_time = time();
                 </tr>
             </thead>
             <tbody>
-                <? foreach($gk_fresult['team'] as $name => $val) { ?>
+                <?php foreach($gk_fresult['team'] as $name => $val) { ?>
                     <tr>
                         <td align="center"><?=$name;?><input type="hidden" value="<?=$name;?>" name="Array[result][<?=$name;?>][name]"></td>
                         <td align="center"><?=$val;?><input type="hidden" value="<?=$val;?>" name="Array[result][<?=$name;?>][vehicleType]"></td>
                         <td align="center"><input type="checkbox" class="gkcheckbox" style="margin: 0px; padding: 0px;" name="Array[result][<?=$name;?>][killed]"></td>
                     </tr>
-                    <? } ?>
+                    <?php } ?>
             </tbody>
         </table>
         <p><?=$lang['gk_win_or_lose'];?>
@@ -81,29 +81,29 @@ $cur_time = time();
         <p><input type="submit" value="<?=$lang['gk_info_9'];?>" name="gkdestroyed" class="gksubmit"></p>
     </form>
 </div>
-<? } ?>
+<?php } ?>
 </div>
 <div align="center">
-   <? if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
+   <?php if(isset($gk_blocked_tanks) and count($gk_blocked_tanks) > 0 ) { ?>
       <table id="tabs-sort-<?=$key;?>" cellspacing="1" width="100%" class="table-id-<?=$key;?>">
       <thead>
          <tr>
             <th><?php echo $lang['name'];?></th>
-            <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+            <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                 <th><?=$lang['company']; ?></th>
-            <? } ?>
+            <?php } ?>
             <?php foreach($gk_blocked_tanks as $column) {?>
-            <th style="padding-right:20px;" align="center"><?echo $column;?></th>
-            <?}?>
+            <th style="padding-right:20px;" align="center"><?=$column;?></th>
+            <?php } ?>
          </tr>
       </thead>
       <tbody>
          <?php foreach($res as $name => $val) {?>
          <tr>
             <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/';?>" target="_blank"><?=$name;?></a></td>
-            <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+            <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                 <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-            <? } ?>
+            <?php } ?>
                <?php foreach($gk_blocked_tanks as $column) {?>
                   <td align='center' style='padding: 0px !important; vertical-align: middle;'>
                      <?php
@@ -125,7 +125,7 @@ $cur_time = time();
          <?php }?>
       </tbody>
       </table>
-      <? } else {
+      <?php } else {
             echo '<div align="center" class="ui-widget ui-widget-content ui-corner-all fixed-menu">',$lang['gk_error_9'],'<br /><br />',$lang['gk_tip'],'</div>';
          } ?>
  </div>

@@ -112,7 +112,7 @@ if($btype == 'all'){
         });
     });
 </script>
-<? $eff_ratings_list = array('eff','wn7','wn8','brone'); ?>
+<?php $eff_ratings_list = array('eff','wn7','wn8','brone'); ?>
 <form>
     <div id="triggeroverall" align="center">
         <input type="radio" id="change_overall_value" name="triggeroverall" checked="checked" /><label for="change_overall_value"><?=$lang['overall_value'];?></label>
@@ -124,13 +124,13 @@ if($btype == 'all'){
         <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>
-                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                     <th><?=$lang['company']; ?></th>
-                    <? } ?>
+                    <?php } ?>
                 <?php
                 $overall = array ('battles', 'wins', 'losses', 'survived_battles');
                 foreach($overall as $name){ ?>
-                    <th class="{sorter: 'digit'} <? if ($name != 'battles') {echo 'overall_value';} ?>"><?=$lang['all_'.$name];?></th>
+                    <th class="{sorter: 'digit'} <?php if ($name != 'battles') {echo 'overall_value';} ?>"><?=$lang['all_'.$name];?></th>
                     <?php }
                 foreach($overall as $column => $name){
                     if($name != 'battles') { ?>
@@ -138,22 +138,22 @@ if($btype == 'all'){
                         <?php }
                 } ?>
                 <?php if($btype == 'all'){ ?>
-                    <? foreach($eff_ratings_list as $val) { ?>
+                    <?php foreach($eff_ratings_list as $val) { ?>
                         <th class="overall_value overall_average"><?=$lang[$val.'_ret'];?></th>
-                        <? } ?>
-                    <? } ?>
+                        <?php } ?>
+                    <?php } ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach($res as $name => $val){ ?>
                 <tr>
                     <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                         <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                        <? } ?>
+                        <?php } ?>
                     <?php
                     foreach($overall as $column => $namec){?>
-                        <td class="<? if($namec != 'battles') {echo 'overall_value';} ?>"><?= $val['data']['statistics'][$btype][$namec];?></td>
+                        <td class="<?php if($namec != 'battles') {echo 'overall_value';} ?>"><?= $val['data']['statistics'][$btype][$namec];?></td>
                         <?php }
                     foreach($overall as $column => $namec){?>
                         <?php if($namec != 'battles') { ?>
@@ -166,9 +166,9 @@ if($btype == 'all'){
                             <?php } ?>
                         <?php } ?>
                     <?php if($btype == 'all'){ ?>
-                        <? foreach($eff_ratings_list as $val) { ?>
+                        <?php foreach($eff_ratings_list as $val) { ?>
                             <td class="overall_value overall_average"><font color="<?=$eff_rating[$name][$val.'_color'];?>"><?=($eff_rating[$name][$val]>0)?$eff_rating[$name][$val]:'0';?></font></td>
-                            <? } ?>
+                            <?php } ?>
                         <?php } ?>
                 </tr>
                 <?php } ?>

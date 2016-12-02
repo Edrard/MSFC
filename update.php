@@ -1139,10 +1139,10 @@ if($config['lang'] == 'ru') { ?>
     <br><br><br>
     Внимательно прочтите отображаемый сверху текст, если он не содержит сообщений о ошибках - обновление завершено успешно, и вы можете продолжать использовать модуль статистики.<br>
     В случае возникновения ошибок, постарайтесь внимательно прочитать сообщение о ошибке, и понять что от вас требуется, возможно вы сможете решить эту ошибку самостоятельно.
-    <? } else { ?>
+    <?php } else { ?>
     <br><br><br>
     Carefully read the text displayed above, if it contains no error messages - update completed successfully and you can continue to use "Module Statistics for Clans".<br>
     If an error occurs, try to carefully read the error message and understand what is required from you, you may be able to solve this error yourself.
-    <? } ?>
+    <?php } ?>
 <br><br><br>
 <center><a href="./index.php" target="_self">index.php</a></center>

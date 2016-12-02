@@ -55,10 +55,10 @@ $(document).ready(function() {
     <thead>
       <tr>
           <th><?=$lang['name']; ?></th>
-          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+          <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
               <th><?=$lang['company']; ?></th>
-          <? } ?>
-               <?  /* Старые рейтинги
+          <?php } ?>
+               <?php  /* Старые рейтинги
                    $exp = array ('gr' => 'integrated_rating', 'wb' => 'battle_avg_performance', 'eb' => 'battle_avg_xp', 'win' => 'battle_wins', 'gpl' => 'battles',
                              'cpt' => 'ctf_points', 'dmg' => 'damage_dealt', 'dpt' => 'dropped_ctf_points', 'frg' => 'frags', 'spt' => 'spotted', 'exp' => 'xp');
                    */
@@ -68,26 +68,26 @@ $(document).ready(function() {
                ?>
                   <th align='center' valign='top' class="{sorter: 'digit'} ratingplace"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><br><?=$lang['r_'.$column];?></th>
                   <th align='center' valign='top' class="{sorter: 'digit'} ratingvalue"><div align='center' class='rating_ico rating_ico_<?=$column;?>'></div><br><?=$lang['r_'.$column];?></th>
-               <? } ?>
+               <?php } ?>
       </tr>
     </thead>
     <tbody>
       <?php foreach($res as $name => $val){ ?>
           <tr>
              <td><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name,'/'; ?>" target="_blank"><?=$name; ?></a></td>
-          <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+          <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
              <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-          <? } ?>
-          <? foreach($exp as $cat) { ?>
+          <?php } ?>
+          <?php foreach($exp as $cat) { ?>
              <td class="ratingplace">
-               <? echo (isset($val['data']['ratings'][$cat]['rank']) && ($val['data']['ratings'][$cat]['rank'] <>''))?$val['data']['ratings'][$cat]['rank']:'-'; ?>
+               <?php echo (isset($val['data']['ratings'][$cat]['rank']) && ($val['data']['ratings'][$cat]['rank'] <>''))?$val['data']['ratings'][$cat]['rank']:'-'; ?>
              </td>
              <td class="ratingvalue">
                <?=(isset($val['data']['ratings'][$cat]['value']))?$val['data']['ratings'][$cat]['value']:'-';?>
              </td>
-          <? } ?>
+          <?php } ?>
           </tr>
-      <? } ?>
+      <?php } ?>
     </tbody>
   </table>
 </div>

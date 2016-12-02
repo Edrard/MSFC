@@ -32,18 +32,18 @@
     });
 </script>
 <div align="center">
-    <? if (isset($achievements_split['sections']) ) { ?>    
+    <?php if (isset($achievements_split['sections']) ) { ?>    
        <?=$lang['select_medals'];?><br /><br />
        <form>
            <div id="triggermedals" align="center">
-               <? $split = 1; ?>
-               <? foreach($achievements_split['sections'] as $id => $val) { ?>
+               <?php $split = 1; ?>
+               <?php foreach($achievements_split['sections'] as $id => $val) { ?>
                   <input type="radio" id="<?=$id;?>0" name="triggermedals" <?=($id=='battle0')?'checked="checked"':'';?> /><label for="<?=$id;?>0" value="<?=$val;?>"><?=$val;?></label>
-                  <? $split++; ?>
-                  <? if(count($achievements_split['split'][$id]) > 1) {
+                  <?php $split++; ?>
+                  <?php if(count($achievements_split['split'][$id]) > 1) {
                        for($i=1;$i<=(count($achievements_split['split'][$id])-1);$i++) { ?>
                         <input type="radio" id="<?=$id,$i;?>" name="triggermedals" /><label for="<?=$id,$i;?>" value="<?=$val,' - ',$i;?>"><?=$val,' - ',$i;?></label>
-                      <? $split++; }
+                      <?php $split++; }
                      }
                   if($split > 5) { echo '<br />'; $split = 1; }
                   } ?>
@@ -54,9 +54,9 @@
            <thead>
                <tr>
                    <th><?=$lang['name']; ?></th>
-                   <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                   <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                        <th><?=$lang['company']; ?></th>
-                   <? } ?>
+                   <?php } ?>
                    <?
                    foreach($achievements_split['split'] as $id => $tmp) {
                      foreach($tmp as $n => $tmp2){
@@ -75,9 +75,9 @@
                <?php foreach($res as $name => $val){ ?>
                    <tr>
                      <td align="left"><a href="<?php echo $config['base'],$val['data']['account_id'].'-'.$name, '/'; ?>" target="_blank"><?=$name; ?></a></td>
-                     <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                     <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                          <td><?=in_array($val['data']['account_id'],$company['in_company'])?$company['company_names'][$company['by_id'][$val['data']['account_id']]]:'';?></td>
-                     <? } ?>
+                     <?php } ?>
                      <?php
                       foreach($achievements_split['split'] as $id => $tmp) {
                        foreach($tmp as $n => $tmp2) {
@@ -94,7 +94,7 @@
                <?php } ?>
            </tbody>
        </table>
-    <? } else {
+    <?php } else {
           show_message($lang['error_no_medals']);
        } ?>
 </div>

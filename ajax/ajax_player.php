@@ -253,7 +253,7 @@ foreach ($statacc as $val) {
          <tbody>
            <?php $i=1; foreach($statmain as $val) {?>
            <tr>
-             <td><span class="hidden"><? echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
+             <td><span class="hidden"><?php echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
              <td<?php if ($val == 'battles') {echo ' align="center" colspan="2"';}
                       echo '>'.number_format($pres['data']['statistics']['all'][$val], 0, '.', '').'</td>';
                       if ($val != 'battles') {echo '<td>'.number_format($pres['data']['statistics']['all'][$val]/$pres['data']['statistics']['all']['battles']*100,2).'%</td>'; } ?>
@@ -271,7 +271,7 @@ foreach ($statacc as $val) {
          <tbody>
            <?php $i=1; foreach($statbattle as $val) { ?>
            <tr>
-             <td><span class="hidden"><? echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
+             <td><span class="hidden"><?php echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
              <?php if ($val == 'hits_percents') {
                        echo '<td colspan="2" align="center">'.$pres['data']['statistics']['all'][$val].'%</td>';
                    }   else {
@@ -293,7 +293,7 @@ foreach ($statacc as $val) {
            <tr><td><span class="hidden">1</span><?=$lang['max_xp'];?></td><td><?=$pres['data']['statistics']['all']['max_xp']; ?></td></tr>
            <?php $i=2; foreach($statexp as $val) { ?>
            <tr>
-             <td><span class="hidden"><? echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
+             <td><span class="hidden"><?php echo $i;++$i; ?></span><?=$lang['all_'.$val]; ?>:</td>
              <td><?=$pres['data']['statistics']['all'][$val]; ?></td>
            </tr>
            <?php } ?>
@@ -318,7 +318,7 @@ foreach ($statacc as $val) {
            <?php } ?>
          </tbody>
        </table>
-       <? }; ?>
+       <?php }; ?>
      </td>
      <td valign="top" width="38%">
        <?php if(isset($info['table1'])) {?>
@@ -366,7 +366,7 @@ foreach ($statacc as $val) {
                    } ?>
            <tr>
              <td><?=$lang[$name['nation']]; ?></td>
-             <td><? echo number_format($info['table3'][$name['nation']]['total'],0, '.', ''); ?></td>
+             <td><?php echo number_format($info['table3'][$name['nation']]['total'],0, '.', ''); ?></td>
              <td><?=$info['table3'][$name['nation']]['win']; ?></td>
              <td><?php echo number_format($info['table3'][$name['nation']]['win']/$info['table3'][$name['nation']]['total']*100,2); ?>%</td>
            </tr>
@@ -397,7 +397,7 @@ foreach ($statacc as $val) {
            <?php };?>
           </tbody>
        </table>
-       <? } ?>
+       <?php } ?>
      </td>
     </tr>
    </tbody>
@@ -495,8 +495,8 @@ if (isset($result)) {
 <?php } //clans
 } // if result
 ?>
-<? $data = $pres['data']['achievements'];?>
-<? if (!empty($data)) { ?>
+<?php $data = $pres['data']['achievements'];?>
+<?php if (!empty($data)) { ?>
 <br>
 <table cellspacing="1" cellpadding="1" width="100%" id="player9">
   <thead>
@@ -505,14 +505,14 @@ if (isset($result)) {
     </tr>
   </thead>
   <tbody>
-  <? $i=1; foreach($achievements_sorted['sections'] as $cat => $name) { ?>
+  <?php $i=1; foreach($achievements_sorted['sections'] as $cat => $name) { ?>
     <tr class="ui-widget-content">
       <td align="center"><span class="hidden"><?=10*$i;?></span><?=$name;?></td>
     </tr>
     <tr>
       <td class="medalContainer"><span class="hidden"><?=10*$i+1;?></span>
-      <? foreach($achievements_sorted['split'][$cat] as $id) { ?>
-           <? $val = $achievements[$id];
+      <?php foreach($achievements_sorted['split'][$cat] as $id) { ?>
+           <?php $val = $achievements[$id];
            if(!empty($val['options'])) {
              if(isset($data[$id])) {
                $ach_name = $val['options'][$data[$id]-1]['name_i18n'];
@@ -528,17 +528,17 @@ if (isset($result)) {
            ?>
            <div class="medalDiv">
               <img width="67" height="71" title="<div style='min-width:400px;'><center><?=$ach_name;?></center><br><?=str_replace('"',"'",$val['description']),(!empty($val['condition'])?'<div style=\'padding:0px;margin:10px 0 0 15px\'>'.nl2br($val['condition']).'</div>':'');?></div>" class="bb <?=(isset($data[$id]))?'':'faded';?>" src="<?=$ach_img;?>">
-              <? if(isset($data[$id])) { ?>
+              <?php if(isset($data[$id])) { ?>
                 <div class="a_num ui-state-highlight ui-widget-content"><?=$data[$id],(($val['type']=='series')?'&nbsp;<span style="color:red;">*</span>':'');?></div>
-              <? } ?>
+              <?php } ?>
           </div>
-      <? } ?>
+      <?php } ?>
       </td>
     </tr>
-  <? ++$i;} ?>
+  <?php ++$i;} ?>
   </tbody>
 </table>
-<? } //end of medals 
+<?php } //end of medals 
 ?> 
 <br>
 <?php
@@ -553,7 +553,7 @@ foreach ($arsd as $val) {
         <tr>
           <th colspan="5" align="center" class="tablesorter-header ui-widget-header ui-corner-all ui-state-default"><?=$lang['teh_title'];?><sup>*</sup></th>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
           <?php foreach(array_keys($info[$val]) as $column) { ?>
           <th align="center" class="tablesorter-header ui-widget-header ui-corner-all ui-state-default"><?=$lang[$column]; ?></th>
@@ -581,7 +581,7 @@ foreach ($arsd as $val) {
                     <td><?=$val2['win']; ?></td>
                     <td><?php echo number_format($val2['win']/$val2['total']*100,2); ?>%</td>
                   </tr>
-                <? } ?>
+                <?php } ?>
               </tbody>
             </table>
           </td>

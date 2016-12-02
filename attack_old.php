@@ -93,9 +93,9 @@ if($maps_active) {
     }
   }
 } ?>
-<? if(isset($maps['data']['state']) and $maps['data']['state'] == 'frozen') { ?>
+<?php if(isset($maps['data']['state']) and $maps['data']['state'] == 'frozen') { ?>
   <div align="center" class="ui-state-highlight ui-corner-all "><?=$lang['global_map_frozen'];?></div>
-<? } elseif($maps_active) { ?>
+<?php } elseif($maps_active) { ?>
   <script type="text/javascript" id="js">
      $(document).ready(function()
      {
@@ -116,31 +116,31 @@ if($maps_active) {
               </tr>
           </thead>
           <tbody>
-          <? if( isset($battel['error']['message']) ) { ?>
+          <?php if( isset($battel['error']['message']) ) { ?>
               <tr><td colspan="7" align="center"><?=$lang['error_1'].(isset($battel['error']['message'])?' ('.$battel['error']['message'].')':'');?></td></tr>
-          <? } elseif( empty($battel['data']) ) { ?>
+          <?php } elseif( empty($battel['data']) ) { ?>
               <tr><td colspan="7" align="center"><?=$lang['no_war'];?></td></tr>
-          <? } else { ?>
-              <? foreach($battel['data'] as $val){ ?>
+          <?php } else { ?>
+              <?php foreach($battel['data'] as $val){ ?>
                   <tr>
                       <td align="center"><img src="./images/<?=($val['type']=='attack')?'meeting_engagement':'for_province';?>.png"></td>
                       <td align="center"><?=($val['time'] > 1)?date('H:i',$val['time']).' +':'--:--'; ?></td>
                       <td align="center"><?=isset($p_info[$val['province_id']]['prime_time'])?$p_info[$val['province_id']]['prime_time']:'--:--'; ?></td>
                       <td align="center">
-                        <? if(isset($p_info[$val['province_id']]['province_name'])) { ?>
+                        <?php if(isset($p_info[$val['province_id']]['province_name'])) { ?>
                           <a href="http://<?=$config['server'];?>.wargaming.net/globalmap<?=$p_info[$val['province_id']]['uri'];?>" target="_blank"><?=$p_info[$val['province_id']]['province_name']; ?></a>
-                        <? } else { ?>
+                        <?php } else { ?>
                           ---
-                        <? } ?>
+                        <?php } ?>
                       </td>
                       <td align="center"><?=isset($p_info[$val['province_id']]['arena_name'])?$p_info[$val['province_id']]['arena_name']:'--'; ?></td>
                       <td align="center" style="color: #ba904d;"><?=isset($p_info[$val['province_id']]['daily_revenue'])?$p_info[$val['province_id']]['daily_revenue']:0;?> <img src="./images/currency-gold.png" border="0"> (x<?=isset($p_info[$val['province_id']]['revenue_level'])?$p_info[$val['province_id']]['revenue_level']:0;?>)</td>
                       <td align="center"><?=isset($p_info[$val['province_id']]['owner_info'])?$p_info[$val['province_id']]['owner_info']:'---'; ?></td>
                   </tr>
-              <? } ?>
-          <? } ?>
+              <?php } ?>
+          <?php } ?>
           </tbody>
       </table>
   </div>
   <br>
-<? } ?>
+<?php } ?>

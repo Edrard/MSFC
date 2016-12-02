@@ -190,9 +190,9 @@ if ( !extension_loaded('pdo_mysql') ) {
 if (!extension_loaded("curl")) {
    show_message($lang['curl_off']);
 }
-if(ini_get('short_open_tag') != 1) {
-    show_message($lang['short_tag_off']);
-}
+//if(ini_get('short_open_tag') != 1) {
+//    show_message($lang['short_tag_off']);
+//}
 if(!file_exists(ROOT_DIR.'/cache/') || !is_writable(ROOT_DIR.'/cache/')) {
     show_message($lang['chmod_off']);
 }

@@ -87,9 +87,9 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <? if($logged == 2) { ?>
+                                        <?php if($logged == 2) { ?>
                                             <a href="./admin/index.php<?=$multi_url;?>" target="_blank"><?=$lang['gotoadmin'];?></a>&nbsp;&nbsp;&nbsp;
-                                        <? } ?>
+                                        <?php } ?>
                                         <a href="./main.php?logout=true<?=$multi_url_param;?>"><?=$lang['logout'];?></a>
                                     </td>
                                 </tr>
@@ -108,17 +108,17 @@
             <tr>
                 <td valign="top" id="tohide2">
                     <ul id="menu" class="tabsmenu ui-corner-all">
-                    <? foreach($tabs as $key => $val) { ?>
+                    <?php foreach($tabs as $key => $val) { ?>
                           <li class="ui-corner-all"  value="<?=$key;?>"><a id="id-<?=$key;?>" onclick="magic(this)" href="<?=($val['type'] == 1)?$val['file'].$multi_url:'#tabs-'.$key;?>"><?=$val['name']; ?></a></li>
-                     <? } ?>
+                     <?php } ?>
                     </ul>
                 </td>
                 <td valign="top" colspan="5">
                     <div>
-                        <? foreach($tabs as $key => $val) { ?>
+                        <?php foreach($tabs as $key => $val) { ?>
                           <div id="tabs-<?=$key; ?>">
                               <a href="#tabs-<?=$key; ?>"></a>
-                              <? if($val['type'] != 1) {
+                              <?php if($val['type'] != 1) {
                                     if($logged >= $val['auth']) {
                                       include(ROOT_DIR.'/tabs/'.$val['file']);
                                     } else {
@@ -126,7 +126,7 @@
                                     }
                                  } ?>
                           </div>
-                        <? } ?>
+                        <?php } ?>
                     </div>
                 </td>
             </tr>

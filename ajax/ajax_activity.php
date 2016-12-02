@@ -240,9 +240,9 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['stronghold_defense
         <thead>
             <tr>
                 <th><?=$lang['name']; ?></th>
-                <? if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
+                <?php if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
                     <th><?=$lang['company']; ?></th>
-                    <? } ?>
+                    <?php } ?>
                 <?php foreach ($showarr as $colname) {
                     for($i=$time['from'];$i<=$time['to'];$i+=86400) {
                         echo '<th class="'.$colname.'">',date('d.m.Y',$i),'</th>';
@@ -255,9 +255,9 @@ if (($sl_count['count'] == 0)||($count['all'] == 0 && $count['stronghold_defense
             <?php foreach($res as $name){ ?>
                 <tr>
                     <td><a href="<?php echo $config['base'].$name.'/'; ?>" target="_blank"><?=$name; ?></a></td>
-                    <? if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
+                    <?php if($config['company'] == 1 and in_array($_POST['key'],$company['tabs'])) { ?>
                         <td><?=in_array($res_id[$name],$company['in_company'])?$company['company_names'][$company['by_id'][$res_id[$name]]]:'';?></td>
-                        <? } ?>
+                        <?php } ?>
                     <?php foreach ($showarr as $colname) {
                         $count = 0;
                         for($i=$time['from'];$i<=$time['to'];$i+=86400) {

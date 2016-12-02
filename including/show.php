@@ -129,7 +129,6 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
         $res_base['ratings'] = multiget_v2('account_id', $links, 'ratings/accounts', array(), array('type'=>'all'));
         $res_base['achievements'] = multiget_v2('account_id', $links, 'account/achievements');
-
         foreach($links as $i => $p_id) {
           //info
           if( !isset($res_base['info'][$p_id]['status']) or $res_base['info'][$p_id]['status'] != 'ok' or empty($res_base['info'][$p_id]['data']) ) {
@@ -144,7 +143,7 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
             continue;
           }
           //achievements
-          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' or empty($res_base['achievements'][$p_id]['data']['frags']) or empty($res_base['achievements'][$p_id]['data']['max_series']) ) {
+          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' ) {
             continue;
           }
 
@@ -166,7 +165,6 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
       }  while ( !empty($links) and $try < $config['try_count'] );
     }
 }
-
 //Battle types    
 $batt_types = get_battle_types($res[array_rand($res,1)]);
 $batt_types_activity = array('all','clan','company');

@@ -22,9 +22,9 @@
             <tr>
                 <th class='sorter-false'>&nbsp;</th>
                 <th><?=$lang['name']; ?></th>
-                <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                     <th><?=$lang['company']; ?></th>
-                <? } ?>
+                <?php } ?>
                 <th>ID</th>
                 <th class="{sorter: 'shortDate'}"><?=$lang['in_clan']; ?></th>
                 <th><?=$lang['day_clan']; ?></th>
@@ -67,9 +67,9 @@
                           &nbsp;
                         </div></a></td>
                     <td class="<?=$color?>"><a href="<?php echo $config['base'],$val['account_id'].'-'.$val['account_name'],'/'; ?>" target="_blank"><?=$val['account_name']; ?></a></td>
-                    <? if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
+                    <?php if($config['company'] == 1 and in_array($key,$company['tabs'])) { ?>
                         <td><?=in_array($id,$company['in_company'])?$company['company_names'][$company['by_id'][$id]]:'';?></td>
-                    <? } ?>
+                    <?php } ?>
                     <td><?=$val['account_id']; ?></td>
                     <td><?=($val['joined_at'] == '')?$lang['na']:date('Y.m.d',$val['joined_at']); ?></td>
                     <td><?=(is_numeric($val['joined_at']))?floor((time() - $val['joined_at'])/(86400)):$lang['na']; ?></td>
@@ -86,4 +86,4 @@
           <span class="col_grey"><?=$lang['roster_grey']?></span><br>
           <span class="col_red"><?=$lang['roster_red']?></span><br>
           <span class="col_black"><?=$lang['roster_black']?></span>
-<? unset($date,$color,$roster_local_num,$diff_date); ?>
+<?php unset($date,$color,$roster_local_num,$diff_date); ?>

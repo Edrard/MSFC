@@ -76,11 +76,11 @@
             </tr> 
         </thead>
         <tbody>
-          <? if ( isset($poss['status']) and $poss['status'] == 'ok' ) { ?>
-            <? if (empty($poss['data'][$config['clan']])) { ?>
+          <?php if ( isset($poss['status']) and $poss['status'] == 'ok' ) { ?>
+            <?php if (empty($poss['data'][$config['clan']])) { ?>
               <tr><td colspan="6" align="center"><?=$lang['no_province'];?></td></tr>
-            <? } else { $total = 0; ?>
-              <? foreach($poss['data'][$config['clan']] as $val) { $total += $val['daily_revenue']; ?>
+            <?php } else { $total = 0; ?>
+              <?php foreach($poss['data'][$config['clan']] as $val) { $total += $val['daily_revenue']; ?>
                 <tr>
                   <td><?=$val['max_vehicle_level'],' ',$lang['lvl'];?></td>
                   <td><a href="http://<?=$config['server'];?>.wargaming.net/globalmap/#province/<?=$val['province_id'];?>" target="_blank"><?=$val['province_name'];?></a></td>
@@ -89,11 +89,11 @@
                   <td align="center" style="color: #ba904d;"><?=$val['daily_revenue'];?> <img src="./images/currency-gold.png"> (x<?=$val['revenue_level'];?>)</td>
                   <td align="center"><?=ceil($val['turns_owned']/24),' ',$lang['days'];?></td>
                 </tr>
-              <? } ?>
-            <? } ?>
-          <? } else { ?>
+              <?php } ?>
+            <?php } ?>
+          <?php } else { ?>
             <tr><td colspan="6" align="center"><?=$lang['error_1'],(isset($poss['error']['message'])?' ('.$poss['error']['message'].')':'');?></td></tr>
-          <? } ?>
+          <?php } ?>
         </tbody>
     </table>
     <?php if (isset($total)) {

@@ -73,16 +73,16 @@ $ll = json_decode($ll,TRUE);
             </thead>
             <tbody>
 
-                <? foreach($ll['planned_battles'] as $val){ ?>
+                <?php foreach($ll['planned_battles'] as $val){ ?>
                     <tr>
                         <td align="center"><?=$val['province_name']?></td>
                         <td align="center"><?=$val['arena_name']?></td>
                         <td align="center"><?=$val['battle_time']?></td>
                         <td align="center" style="color: #ba904d;"><?=isset($val['province_revenue']) ? $val['province_revenue'] : 0;?> <img src="./images/currency-gold.png" border="0"></td>
                     </tr>
-                    <? } ?>
+                    <?php } ?>
             </tbody>
         </table>
     </div>
     <br>
-    <? } ?>
+    <?php } ?>

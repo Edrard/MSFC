@@ -72,7 +72,7 @@
            </tbody>
           </table>
         </td>
-      <? }?>
+      <?php }?>
     </tr>
    </tbody>
 </table>
@@ -97,13 +97,13 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
     </tr>
     <?php if ($rowss<>'2') { ?>
     <tr style="font-weight: bold;">
-    <? for ($i=0; $i<3; $i++) {?>
+    <?php for ($i=0; $i<3; $i++) {?>
         <th class="{sorter: false}">&nbsp;</th>
         <th align="center" class="{sorter: false}"><?=$lang['greeting_sub1']; ?></th>
         <th align="center" class="{sorter: false}"><?=$lang['greeting_sub2']; ?></th>
-        <? } ?>
+        <?php } ?>
     </tr>
-    <? } ?>
+    <?php } ?>
   </thead>
   <tbody>
     <tr>
@@ -411,6 +411,6 @@ if($config['cron'] == 1 && $col_check > 2 && count($main_progress['main']) > 0){
          </tr>
       </tbody>
    </table>
-<? };?>
+<?php } ?>
 </div>
 <?php unset($avtdmg,$avt_eff,$avt,$avt_,$avt_mexp,$h24); ?>
