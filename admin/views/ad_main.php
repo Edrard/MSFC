@@ -125,7 +125,7 @@
                                                             <td align="center"><input type="checkbox" <?=$val2['show']?> name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][show]"></td>
                                                             <td align="center"><input type="text" value="<?=$val2['shortname']?>" name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][shortname]"></td>
                                                             <td align="center"><div class="hidden"><?=$val2['index']?></div>
-                                                                <select name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][index]"><?php for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val2['index']){echo'selected="selected"';}?>><?=$i?></option><?}?></select>
+                                                                <select name="Array[<?=$val2['index'];?>][<?=$val2['tank_id'];?>][index]"><?php for($i = 1; $i <= 10; $i++){?><option value="<?=$i?>" <?if($i==$val2['index']){echo'selected="selected"';}?>><?=$i?></option><?php } ?></select>
                                                             </td>
                                                             <td align="center"><a href="./index.php?removetoptank=1&tank_id=<?=$val2['tank_id']?>&index=<?=$val2['index']?>&page=main<?=$multi_get;?>#tabs-6" onclick="return confirm('<?=$lang['admin_confirm_delete'].' '.$val2['name_i18n'];?>?')"><img src="../images/cred.png" /></a></td>
                                                         </tr>
@@ -287,7 +287,7 @@
                                             <select name="theme">
                                                 <?php foreach ($dir_val as $val){
                                                     if (substr($val, -4)<>'.css') {?>
-                                                        <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?}?>><?=$val;?> </option>
+                                                        <option value="<?=$val;?>" <?php if($config['theme'] == $val){ ?>selected="selected" <?php } ?>><?=$val;?> </option>
                                                         <?php } } ?>
                                             </select>
                                             <?php }?>
