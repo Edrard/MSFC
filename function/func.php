@@ -182,7 +182,13 @@ if (!function_exists('ctype_alnum')) {
         return !preg_match('/^\w*$/', $text);
     }
 }
-
+function dd(){
+    $arg_list = func_get_args();
+    foreach($arg_list as $var){
+        print_r($var); 
+    }              
+    die;
+}
 
 function get_headers_curl($url)
 {

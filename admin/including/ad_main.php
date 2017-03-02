@@ -98,10 +98,6 @@ if(isset($_POST['update_achievements_db'])) {
     $db->insert('TRUNCATE TABLE `achievements`;',__line__,__file__);
     update_achievements_db();
 }
-//Update information about stronghold in db
-if(isset($_POST['update_stronghold_db'])) {
-    update_stronghold_db();
-}
 
 //DB
 if (isset($_POST['recdb'])){

@@ -53,7 +53,6 @@ if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api[
     //Получаем информацию о наградах
     update_achievements_db();
      //Получаем информацию о Укрепах
-    update_stronghold_db();
   }
 }
 

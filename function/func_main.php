@@ -390,21 +390,6 @@ function update_tanks_single($tank_id) {
         $db->insert('INSERT INTO `tanks` (`'.implode('`,`',array_keys($tmp)).'`) VALUES ("'.implode('","',$tmp).'");',__line__,__file__);
     }
 }
-function stronghold() {
-    global $db;
-    $atm = new Atm($db,'stronghold');
-    return array_resort($atm->get_data(),'type');  
-}
-function update_stronghold_db($str = array()){
-    global $db,$config,$lang;
-
-    $str_get = get_api('wot/stronghold/buildings');
-    $atm = new Atm($db,'stronghold');
-    $atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
-    //$atm->construct_data($str_get['data'])->check_mysql()->truncate_table()->insert_data();
-    unset($atm);
-}
-
 function achievements() {
     global $db;
 
