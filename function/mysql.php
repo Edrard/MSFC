@@ -19,18 +19,15 @@
         //header ("Location: /index.php");
         exit;
     }
-
     if(file_exists(ROOT_DIR.'/mysql.config.php')) {
       include(ROOT_DIR.'/mysql.config.php');
     } else {
       $dbhost = $dbuser = $dbpass = $dbname = $dbprefix = '';
     }
-
     if(!isset($dbprefix)) {
       $dbprefix = 'msfc_';
     }
     $sqlchar = 'utf8';
-
     //Проверяем заданы ли переменные для доступа к БД
     if( empty($dbhost) and empty($dbuser) and empty($dbpass) and empty($dbname) ) {
         if(defined('MAIN')){
@@ -40,7 +37,6 @@
         include(ROOT_DIR.'/admin/views/ad_mysql.php');
         die;
     }
-
     //$db = new PDO ( 'mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
     if (!class_exists('MyPDO')) {
         class MyPDO extends PDO
@@ -54,12 +50,10 @@
             private $replacement = '';
             public  $replacement2 = '$1msfcmt_$2$3';
             private $matches;
-
             public function __construct($dsn, $user = null, $password = null, $driver_options = array(),$dbprefix = null)
             {
               $this->count = 0;
               $this->sqls = array();
-
               if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $dbprefix, $this->matches)) {
                   $this->prefix = $this->matches[0];
               } else {
@@ -68,33 +62,27 @@
               $this->pattern = '/([`\'"])(col_medals|col_players|col_ratings|col_tank[\w%]*|config|tabs|top_tanks|top_tanks_presets|gk)([`\'"])/';
               $this->pattern2 = '/([`\'"])(achievements|users|multiclan|tanks|stronghold)([`\'"])/';
               $this->replacement = '$1'.$this->prefix.'$2$3';
-
               parent::__construct($dsn, $user, $password, $driver_options);
             }
-
             public function add_prefix($statement) {
               $this->count += 1;
               $statement = preg_replace($this->pattern, $this->replacement, $statement);
               $statement = preg_replace($this->pattern2, $this->replacement2, $statement);
               return $statement;
             }
-
             public function prepare($statement, $driver_options = array())
             {
               $statement = $this->add_prefix($statement);
               return parent::prepare($statement, $driver_options);
             }
-
             public function exec($statement)
             {
               $statement = $this->add_prefix($statement);
               return parent::exec($statement);
             }
-
             public function current_prefix(){
               return $this->prefix;
             }
-
             public function change_prefix($new_prefix) {
               if (preg_match("/[a-zA-Z0-9]{1,5}_/i", $new_prefix, $this->matches)) {
                   $this->oldprefix = $this->prefix;
@@ -105,7 +93,6 @@
                   return FALSE;
               }
             }
-
             public function select($statement,$line = NULL,$file = NULL,$type = 'all') {
               $statement = $this->add_prefix($statement);
               $result = array();
@@ -135,7 +122,6 @@
               }
               return $result;
             }
-
             public function insert($statement,$line = NULL,$file = NULL) {
               $statement = $this->add_prefix($statement);
               $res = FALSE;
@@ -149,7 +135,6 @@
               }
               return $res;
             }
-
             public function query($statement) {
               $this->count += 1;
               $this->sqls[$this->count] = $statement;
@@ -182,7 +167,6 @@
                 if(preg_match('/^\d/', $_POST['prefix']) == 0 && strlen(preg_replace('/(.*)_/','$1',$_POST['prefix'])) <=5){
                     if(ctype_alnum(preg_replace('/(.*)_/','$1',$_POST['prefix']))){
                         $_POST['prefix'] = strtolower($_POST['prefix']);
-
                         if(preg_match("/[a-zA-Z0-9]{1,5}_/i", $_POST['prefix'])){
                             $dbprefix = $_POST['prefix'];
                         }else{
@@ -194,7 +178,6 @@
             }
         }
     }
-
     try {
         $db_conn = array(
           PDO::ATTR_ERRMODE             =>  PDO::ERRMODE_EXCEPTION,
@@ -208,11 +191,8 @@
     $db->query ( 'SET character_set_client = '.$sqlchar );
     $db->query ( 'SET character_set_results = '.$sqlchar );
     $db->query ( 'SET SESSION wait_timeout = 120;');
-
     if(isset($_GET['multi']) and preg_match("/[a-zA-Z0-9]{1,5}/i", $_GET['multi']) and (strlen($_GET['multi'])<=5)) {
-
         $tmp_prefix = $_GET['multi'].'_';
-
         $multi = $db->select('SELECT COUNT(id) FROM `multiclan` WHERE prefix = "'.$tmp_prefix.'";',__line__,__file__,'column');
         if($multi == 1){
             $db->change_prefix($tmp_prefix);
