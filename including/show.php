@@ -22,38 +22,38 @@ $api_cache = $cache->get('api_info', 0, ROOT_DIR.'/cache/other/');
 //Фикс необходим т.к. в версии 3.1.0 нет этого в кэше, а в промежуточных github версиях есть, но данные старые, без этого параметра
 //Через релиз после 3.1.0 можно удалять
 if(isset($api_cache['status']) and !isset($api_cache['data']['tanks_updated_at'])) {
-  $api_cache['data']['tanks_updated_at'] = 0;
+    $api_cache['data']['tanks_updated_at'] = 0;
 }
 
 //В кэше пусто и данные не получены
 if( ( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) and ( !isset($api_api['status']) or $api_api['status'] != 'ok' or empty($api_api['data']) ) ) {
-  die('No information about API version.');
+    die('No information about API version.');
 }
 //Данные о апи успешно получены
 if(isset($api_api['status']) and $api_api['status'] == 'ok' and !empty($api_api['data'])) {
-  //Данных в кэше нет
-  if( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) {
-      $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
-      $api_cache = $api_api;
-  }
-  //Сравниваем данные о АПИ в кэше и полученные
-  //Если версии отличаются, и дата обновления данных о технике не совпадает
-  //TODO: если добавится дата обновления информации о наградах, добавить и ее
-  if($api_api['data']['tanks_updated_at'] != $api_cache['data']['tanks_updated_at'] and $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
-    //обновляем кэш
-    $cache->clear('api_info', ROOT_DIR.'/cache/other/');
-    $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
-    //удаляем данные о танках
-    $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
-    $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
-    //Получаем информацию о танках
-    update_tanks_db();
-    //удаляем данные о наградах
-    $db->insert('TRUNCATE TABLE `achievements`;',__line__,__file__);
-    //Получаем информацию о наградах
-    update_achievements_db();
-     //Получаем информацию о Укрепах
-  }
+    //Данных в кэше нет
+    if( ($api_cache === FALSE) or empty($api_cache) or !isset($api_cache['status']) ) {
+        $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
+        $api_cache = $api_api;
+    }
+    //Сравниваем данные о АПИ в кэше и полученные
+    //Если версии отличаются, и дата обновления данных о технике не совпадает
+    //TODO: если добавится дата обновления информации о наградах, добавить и ее
+    if($api_api['data']['tanks_updated_at'] != $api_cache['data']['tanks_updated_at'] and $api_api['data']['game_version'] != $api_cache['data']['game_version']) {
+        //обновляем кэш
+        $cache->clear('api_info', ROOT_DIR.'/cache/other/');
+        $cache->set('api_info', $api_api, ROOT_DIR.'/cache/other/');
+        //удаляем данные о танках
+        $db->insert('TRUNCATE TABLE `tanks`;',__line__,__file__);
+        $cache->clear_all(array(), ROOT_DIR.'/cache/tanks/');
+        //Получаем информацию о танках
+        update_tanks_db();
+        //удаляем данные о наградах
+        $db->insert('TRUNCATE TABLE `achievements`;',__line__,__file__);
+        //Получаем информацию о наградах
+        update_achievements_db();
+        //Получаем информацию о Укрепах
+    }
 }
 
 $tanks = tanks();
@@ -93,7 +93,7 @@ foreach($multiclan as $clan){
         $message = '';
     }
     if ( ($multiclan_info[$clan['id']] === FALSE) || (empty($multiclan_info[$clan['id']])) || (!isset($multiclan_info[$clan['id']]['status'])) ||
-         ((isset($multiclan_info[$clan['id']]['status']))&&($multiclan_info[$clan['id']]['status'] != 'ok'))  ) {
+    ((isset($multiclan_info[$clan['id']]['status']))&&($multiclan_info[$clan['id']]['status'] != 'ok'))  ) {
         if ($clan['id'] == $config['clan']) {
             $multiclan_info[$clan['id']] = $cache->get('get_last_roster_'.$clan['id'], 0);
         }
@@ -116,52 +116,55 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
             $cache->clear($pldata['account_id'],ROOT_DIR.'/cache/players/');
             $links[] = $pldata['account_id'];
         } else {
-          $res[$name] = $tmp;
+            $res[$name] = $tmp;
         }
         unset($tmp);
     }
-
     if(!empty($links)) { $try = 0; $update_eff = 1;
-      do {    
-        $res_base = array();
-        $res_base['info'] = multiget_v2('account_id', $links, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));    
-        $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-        $res_base['ratings'] = multiget_v2('account_id', $links, 'ratings/accounts', array(), array('type'=>'all'));
-        $res_base['achievements'] = multiget_v2('account_id', $links, 'account/achievements');
-        foreach($links as $i => $p_id) {
-          //info
-          if( !isset($res_base['info'][$p_id]['status']) or $res_base['info'][$p_id]['status'] != 'ok' or empty($res_base['info'][$p_id]['data']) ) {
-            continue;
-          }
-          //tanks
-          if( !isset($res_base['tanks'][$p_id]['status']) or $res_base['tanks'][$p_id]['status'] != 'ok' ) {
-            continue;
-          }
-          //ratings
-          if( !isset($res_base['ratings'][$p_id]['status']) or $res_base['ratings'][$p_id]['status'] != 'ok' ) {
-            continue;
-          }
-          //achievements
-          if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' ) {
-            continue;
-          }
+        do {  
+            $check_rating = FALSE;  
+            $res_base = array();  
+            $res_base['info'] = multiget_v2('account_id', $links, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));    
+            $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+            $res_base['ratings'] = multiget_v2('account_id', $links, 'ratings/accounts', array(), array('type'=>'all'), array(), $check_rating);
+            $res_base['achievements'] = multiget_v2('account_id', $links, 'account/achievements');
+            foreach($links as $i => $p_id) {
+                //info
+                if( !isset($res_base['info'][$p_id]['status']) or $res_base['info'][$p_id]['status'] != 'ok' or empty($res_base['info'][$p_id]['data']) ) {
+                    continue;
+                }
+                //tanks
+                if( !isset($res_base['tanks'][$p_id]['status']) or $res_base['tanks'][$p_id]['status'] != 'ok' ) {
+                    continue;
+                }
+                //ratings
+                if($check_rating !== FALSE){
+                    if( !isset($res_base['ratings'][$p_id]['status']) or $res_base['ratings'][$p_id]['status'] != 'ok') {
+                        continue;
+                    }
+                }
+                //achievements
+                if( !isset($res_base['achievements'][$p_id]['status']) or $res_base['achievements'][$p_id]['status'] != 'ok' ) {
+                    continue;
+                }
+                $to_cache = array();
+                $to_cache = $res_base['info'][$p_id];
+                if(isset($to_cache['data']['achievements'])) {
+                    unset($to_cache['data']['achievements']);
+                }
+                $to_cache['data']['achievements'] = array_merge($res_base['achievements'][$p_id]['data']['achievements'],$res_base['achievements'][$p_id]['data']['frags'],$res_base['achievements'][$p_id]['data']['max_series']);
+                $to_cache['data']['tanks'] = array_resort($res_base['tanks'][$p_id]['data'],'tank_id');
+                if($check_rating !== FALSE){
+                $to_cache['data']['ratings'] = $res_base['ratings'][$p_id]['data'];
+                }
 
-          $to_cache = array();
-          $to_cache = $res_base['info'][$p_id];
-          if(isset($to_cache['data']['achievements'])) {
-            unset($to_cache['data']['achievements']);
-          }
-          $to_cache['data']['achievements'] = array_merge($res_base['achievements'][$p_id]['data']['achievements'],$res_base['achievements'][$p_id]['data']['frags'],$res_base['achievements'][$p_id]['data']['max_series']);
-          $to_cache['data']['tanks'] = array_resort($res_base['tanks'][$p_id]['data'],'tank_id');
-          $to_cache['data']['ratings'] = $res_base['ratings'][$p_id]['data'];
+                $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
+                $res[$res_base['info'][$p_id]['data']['nickname']] = $to_cache;
 
-          $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
-          $res[$res_base['info'][$p_id]['data']['nickname']] = $to_cache;
-
-          unset($links[$i]);
-        }
-        $try++;
-      }  while ( !empty($links) and $try < $config['try_count'] );
+                unset($links[$i]);
+            }
+            $try++;
+        }  while ( !empty($links) and $try < $config['try_count'] );
     }
 }
 //Battle types    
@@ -176,15 +179,15 @@ autoclean((86400*7), $multiclan, $config, ROOT_DIR.'/cache/players/');
 /* code for wn8 */
 $wn8 = $cache->get('wn8', 7*24*60*60, ROOT_DIR.'/cache/other/'); //once in 7 days
 if(($wn8 === FALSE) or !isset($wn8['data']) or empty($wn8['data'])) {
-  $wn8_get = get_url('http://www.wnefficiency.net/exp/expected_tank_values_latest.json', 1);
-  if(isset($wn8_get['header']['version']) and isset($wn8_get['data'])) {
-    $wn8 = array_resort($wn8_get['data'],'IDNum');
-    $cache->clear('wn8',ROOT_DIR.'/cache/other/');
-    $cache->set('wn8', $wn8, ROOT_DIR.'/cache/other/');
-  } else {
-    $wn8 = array();
-  }
-  unset($wn8_get);
+    $wn8_get = get_url('http://www.wnefficiency.net/exp/expected_tank_values_latest.json', 1);
+    if(isset($wn8_get['header']['version']) and isset($wn8_get['data'])) {
+        $wn8 = array_resort($wn8_get['data'],'IDNum');
+        $cache->clear('wn8',ROOT_DIR.'/cache/other/');
+        $cache->set('wn8', $wn8, ROOT_DIR.'/cache/other/');
+    } else {
+        $wn8 = array();
+    }
+    unset($wn8_get);
 }
 /* end wn8 */
 
@@ -193,15 +196,15 @@ $eff_rating = $cache->get('eff_ratings_'.$config['clan'], 0, ROOT_DIR.'/cache/ot
 build_ratings_tables();
 
 if(is_array($eff_rating)) {
-  $tmp = array_diff(array_keys($roster),array_keys($eff_rating));
-  if(!empty($tmp)) { $update_eff = 1; }
-  unset($tmp);
+    $tmp = array_diff(array_keys($roster),array_keys($eff_rating));
+    if(!empty($tmp)) { $update_eff = 1; }
+    unset($tmp);
 }
 
 if(isset($update_eff) or $eff_rating == false) {
-  $eff_rating = eff_rating($res,$wn8);
-  $cache->clear('eff_ratings_'.$config['clan'],ROOT_DIR.'/cache/other/');
-  $cache->set('eff_ratings_'.$config['clan'], $eff_rating, ROOT_DIR.'/cache/other/');
+    $eff_rating = eff_rating($res,$wn8);
+    $cache->clear('eff_ratings_'.$config['clan'],ROOT_DIR.'/cache/other/');
+    $cache->set('eff_ratings_'.$config['clan'], $eff_rating, ROOT_DIR.'/cache/other/');
 }
 
 $tanks_nation = tanks_nations();
@@ -210,18 +213,18 @@ $tanks_lvl = tanks_lvl();
 sort($tanks_lvl);
 
 if($config['company'] == 1 ) {
-  $company = $cache->get('company_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
-  if(!isset($company['in_company'])) {
-    $company['in_company'] = array();
-  }
-  if(!isset($company['tabs'])) {
-    $company['tabs'] = array();
-  }
-  if(!isset($company['company_names']) or empty($company['company_names'])) {
-    for($i=1;$i<=$config['company_count'];$i++) {
-      $company['company_names'][$i] = $i;
+    $company = $cache->get('company_'.$config['clan'],0,ROOT_DIR.'/cache/other/');
+    if(!isset($company['in_company'])) {
+        $company['in_company'] = array();
     }
-  }
+    if(!isset($company['tabs'])) {
+        $company['tabs'] = array();
+    }
+    if(!isset($company['company_names']) or empty($company['company_names'])) {
+        for($i=1;$i<=$config['company_count'];$i++) {
+            $company['company_names'][$i] = $i;
+        }
+    }
 }
 
 ?>

@@ -51,7 +51,9 @@ function microtime_float()
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
 }
-
+function remove_qutes($string){  
+    return str_replace("'"," ",$string);  
+}
 function now(){
     return strtotime(date("Y-m-d H:i:s"));
 }

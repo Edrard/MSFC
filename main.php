@@ -93,7 +93,6 @@
         $multi_url = '';
         $multi_url_param = '';
     }
-
     include(ROOT_DIR.'/function/tabs.php');
     include(ROOT_DIR.'/including/show.php');
     if(isset($_GET['from_index']) && $_GET['from_index'] == 1 && count($res) > 0) {

@@ -328,7 +328,7 @@ function fix_wg_sheet(&$ove){
         $ove['data']['16913']['contour_image'] = 'http://static-ptl-ru.gcdn.co/static/2.42.0/encyclopedia/tankopedia/vehicle/contour/germany-waffentrager_e100.png';
         $ove['data']['16913']['is_premium'] = 0;
     }   
-}
+}  
 function update_tanks_db($tanks = array(), $force = 0) {
     global $db,$config,$cache;
 
@@ -348,8 +348,8 @@ function update_tanks_db($tanks = array(), $force = 0) {
         }
         fix_wg_sheet($tanks_api);
         foreach ($tanks_api['data'] as $tank_id => $val) {
-            if(!isset($tanks[$tank_id])){
-                $updatearr [$tank_id] = $val;
+            if(!isset($tanks[$tank_id])){        
+                $updatearr [$tank_id] = array_map('remove_qutes',$val);
                 if ($val['is_premium']== true) {
                     $updatearr [$tank_id]['is_premium']      = 1;
                 }   else {

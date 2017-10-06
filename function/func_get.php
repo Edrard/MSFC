@@ -232,7 +232,7 @@ function multiget_v3($urls,$over,$clids, $res = array()) {
     }
     return $res;
 }
-function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(), $param_array = array(), $result = array()) {
+function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(), $param_array = array(), $result = array(),$check = TRUE) {
 
     global $config;
 
@@ -307,7 +307,7 @@ function multiget_v2($paramtoload, $clanids, $whattoload, $fields_array = array(
                     $res[$clanid]['count'] = '1';
                     $res[$clanid]['data'] = $data;
                 }
-            }   else {
+            }   elseif($check !== FALSE) {
                 $k = 0;
                 while($json['status'] !='ok'){ 
                     usleep(1000000);
