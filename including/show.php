@@ -120,9 +120,9 @@ if ((isset($multiclan_info[$config['clan']]['status'])) && ($multiclan_info[$con
         }
         unset($tmp);
     }
+    $check_rating = FALSE;
     if(!empty($links)) { $try = 0; $update_eff = 1;
         do {  
-            $check_rating = FALSE;  
             $res_base = array();  
             $res_base['info'] = multiget_v2('account_id', $links, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));    
             $res_base['tanks'] = multiget_v2('account_id', $links, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields

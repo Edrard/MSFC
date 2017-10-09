@@ -156,15 +156,15 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                     //get list of members in DB, if some of theme already there from previous unsucessfull runs
                     $tmp = $db->select('SELECT account_id FROM `col_players` WHERE updated_at >= "'.(now()-$config['cron_time']*60*60).'" ORDER BY updated_at DESC;',__line__,__file__,'rows');
                     if(!empty($tmp)) {
-                     $counter['old'] = array_flip($tmp);
+                        $counter['old'] = array_flip($tmp);
                     }
                     //Starting geting data
                     if (count($new2['data'][$config['clan']]['members']) > 0){
                         foreach ($new2['data'][$config['clan']]['members'] as $val){
-                          if(!isset($counter['old'][$val['account_id']])) {
-                            $toload[] = $val['account_id'];
-                            //break; //leave for testing purpose
-                          }
+                            if(!isset($counter['old'][$val['account_id']])) {
+                                $toload[] = $val['account_id'];
+                                //break; //leave for testing purpose
+                            }
                         }
                         $new2['data'][$config['clan']]['members'] = array_resort($new2['data'][$config['clan']]['members'],'account_id');
                         if (!empty($toload)) {
@@ -175,76 +175,79 @@ if (($multi_prefix[$dbprefix]['cron'] + $config['cron_time']*3600) <= now() ){
                             $counter['get'] = $try = 0;
 
                             if ($counter['old_count'] > 0 and $log == 1){
-                               fwrite($fh, $date.": (Info) Found info about ".$counter['old_count']." players in database"."\n");
+                                fwrite($fh, $date.": (Info) Found info about ".$counter['old_count']." players in database"."\n");
                             }
                             if ($counter['total'] > 0 and $log == 1){
-                               fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
+                                fwrite($fh, $date.": (WG) Try to load info on ".$counter['total']." players"."\n");
                             } 
+                            $check_rating = FALSE; 
                             do {
-                              $res1 = $res2 = $res3 = $res4 = array();
-                              $res1 = multiget_v2('account_id', $toload, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));
-                              $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
-                              $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'));
-                              $res4 = multiget_v2('account_id', $toload, 'account/achievements');
+                                $res1 = $res2 = $res3 = $res4 = array();
+                                $res1 = multiget_v2('account_id', $toload, 'account/info', array(), array('extra'=>'statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle'));
+                                $res2 = multiget_v2('account_id', $toload, 'account/tanks', array('mark_of_mastery', 'tank_id', 'statistics.battles', 'statistics.wins')); //loading only approved fields
+                                $res3 = multiget_v2('account_id', $toload, 'ratings/accounts', array(), array('type'=>'all'), array(), $check_rating);
+                                $res4 = multiget_v2('account_id', $toload, 'account/achievements');
 
-                              foreach($toload as $link_id => $p_id) {
-                                //info
-                                if( !isset($res1[$p_id]['status']) or $res1[$p_id]['status'] != 'ok' or empty($res1[$p_id]['data']) ) {
-                                  if(isset($res1[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res1[$p_id]['error']['message'].' )';}
-                                  continue;
-                                }
-                                //tanks
-                                if( !isset($res2[$p_id]['status']) or $res2[$p_id]['status'] != 'ok' ) {
-                                  if(isset($res2[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res2[$p_id]['error']['message'].' )';}
-                                  continue;
-                                }
-                                //ratings
-                                if( !isset($res3[$p_id]['status']) or $res3[$p_id]['status'] != 'ok') {
-                                  if(isset($res3[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res3[$p_id]['error']['message'].' )';}
-                                  continue;
-                                }
-                                //achievements
-                                if( !isset($res4[$p_id]['status']) or $res4[$p_id]['status'] != 'ok') {
-                                  if(isset($res4[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res4[$p_id]['error']['message'].' )';}
-                                  continue;
-                                }
+                                foreach($toload as $link_id => $p_id) {
+                                    //info
+                                    if( !isset($res1[$p_id]['status']) or $res1[$p_id]['status'] != 'ok' or empty($res1[$p_id]['data']) ) {
+                                        if(isset($res1[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res1[$p_id]['error']['message'].' )';}
+                                        continue;
+                                    }
+                                    //tanks
+                                    if( !isset($res2[$p_id]['status']) or $res2[$p_id]['status'] != 'ok' ) {
+                                        if(isset($res2[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res2[$p_id]['error']['message'].' )';}
+                                        continue;
+                                    }
+                                    //ratings
+                                    if($check_rating !== FALSE){
+                                        if( !isset($res3[$p_id]['status']) or $res3[$p_id]['status'] != 'ok') {
+                                            if(isset($res3[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res3[$p_id]['error']['message'].' )';}
+                                            continue;
+                                        }
+                                    }
+                                    //achievements
+                                    if( !isset($res4[$p_id]['status']) or $res4[$p_id]['status'] != 'ok') {
+                                        if(isset($res4[$p_id]['error']['message'])) {$error_messages[$p_id] = ' ( '.$res4[$p_id]['error']['message'].' )';}
+                                        continue;
+                                    }
 
-                                $counter['get']++;
-                                $to_cache = array();
-                                $to_cache = $res1[$p_id];
-                                if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
-                                if(isset($res3[$p_id]['data'])) { $to_cache['data']['ratings'] = $res3[$p_id]['data']; }
-                                if(isset($to_cache['data']['achievements'])) {
-                                  unset($to_cache['data']['achievements']);
+                                    $counter['get']++;
+                                    $to_cache = array();
+                                    $to_cache = $res1[$p_id];
+                                    if(isset($res2[$p_id]['data'])) { $to_cache['data']['tanks'] = array_resort($res2[$p_id]['data'],'tank_id'); }
+                                    if(isset($res3[$p_id]['data'])) { $to_cache['data']['ratings'] = $res3[$p_id]['data']; }
+                                    if(isset($to_cache['data']['achievements'])) {
+                                        unset($to_cache['data']['achievements']);
+                                    }
+                                    $to_cache['data']['achievements'] = $res4[$p_id]['data']['achievements'];
+                                    $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
+                                    $to_cache['data']['joined_at'] = $new2['data'][$config['clan']]['members'][$p_id]['joined_at'];
+
+                                    $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
+                                    cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
+
+                                    unset($toload[$link_id]);
                                 }
-                                $to_cache['data']['achievements'] = $res4[$p_id]['data']['achievements'];
-                                $to_cache['data']['role'] = $new2['data'][$config['clan']]['members'][$p_id]['role'];
-                                $to_cache['data']['joined_at'] = $new2['data'][$config['clan']]['members'][$p_id]['joined_at'];
-
-                                $cache->set($p_id, $to_cache, ROOT_DIR.'/cache/players/');
-                                cron_insert_pars_data($to_cache, $medals, $tanks, $nations, $time);
-
-                                unset($toload[$link_id]);
-                              }
-                              $try++;
+                                $try++;
                             }  while ( !empty($toload) and $try < $config['try_count'] );
                             //log how many players are added to db
                             if($log == 1) {
-                              fwrite($fh, $date.": (Info) Successfully added information about ".$counter['get']." players out of ".$counter['total']."\n");
+                                fwrite($fh, $date.": (Info) Successfully added information about ".$counter['get']." players out of ".$counter['total']."\n");
                             }
                             //if some players are still not loaded
                             if (!empty($toload) and $log == 1) {
-                              foreach($toload as $p_id) {
-                                if(isset($error_messages[$p_id])) {$message = $error_messages[$p_id];} else {$message = '';}
-                                fwrite($fh, $date.": (Err) No correct data for player ".$new2['data'][$config['clan']]['members'][$p_id]['account_name']." with ID : ".$p_id.$message."\n");
-                              }
+                                foreach($toload as $p_id) {
+                                    if(isset($error_messages[$p_id])) {$message = $error_messages[$p_id];} else {$message = '';}
+                                    fwrite($fh, $date.": (Err) No correct data for player ".$new2['data'][$config['clan']]['members'][$p_id]['account_name']." with ID : ".$p_id.$message."\n");
+                                }
                             }
                             unset($toload, $res1, $res2, $res3,$to_cache);
                             if( ($counter['old_count']+$counter['get']) == $counter['total_members'] ) {
-                              $db->insert('UPDATE `multiclan` SET cron = "'.now().'" WHERE prefix = "'.$db->prefix.'";',__line__,__file__);
-                              if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
+                                $db->insert('UPDATE `multiclan` SET cron = "'.now().'" WHERE prefix = "'.$db->prefix.'";',__line__,__file__);
+                                if($log == 1) fwrite($fh, $date.": (Info) ".$lang['cron_done']."\n");
                             } else {
-                              if($log == 1) fwrite($fh, $date.": (Err) ".$lang['cron_done']."\n");
+                                if($log == 1) fwrite($fh, $date.": (Err) ".$lang['cron_done']."\n");
                             }
                             echo $lang['cron_done'];
                         }
